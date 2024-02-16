@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class UiManager : MonoBehaviour
 {
     //all buttons used in the menu
-    [SerializeField] private Button buttonOpenSettings;
-    [SerializeField] private Button buttonOpenLevelup;
+    [SerializeField] private Button buttonSettings;
+    [SerializeField] private Button buttonLevel;
 
     //all menu screens
-    [SerializeField] private  Canvas settings;
-    [SerializeField] private Canvas levelUp;
+    [SerializeField] private  Canvas screenSettings;
+    [SerializeField] private Canvas screenLevel;
+
 
 
 
@@ -19,19 +20,18 @@ public class UiManager : MonoBehaviour
     void Start()
     {
         //hide all submenus at startup
-        settings.enabled = false;
-        levelUp.enabled = false;
+        this.screenSettings.enabled = false;
+        this.screenLevel.enabled = false;
 
         //setup all buttons
-        setupButtonListener(buttonOpenSettings);
-        setupButtonListener(buttonOpenLevelup);
+        setupButtonListener(this.buttonSettings);
+        setupButtonListener(this.buttonLevel);
        
     }
 
     // Update is called once per frame
     void Update()
     {
-
 
     }
 
@@ -43,15 +43,12 @@ public class UiManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Button not found. Please assign a Button component to the script.");
+            Debug.LogError($"Button with name {button} not found. Please check if the button exists and ist linkt to the script UiManager!");
         }
     }
 
-
-
-
     // Diese Methode wird aufgerufen, wenn der Button geklickt wird
-    void handleButtonClick(string clickedButton)
+    private void handleButtonClick(string clickedButton)
     {
         Debug.Log($"Button {clickedButton} wurde geklickt!");
     }
