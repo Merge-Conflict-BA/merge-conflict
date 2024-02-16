@@ -100,7 +100,6 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    // Diese Methode wird aufgerufen, wenn der Button geklickt wird
     private void handleButtonClick(string clickedButton)
     {
         screenSwitcher(clickedButton);
@@ -159,7 +158,5 @@ public class UiManager : MonoBehaviour
                 Debug.LogWarning("No Screen to open with the name: " + screenname.Value);
                 break;
         }
-
     }
-
 }
