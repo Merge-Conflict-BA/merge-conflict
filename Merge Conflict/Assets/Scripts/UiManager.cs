@@ -1,3 +1,28 @@
+/**********************************************************************************************************************
+Name:          UiManager
+Description:   Open and close the screens playfield, settings, level, elements, upgrade.  
+                Hirarchy of the screens:
+                UiManager (wrapper which runs this script; contains open/close button to see them both on every sub-menu)
+                |-Playfield
+                |-Mainmenu (contains all buttons to get to the sub-menues)
+                    |-ButtonOpenSettings
+                    |-ButtonOpenLevel
+                    |-ButtonOpenUpgrade
+                    |-ButtonOpenElements
+                |-Level
+                |-Settings
+                |-Upgrade
+                |-Elements
+                |-ButtonObenMainmenu
+                |-ButtonCloseMainmenu
+
+Author(s):     Markus Haubold
+Date:          2024-02-016
+Version:       V1.0 
+TODO:          - maybe its possible to avoid the switch-case in the screenSwitcher()?!
+               - use Singleton-Pattern?!
+**********************************************************************************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,7 +70,7 @@ public class UiManager : MonoBehaviour
 
     void Start()
     {
-        //hide all submenus at startup
+        //hide all submenues at startup
         UI_MANAGER.enabled = true;
         MAINMENU.enabled = false;
         SETTINGS.enabled = false;
@@ -131,7 +156,7 @@ public class UiManager : MonoBehaviour
                 break;
 
             default:
-                Debug.Log("do somthing");
+                Debug.LogWarning("No Screen to open with the name: " + screenname.Value);
                 break;
         }
 
