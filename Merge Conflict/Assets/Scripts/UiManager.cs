@@ -15,6 +15,7 @@ Description:   Open and close the screens playfield, settings, level, elements, 
                 |-Elements
                 |-ButtonObenMainmenu
                 |-ButtonCloseMainmenu
+                |-ButtonExitGame
 
 Author(s):     Markus Haubold
 Date:          2024-02-016
@@ -33,15 +34,13 @@ public class UiManager : MonoBehaviour
     //default buttons to orchestrate the menu
     [SerializeField] private Button buttonOpenMainmenu;
     [SerializeField] private Button buttonCloseMainmenu;
-    //all buttons used in the menu
     [SerializeField] private Button buttonSettings;
     [SerializeField] private Button buttonLevel;
     [SerializeField] private Button buttonUpgrade;
     [SerializeField] private Button buttonElements;
     [SerializeField] private Button buttonExitGame;
 
-
-    //all menu screens
+    //all screens
     [SerializeField] private Canvas PLAYFIELD;
     [SerializeField] private Canvas UI_MANAGER;
     [SerializeField] private Canvas MAINMENU;
@@ -50,17 +49,19 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Canvas UPGRADE;
     [SerializeField] private Canvas ELEMENTS;
 
+    //mapping buttons to the screens wich they should open
     List<KeyValuePair<string, string>> buttonRelationScreen = new List<KeyValuePair<string, string>>
-        {
-            new KeyValuePair<string, string>("ButtonOpenMainmenu", "Mainmenu"),
-            new KeyValuePair<string, string>("ButtonCloseMainmenu", "CloseMenu"),
-            new KeyValuePair<string, string>("ButtonOpenSettings", "Settings"),
-            new KeyValuePair<string, string>("ButtonOpenLevel", "Level"),
-            new KeyValuePair<string, string>("ButtonOpenUpgrade", "Upgrade"),
-            new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
-        };
+    {
+        new KeyValuePair<string, string>("ButtonOpenMainmenu", "Mainmenu"),
+        new KeyValuePair<string, string>("ButtonCloseMainmenu", "CloseMenu"),
+        new KeyValuePair<string, string>("ButtonOpenSettings", "Settings"),
+        new KeyValuePair<string, string>("ButtonOpenLevel", "Level"),
+        new KeyValuePair<string, string>("ButtonOpenUpgrade", "Upgrade"),
+        new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
+    };
 
-    Canvas currentOpenedScreen;
+    private Canvas currentOpenedScreen;
+    const Canvas NO_OPEN_SCREEN = null;
     const string EXIT_GAME = "ButtonExitGame";
 
     void Start()
@@ -73,7 +74,7 @@ public class UiManager : MonoBehaviour
         UPGRADE.enabled = false;
         ELEMENTS.enabled = false;
 
-        //setup all buttons
+        //setup eventlisteners for all buttons
         setupButtonListener(buttonOpenMainmenu);
         setupButtonListener(buttonCloseMainmenu);
         setupButtonListener(buttonSettings);
@@ -112,7 +113,7 @@ public class UiManager : MonoBehaviour
 
     private void screenSwitcher(string requestedScreen)
     {
-        if(!currentOpenedScreen)
+        if(currentOpenedScreen == NO_OPEN_SCREEN)
         {
             currentOpenedScreen = MAINMENU;
         }
@@ -120,7 +121,7 @@ public class UiManager : MonoBehaviour
         //close current opened screen
         currentOpenedScreen.enabled = false;
 
-        //open requested screen
+        //open requested screen with usage of the mapping
         KeyValuePair<string, string> screenname = buttonRelationScreen.Find(pair => pair.Key == requestedScreen);
 
         switch (screenname.Value)
