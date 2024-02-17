@@ -38,6 +38,8 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button buttonLevel;
     [SerializeField] private Button buttonUpgrade;
     [SerializeField] private Button buttonElements;
+    [SerializeField] private Button buttonExitGame;
+
 
     //all menu screens
     [SerializeField] private Canvas PLAYFIELD;
@@ -59,14 +61,7 @@ public class UiManager : MonoBehaviour
         };
 
     Canvas currentOpenedScreen;
-
-    void Update() {
-      Debug.Log("mainmenu: " + MAINMENU.enabled);  
-      Debug.Log("settings: " + SETTINGS.enabled);  
-      Debug.Log("level: " + LEVEL.enabled);  
-      Debug.Log("upgrade: " + UPGRADE.enabled);  
-      Debug.Log("elements: " + ELEMENTS.enabled);  
-    }
+    const string EXIT_GAME = "ButtonExitGame";
 
     void Start()
     {
@@ -85,7 +80,7 @@ public class UiManager : MonoBehaviour
         setupButtonListener(buttonLevel);
         setupButtonListener(buttonUpgrade);
         setupButtonListener(buttonElements);
-       
+        setupButtonListener(buttonExitGame);
     }
 
     private void setupButtonListener(Button button) 
@@ -102,12 +97,21 @@ public class UiManager : MonoBehaviour
 
     private void handleButtonClick(string clickedButton)
     {
+        if(clickedButton == EXIT_GAME)
+        {
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                Application.Quit();
+            #endif
+            return;
+        }
+
         screenSwitcher(clickedButton);
     }
 
     private void screenSwitcher(string requestedScreen)
     {
-        Debug.Log("currentOpenedScreen: " + currentOpenedScreen);
         if(!currentOpenedScreen)
         {
             currentOpenedScreen = MAINMENU;
@@ -115,7 +119,6 @@ public class UiManager : MonoBehaviour
 
         //close current opened screen
         currentOpenedScreen.enabled = false;
-        Debug.Log("Close " + currentOpenedScreen.name);
 
         //open requested screen
         KeyValuePair<string, string> screenname = buttonRelationScreen.Find(pair => pair.Key == requestedScreen);
