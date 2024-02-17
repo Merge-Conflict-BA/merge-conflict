@@ -16,6 +16,9 @@ Description:   Open and close the screens playfield, settings, level, elements, 
                 |-ButtonObenMainmenu
                 |-ButtonCloseMainmenu
                 |-ButtonExitGame
+               
+               To get the current state of the menu, call the methode: getMenuVisibility(). It returns true if the menu 
+               is opened; otherwise it returns false.
 
 Author(s):     Markus Haubold
 Date:          2024-02-016
@@ -60,13 +63,23 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
     };
 
-    private Canvas currentOpenedScreen;
     const Canvas NO_OPEN_SCREEN = null;
     const string EXIT_GAME = "ButtonExitGame";
+    const bool OPENED = true;
+    const bool CLOSED = false;
+
+    private Canvas currentOpenedScreen;
+    private bool menuVisibility = CLOSED;
+
+
+    void Update()
+    {
+        Debug.Log("state: " + getMenuVisibility());
+    }
 
     void Start()
     {
-        //hide all submenues at startup
+        //set default screen states 
         UI_MANAGER.enabled = true;
         MAINMENU.enabled = false;
         SETTINGS.enabled = false;
@@ -84,7 +97,7 @@ public class UiManager : MonoBehaviour
         setupButtonListener(buttonExitGame);
     }
 
-    private void setupButtonListener(Button button) 
+    private void setupButtonListener(Button button)
     {
         if (button != null)
         {
@@ -98,13 +111,13 @@ public class UiManager : MonoBehaviour
 
     private void handleButtonClick(string clickedButton)
     {
-        if(clickedButton == EXIT_GAME)
+        if (clickedButton == EXIT_GAME)
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
-            #else
-                Application.Quit();
-            #endif
+#else
+            Application.Quit();
+#endif
             return;
         }
 
@@ -113,7 +126,7 @@ public class UiManager : MonoBehaviour
 
     private void screenSwitcher(string requestedScreen)
     {
-        if(currentOpenedScreen == NO_OPEN_SCREEN)
+        if (currentOpenedScreen == NO_OPEN_SCREEN)
         {
             currentOpenedScreen = MAINMENU;
         }
@@ -130,37 +143,44 @@ public class UiManager : MonoBehaviour
                 MAINMENU.enabled = true;
                 PLAYFIELD.enabled = false;
                 currentOpenedScreen = MAINMENU;
+                menuVisibility = OPENED;
                 break;
 
             case "Settings":
                 SETTINGS.enabled = true;
                 currentOpenedScreen = SETTINGS;
                 break;
-                
+
             case "Level":
                 LEVEL.enabled = true;
                 currentOpenedScreen = LEVEL;
-                break;   
+                break;
 
             case "Upgrade":
                 UPGRADE.enabled = true;
                 currentOpenedScreen = UPGRADE;
-                break;   
+                break;
 
             case "Elements":
                 ELEMENTS.enabled = true;
                 currentOpenedScreen = ELEMENTS;
                 break;
-                
+
             case "CloseMenu":
                 MAINMENU.enabled = false;
                 PLAYFIELD.enabled = true;
                 currentOpenedScreen = null;
+                menuVisibility = CLOSED;
                 break;
 
             default:
                 Debug.LogWarning("No Screen to open with the name: " + screenname.Value);
                 break;
         }
+    }
+
+    public bool getMenuVisibility()
+    {
+        return menuVisibility;
     }
 }
