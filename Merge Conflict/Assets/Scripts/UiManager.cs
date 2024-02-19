@@ -65,11 +65,10 @@ public class UiManager : MonoBehaviour
 
     const Canvas NO_OPEN_SCREEN = null;
     const string EXIT_GAME = "ButtonExitGame";
-    const bool OPENED = true;
-    const bool CLOSED = false;
 
     private Canvas currentOpenedScreen;
-    private bool menuVisibility = CLOSED;
+
+    public bool isMenuVisible { get; private set; }
 
     void Start()
     {
@@ -115,10 +114,10 @@ public class UiManager : MonoBehaviour
             return;
         }
 
-        screenSwitcher(clickedButton);
+        switchScreen(clickedButton);
     }
 
-    private void screenSwitcher(string requestedScreen)
+    private void switchScreen(string requestedScreen)
     {
         if (currentOpenedScreen == NO_OPEN_SCREEN)
         {
@@ -137,7 +136,7 @@ public class UiManager : MonoBehaviour
                 MAINMENU.enabled = true;
                 PLAYFIELD.enabled = false;
                 currentOpenedScreen = MAINMENU;
-                menuVisibility = OPENED;
+                isMenuVisible = true;
                 break;
 
             case "Settings":
@@ -164,17 +163,12 @@ public class UiManager : MonoBehaviour
                 MAINMENU.enabled = false;
                 PLAYFIELD.enabled = true;
                 currentOpenedScreen = null;
-                menuVisibility = CLOSED;
+                isMenuVisible = false;
                 break;
 
             default:
                 Debug.LogWarning("No Screen to open with the name: " + screenname.Value);
                 break;
         }
-    }
-
-    public bool getMenuVisibility()
-    {
-        return menuVisibility;
     }
 }
