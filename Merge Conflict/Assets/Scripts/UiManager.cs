@@ -53,7 +53,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Canvas ELEMENTS;
 
     //mapping buttons to the screens wich they should open
-    List<KeyValuePair<string, string>> buttonRelationScreen = new List<KeyValuePair<string, string>>
+    List<KeyValuePair<string, string>> readableMenuName = new List<KeyValuePair<string, string>>
     {
         new KeyValuePair<string, string>("ButtonOpenMainmenu", "Mainmenu"),
         new KeyValuePair<string, string>("ButtonCloseMainmenu", "CloseMenu"),
@@ -70,12 +70,6 @@ public class UiManager : MonoBehaviour
 
     private Canvas currentOpenedScreen;
     private bool menuVisibility = CLOSED;
-
-
-    void Update()
-    {
-        Debug.Log("state: " + getMenuVisibility());
-    }
 
     void Start()
     {
@@ -135,7 +129,7 @@ public class UiManager : MonoBehaviour
         currentOpenedScreen.enabled = false;
 
         //open requested screen with usage of the mapping
-        KeyValuePair<string, string> screenname = buttonRelationScreen.Find(pair => pair.Key == requestedScreen);
+        KeyValuePair<string, string> screenname = readableMenuName.Find(pair => pair.Key == requestedScreen);
 
         switch (screenname.Value)
         {
