@@ -3354,10 +3354,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonOpenMainmenu: {fileID: 979635377}
   buttonCloseMainmenu: {fileID: 2046992378}
-  buttonSettings: {fileID: 215222514}
-  buttonLevel: {fileID: 1265005520}
-  buttonUpgrade: {fileID: 1080665956}
-  buttonElements: {fileID: 73737642}
+  buttonOpenSettings: {fileID: 215222514}
+  buttonOpenLevel: {fileID: 1265005520}
+  buttonOpenUpgrade: {fileID: 1080665956}
+  buttonOpenElements: {fileID: 73737642}
   buttonExitGame: {fileID: 741769696}
   PLAYFIELD: {fileID: 210138499}
   UI_MANAGER: {fileID: 1933479629}

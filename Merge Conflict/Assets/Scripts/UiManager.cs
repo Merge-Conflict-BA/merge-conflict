@@ -37,10 +37,10 @@ public class UiManager : MonoBehaviour
     //default buttons to orchestrate the menu
     [SerializeField] private Button buttonOpenMainmenu;
     [SerializeField] private Button buttonCloseMainmenu;
-    [SerializeField] private Button buttonSettings;
-    [SerializeField] private Button buttonLevel;
-    [SerializeField] private Button buttonUpgrade;
-    [SerializeField] private Button buttonElements;
+    [SerializeField] private Button buttonOpenSettings;
+    [SerializeField] private Button buttonOpenLevel;
+    [SerializeField] private Button buttonOpenUpgrade;
+    [SerializeField] private Button buttonOpenElements;
     [SerializeField] private Button buttonExitGame;
 
     //all screens
@@ -90,10 +90,10 @@ public class UiManager : MonoBehaviour
         //setup eventlisteners for all buttons
         setupButtonListener(buttonOpenMainmenu);
         setupButtonListener(buttonCloseMainmenu);
-        setupButtonListener(buttonSettings);
-        setupButtonListener(buttonLevel);
-        setupButtonListener(buttonUpgrade);
-        setupButtonListener(buttonElements);
+        setupButtonListener(buttonOpenSettings);
+        setupButtonListener(buttonOpenLevel);
+        setupButtonListener(buttonOpenUpgrade);
+        setupButtonListener(buttonOpenElements);
         setupButtonListener(buttonExitGame);
     }
 
