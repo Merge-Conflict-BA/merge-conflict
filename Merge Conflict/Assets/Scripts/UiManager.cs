@@ -1,7 +1,7 @@
 /**********************************************************************************************************************
 Name:          UiManager
-Description:   Open and close the screens playfield, settings, level, elements, upgrade.  
-                Hirarchy of the screens:
+Description:   Open and close the menu playfield, settings, level, elements, upgrade.  
+                Hirarchy of the menus:
                 UiManager (wrapper which runs this script; contains open/close button to see them both on every sub-menu)
                 |-Playfield
                 |-Mainmenu (contains all buttons to get to the sub-menues)
@@ -21,10 +21,9 @@ Description:   Open and close the screens playfield, settings, level, elements, 
                is opened; otherwise it returns false.
 
 Author(s):     Markus Haubold
-Date:          2024-02-016
-Version:       V1.0 
-TODO:          - maybe its possible to avoid the switch-case in the screenSwitcher()?!
-               - use Singleton-Pattern?!
+Date:          2024-02-19
+Version:       V1.1 
+TODO:          - use Singleton-Pattern?!
 **********************************************************************************************************************/
 
 using System.Collections;
@@ -43,7 +42,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button buttonOpenElements;
     [SerializeField] private Button buttonExitGame;
 
-    //all screens
+    //all menus
     [SerializeField] private Canvas PLAYFIELD;
     [SerializeField] private Canvas UI_MANAGER;
     [SerializeField] private Canvas MAINMENU;
@@ -52,7 +51,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Canvas UPGRADE;
     [SerializeField] private Canvas ELEMENTS;
 
-    //mapping buttons to the screens wich they should open
+    //mapping buttons to the menu wich they should open
     List<KeyValuePair<string, string>> readableMenuName = new List<KeyValuePair<string, string>>
     {
         new KeyValuePair<string, string>("ButtonOpenMainmenu", "Mainmenu"),
@@ -63,16 +62,16 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
     };
 
-    const Canvas NO_OPEN_SCREEN = null;
+    const Canvas NO_MENU_OPENED = null;
     const string EXIT_GAME = "ButtonExitGame";
 
-    private Canvas currentOpenedScreen;
+    private Canvas currentOpenedMenu;
 
     public bool isMenuVisible { get; private set; }
 
     void Start()
     {
-        //set default screen states 
+        //set default menu states 
         UI_MANAGER.enabled = true;
         MAINMENU.enabled = false;
         SETTINGS.enabled = false;
@@ -106,68 +105,68 @@ public class UiManager : MonoBehaviour
     {
         if (clickedButton == EXIT_GAME)
         {
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
+            #if UNITY_EDITOR
+                            UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                        Application.Quit();
+            #endif
             return;
         }
 
-        switchScreen(clickedButton);
+        switchMenu(clickedButton);
     }
 
-    private void switchScreen(string requestedScreen)
+    private void switchMenu(string requestedMenu)
     {
-        if (currentOpenedScreen == NO_OPEN_SCREEN)
+        if (currentOpenedMenu == NO_MENU_OPENED)
         {
-            currentOpenedScreen = MAINMENU;
+            currentOpenedMenu = MAINMENU;
         }
 
-        //close current opened screen
-        currentOpenedScreen.enabled = false;
+        //close current opened menu
+        currentOpenedMenu.enabled = false;
 
-        //open requested screen with usage of the mapping
-        KeyValuePair<string, string> screenname = readableMenuName.Find(pair => pair.Key == requestedScreen);
+        //open requested menu with usage of the mapping
+        KeyValuePair<string, string> menuName = readableMenuName.Find(pair => pair.Key == requestedMenu);
 
-        switch (screenname.Value)
+        switch (menuName.Value)
         {
             case "Mainmenu":
                 MAINMENU.enabled = true;
                 PLAYFIELD.enabled = false;
-                currentOpenedScreen = MAINMENU;
+                currentOpenedMenu = MAINMENU;
                 isMenuVisible = true;
                 break;
 
             case "Settings":
                 SETTINGS.enabled = true;
-                currentOpenedScreen = SETTINGS;
+                currentOpenedMenu = SETTINGS;
                 break;
 
             case "Level":
                 LEVEL.enabled = true;
-                currentOpenedScreen = LEVEL;
+                currentOpenedMenu = LEVEL;
                 break;
 
             case "Upgrade":
                 UPGRADE.enabled = true;
-                currentOpenedScreen = UPGRADE;
+                currentOpenedMenu = UPGRADE;
                 break;
 
             case "Elements":
                 ELEMENTS.enabled = true;
-                currentOpenedScreen = ELEMENTS;
+                currentOpenedMenu = ELEMENTS;
                 break;
 
             case "CloseMenu":
                 MAINMENU.enabled = false;
                 PLAYFIELD.enabled = true;
-                currentOpenedScreen = null;
+                currentOpenedMenu = null;
                 isMenuVisible = false;
                 break;
 
             default:
-                Debug.LogWarning("No Screen to open with the name: " + screenname.Value);
+                Debug.LogWarning("There is no menu with the name: " + menuName.Value);
                 break;
         }
     }
