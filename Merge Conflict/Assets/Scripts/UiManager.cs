@@ -23,7 +23,7 @@ Description:   Open and close the menu playfield, settings, level, elements, upg
 Author(s):     Markus Haubold
 Date:          2024-02-19
 Version:       V1.1 
-TODO:          - use Singleton-Pattern?!
+TODO:          - /
 **********************************************************************************************************************/
 
 using System.Collections;
@@ -33,6 +33,10 @@ using UnityEngine.UI;
 
 public class UiManager : MonoBehaviour
 {
+    //use it as singleton
+    private static UiManager _instance;
+    public static UiManager instance { get { return _instance; } }
+
     //default buttons to orchestrate the menu
     [SerializeField] private Button buttonOpenMainmenu;
     [SerializeField] private Button buttonCloseMainmenu;
@@ -66,11 +70,18 @@ public class UiManager : MonoBehaviour
     const string EXIT_GAME = "ButtonExitGame";
 
     private Canvas currentOpenedMenu;
-
     public bool isMenuVisible { get; private set; }
 
-    void Start()
+    void Awake()
     {
+        //singleton -> only 1 instance
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        } else {
+            _instance = this;
+        }
+
         //set default menu states 
         UI_MANAGER.enabled = true;
         MAINMENU.enabled = false;
