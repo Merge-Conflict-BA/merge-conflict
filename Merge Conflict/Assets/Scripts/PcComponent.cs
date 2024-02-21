@@ -20,14 +20,20 @@ public class PcComponent : MonoBehaviour
 
     void spawnObject(GameObject componentToSpawn, Vector3 spawnPosition)
     {
-        if (componentToSpawn != null)
+        if (spawnPosition.Equals(Vector3.zero))
         {
-            spawnPosition.z = 0;
-            GameObject spawnedObject = Instantiate(componentToSpawn, spawnPosition, Quaternion.identity);
+            Debug.LogError("Spawnposition (0,0,0) given?!");
+            return;
         }
-        else
+
+        if (componentToSpawn.Equals(null))
         {
             Debug.LogError("Prefab not assigned to spawnObject script. Please assign a prefab in the Unity Editor.");
+            return;
         }
+
+        spawnPosition.z = 0;
+        GameObject spawnedObject = Instantiate(componentToSpawn, spawnPosition, Quaternion.identity);
+            
     }
 }
