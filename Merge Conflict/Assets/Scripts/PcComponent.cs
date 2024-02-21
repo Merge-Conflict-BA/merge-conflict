@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PcComponent : MonoBehaviour
 {
+    private Debugger debug = new Debugger();
     //define all spawnable components here!
     public GameObject componentA;
 
@@ -22,18 +21,17 @@ public class PcComponent : MonoBehaviour
     {
         if (spawnPosition.Equals(Vector3.zero))
         {
-            Debug.LogError("Spawnposition (0,0,0) given?!");
+            debug.logWarning("Spawnposition (0,0,0) given?!");   
             return;
         }
 
         if (componentToSpawn.Equals(null))
         {
-            Debug.LogError("Prefab not assigned to spawnObject script. Please assign a prefab in the Unity Editor.");
+            debug.logError("Prefab not assigned to spawnObject script. Please assign a prefab in the Unity Editor.");
             return;
         }
 
         spawnPosition.z = 0;
-        GameObject spawnedObject = Instantiate(componentToSpawn, spawnPosition, Quaternion.identity);
-            
+        GameObject spawnedObject = Instantiate(componentToSpawn, spawnPosition, Quaternion.identity);   
     }
 }
