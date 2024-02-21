@@ -1,3 +1,12 @@
+/**********************************************************************************************************************
+Name:          Dragging
+Description:   Custom debugging class to log message automaticly only during the development in the unity editor
+Author(s):     Markus Haubold
+Date:          2024-02-20
+Version:       V1.0 
+TODO:          - setup logMessage(), logWarning() and logError()
+**********************************************************************************************************************/
+
 using UnityEngine;
 
 public class Debugger
@@ -22,5 +31,4 @@ public class Debugger
             Debug.LogError(message);   
         #endif
     }
-
 }

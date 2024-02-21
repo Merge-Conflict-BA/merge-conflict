@@ -1,3 +1,12 @@
+/**********************************************************************************************************************
+Name:          PcComponent
+Description:   Handle all functions from the pc-components.
+Author(s):     Markus Haubold
+Date:          2024-02-21
+Version:       V1.0 
+TODO:          - setup spawnComponents() 
+**********************************************************************************************************************/
+
 using UnityEngine;
 
 public class PcComponent : MonoBehaviour
@@ -13,11 +22,11 @@ public class PcComponent : MonoBehaviour
         //TODO: delete this, if the gamelogic for the spawning is implemented!!!
         if (Input.GetKeyDown("s"))
         {
-            spawnObject(componentA, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            spawnComponent(componentA, Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
     }
 
-    void spawnObject(GameObject componentToSpawn, Vector3 spawnPosition)
+    void spawnComponent(GameObject componentToSpawn, Vector3 spawnPosition)
     {
         if (spawnPosition.Equals(Vector3.zero))
         {
@@ -27,7 +36,7 @@ public class PcComponent : MonoBehaviour
 
         if (componentToSpawn.Equals(null))
         {
-            debug.logError("Prefab not assigned to spawnObject script. Please assign a prefab in the Unity Editor.");
+            debug.logError("Prefab not assigned to spawnComponent script. Please assign a prefab in the Unity Editor.");
             return;
         }
 
