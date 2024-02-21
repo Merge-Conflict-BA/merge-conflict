@@ -1,3 +1,11 @@
+/**********************************************************************************************************************
+Name:          Dragging
+Description:   Drag and drop sprites on the playfield. The current clicked sprite will set on top. 
+Author(s):     Markus Haubold
+Date:          2024-02-20
+Version:       V1.0 
+TODO:          - its the 1st prototype
+**********************************************************************************************************************/
 using UnityEngine;
 
 public class Dragging : MonoBehaviour
@@ -18,14 +26,11 @@ public class Dragging : MonoBehaviour
     {
         handleSpriteSorting();
         offsetMouseToCamera = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
         draggingActive = true;
     }
 
     private void OnMouseUp()
     {
-
-
         draggingActive = false;
     }
 
@@ -63,5 +68,4 @@ public class Dragging : MonoBehaviour
 
         return highestSortingOrder;
     }
-
 }
