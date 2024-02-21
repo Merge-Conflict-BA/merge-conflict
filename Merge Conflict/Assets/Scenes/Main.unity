@@ -503,6 +503,7 @@ GameObject:
   - component: {fileID: 210138499}
   - component: {fileID: 210138498}
   - component: {fileID: 210138497}
+  - component: {fileID: 210138501}
   m_Layer: 5
   m_Name: Playfield
   m_TagString: Untagged
@@ -597,6 +598,19 @@ RectTransform:
   m_AnchoredPosition: {x: 200, y: 400}
   m_SizeDelta: {x: 400, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &210138501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210138496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8dd1e87564494fb6b473c56d3594aae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  componentA: {fileID: 2556968358889389474, guid: 3e186cf2c6ff241ef85ddffea5dd44ec, type: 3}
 --- !u!1 &215222512
 GameObject:
   m_ObjectHideFlags: 0
