@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
-Name:          PcComponent
-Description:   Handle all functions from the pc-components.
+Name:          ComponentSpawner
+Description:   Spawn the given object "objectToSpawn" at the given postion "spawnPosition"
 Author(s):     Markus Haubold
 Date:          2024-02-21
 Version:       V1.0 
@@ -9,11 +9,12 @@ TODO:          - setup spawnComponents()
 
 using UnityEngine;
 
-public class PcComponent : MonoBehaviour
+public class ComponentSpawner : MonoBehaviour
 {
     private Debugger debug = new Debugger();
     //define all spawnable components here!
-    public GameObject componentA;
+    public GameObject objectToSpawn;
+    public Vector3 spawnPosition;
 
 
     void Update()
@@ -22,7 +23,8 @@ public class PcComponent : MonoBehaviour
         //TODO: delete this, if the gamelogic for the spawning is implemented!!!
         if (Input.GetKeyDown("s"))
         {
-            spawnComponent(componentA, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            spawnComponent(objectToSpawn, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            //spawnComponent(objectToSpawn, spawnPosition);
         }
     }
 
