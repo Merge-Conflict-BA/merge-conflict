@@ -75,23 +75,25 @@ public class Dragging : MonoBehaviour
 
     private void mergeTwoComponents()
     {
-        float radiusToDetectSpritesOverlapping = 1.0f;
-        string spriteTypeIsComponent = "component"; //tag from the inspector-window
+        const float timeToDestroyObject = 1.0f;
+        const float radiusToDetectSpritesOverlapping = 1.0f;
+        const string spriteTypeIsComponent = "component"; //tag from the inspector-window
+        GameObject draggedComponent = gameObject;
 
         //check if there is an sprites-overlapping situation
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radiusToDetectSpritesOverlapping);
+        Collider2D[] overlappedStaticComponents = Physics2D.OverlapCircleAll(draggedComponent.transform.position, radiusToDetectSpritesOverlapping);
 
-        if(colliders == null) { return; };
+        if(overlappedStaticComponents == null) { return; };
 
-        foreach (Collider2D collider in colliders)
+        foreach (Collider2D staticComponent in overlappedStaticComponents)
         {
             //check if the overlapping sprite is an component too (so maybe its mergable)
-            if (collider.gameObject != gameObject && collider.CompareTag(spriteTypeIsComponent))
+            if (staticComponent.gameObject != draggedComponent && staticComponent.CompareTag(spriteTypeIsComponent))
             {
                 debug.logMessage("two components overlapp => merge?!");
                 draggingActive = false;
-                Destroy(gameObject, 1.5f);
-                Destroy(collider.gameObject, 1.5f);
+                Destroy(draggedComponent, timeToDestroyObject);
+                Destroy(staticComponent.gameObject, timeToDestroyObject);
             }
         }
     }
