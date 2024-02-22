@@ -21,7 +21,7 @@ public class Dragging : MonoBehaviour
         if (draggingActive)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
-            CheckForOverlap();
+            checkSpritesOverlapping();
         }
     }
 
@@ -73,22 +73,20 @@ public class Dragging : MonoBehaviour
         return highestSortingOrder;
     }
 
-    private void CheckForOverlap()
+    private void checkSpritesOverlapping()
     {
-        // Definiere den Radius des Überlappungsbereichs (kann je nach Bedarf angepasst werden)
-        float overlapRadius = 10.0f;
+        float radiusToDetectSpritesOverlapping = 5.0f;
+        string spriteTypeIsComponent = "component"; //tag from the inspector-window
 
-        // Überprüfe, ob andere Collider im Überlappungsbereich sind
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, overlapRadius);
+        //check if there is an sprites-overlapping situation
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radiusToDetectSpritesOverlapping);
 
-        // Durchlaufe alle überlappenden Collider
         foreach (Collider2D collider in colliders)
         {
-            // Überprüfe, ob es sich um ein anderes Sprite handelt (kann je nach Bedarf angepasst werden)
-            if (collider.gameObject != gameObject && collider.CompareTag("component"))
+            //check if the overlapping sprite is an component too (so maybe its mergable)
+            if (collider.gameObject != gameObject && collider.CompareTag(spriteTypeIsComponent))
             {
-                // Handle die Überlappung hier, z.B. schreibe ein Log
-                Debug.Log("Die Sprites überlappen sich!");
+                debug.logMessage("two components overlapp => merge?!");
             }
         }
     }
