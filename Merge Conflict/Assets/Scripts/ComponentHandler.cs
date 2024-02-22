@@ -21,7 +21,7 @@ public class Dragging : MonoBehaviour
         if (draggingActive)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
-            checkSpritesOverlapping();
+            mergeTwoComponents();
         }
     }
 
@@ -73,13 +73,15 @@ public class Dragging : MonoBehaviour
         return highestSortingOrder;
     }
 
-    private void checkSpritesOverlapping()
+    private void mergeTwoComponents()
     {
-        float radiusToDetectSpritesOverlapping = 5.0f;
+        float radiusToDetectSpritesOverlapping = 1.0f;
         string spriteTypeIsComponent = "component"; //tag from the inspector-window
 
         //check if there is an sprites-overlapping situation
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radiusToDetectSpritesOverlapping);
+
+        if(colliders == null) { return; };
 
         foreach (Collider2D collider in colliders)
         {
@@ -87,6 +89,9 @@ public class Dragging : MonoBehaviour
             if (collider.gameObject != gameObject && collider.CompareTag(spriteTypeIsComponent))
             {
                 debug.logMessage("two components overlapp => merge?!");
+                draggingActive = false;
+                Destroy(gameObject, 1.5f);
+                Destroy(collider.gameObject, 1.5f);
             }
         }
     }
