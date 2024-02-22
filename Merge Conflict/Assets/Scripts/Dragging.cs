@@ -1,9 +1,9 @@
 /**********************************************************************************************************************
 Name:          Dragging
 Description:   Drag and drop sprites on the playfield. The current clicked sprite will set on top. 
-Author(s):     Markus Haubold
-Date:          2024-02-20
-Version:       V1.0 
+Author(s):     Markus Haubold, Hanno Witzleb
+Date:          2024-02-21
+Version:       V1.1 
 TODO:          - its the 1st prototype
 **********************************************************************************************************************/
 using UnityEngine;
@@ -11,21 +11,22 @@ using UnityEngine;
 public class Dragging : MonoBehaviour
 {
     private bool draggingActive = false;
-    private Vector3 offsetMouseToCamera;
+    // camera has position in world too, therefore we need the offset to calculate accurate placement
+    private Vector3 offsetMouseToCameraAtStartDragging;
 
 
     void Update()
     {
         if (draggingActive)
         {
-            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
+            transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCameraAtStartDragging;
         }
     }
 
     private void OnMouseDown()
     {
         handleSpriteSorting();
-        offsetMouseToCamera = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        offsetMouseToCameraAtStartDragging = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         draggingActive = true;
     }
 
@@ -40,16 +41,15 @@ public class Dragging : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if (hit.collider != null)
-        {
-            SpriteRenderer spriteRenderer = hit.collider.GetComponent<SpriteRenderer>();
+        if (hit.collider == null) { return; }
 
-            if (spriteRenderer != null)
-            {
-                //set current sprite on top of all
-                spriteRenderer.sortingOrder = getHighestSpritePosition() + 1;
-            }
-        }
+        SpriteRenderer spriteRenderer = hit.collider.GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer == null) { return; }
+        
+        //set current sprite on top of all
+        spriteRenderer.sortingOrder = getHighestSpritePosition();
+        
     }
 
     int getHighestSpritePosition()
@@ -64,6 +64,8 @@ public class Dragging : MonoBehaviour
             {
                 highestSortingOrder = spriteRenderer.sortingOrder;
             }
+
+            spriteRenderer.sortingOrder--;
         }
 
         return highestSortingOrder;
