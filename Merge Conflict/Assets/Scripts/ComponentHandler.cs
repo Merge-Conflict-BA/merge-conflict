@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
-Name:          Dragging
-Description:   Drag and drop sprites on the playfield. The current clicked sprite will set on top. 
+Name:          CoomponentHandler
+Description:   Contains all functions to handle one component.
 Author(s):     Markus Haubold
 Date:          2024-02-20
 Version:       V1.0 
