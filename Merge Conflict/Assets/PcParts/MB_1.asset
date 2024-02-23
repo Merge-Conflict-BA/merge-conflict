@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MB_1
   m_EditorClassIdentifier: 
   ID: 2
-  Name: ram
+  Name: mb
   IsTrash: 0
   ItemLevel: 1
   CPU_Slot_lvl: 0
@@ -22,9 +22,11 @@ MonoBehaviour:
   RAM_Slot_lvl: 0
   HDD_Slot_lvl: 0
   Powersupply_Slot_lvl: 0
-  ElementSprite: {fileID: 0}
+  ElementSprite: {fileID: 21300000, guid: f8da6347c9c2b504b92ea240dc387fdc, type: 3}
   SizeWidth: 1
   SizeHeight: 1
+  ScaleX: 25
+  ScaleY: 25
   TrashValue: 5
   SalesValue: 50
   CanMove: 0
