@@ -7,7 +7,13 @@ using TMPro;
 public class PcPartManagerTest : MonoBehaviour
 {
     public PcPart data;
+    public GameObject objectCPU;
+    public GameObject objectRAM;
+    public GameObject objectGPU;
 
+
+
+    private int counter = 0;
 
     void Start()
     {
@@ -27,6 +33,7 @@ public class PcPartManagerTest : MonoBehaviour
         {
             if (touch.phase == TouchPhase.Ended)
             {
+                counter += 1;
                 Debug.Log("Test");
                 CheckAndDuplicate();
             }
@@ -35,9 +42,12 @@ public class PcPartManagerTest : MonoBehaviour
 
     private void CheckAndDuplicate()
     {
-        GameObject duplicate = Instantiate(gameObject, gameObject.transform.position, gameObject.transform.rotation, gameObject.transform.parent);
-        duplicate.name = gameObject.name + "_duplicate";
-
+        GameObject duplicate = Instantiate(counter == 1 ? objectCPU : counter == 2 ? objectRAM : objectGPU, gameObject.transform.position, gameObject.transform.rotation, gameObject.transform.parent);
         duplicate.transform.SetParent(gameObject.transform, true);
+        duplicate.name = gameObject.name + (counter == 1 ? "_objectCPU" : counter == 2 ? "_objectRAM" : "_objectGPU");
+
+        SpriteRenderer gameObjectSpriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        SpriteRenderer duplicateSpriteRenderer = duplicate.GetComponent<SpriteRenderer>();
+        duplicateSpriteRenderer.sortingOrder = gameObjectSpriteRenderer.sortingOrder + 1;
     }
 }

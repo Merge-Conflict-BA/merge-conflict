@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe15dcd154938bc41abfebc27f5a413a, type: 3}
+  m_Name: MB_Test
+  m_EditorClassIdentifier: 
+  ID: 2
+  Name: mb
+  IsTrash: 0
+  ItemLevel: 1
+  CPU_Slot_lvl: 0
+  MB_Slot_lvl: 0
+  GPU_Slot_lvl: 0
+  RAM_Slot_lvl: 0
+  HDD_Slot_lvl: 0
+  Powersupply_Slot_lvl: 0
+  ElementSprite: {fileID: 21300000, guid: 5c11b2a225ad05e4c8a645c223a8bddb, type: 3}
+  SizeWidth: 1
+  SizeHeight: 1
+  ScaleX: 25
+  ScaleY: 25
+  TrashValue: 5
+  SalesValue: 133
+  CanMove: 0
+  movingSpeed: 1

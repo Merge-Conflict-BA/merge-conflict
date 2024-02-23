@@ -33,5 +33,5 @@ public class PcPart : ScriptableObject
     public int TrashValue;
     public int SalesValue;
     public bool CanMove; // shout be false when on conveyor belt
-
+    public float movingSpeed = 1;
 }
