@@ -30,6 +30,8 @@ public class PcPart : ScriptableObject
     public float SizeHeight = 1;
     public float ScaleX = 1;
     public float ScaleY = 1;
+    public float SizeBoxColliderWidth = 1;
+    public float SizeBoxColliderHeight = 1;
     public int TrashValue;
     public int SalesValue;
     public bool CanMove; // shout be false when on conveyor belt

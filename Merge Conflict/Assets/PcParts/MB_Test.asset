@@ -23,10 +23,12 @@ MonoBehaviour:
   HDD_Slot_lvl: 0
   Powersupply_Slot_lvl: 0
   ElementSprite: {fileID: 21300000, guid: 5c11b2a225ad05e4c8a645c223a8bddb, type: 3}
-  SizeWidth: 1
-  SizeHeight: 1
+  SizeWidth: 6
+  SizeHeight: 8
   ScaleX: 25
   ScaleY: 25
+  SizeBoxColliderWidth: 1
+  SizeBoxColliderHeight: 1
   TrashValue: 5
   SalesValue: 133
   CanMove: 0
