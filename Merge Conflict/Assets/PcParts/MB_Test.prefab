@@ -103,9 +103,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 77c852fba79826f4e9e532ee41ed552b, type: 2}
-  objectCPU: {fileID: 1933900169350443352, guid: c0f2686967b54a44d825e6e4f625079f, type: 3}
-  objectRAM: {fileID: 1933900169350443352, guid: d25389539bd105c47b69ac301eb7334f, type: 3}
-  objectGPU: {fileID: 1933900169350443352, guid: 11f37a52f31d4ad488715db856eb4b3c, type: 3}
 --- !u!61 &-6653666476030799122
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -135,7 +132,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

@@ -27,8 +27,8 @@ MonoBehaviour:
   SizeHeight: 0.1
   ScaleX: 1
   ScaleY: 1
-  SizeBoxColliderWidth: 1
-  SizeBoxColliderHeight: 1
+  SizeBoxColliderWidth: 0.1
+  SizeBoxColliderHeight: 0.1
   TrashValue: 5
   SalesValue: 12
   CanMove: 0
