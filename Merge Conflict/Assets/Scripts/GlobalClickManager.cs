@@ -46,6 +46,18 @@ public class GlobalClickManager : MonoBehaviour
                     SpriteRenderer toucedGameObjectSpriteRenderer = touchedGameObject.GetComponent<SpriteRenderer>();
                     SpriteRenderer newChildSpriteRenderer = newChild.GetComponent<SpriteRenderer>();
                     newChildSpriteRenderer.sortingOrder = toucedGameObjectSpriteRenderer.sortingOrder + 1;
+
+
+
+
+                    PcPartManagerTest retrievedData = touchedGameObject.GetComponent<PcPartManagerTest>();
+
+                    if (retrievedData != null)
+                    {
+                        Debug.Log("Abgerufene Daten:     Name: " + retrievedData.data.Name + "     Lvl: " + retrievedData.data.ItemLevel);
+
+                        // Hier können Sie mit den Daten arbeiten, z.B. sie modifizieren oder anderweitig verwenden
+                    }
                 }
             }
         }
