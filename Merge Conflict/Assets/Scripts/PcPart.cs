@@ -15,25 +15,24 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "PcPart")]
 public class PcPart : ScriptableObject
 {
-    public string ID;
-    public string Name;
-    public bool IsTrash;
-    public int ItemLevel;
-    public int CPU_Slot_lvl;
-    public int MB_Slot_lvl;
-    public int GPU_Slot_lvl;
-    public int RAM_Slot_lvl;
-    public int HDD_Slot_lvl;
-    public int Powersupply_Slot_lvl;
-    public Sprite ElementSprite;
-    public float SizeWidth = 1;
-    public float SizeHeight = 1;
-    public float ScaleX = 1;
-    public float ScaleY = 1;
-    public float SizeBoxColliderWidth = 1;
-    public float SizeBoxColliderHeight = 1;
-    public int TrashValue;
-    public int SalesValue;
-    public bool CanMove; // shout be false when on conveyor belt
+    public string id;
+    public string name;
+    public int type; // Case: 1     Powersupply: 2     HDD: 3     MB: 4     CPU: 5     RAM: 6     GPU: 7
+    public bool isTrash;
+    public int itemLevel;
+    public int cpu_Slot_lvl;
+    public int mb_Slot_lvl;
+    public int gpu_Slot_lvl;
+    public int ram_Slot_lvl;
+    public int hdd_Slot_lvl;
+    public int powersupply_Slot_lvl;
+    public Sprite elementSprite;
+    public float sizeWidth = 1;
+    public float sizeHeight = 1;
+    public float sizeScaleX = 1;
+    public float sizeScaleY = 1;
+    public int trashValue;
+    public int salesValue;
+    public bool canMove; // shout be false when on conveyor belt
     public float movingSpeed = 1;
 }

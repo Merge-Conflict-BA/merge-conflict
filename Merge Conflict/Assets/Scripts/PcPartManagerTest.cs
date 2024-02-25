@@ -15,12 +15,12 @@ public class PcPartManagerTest : MonoBehaviour
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
 
-        spriteRenderer.sprite = data.ElementSprite;
+        spriteRenderer.sprite = data.elementSprite;
 
-        rectTransform.sizeDelta = new Vector2(data.SizeWidth, data.SizeHeight);
-        transform.localScale = new Vector2(data.ScaleX, data.ScaleY);
+        rectTransform.sizeDelta = new Vector2(data.sizeWidth, data.sizeHeight);
+        transform.localScale = new Vector2(data.sizeScaleX, data.sizeScaleY);
         boxCollider2D.isTrigger = true;
-        boxCollider2D.size = new Vector2(data.SizeBoxColliderWidth, data.SizeBoxColliderHeight);
+        boxCollider2D.size = new Vector2(data.sizeWidth, data.sizeHeight);
     }
 
     void Update()
