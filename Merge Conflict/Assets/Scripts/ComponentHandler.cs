@@ -13,13 +13,19 @@ public class ComponentHandler : MonoBehaviour
     private Debugger debug = new Debugger();
     private bool draggingActive = false;
     private Vector3 offsetMouseToCamera;
-     
+
     public GameObject spawnedObjectAfterMerge;
+    private ComponentSpawner spawner;
 
+    //its for the test first
+    public GameObject componentToSpawn;
 
+    private void Awake()
+    {
+        spawner = GameObject.Find("conveyorBelt").GetComponent<ComponentSpawner>();
+    }
 
-
-    void Update()
+    private void Update()
     {
 
 
@@ -100,7 +106,7 @@ public class ComponentHandler : MonoBehaviour
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
 
                 //create new object
-                Instantiate(spawnedObjectAfterMerge, new Vector3(100, 100, 0), Quaternion.identity);
+                spawner.spawnOnBelt(spawnedObjectAfterMerge);
             }
         }
     }

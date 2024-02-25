@@ -148,3 +148,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnedObjectAfterMerge: {fileID: 7110887825735875448, guid: d6f6a9e19cbee477bb0dbdaa8d2a6772, type: 3}
+  componentToSpawn: {fileID: 2556968358889389474}
