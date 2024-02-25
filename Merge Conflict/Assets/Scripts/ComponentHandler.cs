@@ -17,7 +17,7 @@ public class ComponentHandler : MonoBehaviour
     public GameObject spawnedObjectAfterMerge;
     private ComponentSpawner spawner;
 
-    //its for the test first
+    //for the testing only
     public GameObject componentToSpawn;
 
     private void Awake()
@@ -27,8 +27,6 @@ public class ComponentHandler : MonoBehaviour
 
     private void Update()
     {
-
-
         if (draggingActive)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
@@ -86,7 +84,7 @@ public class ComponentHandler : MonoBehaviour
 
     private void mergeTwoComponents(string mergableComponentType)
     {
-        const float timeToDestroyObject = 1.0f;
+        const float timeToDestroyObject = 0.5f;
         const float radiusToDetectSpritesOverlapping = 1.0f;
         GameObject draggedComponent = gameObject;
 
@@ -95,9 +93,10 @@ public class ComponentHandler : MonoBehaviour
 
         if (overlappedStaticComponents == null) { return; };
 
+        //go trough all overlapped sprites and check if there is an mergabel one 
         foreach (Collider2D staticComponent in overlappedStaticComponents)
         {
-            //check if the overlapping sprite is an component too (so maybe its mergable)
+            //check if the overlapping sprite is an component too
             if (staticComponent.gameObject != draggedComponent && staticComponent.CompareTag(mergableComponentType))
             {
                 debug.logMessage("two components overlapp => merge?!");
@@ -105,7 +104,6 @@ public class ComponentHandler : MonoBehaviour
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
 
-                //create new object
                 spawner.spawnOnBelt(spawnedObjectAfterMerge);
             }
         }
