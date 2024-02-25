@@ -1,8 +1,8 @@
 /**********************************************************************************************************************
 Name:          ComponentHandler
-Description:   Contains all functions to handle one component.
+Description:   Contains the methode to drag the component-objects and the methode to merge them.
 Author(s):     Markus Haubold
-Date:          2024-02-20
+Date:          2024-02-25
 Version:       V1.0 
 TODO:          - its the 1st prototype
 **********************************************************************************************************************/

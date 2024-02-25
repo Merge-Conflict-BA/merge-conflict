@@ -1,10 +1,10 @@
 /**********************************************************************************************************************
 Name:          ComponentSpawner
-Description:   Spawn the given object "objectToSpawn" at the given postion "spawnPosition"
+Description:   Spawn the given object at the conveor-belt-object or at an custom postion
 Author(s):     Markus Haubold
-Date:          2024-02-21
+Date:          2024-02-25
 Version:       V1.0 
-TODO:          - setup spawnComponents() 
+TODO:          - 
 **********************************************************************************************************************/
 
 using UnityEngine;
