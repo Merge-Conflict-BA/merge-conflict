@@ -1,5 +1,5 @@
 /**********************************************************************************************************************
-Name:          CoomponentHandler
+Name:          ComponentHandler
 Description:   Contains all functions to handle one component.
 Author(s):     Markus Haubold
 Date:          2024-02-20
@@ -8,20 +8,25 @@ TODO:          - its the 1st prototype
 **********************************************************************************************************************/
 using UnityEngine;
 
-public class Dragging : MonoBehaviour
+public class ComponentHandler : MonoBehaviour
 {
     private Debugger debug = new Debugger();
     private bool draggingActive = false;
     private Vector3 offsetMouseToCamera;
+     
+    public GameObject spawnedObjectAfterMerge;
+
+
 
 
     void Update()
     {
 
+
         if (draggingActive)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
-            mergeTwoComponents();
+            mergeTwoComponents("component");
         }
     }
 
@@ -73,27 +78,29 @@ public class Dragging : MonoBehaviour
         return highestSortingOrder;
     }
 
-    private void mergeTwoComponents()
+    private void mergeTwoComponents(string mergableComponentType)
     {
         const float timeToDestroyObject = 1.0f;
         const float radiusToDetectSpritesOverlapping = 1.0f;
-        const string spriteTypeIsComponent = "component"; //tag from the inspector-window
         GameObject draggedComponent = gameObject;
 
         //check if there is an sprites-overlapping situation
         Collider2D[] overlappedStaticComponents = Physics2D.OverlapCircleAll(draggedComponent.transform.position, radiusToDetectSpritesOverlapping);
 
-        if(overlappedStaticComponents == null) { return; };
+        if (overlappedStaticComponents == null) { return; };
 
         foreach (Collider2D staticComponent in overlappedStaticComponents)
         {
             //check if the overlapping sprite is an component too (so maybe its mergable)
-            if (staticComponent.gameObject != draggedComponent && staticComponent.CompareTag(spriteTypeIsComponent))
+            if (staticComponent.gameObject != draggedComponent && staticComponent.CompareTag(mergableComponentType))
             {
                 debug.logMessage("two components overlapp => merge?!");
                 draggingActive = false;
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
+
+                //create new object
+                Instantiate(spawnedObjectAfterMerge, new Vector3(100, 100, 0), Quaternion.identity);
             }
         }
     }

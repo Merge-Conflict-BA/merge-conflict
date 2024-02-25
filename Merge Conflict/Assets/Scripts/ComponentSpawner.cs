@@ -14,7 +14,7 @@ public class ComponentSpawner : MonoBehaviour
     private Debugger debug = new Debugger();
     //define all spawnable components here!
     public GameObject objectToSpawn;
-    public Vector3 spawnPosition;
+    private Vector3 spawnPositionOnBelt = new Vector3(200, 40 ,0);
 
 
     void Update()
@@ -24,11 +24,14 @@ public class ComponentSpawner : MonoBehaviour
         if (Input.GetKeyDown("s"))
         {
             spawnComponent(objectToSpawn, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            //spawnComponent(objectToSpawn, spawnPosition);
+        }
+        if (Input.GetKeyDown("b"))
+        {
+            spawnOnBelt(objectToSpawn);
         }
     }
 
-    void spawnComponent(GameObject componentToSpawn, Vector3 spawnPosition)
+    public void spawnComponent(GameObject componentToSpawn, Vector3 spawnPosition)
     {
         if (spawnPosition.Equals(Vector3.zero))
         {
@@ -44,5 +47,10 @@ public class ComponentSpawner : MonoBehaviour
 
         spawnPosition.z = 0;
         GameObject spawnedObject = Instantiate(componentToSpawn, spawnPosition, Quaternion.identity);   
+    }
+
+    public void spawnOnBelt(GameObject objectToSpawn)
+    {
+        spawnComponent(objectToSpawn, spawnPositionOnBelt);
     }
 }
