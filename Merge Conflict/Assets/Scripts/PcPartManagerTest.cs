@@ -6,7 +6,7 @@ using TMPro;
 
 public class PcPartManagerTest : MonoBehaviour
 {
-    public PcPart data;
+    public ElementTexture data;
 
 
     void Start()

@@ -1,9 +1,9 @@
 /**********************************************************************************************************************
-Name:          PcPart
+Name:          Element
 Description:   Elements data structure.  
 
 Author(s):     Daniel Rittrich
-Date:          2024-02-22
+Date:          2024-02-26
 Version:       V1.0 
 TODO:          - /
 **********************************************************************************************************************/
@@ -12,25 +12,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "PcPart")]
-public class PcPart : ScriptableObject
+[CreateAssetMenu(menuName = "Own/Element")]
+public class Element : MonoBehaviour
 {
     public string id;
     public string name;
-    public int type; // Case: 1     Powersupply: 2     HDD: 3     MB: 4     CPU: 5     RAM: 6     GPU: 7
-    public bool isTrash;
+    public int type; // Case: 0     Powersupply: 1     HDD: 2     MB: 3     CPU: 4     RAM: 5     GPU: 6     Trash: 7
     public int itemLevel;
-    public int cpu_Slot_lvl;
-    public int mb_Slot_lvl;
-    public int gpu_Slot_lvl;
-    public int ram_Slot_lvl;
-    public int hdd_Slot_lvl;
-    public int powersupply_Slot_lvl;
-    public Sprite elementSprite;
-    public float sizeWidth = 1;
-    public float sizeHeight = 1;
-    public float sizeScaleX = 1;
-    public float sizeScaleY = 1;
     public int trashValue;
     public int salesValue;
     public bool canMove; // shout be false when on conveyor belt

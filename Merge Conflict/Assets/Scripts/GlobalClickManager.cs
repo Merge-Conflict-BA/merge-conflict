@@ -54,9 +54,7 @@ public class GlobalClickManager : MonoBehaviour
 
                     if (retrievedData != null)
                     {
-                        Debug.Log("Abgerufene Daten:     Name: " + retrievedData.data.name + "     Lvl: " + retrievedData.data.itemLevel);
-
-                        // Hier können Sie mit den Daten arbeiten, z.B. sie modifizieren oder anderweitig verwenden
+                        Debug.Log("Abgerufene Daten:     Name: " + retrievedData.data.name);
                     }
                 }
             }
