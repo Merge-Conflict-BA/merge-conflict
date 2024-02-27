@@ -7,7 +7,6 @@ Version:       V1.0
 **********************************************************************************************************************/
 
 using System;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace ConveyorBelt
@@ -18,6 +17,7 @@ namespace ConveyorBelt
     
         [SerializeField] public GameObject PrefabConveyorBeltHorizontal;
         [SerializeField] public GameObject PrefabConveyorBeltVertical;
+        [SerializeField] public GameObject PrefabConveyorBeltEnd;
 
         [SerializeField] public float MovingSpeed;
 
@@ -50,8 +50,10 @@ namespace ConveyorBelt
             int screenWidth = Screen.width;
             float prefabWidth = sizeOfPrefab.x;
             Vector2 centerOfPrefab = sizeOfPrefab / 2;
-        
-            for (int i = 0; (i * prefabWidth) < screenWidth; i++)
+
+            int i;
+            
+            for (i = 0; ((i - 1) * prefabWidth) < screenWidth; i++)
             {
                 float posX = centerOfPrefab.x + i * prefabWidth;
             
@@ -60,6 +62,11 @@ namespace ConveyorBelt
                 
                 AddConveyorBeltMovementComponent(beltPart, MovingDirection.RIGHT);
             }
+            
+            Vector3 pos = new Vector3( centerOfPrefab.x + i * prefabWidth, centerOfPrefab.y, 0);
+
+            var beltEndPart = Instantiate(PrefabConveyorBeltEnd, pos, Quaternion.identity, transform);
+            AddConveyorBeltMovementComponent(beltEndPart, MovingDirection.RIGHT, true);
         }
     
         private void InitializeConveyorBeltVertical(Vector2 sizeOfPrefab, float offsetY)
@@ -81,11 +88,12 @@ namespace ConveyorBelt
         }
 
 
-        private void AddConveyorBeltMovementComponent(GameObject beltPart, MovingDirection direction)
+        private void AddConveyorBeltMovementComponent(GameObject beltPart, MovingDirection direction, Boolean isEndPart = false)
         {
             ConveyorBeltMovement component = beltPart.AddComponent<ConveyorBeltMovement>();
             component.MovingSpeed = MovingSpeed;
             component.MovingDirection = direction;
+            component.IsEndPart = isEndPart;
         }
     }
 }

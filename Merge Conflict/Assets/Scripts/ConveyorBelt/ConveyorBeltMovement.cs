@@ -6,6 +6,7 @@ Date:          2024-02-23
 Version:       V1.0 
 **********************************************************************************************************************/
 
+using System;
 using UnityEngine;
 
 namespace ConveyorBelt
@@ -16,6 +17,8 @@ namespace ConveyorBelt
 
         [SerializeField] public MovingDirection MovingDirection;
 
+        [SerializeField] public Boolean IsEndPart = false;
+
         void OnCollisionStay2D(Collision2D collision)
         {
             if (!collision.gameObject.CompareTag("ConveyorBelt"))
@@ -24,6 +27,19 @@ namespace ConveyorBelt
                 var translationVector = MovingDirection.GetVector3() * velocity;
                 
                 collision.transform.Translate(translationVector, Space.World);
+            }
+        }
+
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("ConveyorBelt"))
+            {
+                return;
+            }
+            
+            if (IsEndPart)
+            {
+                Destroy(collision.gameObject);
             }
         }
     }
