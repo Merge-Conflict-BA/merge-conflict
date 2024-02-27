@@ -4246,7 +4246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrefabConveyorBeltHorizontal: {fileID: 4822088931040203767, guid: 139777db977e73e488efdf05cf56484d, type: 3}
   PrefabConveyorBeltVertical: {fileID: 4822088931040203767, guid: 58aba51a3950ce046adaae36c8b9aa32, type: 3}
-  MovingSpeed: 20
+  MovingSpeed: 30
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

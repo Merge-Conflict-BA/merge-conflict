@@ -21,8 +21,9 @@ namespace ConveyorBelt
             if (!collision.gameObject.CompareTag("ConveyorBelt"))
             {
                 var velocity = MovingSpeed * Time.deltaTime;
-            
-                collision.transform.Translate(MovingDirection.GetVector3() * velocity);
+                var translationVector = MovingDirection.GetVector3() * velocity;
+                
+                collision.transform.Translate(translationVector, Space.World);
             }
         }
     }
