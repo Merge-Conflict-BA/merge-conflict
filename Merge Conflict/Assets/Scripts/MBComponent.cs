@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
-Name:          ComponentCase
-Description:   Elements data structure for the case.  
+Name:          MBComponent
+Description:   Elements data structure for motherboard.  
 
 Author(s):     Daniel Rittrich
 Date:          2024-02-26
@@ -12,9 +12,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ComponentCase : Component
+public class MBComponent : Element, IComponent
 {
-    public int mbSlotElementLevel;
-    public int powersupplySlotElementLevel;
-    public int hddSlotElementLevel;
+    public int cpuSlotElementLevel;
+    public int gpuSlotElementLevel;
+    public int ramSlotElementLevel;
+
+    public Element Merge(Element element){
+        // TODO implement actual merge
+        return element;
+    }
 }

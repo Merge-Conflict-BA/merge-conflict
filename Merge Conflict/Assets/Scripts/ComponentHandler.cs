@@ -20,6 +20,8 @@ public class ComponentHandler : MonoBehaviour
     //for the testing only
     public GameObject componentToSpawn;
 
+    public Element element;
+
     private void Update()
     {
         if (isDraggingActive)
@@ -98,6 +100,15 @@ public class ComponentHandler : MonoBehaviour
             //check if the overlapping sprite is an component too
             if (staticComponent.gameObject != draggedComponent && IsComponent(staticComponent.gameObject))
             {
+
+                // check if compnents can be merger
+                // mergedComponent = draggedComponent.Element.Merge(staticComponent.Element)
+                // if(mergedComponent != null)
+                //      MERGE COMPONENTS
+
+                // needs to get Element of COmponentHandler Script!!!
+
+
                 Debugger.LogMessage("two components overlapp => merge?!");
                 isDraggingActive = false;
                 Destroy(draggedComponent, timeToDestroyObject);

@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Component : Element
+public interface IComponent
 {
+    public Element? Merge(Element element);
 }
