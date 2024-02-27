@@ -1,71 +1,68 @@
 /**********************************************************************************************************************
 Name:          ComponentHandler
 Description:   Contains the methode to drag the component-objects and the methode to merge them.
-Author(s):     Markus Haubold
+Author(s):     Markus Haubold, Hanno Witzleb
 Date:          2024-02-25
-Version:       V1.0 
+Version:       V1.1
 TODO:          - its the 1st prototype
 **********************************************************************************************************************/
 using UnityEngine;
 
 public class ComponentHandler : MonoBehaviour
 {
-    private Debugger debug = new Debugger();
-    private bool draggingActive = false;
+    private bool isDraggingActive = false;
+    // camera is located on the bottom left corner, so we have an offset to the mouse
+    // gets set every time dragging starts
     private Vector3 offsetMouseToCamera;
 
+    // TODO remove, when spawning functionality is implemented
     public GameObject spawnedObjectAfterMerge;
-    private ComponentSpawner spawner;
-
     //for the testing only
     public GameObject componentToSpawn;
 
-    private void Awake()
-    {
-        spawner = GameObject.Find("conveyorBelt").GetComponent<ComponentSpawner>();
-    }
-
     private void Update()
     {
-        if (draggingActive)
+        if (isDraggingActive)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
-            mergeTwoComponents("component");
+            MergeTwoComponents();
         }
     }
 
     private void OnMouseDown()
     {
-        handleSpriteSorting();
+        HandleSpriteSorting();
         offsetMouseToCamera = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        draggingActive = true;
+        isDraggingActive = true;
     }
 
     private void OnMouseUp()
     {
-
-        draggingActive = false;
+        isDraggingActive = false;
     }
 
-    private void handleSpriteSorting()
+    // IsComponent compares Unity Tags, is useful for checking colissions
+    private bool IsComponent(GameObject gameObject)
+    {
+        return gameObject.CompareTag("component");
+    }
+
+    private void HandleSpriteSorting()
     {
         // get the raycast from the clicked object
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if (hit.collider != null)
-        {
-            SpriteRenderer spriteRenderer = hit.collider.GetComponent<SpriteRenderer>();
+        if(hit.collider == null) { return; }
 
-            if (spriteRenderer != null)
-            {
-                //set current sprite on top of all
-                spriteRenderer.sortingOrder = getHighestSpritePosition() + 1;
-            }
+        if (hit.collider.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
+        {
+            //set current sprite on top of all
+            spriteRenderer.sortingOrder = GetHighestSpritePosition() + 1;
         }
     }
 
-    int getHighestSpritePosition()
+    private int GetHighestSpritePosition()
     {
         SpriteRenderer[] allSprites = FindObjectsOfType<SpriteRenderer>();
         int highestSortingOrder = int.MinValue;
@@ -77,12 +74,14 @@ public class ComponentHandler : MonoBehaviour
             {
                 highestSortingOrder = spriteRenderer.sortingOrder;
             }
+
+            spriteRenderer.sortingOrder--;
         }
 
         return highestSortingOrder;
     }
 
-    private void mergeTwoComponents(string mergableComponentType)
+    private void MergeTwoComponents()
     {
         const float timeToDestroyObject = 0.5f;
         const float radiusToDetectSpritesOverlapping = 1.0f;
@@ -97,14 +96,14 @@ public class ComponentHandler : MonoBehaviour
         foreach (Collider2D staticComponent in overlappedStaticComponents)
         {
             //check if the overlapping sprite is an component too
-            if (staticComponent.gameObject != draggedComponent && staticComponent.CompareTag(mergableComponentType))
+            if (staticComponent.gameObject != draggedComponent && IsComponent(staticComponent.gameObject))
             {
-                debug.logMessage("two components overlapp => merge?!");
-                draggingActive = false;
+                Debugger.LogMessage("two components overlapp => merge?!");
+                isDraggingActive = false;
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
 
-                spawner.spawnOnBelt(spawnedObjectAfterMerge);
+                ComponentSpawner.Instance.SpawnOnBelt(spawnedObjectAfterMerge);
             }
         }
     }
