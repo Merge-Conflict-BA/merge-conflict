@@ -16,25 +16,14 @@ namespace ConveyorBelt
 
         [SerializeField] public MovingDirection MovingDirection;
 
-        // Start is called before the first frame update
-        void Start()
+        void OnCollisionStay2D(Collision2D collision)
         {
-        }
-
-        // Update is called once per frame
-        void FixedUpdate()
-        {
+            if (!collision.gameObject.CompareTag("ConveyorBelt"))
+            {
+                var velocity = MovingSpeed * Time.deltaTime;
             
+                collision.transform.Translate(MovingDirection.GetVector3() * velocity);
+            }
         }
-
-        // void OnCollisionStay2D(Collision2D collision)
-        // {
-        //     var velocity = MovingSpeed * Time.deltaTime;
-        //     var curPos = collision.transform.position;
-        //
-        //     Vector3 newPos = curPos + MovingDirection.GetVector3() * velocity;
-        //
-        //     collision.transform.SetPositionAndRotation(newPos, Quaternion.identity);
-        // }
     }
 }
