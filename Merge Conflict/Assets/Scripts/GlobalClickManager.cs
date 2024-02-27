@@ -19,7 +19,7 @@ public class GlobalClickManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.touchCount > 0)
+        /* if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
@@ -58,6 +58,6 @@ public class GlobalClickManager : MonoBehaviour
                     }
                 }
             }
-        }
+        } */
     }
 }

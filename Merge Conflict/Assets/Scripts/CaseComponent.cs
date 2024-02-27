@@ -29,6 +29,21 @@ public class CaseComponent : Element, IComponent
         //
         // returns MB (with CPU)
 
+        Debug.Log("Test_Merge_CaseComponent");
+
+        if ((element.GetType() == typeof(PowersupplyComponent)) && (powersupplySlotElementLevel == 0))
+        {
+
+        }
+        else if ((element.GetType() == typeof(HDDComponent)) && (hddSlotElementLevel == 0))
+        {
+
+        }
+        else if ((element.GetType() == typeof(MBComponent)) && (mbSlotElementLevel == 0))
+        {
+
+        }
+
 
         // case 2
         // element1 & element2 = MB
@@ -36,6 +51,15 @@ public class CaseComponent : Element, IComponent
         // return MB (with lvl +1)
         // if not
         // return null
+
+        else if ((element.GetType() == typeof(CaseComponent)) && (itemLevel == element.itemLevel) && (itemLevel < 4))
+        {
+            // return element lvl+1;
+        }
+        else
+        {
+            return null;
+        }
 
 
         // https://stackoverflow.com/questions/983030/type-checking-typeof-gettype-or-is

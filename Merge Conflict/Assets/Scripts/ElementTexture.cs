@@ -16,7 +16,7 @@ using UnityEngine;
 public class ElementTexture : ScriptableObject
 {
     public string id;
-    public string name;
+    public new string name;
     public Sprite elementSprite;
     public float sizeWidth = 1;
     public float sizeHeight = 1;

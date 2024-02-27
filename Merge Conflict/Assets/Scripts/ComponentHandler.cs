@@ -101,7 +101,8 @@ public class ComponentHandler : MonoBehaviour
             if (staticComponent.gameObject != draggedComponent && IsComponent(staticComponent.gameObject))
             {
 
-                // check if compnents can be merger
+                // @ Daniel
+                // check if compnents can be merged
                 // mergedComponent = draggedComponent.Element.Merge(staticComponent.Element)
                 // if(mergedComponent != null)
                 //      MERGE COMPONENTS

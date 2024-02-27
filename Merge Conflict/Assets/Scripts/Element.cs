@@ -15,7 +15,7 @@ using UnityEngine;
 public class Element : MonoBehaviour
 {
     public string id;
-    public string name;
+    public new string name;
     public int type; // Case: 0     Powersupply: 1     HDD: 2     MB: 3     CPU: 4     RAM: 5     GPU: 6     Trash: 7
     public int itemLevel;
     public int trashValue;
