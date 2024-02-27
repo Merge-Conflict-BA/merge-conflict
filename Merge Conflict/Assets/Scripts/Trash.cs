@@ -12,7 +12,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Own/Element/Trash")]
 public class Trash : Element
 {
 }

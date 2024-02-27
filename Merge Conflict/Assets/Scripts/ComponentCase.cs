@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
-Name:          PcComponent
-Description:   Elements data structure for pc component.  
+Name:          ComponentCase
+Description:   Elements data structure for the case.  
 
 Author(s):     Daniel Rittrich
 Date:          2024-02-26
@@ -12,7 +12,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Own/Element/PcComponent")]
-public class PcComponent : Element
+public class ComponentCase : Component
 {
+    public int mbSlotElementLevel;
+    public int powersupplySlotElementLevel;
+    public int hddSlotElementLevel;
 }

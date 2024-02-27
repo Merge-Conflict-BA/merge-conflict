@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
-Name:          PcComponentMB
-Description:   Elements data structure for motherboard.  
+Name:          Component
+Description:   Elements data structure for pc component.  
 
 Author(s):     Daniel Rittrich
 Date:          2024-02-26
@@ -12,10 +12,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Own/Element/PcComponent/MB")]
-public class PcComponentMB : PcComponent
+public class Component : Element
 {
-    public int cpuSlotElementLevel;
-    public int gpuSlotElementLevel;
-    public int ramSlotElementLevel;
 }
