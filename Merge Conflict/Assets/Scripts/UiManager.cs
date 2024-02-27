@@ -35,7 +35,7 @@ public class UiManager : MonoBehaviour
 {
     //use it as singleton
     private static UiManager _instance;
-    public static UiManager instance { get { return _instance; } }
+    public static UiManager Instance { get { return _instance; } }
 
     //default buttons to orchestrate the menu
     [SerializeField] private Button buttonOpenMainmenu;
