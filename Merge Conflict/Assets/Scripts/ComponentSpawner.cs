@@ -1,9 +1,9 @@
 /**********************************************************************************************************************
 Name:          ComponentSpawner
 Description:   Spawn the given object at the conveor-belt-object or at an custom postion
-Author(s):     Markus Haubold, Hanno Witzleb
+Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
 Date:          2024-02-27
-Version:       V1.1
+Version:       V1.2
 TODO:          - 
 **********************************************************************************************************************/
 
@@ -16,7 +16,7 @@ public class ComponentSpawner : MonoBehaviour
 
     //define all spawnable components here!
     public GameObject testObjectToSpawn;
-    private Vector3 spawnPositionOnBelt = new Vector2(200, 40);
+    private Vector3 spawnPositionOnBelt = new Vector2(45, Screen.height + 50);
 
     void Awake()
     {
@@ -59,7 +59,7 @@ public class ComponentSpawner : MonoBehaviour
             return;
         }
 
-        Instantiate(componentToSpawn, spawnPosition, Quaternion.identity);
+        Instantiate(componentToSpawn, spawnPosition, Quaternion.identity, transform.parent);
     }
 
     public void SpawnOnBelt(GameObject componentToSpawn)

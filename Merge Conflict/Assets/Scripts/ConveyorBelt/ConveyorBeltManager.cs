@@ -12,14 +12,12 @@ namespace ConveyorBelt
 {
     public class ConveyorBeltManager : MonoBehaviour
     {
-        // Make sure that both Prefabs have the same size
-        [SerializeField] public GameObject PrefabConveyorBeltHorizontal;
-        [SerializeField] public GameObject PrefabConveyorBeltVertical;
+        
     
         // Start is called before the first frame update
         void Start()
         {
-            InstantiateConveyorBelt.Instance.Instantiate(PrefabConveyorBeltHorizontal, PrefabConveyorBeltVertical, gameObject.transform);
+            ConveyorBelt.Instance.Instantiate();
         }
 
     
