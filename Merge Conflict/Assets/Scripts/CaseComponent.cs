@@ -33,7 +33,7 @@ public class CaseComponent : Element, IComponent
 
         if ((element.GetType() == typeof(PowersupplyComponent)) && (powersupplySlotElementLevel == 0))
         {
-
+            ComponentSpawnerDaniel.Instance.SpawnObject(element);
         }
         else if ((element.GetType() == typeof(HDDComponent)) && (hddSlotElementLevel == 0))
         {
