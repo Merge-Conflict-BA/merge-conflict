@@ -13,29 +13,13 @@ namespace ConveyorBelt
 {
     public class ConveyorBelt : MonoBehaviour
     {
-        public static ConveyorBelt Instance { get; private set; }
-    
         [SerializeField] public GameObject PrefabConveyorBeltHorizontal;
         [SerializeField] public GameObject PrefabConveyorBeltVertical;
         [SerializeField] public GameObject PrefabConveyorBeltEnd;
 
         [SerializeField] public float MovingSpeed;
 
-        private void Awake() 
-        { 
-            // If there is an instance, and it's not me, delete myself.
-    
-            if (Instance != null && Instance != this) 
-            { 
-                Destroy(this); 
-            } 
-            else 
-            { 
-                Instance = this; 
-            } 
-        }
-    
-        public void Instantiate()
+        public void Start()
         {
             Vector2 prefabSizeHorizontal = PrefabConveyorBeltHorizontal.GetComponent<RectTransform>().rect.size;
             Vector2 prefabSizeVertical = PrefabConveyorBeltVertical.GetComponent<RectTransform>().rect.size;
@@ -43,7 +27,6 @@ namespace ConveyorBelt
             InitializeConveyorBeltHorizontal(prefabSizeHorizontal);
             InitializeConveyorBeltVertical(prefabSizeVertical, prefabSizeHorizontal.y);
         }
-
 
         private void InitializeConveyorBeltHorizontal(Vector2 sizeOfPrefab)
         {
@@ -86,7 +69,6 @@ namespace ConveyorBelt
                 AddConveyorBeltMovementComponent(beltPart, MovingDirection.DOWN);
             }
         }
-
 
         private void AddConveyorBeltMovementComponent(GameObject beltPart, MovingDirection direction, Boolean isEndPart = false)
         {
