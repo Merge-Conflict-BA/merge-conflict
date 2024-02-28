@@ -6,6 +6,8 @@ Date:          2024-02-25
 Version:       V1.1
 TODO:          - its the 1st prototype
 **********************************************************************************************************************/
+
+using System;
 using UnityEngine;
 
 public class ComponentHandler : MonoBehaviour
@@ -19,6 +21,9 @@ public class ComponentHandler : MonoBehaviour
     public GameObject spawnedObjectAfterMerge;
     //for the testing only
     public GameObject componentToSpawn;
+    
+    // store current count of collision with conveyor belt parts
+    public int CountCollisionConveyorBelt = 0;
 
     private void Update()
     {
@@ -105,6 +110,22 @@ public class ComponentHandler : MonoBehaviour
 
                 ComponentSpawner.Instance.SpawnOnBelt(spawnedObjectAfterMerge);
             }
+        }
+    }
+    
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("ConveyorBelt"))
+        {
+            CountCollisionConveyorBelt++;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("ConveyorBelt"))
+        {
+            CountCollisionConveyorBelt--;
         }
     }
 }
