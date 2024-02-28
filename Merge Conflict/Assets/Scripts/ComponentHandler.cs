@@ -25,7 +25,7 @@ public class ComponentHandler : MonoBehaviour
         if (isDraggingActive)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
-            HandleOverlappedObjects();
+            HandleOverlappingObjects();
         }
     }
 
@@ -87,7 +87,7 @@ public class ComponentHandler : MonoBehaviour
         return highestSortingOrder;
     }
 
-    private void HandleOverlappedObjects()
+    private void HandleOverlappingObjects()
     {
         const float timeToDestroyObject = 0.5f;
         const float radiusToDetectSpritesOverlapping = 1.0f;
