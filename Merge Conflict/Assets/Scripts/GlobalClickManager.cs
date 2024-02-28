@@ -9,7 +9,8 @@ public class GlobalClickManager : MonoBehaviour
     public GameObject objectRAM;
     public GameObject objectGPU;
 
-    private int counter = 0;
+
+    public GameObject baseObjectToSpawn;
 
 
     void Start()
@@ -19,13 +20,19 @@ public class GlobalClickManager : MonoBehaviour
 
     void Update()
     {
-        /* if (Input.touchCount > 0)
+        if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
             if (touch.phase == TouchPhase.Began)
             {
-                Vector3 touchPosition = mainCamera.ScreenToWorldPoint(touch.position);
+
+                GameObject test = GameObject.Instantiate(baseObjectToSpawn);
+                test.AddComponent<CaseComponent>();
+                ComponentSpawnerDaniel.Instance.SpawnObject(test, new Vector2(50, 400));
+
+
+                /* Vector3 touchPosition = mainCamera.ScreenToWorldPoint(touch.position);
                 touchPosition.z = 0; // Stellt sicher, dass der Z-Wert nicht die Raycast-Abfrage beeinflusst
 
                 RaycastHit2D hit = Physics2D.Raycast(touchPosition, Vector2.zero);
@@ -56,8 +63,8 @@ public class GlobalClickManager : MonoBehaviour
                     {
                         Debug.Log("Abgerufene Daten:     Name: " + retrievedData.data.name);
                     }
-                }
+                } */
             }
-        } */
+        }
     }
 }

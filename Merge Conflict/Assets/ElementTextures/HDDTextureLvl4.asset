@@ -17,5 +17,5 @@ MonoBehaviour:
   elementSprite: {fileID: 21300000, guid: 1f83237f3f88f9d42897ef1aacd6f1e5, type: 3}
   sizeWidth: 1
   sizeHeight: 1
-  sizeScaleX: 1
-  sizeScaleY: 1
+  sizeScaleX: 25
+  sizeScaleY: 25

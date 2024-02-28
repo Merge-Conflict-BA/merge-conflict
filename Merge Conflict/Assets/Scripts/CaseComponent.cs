@@ -18,7 +18,7 @@ public class CaseComponent : Element, IComponent
     public int powersupplySlotElementLevel;
     public int hddSlotElementLevel;
 
-    public Element Merge(Element element)
+    public void Merge(GameObject obj)
     {
         // TODO implement actual merge
 
@@ -31,17 +31,17 @@ public class CaseComponent : Element, IComponent
 
         Debug.Log("Test_Merge_CaseComponent");
 
-        if ((element.GetType() == typeof(PowersupplyComponent)) && (powersupplySlotElementLevel == 0))
+        if ((obj.GetComponent<PowersupplyComponent>() != null) && (powersupplySlotElementLevel == 0))
         {
-            ComponentSpawnerDaniel.Instance.SpawnObject(element);
+            ComponentSpawnerDaniel.Instance.SpawnObject(this.gameObject, this.gameObject.transform.position);
         }
-        else if ((element.GetType() == typeof(HDDComponent)) && (hddSlotElementLevel == 0))
+        else if ((obj.GetComponent<HDDComponent>() != null) && (hddSlotElementLevel == 0))
         {
-
+            // TODO weiter machen
         }
-        else if ((element.GetType() == typeof(MBComponent)) && (mbSlotElementLevel == 0))
+        else if ((obj.GetComponent<MBComponent>() != null) && (mbSlotElementLevel == 0))
         {
-
+            // TODO weiter machen
         }
 
 
@@ -52,18 +52,17 @@ public class CaseComponent : Element, IComponent
         // if not
         // return null
 
-        else if ((element.GetType() == typeof(CaseComponent)) && (itemLevel == element.itemLevel) && (itemLevel < 4))
+        else if ((obj.GetComponent<CaseComponent>() != null) && (itemLevel == obj.GetComponent<CaseComponent>().itemLevel) && (itemLevel < 4))
         {
             // return element lvl+1;
         }
         else
         {
-            return null;
+            Debugger.LogError("Merching not possible.");
         }
 
 
         // https://stackoverflow.com/questions/983030/type-checking-typeof-gettype-or-is
 
-        return element;
     }
 }

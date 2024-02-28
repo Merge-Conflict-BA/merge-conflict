@@ -107,6 +107,8 @@ public class ComponentHandler : MonoBehaviour
                 // if(mergedComponent != null)
                 //      MERGE COMPONENTS
 
+                
+
                 // needs to get Element of COmponentHandler Script!!!
 
 
