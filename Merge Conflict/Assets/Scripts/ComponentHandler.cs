@@ -101,16 +101,23 @@ public class ComponentHandler : MonoBehaviour
             if (staticComponent.gameObject != draggedComponent && IsComponent(staticComponent.gameObject))
             {
 
-                // @ Daniel
+                // TODO Daniel
                 // check if compnents can be merged
                 // mergedComponent = draggedComponent.Element.Merge(staticComponent.Element)
                 // if(mergedComponent != null)
                 //      MERGE COMPONENTS
 
-                
 
-                // needs to get Element of COmponentHandler Script!!!
+                // needs to get Element of ComponentHandler Script!!!
 
+                // Beim instanziieren dran denken, dass das GameObject den Tag "Component" erhalten muss !!
+
+                //TODO: 4 markus
+                //wenn daniel fertig, dann Spawn mehtode anpassen
+                //es werden beide Merge() der KOmponenten aufgerufen 
+                //sobald eine Methode eine Klasse zurückgibt, werden die Beiden gelöscht und eine Instanz der erhaltenenen Klasse erstellt 
+                //(Klasse ist dann schon komplett vorbereitet)
+                //wenn nicht mergebar -> returnt Merge() null 
 
                 Debugger.LogMessage("two components overlapp => merge?!");
                 isDraggingActive = false;

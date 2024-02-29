@@ -31,13 +31,13 @@ public class ComponentSpawnerDaniel : MonoBehaviour
 
     }
 
-    public void SpawnObject(GameObject element, Vector2 position)
+    public void SpawnObject(Element element, Vector2 position)
     {
         GameObject newObject = Instantiate(baseObjectToSpawn, position, Quaternion.Euler(0, 0, 0));
 
         newObject.name = element.name + "_newObject";
-        string getClass = ClassAtlas.Instance.GetClass(element);
-        newObject.AddComponent<>();                                // @ Daniel : passende Klasse einfügen und als Component adden
+        // string getClass = ClassAtlas.Instance.GetClass(element);
+        // newObject.AddComponent<>();                                // @ Daniel : passende Klasse einfügen und als Component adden
         newObject.AddComponent<BoxCollider2D>();
 
         SpriteRenderer newObjectSpriteRenderer = newObject.GetComponent<SpriteRenderer>();

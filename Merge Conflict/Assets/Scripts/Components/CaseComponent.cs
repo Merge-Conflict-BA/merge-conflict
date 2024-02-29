@@ -16,7 +16,6 @@ public class CaseComponent : Element, IComponent
 {
 
     public MBComponent? motherboard;
-
     public PowersupplyComponent? powerSupply;
     public HDDComponent? hdd;
 

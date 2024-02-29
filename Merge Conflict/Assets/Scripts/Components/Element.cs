@@ -21,5 +21,4 @@ public class Element : MonoBehaviour
     public int trashValue;
     public int salesValue;
     public bool canMove; // shout be false when on conveyor belt
-    public float movingSpeed = 1;
 }

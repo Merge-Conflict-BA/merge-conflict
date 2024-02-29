@@ -27,9 +27,9 @@ public class GlobalClickManager : MonoBehaviour
             if (touch.phase == TouchPhase.Began)
             {
 
-                GameObject test = GameObject.Instantiate(baseObjectToSpawn);
+                /* GameObject test = GameObject.Instantiate(baseObjectToSpawn);
                 test.AddComponent<CaseComponent>();
-                ComponentSpawnerDaniel.Instance.SpawnObject(test, new Vector2(50, 400));
+                ComponentSpawnerDaniel.Instance.SpawnObject(test, new Vector2(50, 400)); */
 
 
                 /* Vector3 touchPosition = mainCamera.ScreenToWorldPoint(touch.position);
