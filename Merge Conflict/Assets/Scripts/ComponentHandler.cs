@@ -101,29 +101,31 @@ public class ComponentHandler : MonoBehaviour
         //go trough all overlapped sprites and check if there is an mergabel one 
         foreach (Collider2D staticComponent in overlappedStaticObjects)
         {
-            //select the action according to the object-types (component, bin etc.)
-            if (staticComponent.gameObject != draggedComponent)
+            //skip the dragged component from the list
+            if (staticComponent.gameObject == draggedComponent)
             {
-                //merge components if possible 
-                if (IsComponent(staticComponent.gameObject))
-                {
-                    Debugger.LogMessage("two components overlapp => merge?!");
-                    isDraggingActive = false;
-                    Destroy(draggedComponent, timeToDestroyObject);
-                    Destroy(staticComponent.gameObject, timeToDestroyObject);
+                continue;
+            }
+            
+            //merge components if possible 
+            if (IsComponent(staticComponent.gameObject))
+            {
+                Debugger.LogMessage("two components overlapp => merge?!");
+                isDraggingActive = false;
+                Destroy(draggedComponent, timeToDestroyObject);
+                Destroy(staticComponent.gameObject, timeToDestroyObject);
 
-                    ComponentSpawner.Instance.SpawnOnBelt(spawnedObjectAfterMerge);
-                    return;
-                }
+                ComponentSpawner.Instance.SpawnOnBelt(spawnedObjectAfterMerge);
+                return;
+            }
 
-                //put component in the bin -> delete it
-                if (IsBin(staticComponent.gameObject))
-                {
-                    Debugger.LogMessage("Component was put in the bin! Thx for recycling!");
-                    isDraggingActive = false;
-                    Destroy(draggedComponent, timeToDestroyObject);
-                    //TODO: call xp/money controller
-                }
+            //put component in the bin -> delete it
+            if (IsBin(staticComponent.gameObject))
+            {
+                Debugger.LogMessage("Component was put in the bin! Thx for recycling!");
+                isDraggingActive = false;
+                Destroy(draggedComponent, timeToDestroyObject);
+                //TODO: call xp/money controller
             }
         }
     }
