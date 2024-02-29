@@ -2,7 +2,7 @@
 Name:          InstantiateConveyorBelt
 Description:   Instantiate the prefabs for the Conveyor Belt.
 Author(s):     Simeon Baumann
-Date:          2024-02-23
+Date:          2024-02-29
 Version:       V1.0 
 **********************************************************************************************************************/
 
@@ -15,59 +15,71 @@ namespace ConveyorBelt
     {
         [SerializeField] public GameObject PrefabConveyorBeltHorizontal;
         [SerializeField] public GameObject PrefabConveyorBeltVertical;
+        [SerializeField] public GameObject PrefabConveyorBeltDiagonal;
         [SerializeField] public GameObject PrefabConveyorBeltEnd;
 
         [SerializeField] public float MovingSpeed;
 
+        private Vector2 _prefabSizeHorizontal;
+        private Vector2 _prefabSizeVertical;
+        private Vector2 _prefabSizeDiagonal;
+
         public void Start()
         {
-            Vector2 prefabSizeHorizontal = PrefabConveyorBeltHorizontal.GetComponent<RectTransform>().rect.size;
-            Vector2 prefabSizeVertical = PrefabConveyorBeltVertical.GetComponent<RectTransform>().rect.size;
+            _prefabSizeHorizontal = PrefabConveyorBeltHorizontal.GetComponent<RectTransform>().rect.size;
+            _prefabSizeVertical = PrefabConveyorBeltVertical.GetComponent<RectTransform>().rect.size;
+            _prefabSizeDiagonal = PrefabConveyorBeltDiagonal.GetComponent<RectTransform>().rect.size;
 
-            InitializeConveyorBeltHorizontal(prefabSizeHorizontal);
-            InitializeConveyorBeltVertical(prefabSizeVertical, prefabSizeHorizontal.y);
+            InitializeConveyorBeltDiagonal();
+            InitializeConveyorBeltHorizontal();
+            InitializeConveyorBeltVertical();
         }
 
-        private void InitializeConveyorBeltHorizontal(Vector2 sizeOfPrefab)
+        private void InitializeConveyorBeltHorizontal()
         {
             int screenWidth = Screen.width;
-            float prefabWidth = sizeOfPrefab.x;
-            Vector2 centerOfPrefab = sizeOfPrefab / 2;
-
+            float prefabWidth = _prefabSizeHorizontal.x;
+            Vector2 centerOfPrefab = _prefabSizeHorizontal / 2;
+            
             int i;
-            
-            for (i = 0; ((i - 1) * prefabWidth) < screenWidth; i++)
+            for (i = 0; (i * prefabWidth) < screenWidth; i++)
             {
-                float posX = centerOfPrefab.x + i * prefabWidth;
-            
+                float posX = centerOfPrefab.x + i * prefabWidth + _prefabSizeVertical.x;
                 Vector3 position = new Vector3(posX, centerOfPrefab.y, 0);
-                var beltPart = Instantiate(PrefabConveyorBeltHorizontal, position, Quaternion.identity, transform);
                 
+                var beltPart = Instantiate(PrefabConveyorBeltHorizontal, position, Quaternion.identity, transform);
                 AddConveyorBeltMovementComponent(beltPart, MovingDirection.RIGHT);
             }
             
-            Vector3 pos = new Vector3( centerOfPrefab.x + i * prefabWidth, centerOfPrefab.y, 0);
+            // endPart (to destroy moving elements)
+            Vector3 positionEndPart = new Vector3( centerOfPrefab.x + i * prefabWidth + _prefabSizeVertical.x, centerOfPrefab.y, 0);
 
-            var beltEndPart = Instantiate(PrefabConveyorBeltEnd, pos, Quaternion.identity, transform);
+            var beltEndPart = Instantiate(PrefabConveyorBeltEnd, positionEndPart, Quaternion.identity, transform);
             AddConveyorBeltMovementComponent(beltEndPart, MovingDirection.RIGHT, true);
         }
     
-        private void InitializeConveyorBeltVertical(Vector2 sizeOfPrefab, float offsetY)
+        private void InitializeConveyorBeltVertical()
         {
             int screenHeight = Screen.height;
-            float prefabHeight = sizeOfPrefab.y;
-            Vector2 centerOfPrefab = sizeOfPrefab / 2;
-        
-            // Add one more above Screen
-            for (int i = 0; ((i - 1) * prefabHeight) < screenHeight; i++)
-            {
-                float posY = centerOfPrefab.y + i * prefabHeight + offsetY;
+            float prefabHeight = _prefabSizeVertical.y;
+            Vector2 centerOfPrefab = _prefabSizeVertical / 2;
             
+            for (int i = 0; (i * prefabHeight) < screenHeight; i++)
+            {
+                float posY = centerOfPrefab.y + i * prefabHeight + _prefabSizeHorizontal.y;
                 Vector3 position = new Vector3(centerOfPrefab.x, posY, 0);
-                var beltPart = Instantiate(PrefabConveyorBeltVertical, position, Quaternion.identity, transform);
                 
+                var beltPart = Instantiate(PrefabConveyorBeltVertical, position, Quaternion.identity, transform);
                 AddConveyorBeltMovementComponent(beltPart, MovingDirection.DOWN);
             }
+        }
+
+        private void InitializeConveyorBeltDiagonal()
+        {
+            Vector2 centerOfPrefab = _prefabSizeDiagonal / 2;
+
+            var beltPart = Instantiate(PrefabConveyorBeltDiagonal, centerOfPrefab, Quaternion.identity, transform);
+            AddConveyorBeltMovementComponent(beltPart, MovingDirection.DIAGONAL);
         }
 
         private void AddConveyorBeltMovementComponent(GameObject beltPart, MovingDirection direction, Boolean isEndPart = false)
@@ -75,6 +87,15 @@ namespace ConveyorBelt
             ConveyorBeltMovement component = beltPart.AddComponent<ConveyorBeltMovement>();
             component.MovingSpeed = MovingSpeed;
             component.MovingDirection = direction;
+
+            component.SizeOfPart = direction switch
+            {
+                MovingDirection.DOWN => _prefabSizeVertical,
+                MovingDirection.RIGHT => _prefabSizeHorizontal,
+                MovingDirection.DIAGONAL => _prefabSizeDiagonal,
+                _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+            };
+
             component.IsEndPart = isEndPart;
         }
     }

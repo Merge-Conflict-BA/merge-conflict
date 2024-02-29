@@ -1,9 +1,9 @@
 /**********************************************************************************************************************
 Name:          ComponentHandler
 Description:   Contains the methode to drag the component-objects and the methode to merge them.
-Author(s):     Markus Haubold, Hanno Witzleb
-Date:          2024-02-25
-Version:       V1.1
+Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
+Date:          2024-02-29
+Version:       V1.2
 TODO:          - its the 1st prototype
 **********************************************************************************************************************/
 
@@ -24,6 +24,7 @@ public class ComponentHandler : MonoBehaviour
     
     // store current count of collision with conveyor belt parts
     public int CountCollisionConveyorBelt = 0;
+    public bool IsOnConveyorBeltDiagonal = false;
 
     private void Update()
     {
@@ -119,6 +120,12 @@ public class ComponentHandler : MonoBehaviour
         {
             CountCollisionConveyorBelt++;
         }
+
+        if (col.gameObject.CompareTag("ConveyorBeltDiagonal"))
+        {
+            CountCollisionConveyorBelt++;
+            IsOnConveyorBeltDiagonal = true;
+        }
     }
 
     private void OnCollisionExit2D(Collision2D other)
@@ -126,6 +133,12 @@ public class ComponentHandler : MonoBehaviour
         if (other.gameObject.CompareTag("ConveyorBelt"))
         {
             CountCollisionConveyorBelt--;
+        }
+        
+        if (other.gameObject.CompareTag("ConveyorBeltDiagonal"))
+        {
+            CountCollisionConveyorBelt--;
+            IsOnConveyorBeltDiagonal = false;
         }
     }
 }
