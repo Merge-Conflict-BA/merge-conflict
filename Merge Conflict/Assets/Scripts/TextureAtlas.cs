@@ -18,6 +18,7 @@ public class TextureAtlas : MonoBehaviour
     private static TextureAtlas _instance;
     public static TextureAtlas Instance { get { return _instance; } }
 
+// TODO use arrays pls
     public ElementTexture caseTextureLvl1;
     public ElementTexture caseTextureLvl2;
     public ElementTexture caseTextureLvl3;
@@ -81,52 +82,52 @@ public class TextureAtlas : MonoBehaviour
         switch (element)
         {
             case CaseComponent:
-                if (element.itemLevel == 1) { return caseTextureLvl1; }
-                if (element.itemLevel == 2) { return caseTextureLvl2; }
-                if (element.itemLevel == 3) { return caseTextureLvl3; }
-                if (element.itemLevel == 4) { return caseTextureLvl4; }
+                if (element.level == 1) { return caseTextureLvl1; }
+                if (element.level == 2) { return caseTextureLvl2; }
+                if (element.level == 3) { return caseTextureLvl3; }
+                if (element.level == 4) { return caseTextureLvl4; }
                 return defaultTexture;
 
             case PowersupplyComponent:
-                if (element.itemLevel == 1) { return powersupplyTextureLvl1; }
-                if (element.itemLevel == 2) { return powersupplyTextureLvl2; }
-                if (element.itemLevel == 3) { return powersupplyTextureLvl3; }
-                if (element.itemLevel == 4) { return powersupplyTextureLvl4; }
+                if (element.level == 1) { return powersupplyTextureLvl1; }
+                if (element.level == 2) { return powersupplyTextureLvl2; }
+                if (element.level == 3) { return powersupplyTextureLvl3; }
+                if (element.level == 4) { return powersupplyTextureLvl4; }
                 return defaultTexture;
 
             case HDDComponent:
-                if (element.itemLevel == 1) { return hddTextureLvl1; }
-                if (element.itemLevel == 2) { return hddTextureLvl2; }
-                if (element.itemLevel == 3) { return hddTextureLvl3; }
-                if (element.itemLevel == 4) { return hddTextureLvl4; }
+                if (element.level == 1) { return hddTextureLvl1; }
+                if (element.level == 2) { return hddTextureLvl2; }
+                if (element.level == 3) { return hddTextureLvl3; }
+                if (element.level == 4) { return hddTextureLvl4; }
                 return defaultTexture;
 
             case MBComponent:
-                if (element.itemLevel == 1) { return mbTextureLvl1; }
-                if (element.itemLevel == 2) { return mbTextureLvl2; }
-                if (element.itemLevel == 3) { return mbTextureLvl3; }
-                if (element.itemLevel == 4) { return mbTextureLvl4; }
+                if (element.level == 1) { return mbTextureLvl1; }
+                if (element.level == 2) { return mbTextureLvl2; }
+                if (element.level == 3) { return mbTextureLvl3; }
+                if (element.level == 4) { return mbTextureLvl4; }
                 return defaultTexture;
 
             case CPUComponent:
-                if (element.itemLevel == 1) { return cpuTextureLvl1; }
-                if (element.itemLevel == 2) { return cpuTextureLvl2; }
-                if (element.itemLevel == 3) { return cpuTextureLvl3; }
-                if (element.itemLevel == 4) { return cpuTextureLvl4; }
+                if (element.level == 1) { return cpuTextureLvl1; }
+                if (element.level == 2) { return cpuTextureLvl2; }
+                if (element.level == 3) { return cpuTextureLvl3; }
+                if (element.level == 4) { return cpuTextureLvl4; }
                 return defaultTexture;
 
             case RAMComponent:
-                if (element.itemLevel == 1) { return ramTextureLvl1; }
-                if (element.itemLevel == 2) { return ramTextureLvl2; }
-                if (element.itemLevel == 3) { return ramTextureLvl3; }
-                if (element.itemLevel == 4) { return ramTextureLvl4; }
+                if (element.level == 1) { return ramTextureLvl1; }
+                if (element.level == 2) { return ramTextureLvl2; }
+                if (element.level == 3) { return ramTextureLvl3; }
+                if (element.level == 4) { return ramTextureLvl4; }
                 return defaultTexture;
 
             case GPUComponent:
-                if (element.itemLevel == 1) { return gpuTextureLvl1; }
-                if (element.itemLevel == 2) { return gpuTextureLvl2; }
-                if (element.itemLevel == 3) { return gpuTextureLvl3; }
-                if (element.itemLevel == 4) { return gpuTextureLvl4; }
+                if (element.level == 1) { return gpuTextureLvl1; }
+                if (element.level == 2) { return gpuTextureLvl2; }
+                if (element.level == 3) { return gpuTextureLvl3; }
+                if (element.level == 4) { return gpuTextureLvl4; }
                 return defaultTexture;
 
             case Trash:
