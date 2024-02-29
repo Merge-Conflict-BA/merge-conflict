@@ -33,7 +33,7 @@ public class ComponentSpawnerDaniel : MonoBehaviour
 
     public void SpawnObject(Element element, Vector2 position)
     {
-        GameObject newObject = Instantiate(baseObjectToSpawn, position, Quaternion.Euler(0, 0, 0));
+        /* GameObject newObject = Instantiate(baseObjectToSpawn, position, Quaternion.Euler(0, 0, 0));
 
         newObject.name = element.name + "_newObject";
         // string getClass = ClassAtlas.Instance.GetClass(element);
@@ -51,7 +51,7 @@ public class ComponentSpawnerDaniel : MonoBehaviour
         newObjectRectTransform.sizeDelta = new Vector2(newObjectTexture.sizeWidth, newObjectTexture.sizeHeight);
         newObjectRectTransform.localScale = new Vector2(newObjectTexture.sizeScaleX, newObjectTexture.sizeScaleY);
         newObjectBoxCollider2D.isTrigger = true;
-        newObjectBoxCollider2D.size = new Vector2(newObjectTexture.sizeWidth, newObjectTexture.sizeHeight);
+        newObjectBoxCollider2D.size = new Vector2(newObjectTexture.sizeWidth, newObjectTexture.sizeHeight); */
 
 
         // @ Daniel   TODO: implement logic for equiped components on MB

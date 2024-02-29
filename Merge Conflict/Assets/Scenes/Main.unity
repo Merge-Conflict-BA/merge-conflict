@@ -2318,6 +2318,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864015477}
   m_CullTransparentMesh: 1
+--- !u!1 &935302682 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6743945790784876711, guid: 06e3dde1839e0bf47b11e395f6051f29, type: 3}
+  m_PrefabInstance: {fileID: 6238168983492066526}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &979635375
 GameObject:
   m_ObjectHideFlags: 0
@@ -2659,14 +2664,13 @@ MonoBehaviour:
   id: 
   name: 
   type: 0
-  itemLevel: 1
+  level: 0
   trashValue: 0
   salesValue: 0
   canMove: 0
-  movingSpeed: 1
-  mbSlotElementLevel: 0
-  powersupplySlotElementLevel: 0
-  hddSlotElementLevel: 0
+  motherboard: {fileID: 0}
+  powersupply: {fileID: 0}
+  hdd: {fileID: 0}
 --- !u!212 &1126671607
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2763,46 +2767,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 600dee7ef671e114d8547a5d05e62ba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  caseTextureLvl1: {fileID: 11400000, guid: d10558f9e77826042acf24a88d8d8cbf, type: 2}
-  caseTextureLvl2: {fileID: 11400000, guid: 1916cfbd4933036479e1eee35bcd6051, type: 2}
-  caseTextureLvl3: {fileID: 11400000, guid: 5907829f876b3a749ba58c719d276a1f, type: 2}
-  caseTextureLvl4: {fileID: 11400000, guid: 07999669834f70342b416143e146d23a, type: 2}
-  powersupplyTextureLvl1: {fileID: 11400000, guid: 34f12e4d1844afc40b675dae1510646b, type: 2}
-  powersupplyTextureLvl2: {fileID: 11400000, guid: e276ea1957115034cbb87f48c33db8f5, type: 2}
-  powersupplyTextureLvl3: {fileID: 11400000, guid: ec4a6c846b40793438e983e66c2b58bf, type: 2}
-  powersupplyTextureLvl4: {fileID: 11400000, guid: 728f072d270772541a127f75ac56cbe4, type: 2}
-  hddTextureLvl1: {fileID: 11400000, guid: 70f2306a06ce74f459c6da7810d318f3, type: 2}
-  hddTextureLvl2: {fileID: 11400000, guid: cd6c22942f2de4b43a4989fe2a4f5f78, type: 2}
-  hddTextureLvl3: {fileID: 11400000, guid: f6738b16df54a3e42a9ad06878e33bbd, type: 2}
-  hddTextureLvl4: {fileID: 11400000, guid: 2092c1281481d874b90a0f5bdb52813a, type: 2}
-  mbTextureLvl1: {fileID: 11400000, guid: 4d80317b915dcae41ae0e6b628d9e9cf, type: 2}
-  mbTextureLvl2: {fileID: 11400000, guid: 65d268169d32a7b40b41acfe99063b9d, type: 2}
-  mbTextureLvl3: {fileID: 11400000, guid: 3068bd9a734c7e84088765bd97e83bf9, type: 2}
-  mbTextureLvl4: {fileID: 11400000, guid: 38e7714938a30d74c9fc657dba8e0193, type: 2}
-  cpuTextureLvl1: {fileID: 11400000, guid: 31f14648d388f684a9994179bd4edd4f, type: 2}
-  cpuTextureLvl2: {fileID: 11400000, guid: 59e0cf0be8be2684188873759d449c65, type: 2}
-  cpuTextureLvl3: {fileID: 11400000, guid: 361167a0a74963444805a3d5ec375074, type: 2}
-  cpuTextureLvl4: {fileID: 11400000, guid: 8afe45625c56fbe4d9546faa82915aeb, type: 2}
-  ramTextureLvl1: {fileID: 11400000, guid: 1b06f1bb136edaf4ba882b18d53aaa26, type: 2}
-  ramTextureLvl2: {fileID: 11400000, guid: cad5814333c899a4daf2d08abc94d58c, type: 2}
-  ramTextureLvl3: {fileID: 11400000, guid: 615c5daf9e3736840b0e0f139543cbbd, type: 2}
-  ramTextureLvl4: {fileID: 11400000, guid: bbf05cf86a2e32345a274d74da681fb6, type: 2}
-  gpuTextureLvl1: {fileID: 11400000, guid: e6b1b69f46a192a428c07e41b9042fdf, type: 2}
-  gpuTextureLvl2: {fileID: 11400000, guid: 96bca697809e38842b47a0d3ccaa3895, type: 2}
-  gpuTextureLvl3: {fileID: 11400000, guid: d875e0d3e83bffa4f8515c4e62308227, type: 2}
-  gpuTextureLvl4: {fileID: 11400000, guid: 402b80791d1875149b050948f6c43396, type: 2}
-  cpuEquipedTextureLvl1: {fileID: 0}
-  cpuEquipedTextureLvl2: {fileID: 0}
-  cpuEquipedTextureLvl3: {fileID: 0}
-  cpuEquipedTextureLvl4: {fileID: 0}
-  ramEquipedTextureLvl1: {fileID: 0}
-  ramEquipedTextureLvl2: {fileID: 0}
-  ramEquipedTextureLvl3: {fileID: 0}
-  ramEquipedTextureLvl4: {fileID: 0}
-  gpuEquipedTextureLvl1: {fileID: 0}
-  gpuEquipedTextureLvl2: {fileID: 0}
-  gpuEquipedTextureLvl3: {fileID: 0}
-  gpuEquipedTextureLvl4: {fileID: 0}
+  caseTexture:
+  - {fileID: 11400000, guid: d10558f9e77826042acf24a88d8d8cbf, type: 2}
+  - {fileID: 11400000, guid: 1916cfbd4933036479e1eee35bcd6051, type: 2}
+  - {fileID: 11400000, guid: 5907829f876b3a749ba58c719d276a1f, type: 2}
+  - {fileID: 11400000, guid: 07999669834f70342b416143e146d23a, type: 2}
+  powersupplyTexture:
+  - {fileID: 11400000, guid: 34f12e4d1844afc40b675dae1510646b, type: 2}
+  - {fileID: 11400000, guid: e276ea1957115034cbb87f48c33db8f5, type: 2}
+  - {fileID: 11400000, guid: ec4a6c846b40793438e983e66c2b58bf, type: 2}
+  - {fileID: 11400000, guid: 728f072d270772541a127f75ac56cbe4, type: 2}
+  hddTexture:
+  - {fileID: 11400000, guid: 70f2306a06ce74f459c6da7810d318f3, type: 2}
+  - {fileID: 11400000, guid: cd6c22942f2de4b43a4989fe2a4f5f78, type: 2}
+  - {fileID: 11400000, guid: f6738b16df54a3e42a9ad06878e33bbd, type: 2}
+  - {fileID: 11400000, guid: 2092c1281481d874b90a0f5bdb52813a, type: 2}
+  mbTexture:
+  - {fileID: 11400000, guid: 4d80317b915dcae41ae0e6b628d9e9cf, type: 2}
+  - {fileID: 11400000, guid: 65d268169d32a7b40b41acfe99063b9d, type: 2}
+  - {fileID: 11400000, guid: 3068bd9a734c7e84088765bd97e83bf9, type: 2}
+  - {fileID: 11400000, guid: 38e7714938a30d74c9fc657dba8e0193, type: 2}
+  cpuTexture:
+  - {fileID: 11400000, guid: 31f14648d388f684a9994179bd4edd4f, type: 2}
+  - {fileID: 11400000, guid: 59e0cf0be8be2684188873759d449c65, type: 2}
+  - {fileID: 11400000, guid: 361167a0a74963444805a3d5ec375074, type: 2}
+  - {fileID: 11400000, guid: 8afe45625c56fbe4d9546faa82915aeb, type: 2}
+  ramTexture:
+  - {fileID: 11400000, guid: 1b06f1bb136edaf4ba882b18d53aaa26, type: 2}
+  - {fileID: 11400000, guid: cad5814333c899a4daf2d08abc94d58c, type: 2}
+  - {fileID: 11400000, guid: 615c5daf9e3736840b0e0f139543cbbd, type: 2}
+  - {fileID: 11400000, guid: bbf05cf86a2e32345a274d74da681fb6, type: 2}
+  gpuTexture:
+  - {fileID: 11400000, guid: e6b1b69f46a192a428c07e41b9042fdf, type: 2}
+  - {fileID: 11400000, guid: 96bca697809e38842b47a0d3ccaa3895, type: 2}
+  - {fileID: 11400000, guid: d875e0d3e83bffa4f8515c4e62308227, type: 2}
+  - {fileID: 11400000, guid: 402b80791d1875149b050948f6c43396, type: 2}
+  cpuSlotComponentTexture:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  ramSlotComponentTexture:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  gpuSlotComponentTexture:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   trashTexture: {fileID: 0}
   defaultTexture: {fileID: 11400000, guid: 0d6df61d2f3a21449a6151a4ca7ac90b, type: 2}
 --- !u!4 &1154819337
@@ -2994,14 +3008,13 @@ MonoBehaviour:
   id: 
   name: 
   type: 0
-  itemLevel: 1
+  level: 0
   trashValue: 0
   salesValue: 0
   canMove: 0
-  movingSpeed: 1
-  mbSlotElementLevel: 0
-  powersupplySlotElementLevel: 0
-  hddSlotElementLevel: 0
+  motherboard: {fileID: 0}
+  powersupply: {fileID: 0}
+  hdd: {fileID: 0}
 --- !u!212 &1217546866
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3797,6 +3810,51 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8720022169517305732, guid: 06e3dde1839e0bf47b11e395f6051f29, type: 3}
   m_PrefabInstance: {fileID: 6238168983492066526}
   m_PrefabAsset: {fileID: 0}
+--- !u!61 &1491256849
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935302682}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1526396946
 GameObject:
   m_ObjectHideFlags: 0
@@ -5634,6 +5692,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 210138500}
     m_Modifications:
+    - target: {fileID: -6653666476030799122, guid: c575c1a3330f59943b63b50a870ce36b, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6653666476030799122, guid: c575c1a3330f59943b63b50a870ce36b, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 343584006823711950, guid: c575c1a3330f59943b63b50a870ce36b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5918,11 +5984,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8720022169517305732, guid: 06e3dde1839e0bf47b11e395f6051f29, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -190.08
+      value: -193.4
       objectReference: {fileID: 0}
     - target: {fileID: 8720022169517305732, guid: 06e3dde1839e0bf47b11e395f6051f29, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 142.25
+      value: 138.6
       objectReference: {fileID: 0}
     - target: {fileID: 8720022169517305732, guid: 06e3dde1839e0bf47b11e395f6051f29, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5939,7 +6005,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6743945790784876711, guid: 06e3dde1839e0bf47b11e395f6051f29, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1491256849}
   m_SourcePrefab: {fileID: 100100000, guid: 06e3dde1839e0bf47b11e395f6051f29, type: 3}
 --- !u!1001 &6722533847850443885
 PrefabInstance:

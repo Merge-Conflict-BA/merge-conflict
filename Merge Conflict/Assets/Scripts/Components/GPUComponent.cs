@@ -8,6 +8,7 @@ Version:       V1.0
 TODO:          - /
 **********************************************************************************************************************/
 
+#nullable enable
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,28 +16,19 @@ using UnityEngine;
 public class GPUComponent : Element, IComponent
 {
 
-    public Element Merge(Element element)
+    public Element? Merge(Element element)
     {
-        // TODO implement actual merge
 
-        // compare elements and decide if can merge
-        // example:
-        // element1 = Cpu
-        // element2 = MB
-        //
-        // returns MB (with CPU)
+        if (element is GPUComponent otherGPU)
+        {
 
+            if ((element.level == otherGPU.level) && element.level < 4)
+            {
+                this.level++;
+                return this;
+            }
+        }
 
-        // case 2
-        // element1 & element2 = MB
-        // if same lvl
-        // return MB (with lvl +1)
-        // if not
-        // return null
-
-
-        // https://stackoverflow.com/questions/983030/type-checking-typeof-gettype-or-is
-
-        return element;
+        return null;
     }
 }
