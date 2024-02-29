@@ -4,7 +4,7 @@ Description:   Contains the methode to drag the component-objects and the method
 Author(s):     Markus Haubold, Hanno Witzleb
 Date:          2024-02-28
 Version:       V1.2
-TODO:          - call xp/money controller (when its implemented) after put component into bin
+TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
 using UnityEngine;
 
@@ -47,10 +47,10 @@ public class ComponentHandler : MonoBehaviour
         return gameObject.CompareTag("component");
     }
 
-    //unity object tagged with "bin"
-    private bool IsBin(GameObject gameObject)
+    //unity object tagged with "trashcan"
+    private bool IsTrashcan(GameObject gameObject)
     {
-        return gameObject.CompareTag("bin");
+        return gameObject.CompareTag("trashcan");
     }
 
     private void HandleSpriteSorting()
@@ -119,10 +119,10 @@ public class ComponentHandler : MonoBehaviour
                 return;
             }
 
-            //put component in the bin -> delete it
-            if (IsBin(staticComponent.gameObject))
+            //put component in the trashcan -> delete it
+            if (IsTrashcan(staticComponent.gameObject))
             {
-                Debugger.LogMessage("Component was put in the bin! Thx for recycling!");
+                Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
                 isDraggingActive = false;
                 Destroy(draggedComponent, timeToDestroyObject);
                 //TODO: call xp/money controller
