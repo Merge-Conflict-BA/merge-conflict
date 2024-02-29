@@ -25,7 +25,6 @@ public class ComponentHandler : MonoBehaviour
         if (isDraggingActive)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
-            HandleOverlappingObjects();
         }
     }
 
@@ -38,6 +37,7 @@ public class ComponentHandler : MonoBehaviour
 
     private void OnMouseUp()
     {
+        HandleOverlappingObjects();
         isDraggingActive = false;
     }
 
@@ -111,7 +111,6 @@ public class ComponentHandler : MonoBehaviour
             if (IsComponent(staticComponent.gameObject))
             {
                 Debugger.LogMessage("two components overlapp => merge?!");
-                isDraggingActive = false;
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
 
@@ -123,7 +122,6 @@ public class ComponentHandler : MonoBehaviour
             if (IsTrashcan(staticComponent.gameObject))
             {
                 Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
-                isDraggingActive = false;
                 Destroy(draggedComponent, timeToDestroyObject);
                 //TODO: call xp/money controller
             }
