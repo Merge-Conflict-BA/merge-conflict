@@ -2,11 +2,10 @@
 Name:          ComponentHandler
 Description:   Contains the methode to drag the component-objects and the methode to merge them.
 Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
-Date:          2024-02-29
+Date:          2024-03-01
 Version:       V1.2
-TODO:          - its the 1st prototype
+TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
-
 using System;
 using UnityEngine;
 
@@ -31,7 +30,6 @@ public class ComponentHandler : MonoBehaviour
         if (isDraggingActive)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
-            MergeTwoComponents();
         }
     }
 
@@ -44,6 +42,7 @@ public class ComponentHandler : MonoBehaviour
 
     private void OnMouseUp()
     {
+        HandleOverlappingObjects();
         isDraggingActive = false;
     }
 
@@ -53,13 +52,19 @@ public class ComponentHandler : MonoBehaviour
         return gameObject.CompareTag("component");
     }
 
+    //unity object tagged with "trashcan"
+    private bool IsTrashcan(GameObject gameObject)
+    {
+        return gameObject.CompareTag("trashcan");
+    }
+
     private void HandleSpriteSorting()
     {
         // get the raycast from the clicked object
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if(hit.collider == null) { return; }
+        if (hit.collider == null) { return; }
 
         if (hit.collider.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
         {
@@ -87,29 +92,43 @@ public class ComponentHandler : MonoBehaviour
         return highestSortingOrder;
     }
 
-    private void MergeTwoComponents()
+    private void HandleOverlappingObjects()
     {
         const float timeToDestroyObject = 0.5f;
         const float radiusToDetectSpritesOverlapping = 1.0f;
         GameObject draggedComponent = gameObject;
 
         //check if there is an sprites-overlapping situation
-        Collider2D[] overlappedStaticComponents = Physics2D.OverlapCircleAll(draggedComponent.transform.position, radiusToDetectSpritesOverlapping);
+        Collider2D[] overlappedStaticObjects = Physics2D.OverlapCircleAll(draggedComponent.transform.position, radiusToDetectSpritesOverlapping);
 
-        if (overlappedStaticComponents == null) { return; };
+        if (overlappedStaticObjects == null) { return; };
 
         //go trough all overlapped sprites and check if there is an mergabel one 
-        foreach (Collider2D staticComponent in overlappedStaticComponents)
+        foreach (Collider2D staticComponent in overlappedStaticObjects)
         {
-            //check if the overlapping sprite is an component too
-            if (staticComponent.gameObject != draggedComponent && IsComponent(staticComponent.gameObject))
+            //skip the dragged component from the list
+            if (staticComponent.gameObject == draggedComponent)
+            {
+                continue;
+            }
+            
+            //merge components if possible 
+            if (IsComponent(staticComponent.gameObject))
             {
                 Debugger.LogMessage("two components overlapp => merge?!");
-                isDraggingActive = false;
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
 
                 ComponentSpawner.Instance.SpawnOnBelt(spawnedObjectAfterMerge);
+                return;
+            }
+
+            //put component in the trashcan -> delete it
+            if (IsTrashcan(staticComponent.gameObject))
+            {
+                Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
+                Destroy(draggedComponent, timeToDestroyObject);
+                //TODO: call xp/money controller
             }
         }
     }

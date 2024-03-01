@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Element
   - component
+  - trashcan
   - ConveyorBelt
   - ConveyorBeltDiagonal
   layers:
