@@ -1,11 +1,12 @@
 /**********************************************************************************************************************
 Name:          ComponentHandler
 Description:   Contains the methode to drag the component-objects and the methode to merge them.
-Author(s):     Markus Haubold, Hanno Witzleb
-Date:          2024-02-28
+Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
+Date:          2024-03-01
 Version:       V1.2
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
+using System;
 using UnityEngine;
 
 public class ComponentHandler : MonoBehaviour
@@ -19,6 +20,10 @@ public class ComponentHandler : MonoBehaviour
     public GameObject spawnedObjectAfterMerge;
     //for the testing only
     public GameObject componentToSpawn;
+    
+    // store current count of collision with conveyor belt parts
+    public int CountCollisionConveyorBelt = 0;
+    public bool IsOnConveyorBeltDiagonal = false;
 
     private void Update()
     {
@@ -125,6 +130,34 @@ public class ComponentHandler : MonoBehaviour
                 Destroy(draggedComponent, timeToDestroyObject);
                 //TODO: call xp/money controller
             }
+        }
+    }
+    
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("ConveyorBelt"))
+        {
+            CountCollisionConveyorBelt++;
+        }
+
+        if (col.gameObject.CompareTag("ConveyorBeltDiagonal"))
+        {
+            CountCollisionConveyorBelt++;
+            IsOnConveyorBeltDiagonal = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("ConveyorBelt"))
+        {
+            CountCollisionConveyorBelt--;
+        }
+        
+        if (other.gameObject.CompareTag("ConveyorBeltDiagonal"))
+        {
+            CountCollisionConveyorBelt--;
+            IsOnConveyorBeltDiagonal = false;
         }
     }
 }
