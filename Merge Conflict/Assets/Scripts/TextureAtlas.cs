@@ -89,7 +89,7 @@ public class TextureAtlas : MonoBehaviour
     public List<ElementTexture> GetSlotComponentTexture(Element element)
     {
 
-        List<ElementTexture> listOfSlotComponentTextures = new List<ElementTexture>();
+        List<ElementTexture> listOfSlotComponentTextures = new();
 
         if (element is MBComponent mb)
         {

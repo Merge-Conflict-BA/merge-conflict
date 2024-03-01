@@ -2663,7 +2663,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   name: 
-  type: 0
   level: 0
   trashValue: 0
   salesValue: 0
@@ -2802,17 +2801,47 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 96bca697809e38842b47a0d3ccaa3895, type: 2}
   - {fileID: 11400000, guid: d875e0d3e83bffa4f8515c4e62308227, type: 2}
   - {fileID: 11400000, guid: 402b80791d1875149b050948f6c43396, type: 2}
-  cpuSlotComponentTexture:
+  mbCPUSlotTexture:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  ramSlotComponentTexture:
+  mbRAMSlotTexture:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  gpuSlotComponentTexture:
+  mbGPUSlotTexture:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  casePowersupplySlotTexture:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  caseHDDSlotTexture:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  caseMBSlotTexture:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  caseCPUSlotTexture:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  caseRAMSlotTexture:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  caseGPUSlotTexture:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -3007,7 +3036,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 
   name: 
-  type: 0
   level: 0
   trashValue: 0
   salesValue: 0

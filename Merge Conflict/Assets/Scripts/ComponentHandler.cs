@@ -6,6 +6,7 @@ Date:          2024-02-25
 Version:       V1.1
 TODO:          - its the 1st prototype
 **********************************************************************************************************************/
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ComponentHandler : MonoBehaviour
@@ -55,7 +56,7 @@ public class ComponentHandler : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
-        if(hit.collider == null) { return; }
+        if (hit.collider == null) { return; }
 
         if (hit.collider.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
         {
@@ -107,6 +108,16 @@ public class ComponentHandler : MonoBehaviour
                 // if(mergedComponent != null)
                 //      MERGE COMPONENTS
 
+                                                /*  staticComponent.AddComponent<CaseComponent>();
+                                                    draggedComponent.AddComponent<CPUComponent>();
+
+                                                    Debug.Log("staticComponent");
+                                                    Debug.Log(staticComponent.GetComponent<Element>());
+                                                    Debug.Log("draggedComponent");
+                                                    Debug.Log(draggedComponent.gameObject.GetComponent<Element>());
+
+                                                    CaseComponent test = staticComponent.GetComponent<CaseComponent>();
+                                                    test.Merge(draggedComponent.AddComponent<CPUComponent>()); */
 
                 // needs to get Element of ComponentHandler Script!!!
 
