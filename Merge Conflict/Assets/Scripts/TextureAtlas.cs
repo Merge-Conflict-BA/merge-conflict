@@ -4,7 +4,7 @@ Description:   Elements data structure for texture.
 
 Author(s):     Daniel Rittrich
 Date:          2024-02-27
-Version:       V2.0 
+Version:       V2.1 
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -25,9 +25,15 @@ public class TextureAtlas : MonoBehaviour
     public ElementTexture[] cpuTexture;
     public ElementTexture[] ramTexture;
     public ElementTexture[] gpuTexture;
-    public ElementTexture[] cpuSlotComponentTexture;
-    public ElementTexture[] ramSlotComponentTexture;
-    public ElementTexture[] gpuSlotComponentTexture;
+    public ElementTexture[] mbCPUSlotTexture;
+    public ElementTexture[] mbRAMSlotTexture;
+    public ElementTexture[] mbGPUSlotTexture;
+    public ElementTexture[] casePowersupplySlotTexture;
+    public ElementTexture[] caseHDDSlotTexture;
+    public ElementTexture[] caseMBSlotTexture;
+    public ElementTexture[] caseCPUSlotTexture;
+    public ElementTexture[] caseRAMSlotTexture;
+    public ElementTexture[] caseGPUSlotTexture;
     public ElementTexture trashTexture;
     public ElementTexture defaultTexture;
 
@@ -46,7 +52,7 @@ public class TextureAtlas : MonoBehaviour
     }
 
 
-    public ElementTexture getComponentTexture(Element element)
+    public ElementTexture GetComponentTexture(Element element)
     {
         switch (element)
         {
@@ -80,30 +86,30 @@ public class TextureAtlas : MonoBehaviour
         }
     }
 
-    public List<ElementTexture> getSlotComponentTexture(Element element)
+    public List<ElementTexture> GetSlotComponentTexture(Element element)
     {
-        if (!(element is MBComponent mb)) { return null; }
 
         List<ElementTexture> listOfSlotComponentTextures = new List<ElementTexture>();
 
-        if (mb.cpu != null)
+        if (element is MBComponent mb)
         {
-            listOfSlotComponentTextures.Add(cpuSlotComponentTexture[mb.cpu.level]);
+            if (mb.cpu != null) { listOfSlotComponentTextures.Add(mbCPUSlotTexture[mb.cpu.level]); }
+            if (mb.gpu != null) { listOfSlotComponentTextures.Add(mbGPUSlotTexture[mb.gpu.level]); }
+            if (mb.ram != null) { listOfSlotComponentTextures.Add(mbRAMSlotTexture[mb.ram.level]); }
         }
 
-        if (mb.gpu != null)
+        if (element is CaseComponent cs)
         {
-            listOfSlotComponentTextures.Add(gpuSlotComponentTexture[mb.gpu.level]);
-        }
-
-        if (mb.ram != null)
-        {
-            listOfSlotComponentTextures.Add(ramSlotComponentTexture[mb.ram.level]);
+            if (cs.powersupply != null) { listOfSlotComponentTextures.Add(casePowersupplySlotTexture[cs.powersupply.level]); }
+            if (cs.hdd != null) { listOfSlotComponentTextures.Add(caseHDDSlotTexture[cs.hdd.level]); }
+            if (cs.motherboard != null) { listOfSlotComponentTextures.Add(caseMBSlotTexture[cs.motherboard.level]); }
+            if (cs.motherboard.cpu != null) { listOfSlotComponentTextures.Add(caseCPUSlotTexture[cs.motherboard.cpu.level]); }
+            if (cs.motherboard.ram != null) { listOfSlotComponentTextures.Add(caseRAMSlotTexture[cs.motherboard.ram.level]); }
+            if (cs.motherboard.gpu != null) { listOfSlotComponentTextures.Add(caseGPUSlotTexture[cs.motherboard.gpu.level]); }
         }
 
         if (listOfSlotComponentTextures.Count == 0)
         {
-            Debug.LogWarning("There is no matching slotComponentTexture for: " + element);
             return null;
         }
 
