@@ -93,19 +93,19 @@ public class TextureAtlas : MonoBehaviour
 
         if (element is MBComponent mb)
         {
-            if (mb.cpu != null) { listOfSlotComponentTextures.Add(mbCPUSlotTexture[mb.cpu.level]); }
-            if (mb.gpu != null) { listOfSlotComponentTextures.Add(mbGPUSlotTexture[mb.gpu.level]); }
-            if (mb.ram != null) { listOfSlotComponentTextures.Add(mbRAMSlotTexture[mb.ram.level]); }
+            if (mb.cpu != null) { listOfSlotComponentTextures.Add(mbCPUSlotTexture[mb.cpu.level - 1]); }
+            if (mb.gpu != null) { listOfSlotComponentTextures.Add(mbGPUSlotTexture[mb.gpu.level - 1]); }
+            if (mb.ram != null) { listOfSlotComponentTextures.Add(mbRAMSlotTexture[mb.ram.level - 1]); }
         }
 
         if (element is CaseComponent cs)
         {
-            if (cs.powersupply != null) { listOfSlotComponentTextures.Add(casePowersupplySlotTexture[cs.powersupply.level]); }
-            if (cs.hdd != null) { listOfSlotComponentTextures.Add(caseHDDSlotTexture[cs.hdd.level]); }
-            if (cs.motherboard != null) { listOfSlotComponentTextures.Add(caseMBSlotTexture[cs.motherboard.level]); }
-            if (cs.motherboard.cpu != null) { listOfSlotComponentTextures.Add(caseCPUSlotTexture[cs.motherboard.cpu.level]); }
-            if (cs.motherboard.ram != null) { listOfSlotComponentTextures.Add(caseRAMSlotTexture[cs.motherboard.ram.level]); }
-            if (cs.motherboard.gpu != null) { listOfSlotComponentTextures.Add(caseGPUSlotTexture[cs.motherboard.gpu.level]); }
+            if (cs.powersupply != null) { listOfSlotComponentTextures.Add(casePowersupplySlotTexture[cs.powersupply.level - 1]); }
+            if (cs.hdd != null) { listOfSlotComponentTextures.Add(caseHDDSlotTexture[cs.hdd.level - 1]); }
+            if (cs.motherboard != null) { listOfSlotComponentTextures.Add(caseMBSlotTexture[cs.motherboard.level - 1]); }
+            if (cs.motherboard.cpu != null) { listOfSlotComponentTextures.Add(caseCPUSlotTexture[cs.motherboard.cpu.level - 1]); }
+            if (cs.motherboard.ram != null) { listOfSlotComponentTextures.Add(caseRAMSlotTexture[cs.motherboard.ram.level - 1]); }
+            if (cs.motherboard.gpu != null) { listOfSlotComponentTextures.Add(caseGPUSlotTexture[cs.motherboard.gpu.level - 1]); }
         }
 
         if (listOfSlotComponentTextures.Count == 0)
