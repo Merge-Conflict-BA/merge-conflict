@@ -6,7 +6,9 @@ Date:          2024-03-01
 Version:       V1.2
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
+
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ComponentHandler : MonoBehaviour
@@ -24,6 +26,8 @@ public class ComponentHandler : MonoBehaviour
     // store current count of collision with conveyor belt parts
     public int CountCollisionConveyorBelt = 0;
     public bool IsOnConveyorBeltDiagonal = false;
+
+    public Element element;
 
     private void Update()
     {
@@ -115,6 +119,35 @@ public class ComponentHandler : MonoBehaviour
             //merge components if possible 
             if (IsComponent(staticComponent.gameObject))
             {
+
+                // TODO Daniel
+                // check if compnents can be merged
+                // mergedComponent = draggedComponent.Element.Merge(staticComponent.Element)
+                // if(mergedComponent != null)
+                //      MERGE COMPONENTS
+
+                                                /*  staticComponent.AddComponent<CaseComponent>();
+                                                    draggedComponent.AddComponent<CPUComponent>();
+
+                                                    Debug.Log("staticComponent");
+                                                    Debug.Log(staticComponent.GetComponent<Element>());
+                                                    Debug.Log("draggedComponent");
+                                                    Debug.Log(draggedComponent.gameObject.GetComponent<Element>());
+
+                                                    CaseComponent test = staticComponent.GetComponent<CaseComponent>();
+                                                    test.Merge(draggedComponent.AddComponent<CPUComponent>()); */
+
+                // needs to get Element of ComponentHandler Script!!!
+
+                // Beim instanziieren dran denken, dass das GameObject den Tag "Component" erhalten muss !!
+
+                //TODO: 4 markus
+                //wenn daniel fertig, dann Spawn mehtode anpassen
+                //es werden beide Merge() der KOmponenten aufgerufen 
+                //sobald eine Methode eine Klasse zurückgibt, werden die Beiden gelöscht und eine Instanz der erhaltenenen Klasse erstellt 
+                //(Klasse ist dann schon komplett vorbereitet)
+                //wenn nicht mergebar -> returnt Merge() null 
+
                 Debugger.LogMessage("two components overlapp => merge?!");
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
