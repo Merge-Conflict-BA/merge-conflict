@@ -8,18 +8,15 @@ TODO:          -
 **********************************************************************************************************************/
 
 using UnityEngine;
-public class TagHandler
-{
-    private readonly string _componentTag = "component";
-    private readonly string _trashcanTag = "trashcan";
-    
-     public bool IsComponent(GameObject gameObject)
+public static class Tag
+{    
+     public static bool IsComponent(GameObject gameObject)
     {
-        return gameObject.CompareTag(_componentTag);
+        return gameObject.CompareTag("component");
     }
 
-    public bool IsTrashcan(GameObject gameObject)
+    public static bool IsTrashcan(GameObject gameObject)
     {
-        return gameObject.CompareTag(_trashcanTag);
+        return gameObject.CompareTag("trashcan");
     }
 }
