@@ -86,7 +86,7 @@ public class TextureAtlas : MonoBehaviour
         }
     }
 
-    public List<ElementTexture> GetSlotComponentTexture(Element element)
+    public List<ElementTexture> GetSlotComponentTextures(Element element)
     {
 
         List<ElementTexture> listOfSlotComponentTextures = new();
