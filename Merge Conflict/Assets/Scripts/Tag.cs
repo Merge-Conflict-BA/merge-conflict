@@ -13,7 +13,7 @@ using UnityEngine;
 //add all tags which are used in unity!
 public static class Tag
 {
-    public enum PossibleTags
+    public enum Tags
     {
         component,
         trashcan,
@@ -21,8 +21,15 @@ public static class Tag
         ConveyorBeltDiagonal
     }
 
-    public static bool CompareTags(GameObject gameObject, PossibleTags possibleTag)
+    public static bool CompareTags(this GameObject gameObject, Tags tags)
     {
-        return gameObject.CompareTag(possibleTag.ToString());
+        return tags switch
+        {
+            Tags.component => gameObject.CompareTag(tags.ToString()),
+            Tags.trashcan => gameObject.CompareTag(tags.ToString()),
+            Tags.ConveyorBelt => gameObject.CompareTag(tags.ToString()),
+            Tags.ConveyorBeltDiagonal => gameObject.CompareTag(tags.ToString()),
+            _ => false,
+        };
     }
 }
