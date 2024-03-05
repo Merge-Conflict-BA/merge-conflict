@@ -33,7 +33,7 @@ public class MBComponent : Element, IComponent
         {
             if (HasComponents() || otherMB.HasComponents()) { return null; }
 
-            if ((element.level == otherMB.level) && element.level < 4)
+            if ((this.level == otherMB.level) && this.level < 4)
             {
                 this.level++;
                 return this;

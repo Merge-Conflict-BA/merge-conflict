@@ -22,7 +22,7 @@ public class PowersupplyComponent : Element, IComponent
         if (element is PowersupplyComponent otherPowersupply)
         {
 
-            if ((element.level == otherPowersupply.level) && element.level < 4)
+            if ((this.level == otherPowersupply.level) && this.level < 4)
             {
                 this.level++;
                 return this;

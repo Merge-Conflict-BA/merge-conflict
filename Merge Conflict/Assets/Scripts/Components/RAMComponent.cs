@@ -22,7 +22,7 @@ public class RAMComponent : Element, IComponent
         if (element is RAMComponent otherRAM)
         {
 
-            if ((element.level == otherRAM.level) && element.level < 4)
+            if ((this.level == otherRAM.level) && this.level < 4)
             {
                 this.level++;
                 return this;

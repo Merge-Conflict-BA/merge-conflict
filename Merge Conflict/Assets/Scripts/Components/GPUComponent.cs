@@ -22,7 +22,7 @@ public class GPUComponent : Element, IComponent
         if (element is GPUComponent otherGPU)
         {
 
-            if ((element.level == otherGPU.level) && element.level < 4)
+            if ((this.level == otherGPU.level) && this.level < 4)
             {
                 this.level++;
                 return this;

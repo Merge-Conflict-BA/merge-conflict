@@ -22,7 +22,7 @@ public class HDDComponent : Element, IComponent
         if (element is HDDComponent otherHDD)
         {
 
-            if ((element.level == otherHDD.level) && element.level < 4)
+            if ((this.level == otherHDD.level) && this.level < 4)
             {
                 this.level++;
                 return this;

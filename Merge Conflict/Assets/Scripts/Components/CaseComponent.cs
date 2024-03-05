@@ -21,6 +21,7 @@ public class CaseComponent : Element, IComponent
     public HDDComponent? hdd;
 
 
+    // !  später mal noch testen : evtl. muss bei den Zeilen            if (motherboard) { return null; }     this.motherboard = otherMB;            erst der Component mit AddComponent<MBComponent>() hinzugefügt werden
 
     // Element in der funktion merge ist das Element, dass auf den CaseComponent drauf gemerged wird
     public Element? Merge(Element element)
@@ -30,7 +31,7 @@ public class CaseComponent : Element, IComponent
         {
             if (HasComponents() || otherCase.HasComponents()) { return null; }
 
-            if ((element.level == otherCase.level) && element.level < 4)
+            if ((this.level == otherCase.level) && this.level < 4)
             {
                 this.level++;
                 return this;

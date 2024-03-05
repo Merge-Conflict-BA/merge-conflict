@@ -22,7 +22,7 @@ public class CPUComponent : Element, IComponent
         if (element is CPUComponent otherCPU)
         {
 
-            if ((element.level == otherCPU.level) && element.level < 4)
+            if ((this.level == otherCPU.level) && this.level < 4)
             {
                 this.level++;
                 return this;
