@@ -1,11 +1,12 @@
 /**********************************************************************************************************************
 Name:          ComponentHandler
 Description:   Contains the methode to drag the component-objects and the methode to merge them.
-Author(s):     Markus Haubold, Hanno Witzleb
-Date:          2024-02-25
-Version:       V1.1
-TODO:          - its the 1st prototype
+Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
+Date:          2024-03-01
+Version:       V1.2
+TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -20,15 +21,16 @@ public class ComponentHandler : MonoBehaviour
     public GameObject spawnedObjectAfterMerge;
     //for the testing only
     public GameObject componentToSpawn;
-
-    public Element element;
+    
+    // store current count of collision with conveyor belt parts
+    public int CountCollisionConveyorBelt = 0;
+    public bool IsOnConveyorBeltDiagonal = false;
 
     private void Update()
     {
         if (isDraggingActive)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
-            MergeTwoComponents();
         }
     }
 
@@ -41,6 +43,7 @@ public class ComponentHandler : MonoBehaviour
 
     private void OnMouseUp()
     {
+        HandleOverlappingObjects();
         isDraggingActive = false;
     }
 
@@ -48,6 +51,12 @@ public class ComponentHandler : MonoBehaviour
     private bool IsComponent(GameObject gameObject)
     {
         return gameObject.CompareTag("component");
+    }
+
+    //unity object tagged with "trashcan"
+    private bool IsTrashcan(GameObject gameObject)
+    {
+        return gameObject.CompareTag("trashcan");
     }
 
     private void HandleSpriteSorting()
@@ -84,22 +93,28 @@ public class ComponentHandler : MonoBehaviour
         return highestSortingOrder;
     }
 
-    private void MergeTwoComponents()
+    private void HandleOverlappingObjects()
     {
         const float timeToDestroyObject = 0.5f;
         const float radiusToDetectSpritesOverlapping = 1.0f;
         GameObject draggedComponent = gameObject;
 
         //check if there is an sprites-overlapping situation
-        Collider2D[] overlappedStaticComponents = Physics2D.OverlapCircleAll(draggedComponent.transform.position, radiusToDetectSpritesOverlapping);
+        Collider2D[] overlappedStaticObjects = Physics2D.OverlapCircleAll(draggedComponent.transform.position, radiusToDetectSpritesOverlapping);
 
-        if (overlappedStaticComponents == null) { return; };
+        if (overlappedStaticObjects == null) { return; };
 
         //go trough all overlapped sprites and check if there is an mergabel one 
-        foreach (Collider2D staticComponent in overlappedStaticComponents)
+        foreach (Collider2D staticComponent in overlappedStaticObjects)
         {
-            //check if the overlapping sprite is an component too
-            if (staticComponent.gameObject != draggedComponent && IsComponent(staticComponent.gameObject))
+            //skip the dragged component from the list
+            if (staticComponent.gameObject == draggedComponent)
+            {
+                continue;
+            }
+            
+            //merge components if possible 
+            if (IsComponent(staticComponent.gameObject))
             {
 
                 // TODO Daniel
@@ -131,12 +146,48 @@ public class ComponentHandler : MonoBehaviour
                 //wenn nicht mergebar -> returnt Merge() null 
 
                 Debugger.LogMessage("two components overlapp => merge?!");
-                isDraggingActive = false;
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
 
                 ComponentSpawner.Instance.SpawnOnBelt(spawnedObjectAfterMerge);
+                return;
             }
+
+            //put component in the trashcan -> delete it
+            if (IsTrashcan(staticComponent.gameObject))
+            {
+                Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
+                Destroy(draggedComponent, timeToDestroyObject);
+                //TODO: call xp/money controller
+            }
+        }
+    }
+    
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("ConveyorBelt"))
+        {
+            CountCollisionConveyorBelt++;
+        }
+
+        if (col.gameObject.CompareTag("ConveyorBeltDiagonal"))
+        {
+            CountCollisionConveyorBelt++;
+            IsOnConveyorBeltDiagonal = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("ConveyorBelt"))
+        {
+            CountCollisionConveyorBelt--;
+        }
+        
+        if (other.gameObject.CompareTag("ConveyorBeltDiagonal"))
+        {
+            CountCollisionConveyorBelt--;
+            IsOnConveyorBeltDiagonal = false;
         }
     }
 }

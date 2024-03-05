@@ -4,7 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Element
   - component
+  - trashcan
+  - ConveyorBelt
+  - ConveyorBeltDiagonal
   layers:
   - Default
   - TransparentFX
