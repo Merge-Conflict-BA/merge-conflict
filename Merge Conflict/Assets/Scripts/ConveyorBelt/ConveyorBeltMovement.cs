@@ -23,12 +23,12 @@ namespace ConveyorBelt
         private void OnCollisionStay2D(Collision2D collision)
         {
             // BeltParts could touch each other (Overlay of 1px)
-            if (collision.gameObject.CompareTags(Tag.Tags.ConveyorBelt))
+            if (Tags.Tag.ConveyorBelt.CompareWithGameObjectTag(collision.gameObject))
             {
                 return;
             }
-            
-            if (collision.gameObject.CompareTags(Tag.Tags.component))
+
+            if (Tags.Tag.Component.CompareWithGameObjectTag(collision.gameObject))
             {
                 bool success = collision.gameObject.TryGetComponent(out ComponentHandler componentHandler);
 
@@ -39,10 +39,10 @@ namespace ConveyorBelt
                     // It could happen, that 2 beltParts add the same velocity --> the component is two times faster
                     float velocity = (MovingSpeed * Time.deltaTime) / componentHandler.CountCollisionConveyorBelt;
                     Vector3 translationVector = MovingDirection.GetVector3() * velocity;
-                    
+
                     // vector to center of conveyor belt
                     Vector3 translationToCenter;
-                    
+
                     switch (MovingDirection)
                     {
                         case MovingDirection.DOWN:
@@ -50,7 +50,7 @@ namespace ConveyorBelt
                             {
                                 var centerX = SizeOfPart.x / 2;
                                 var deltaX = centerX - collision.transform.position.x;
-                            
+
                                 translationToCenter = new Vector3(deltaX * Time.deltaTime * SpeedToCenter, 0, 0);
                             }
                             else
@@ -62,7 +62,7 @@ namespace ConveyorBelt
                         case MovingDirection.DIAGONAL:
                             var centerY = SizeOfPart.y / 2;
                             var deltaY = centerY - collision.transform.position.y;
-                            
+
                             translationToCenter = new Vector3(0, deltaY * Time.deltaTime * SpeedToCenter, 0);
                             break;
                         default:
@@ -79,11 +79,11 @@ namespace ConveyorBelt
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.CompareTags(Tag.Tags.ConveyorBelt))
+            if (Tags.Tag.ConveyorBelt.CompareWithGameObjectTag(collision.gameObject))
             {
                 return;
             }
-            
+
             // Destroy element if this beltPart is the end
             if (IsEndPart)
             {

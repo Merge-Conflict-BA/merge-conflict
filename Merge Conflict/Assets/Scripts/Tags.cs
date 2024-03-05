@@ -11,24 +11,24 @@ TODO:          - ongoing: add new tags
 using UnityEngine;
 
 //add all tags which are used in unity!
-public static class Tag
+public static class Tags
 {
-    public enum Tags
+    public enum Tag
     {
-        component,
-        trashcan,
+        Component,
+        Trashcan,
         ConveyorBelt,
         ConveyorBeltDiagonal
     }
 
-    public static bool CompareTags(this GameObject gameObject, Tags tags)
+    public static bool CompareWithGameObjectTag(this Tag tags, GameObject gameObject)
     {
         return tags switch
         {
-            Tags.component => gameObject.CompareTag(tags.ToString()),
-            Tags.trashcan => gameObject.CompareTag(tags.ToString()),
-            Tags.ConveyorBelt => gameObject.CompareTag(tags.ToString()),
-            Tags.ConveyorBeltDiagonal => gameObject.CompareTag(tags.ToString()),
+            Tag.Component => gameObject.CompareTag(tags.ToString()),
+            Tag.Trashcan => gameObject.CompareTag(tags.ToString()),
+            Tag.ConveyorBelt => gameObject.CompareTag(tags.ToString()),
+            Tag.ConveyorBeltDiagonal => gameObject.CompareTag(tags.ToString()),
             _ => false,
         };
     }
