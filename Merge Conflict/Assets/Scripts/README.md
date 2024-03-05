@@ -20,14 +20,14 @@ Feel free to add some more methods if needed.
  
 ---
 ## Compare GameObject tag
-To compare the tage from an GameObject, pls. use the static class [TagHandler](/Assets/Scripts/TagHandler.cs)! If there is a new tag upcoming, add it to the PossibleTags.<br><br>
+To compare the tage from an GameObject, pls. use the static class [Tag](/Assets/Scripts/Tag.cs)! If there is a new tag upcoming, add it to the PossibleTags.<br><br>
 **Usage:**
 ```
 /* Pseudo: 
-bool tagCheckResult = TagHandler.CompareTags(<GameObjectWhichShouldCheckedOnTag>, TagHandler.PossibleTags.<theTagWhichShouldItBe>)
+bool tagCheckResult = Tag.CompareTags(<GameObjectWhichShouldCheckedOnTag>, Tag.PossibleTags.<theTagWhichShouldItBe>)
 */
 
-if (TagHandler.CompareTags(col.gameObject, TagHandler.PossibleTags.ConveyorBelt))
+if (Tag.CompareTags(col.gameObject, Tag.PossibleTags.ConveyorBelt))
 {
     Debug.Log("col.gameObject has the tag: ConveyorBelt")
 }

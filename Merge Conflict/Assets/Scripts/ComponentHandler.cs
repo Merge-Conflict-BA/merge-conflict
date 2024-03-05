@@ -101,7 +101,7 @@ public class ComponentHandler : MonoBehaviour
             }
 
             //merge components if possible 
-            if (TagHandler.CompareTags(staticComponent.gameObject, TagHandler.PossibleTags.component))
+            if (Tag.CompareTags(staticComponent.gameObject, Tag.PossibleTags.component))
             {
                 Debugger.LogMessage("two components overlapp => merge?!");
                 Destroy(draggedComponent, timeToDestroyObject);
@@ -112,7 +112,7 @@ public class ComponentHandler : MonoBehaviour
             }
 
             //put component in the trashcan -> delete it
-            if (TagHandler.CompareTags(staticComponent.gameObject, TagHandler.PossibleTags.trashcan))
+            if (Tag.CompareTags(staticComponent.gameObject, Tag.PossibleTags.trashcan))
             {
                 Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
                 Destroy(draggedComponent, timeToDestroyObject);
@@ -123,12 +123,12 @@ public class ComponentHandler : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (TagHandler.CompareTags(col.gameObject, TagHandler.PossibleTags.ConveyorBelt))
+        if (Tag.CompareTags(col.gameObject, Tag.PossibleTags.ConveyorBelt))
         {
             CountCollisionConveyorBelt++;
         }
 
-        if (TagHandler.CompareTags(col.gameObject, TagHandler.PossibleTags.ConveyorBeltDiagonal))
+        if (Tag.CompareTags(col.gameObject, Tag.PossibleTags.ConveyorBeltDiagonal))
         {
             CountCollisionConveyorBelt++;
             IsOnConveyorBeltDiagonal = true;
@@ -137,12 +137,12 @@ public class ComponentHandler : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (TagHandler.CompareTags(other.gameObject, TagHandler.PossibleTags.ConveyorBelt))
+        if (Tag.CompareTags(other.gameObject, Tag.PossibleTags.ConveyorBelt))
         {
             CountCollisionConveyorBelt--;
         }
 
-        if (TagHandler.CompareTags(other.gameObject, TagHandler.PossibleTags.ConveyorBeltDiagonal))
+        if (Tag.CompareTags(other.gameObject, Tag.PossibleTags.ConveyorBeltDiagonal))
         {
             CountCollisionConveyorBelt--;
             IsOnConveyorBeltDiagonal = false;

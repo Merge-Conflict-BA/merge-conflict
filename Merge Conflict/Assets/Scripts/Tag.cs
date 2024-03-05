@@ -1,5 +1,5 @@
 /**********************************************************************************************************************
-Name:          TagHandler
+Name:          Tag
 Description:   Contains all tags, which are used to identify objects. With CompareTags() its possible to compare the tag 
                from the given GameObject with a tag from the PossibleTags "list".
 Author(s):     Markus Haubold
@@ -11,7 +11,7 @@ TODO:          - ongoing: add new tags
 using UnityEngine;
 
 //add all tags which are used in unity!
-public static class TagHandler
+public static class Tag
 {
     public enum PossibleTags
     {
