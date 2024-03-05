@@ -23,8 +23,6 @@ public static class Tag
 
     public static bool CompareTags(GameObject gameObject, PossibleTags possibleTag)
     {
-        if (gameObject.CompareTag(possibleTag.ToString())) { return true; }
-
-        return false;
+        return gameObject.CompareTag(possibleTag.ToString());
     }
 }
