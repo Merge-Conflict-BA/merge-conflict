@@ -590,6 +590,12 @@ RectTransform:
   - {fileID: 1006736382}
   - {fileID: 1064727935}
   - {fileID: 2139890876}
+  - {fileID: 1126671604}
+  - {fileID: 1217546863}
+  - {fileID: 2008447070}
+  - {fileID: 447530105}
+  - {fileID: 1643430859}
+  - {fileID: 296579406}
   m_Father: {fileID: 1933479630}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -610,6 +616,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testObjectToSpawn: {fileID: 0}
+  ObjectsToSpawn: []
+  ConveyorBeltGameObject: {fileID: 0}
 --- !u!1 &215222512
 GameObject:
   m_ObjectHideFlags: 0
@@ -1781,11 +1789,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!224 &781338729 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6544123399233945264, guid: b14bd7ada470a9e47803b55a02d3e049, type: 3}
-  m_PrefabInstance: {fileID: 4237394318518543286}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &794916804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1895,11 +1898,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c575c1a3330f59943b63b50a870ce36b, type: 3}
---- !u!224 &811414727 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3710652652175539594, guid: 3e186cf2c6ff241ef85ddffea5dd44ec, type: 3}
-  m_PrefabInstance: {fileID: 1778031223064040885}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &848607537
 GameObject:
   m_ObjectHideFlags: 0
@@ -2109,11 +2107,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864015477}
   m_CullTransparentMesh: 1
---- !u!1 &935302682 stripped
+--- !u!1 &935302682
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 6743945790784876711, guid: 06e3dde1839e0bf47b11e395f6051f29, type: 3}
-  m_PrefabInstance: {fileID: 6238168983492066526}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 935302683}
+  m_Layer: 0
+  m_Name: 
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &935302683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935302682}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &979635375
 GameObject:
   m_ObjectHideFlags: 0
@@ -2711,7 +2735,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnedObjectAfterMerge: {fileID: 0}
   componentToSpawn: {fileID: 0}
-  element: {fileID: 0}
+  CountCollisionConveyorBelt: 0
+  IsOnConveyorBeltDiagonal: 0
 --- !u!1 &1154819335
 GameObject:
   m_ObjectHideFlags: 0
@@ -2777,50 +2802,50 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d875e0d3e83bffa4f8515c4e62308227, type: 2}
   - {fileID: 11400000, guid: 402b80791d1875149b050948f6c43396, type: 2}
   mbCPUSlotTexture:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 41bc63f6709591943a80e346b88a8152, type: 2}
+  - {fileID: 11400000, guid: 501078d88853f9a4784b0f136902e10f, type: 2}
+  - {fileID: 11400000, guid: 00e3921c9aada8c44a066a44cec920f3, type: 2}
+  - {fileID: 11400000, guid: b08b6fc8ac6bb4b43a6b61d160262b94, type: 2}
   mbRAMSlotTexture:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 46edfb30a0d158f41b6e06faab145290, type: 2}
+  - {fileID: 11400000, guid: 49ce56bdfe1a3004598ad0c0869727a0, type: 2}
+  - {fileID: 11400000, guid: 4263c8754c8bc3f4fa4c182b8c64a2da, type: 2}
+  - {fileID: 11400000, guid: 3743e9d7c96bc6f459379515481708cf, type: 2}
   mbGPUSlotTexture:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: cba37117987275e45b1d3ac0cba8eb88, type: 2}
+  - {fileID: 11400000, guid: 20729554f88e0fc44ba1bcb73abd4420, type: 2}
+  - {fileID: 11400000, guid: bfffb40ff67c0724e92dac57d01e8a82, type: 2}
+  - {fileID: 11400000, guid: 71da7bb7dfb42d040a4fb6b6ba5d29c1, type: 2}
   casePowersupplySlotTexture:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f0e58f674c209e641a5ad79f9d2175f7, type: 2}
+  - {fileID: 11400000, guid: 95b7b127a6960814aace6a43299de44c, type: 2}
+  - {fileID: 11400000, guid: ed096cd7935a28d4da69aed7cfe86d77, type: 2}
+  - {fileID: 11400000, guid: aca1950ee36b58448adc957b9ef5d91f, type: 2}
   caseHDDSlotTexture:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 27c20a5d3fdfdae45a36c8058f566f49, type: 2}
+  - {fileID: 11400000, guid: 97efddd9cd224b0428d85fd42a703759, type: 2}
+  - {fileID: 11400000, guid: 69108289a5dcc844f95915707f435e54, type: 2}
+  - {fileID: 11400000, guid: cba478d461ed1574492bdbb27fb74483, type: 2}
   caseMBSlotTexture:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 0e42882feb779404eb9156dcf5a4e51b, type: 2}
+  - {fileID: 11400000, guid: 078e2964c960a8b47a0d82364e9cb951, type: 2}
+  - {fileID: 11400000, guid: eeb0ee97ea9a44f4ebc617b1862d6808, type: 2}
+  - {fileID: 11400000, guid: 1282dff9456a51e49aa3315111851d97, type: 2}
   caseCPUSlotTexture:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 61e62d052002a4a4a9186b12827119e0, type: 2}
+  - {fileID: 11400000, guid: b89e598b65559df42ba3c2958c918166, type: 2}
+  - {fileID: 11400000, guid: 0ad3fdac09ae88842b5462d7f89137d9, type: 2}
+  - {fileID: 11400000, guid: 9111e9d1bf3c88148860a2879697e6ae, type: 2}
   caseRAMSlotTexture:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 05ba0d5eb32f71546aa80bc63a72ecbe, type: 2}
+  - {fileID: 11400000, guid: ae974b9e653f7b2499399a5d62f5d6ce, type: 2}
+  - {fileID: 11400000, guid: d5598a3de7afd784686a503e124cc7cf, type: 2}
+  - {fileID: 11400000, guid: e05c10abbbb7dc54283d9202cef4a3da, type: 2}
   caseGPUSlotTexture:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: ff0e62137f3c2dd4d99a0328c3f33c12, type: 2}
+  - {fileID: 11400000, guid: 09c1011a7161d9046ad35fcb12f36f3f, type: 2}
+  - {fileID: 11400000, guid: fdeae90856fc03a4a9f2ea8a70f91ab4, type: 2}
+  - {fileID: 11400000, guid: 7dd295d541c76094e95e16e0aaf6b621, type: 2}
   trashTexture: {fileID: 0}
   defaultTexture: {fileID: 11400000, guid: 0d6df61d2f3a21449a6151a4ca7ac90b, type: 2}
 --- !u!4 &1154819337
@@ -3084,7 +3109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnedObjectAfterMerge: {fileID: 0}
   componentToSpawn: {fileID: 0}
-  element: {fileID: 0}
+  CountCollisionConveyorBelt: 0
+  IsOnConveyorBeltDiagonal: 0
 --- !u!1 &1217689376
 GameObject:
   m_ObjectHideFlags: 0
@@ -4339,11 +4365,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750788550}
   m_CullTransparentMesh: 1
---- !u!224 &1803808585 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 343584006823711950, guid: c575c1a3330f59943b63b50a870ce36b, type: 3}
-  m_PrefabInstance: {fileID: 3428182946176261550}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1816797937
 GameObject:
   m_ObjectHideFlags: 0
@@ -4478,11 +4499,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816797937}
   m_CullTransparentMesh: 1
---- !u!224 &1852377204 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2043123014509733732, guid: 0c0e80def8fbe2343bfda9e40bc342ac, type: 3}
-  m_PrefabInstance: {fileID: 6722533847850443885}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1884180368
 GameObject:
   m_ObjectHideFlags: 0
@@ -5066,6 +5082,11 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!224 &2008447070 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3710652652175539594, guid: 3e186cf2c6ff241ef85ddffea5dd44ec, type: 3}
+  m_PrefabInstance: {fileID: 1316347120}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2046992376
 GameObject:
   m_ObjectHideFlags: 0
@@ -5585,6 +5606,10 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 935302683}
   - {fileID: 519420032}
   - {fileID: 1933479630}
   - {fileID: 540637954}
+  - {fileID: 493159713}
+  - {fileID: 1154819337}
+  - {fileID: 1665338210}
