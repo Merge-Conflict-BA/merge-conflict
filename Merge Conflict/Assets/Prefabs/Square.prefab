@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3326050630729256716}
   m_Layer: 0
   m_Name: Square
-  m_TagString: component
+  m_TagString: Component
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,6 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnedObjectAfterMerge: {fileID: 7110887825735875448, guid: d6f6a9e19cbee477bb0dbdaa8d2a6772, type: 3}
   componentToSpawn: {fileID: 2556968358889389474}
+  CountCollisionConveyorBelt: 0
+  IsOnConveyorBeltDiagonal: 0
 --- !u!50 &3326050630729256716
 Rigidbody2D:
   serializedVersion: 4
