@@ -122,17 +122,45 @@ public class ComponentHandler : MonoBehaviour
                 // mergedComponent = draggedComponent.Element.Merge(staticComponent.Element)
                 // if(mergedComponent != null)
                 //      MERGE COMPONENTS
-
-                                                /*  staticComponent.AddComponent<CaseComponent>();
+                                                    
+                                                    // TODO Daniel + Markus 
+                                                    /* 
+                                                    // zum testen werden den GameObjects Klassen hinzugefügt
+                                                    staticComponent.AddComponent<CaseComponent>();
                                                     draggedComponent.AddComponent<CPUComponent>();
 
+                                                    // prüfen der Klasse des ersten GameObjects
                                                     Debug.Log("staticComponent");
                                                     Debug.Log(staticComponent.GetComponent<Element>());
-                                                    Debug.Log("draggedComponent");
-                                                    Debug.Log(draggedComponent.gameObject.GetComponent<Element>());
 
-                                                    CaseComponent test = staticComponent.GetComponent<CaseComponent>();
-                                                    test.Merge(draggedComponent.AddComponent<CPUComponent>()); */
+                                                    // setzen des Level's des Components
+                                                    staticComponent.GetComponent<Element>().level = 1;
+                                                    Debug.Log("staticComponent Level = " + staticComponent.GetComponent<Element>().level);
+
+                                                    // hinzufügen der "Child"-Klassen für den Gehäuse-Component und setzen des Level's für die CPU
+                                                    staticComponent.GetComponent<CaseComponent>().motherboard = staticComponent.gameObject.AddComponent<MBComponent>();
+                                                    staticComponent.GetComponent<CaseComponent>().motherboard.cpu = staticComponent.gameObject.AddComponent<CPUComponent>();
+                                                    staticComponent.GetComponent<CaseComponent>().motherboard.cpu.level = 3;
+                                                    Debug.Log("staticComponent MB-CPU-Slot-Level = " + staticComponent.GetComponent<CaseComponent>().motherboard.cpu.level);
+
+                                                    // prüfen der Klasse des zweiten GameObjects
+                                                    Debug.Log("draggedComponent");
+                                                    Debug.Log(draggedComponent.GetComponent<Element>());
+
+                                                    // NUR EIN TEST : ausführen einer Mergefunktion in einer tieferen Ebene
+                                                    // Debug.Log("(ComponentHandler) Test-Merge");
+                                                    // Debug.Log(staticComponent.GetComponent<CaseComponent>().motherboard.cpu.Merge(draggedComponent.GetComponent<Element>()));
+
+                                                    // Merge()
+                                                    var mergeResult = staticComponent.GetComponent<IComponent>().Merge(draggedComponent.GetComponent<Element>());
+                                                    if ( mergeResult == null) {
+                                                        mergeResult = draggedComponent.GetComponent<IComponent>().Merge(staticComponent.GetComponent<Element>());
+                                                        if (mergeResult == null) { Debug.Log(" - Components not mergable - ");}
+                                                    }
+                                                    // Nutze "mergeResult" als Rückgabewert der Merge()        
+                                                    */
+
+
 
                 // needs to get Element of ComponentHandler Script!!!
 
