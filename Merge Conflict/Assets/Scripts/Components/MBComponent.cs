@@ -20,6 +20,20 @@ public class MBComponent : Element, IComponent
     public GPUComponent? gpu;
 
 
+    public MBComponent(string newID, string newName, int newLevel, int newTrashValue, int newSalesValue, bool newCanMove, CPUComponent newCPU, RAMComponent newRAM, GPUComponent newGPU)
+    {
+        id = newID;
+        name = newName;
+        level = newLevel;
+        trashValue = newTrashValue;
+        salesValue = newSalesValue;
+        canMove = newCanMove;
+        cpu = newCPU;
+        ram = newRAM;
+        gpu = newGPU;
+    }
+
+
     // Element in der funktion merge ist das Element, dass auf den MBComponent drauf gemerged wird
 
     // !   Mögliches Problem : Was passiert beim Drag&Drop (mergen) wenn ein CaseComponent einen unbestückten MBComponent in sich trägt 

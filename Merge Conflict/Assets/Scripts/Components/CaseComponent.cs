@@ -21,6 +21,20 @@ public class CaseComponent : Element, IComponent
     public HDDComponent? hdd;
 
 
+    public CaseComponent(string newID, string newName, int newLevel, int newTrashValue, int newSalesValue, bool newCanMove, MBComponent newMotherboard, PowersupplyComponent newPowersupply, HDDComponent newHDD)
+    {
+        id = newID;
+        name = newName;
+        level = newLevel;
+        trashValue = newTrashValue;
+        salesValue = newSalesValue;
+        canMove = newCanMove;
+        motherboard = newMotherboard;
+        powersupply = newPowersupply;
+        hdd = newHDD;
+    }
+
+
     // !  später mal noch testen : evtl. muss bei den Zeilen            if (motherboard) { return null; }     this.motherboard = otherMB;            erst der Component mit AddComponent<MBComponent>() hinzugefügt werden
 
     // Element in der funktion merge ist das Element, dass auf den CaseComponent drauf gemerged wird

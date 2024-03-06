@@ -16,6 +16,16 @@ using UnityEngine;
 public class HDDComponent : Element, IComponent
 {
 
+    public HDDComponent(string newID, string newName, int newLevel, int newTrashValue, int newSalesValue, bool newCanMove)
+    {
+        id = newID;
+        name = newName;
+        level = newLevel;
+        trashValue = newTrashValue;
+        salesValue = newSalesValue;
+        canMove = newCanMove;
+    }
+
     public Element? Merge(Element element)
     {
 

@@ -4081,7 +4081,7 @@ GameObject:
   - component: {fileID: 1665338210}
   - component: {fileID: 1665338209}
   m_Layer: 0
-  m_Name: GlobalClickManager
+  m_Name: GlobalClickManager_Testing_Daniel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
