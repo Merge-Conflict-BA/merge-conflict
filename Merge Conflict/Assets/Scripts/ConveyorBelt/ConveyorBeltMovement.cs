@@ -23,12 +23,12 @@ namespace ConveyorBelt
         private void OnCollisionStay2D(Collision2D collision)
         {
             // BeltParts could touch each other (Overlay of 1px)
-            if (Tags.Tag.ConveyorBelt.CompareWithGameObjectTag(collision.gameObject))
+            if (Tags.ConveyorBelt.CompareWithGameObjectTag(collision.gameObject))
             {
                 return;
             }
 
-            if (Tags.Tag.Component.CompareWithGameObjectTag(collision.gameObject))
+            if (Tags.Component.CompareWithGameObjectTag(collision.gameObject))
             {
                 bool success = collision.gameObject.TryGetComponent(out ComponentHandler componentHandler);
 
@@ -79,7 +79,7 @@ namespace ConveyorBelt
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (Tags.Tag.ConveyorBelt.CompareWithGameObjectTag(collision.gameObject))
+            if (Tags.ConveyorBelt.CompareWithGameObjectTag(collision.gameObject))
             {
                 return;
             }
