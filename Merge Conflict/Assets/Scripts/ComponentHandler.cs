@@ -157,7 +157,7 @@ public class ComponentHandler : MonoBehaviour
                                                         mergeResult = draggedComponent.GetComponent<IComponent>().Merge(staticComponent.GetComponent<Element>());
                                                         if (mergeResult == null) { Debug.Log(" - Components not mergable - ");}
                                                     }
-                                                    // Nutze "mergeResult" als Rückgabewert der Merge()        
+                                                    // Nutze "mergeResult" als Rückgabewert der Merge()   => Gibt eine Klasse "Element" zurück oder NULL       
                                                     */
 
 
