@@ -14,4 +14,5 @@ using UnityEngine;
 
 public class Trash : Element
 {
+    public int trashVariant;   // 0 == banana     1 == bug     2 == can
 }

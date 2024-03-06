@@ -2731,7 +2731,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09c1011a7161d9046ad35fcb12f36f3f, type: 2}
   - {fileID: 11400000, guid: fdeae90856fc03a4a9f2ea8a70f91ab4, type: 2}
   - {fileID: 11400000, guid: 7dd295d541c76094e95e16e0aaf6b621, type: 2}
-  trashTexture: {fileID: 0}
+  trashTexture:
+  - {fileID: 11400000, guid: 586b33b4d45974e38baf04c43b3a9dc1, type: 2}
+  - {fileID: 11400000, guid: fc29f5608c5de476e9349e3822874e47, type: 2}
+  - {fileID: 11400000, guid: b299a0f3823bd467489d0621a86f2ef4, type: 2}
   defaultTexture: {fileID: 11400000, guid: 0d6df61d2f3a21449a6151a4ca7ac90b, type: 2}
 --- !u!4 &1154819337
 Transform:

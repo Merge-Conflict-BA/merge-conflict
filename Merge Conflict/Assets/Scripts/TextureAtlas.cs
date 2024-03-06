@@ -34,7 +34,7 @@ public class TextureAtlas : MonoBehaviour
     public ElementTexture[] caseCPUSlotTexture;
     public ElementTexture[] caseRAMSlotTexture;
     public ElementTexture[] caseGPUSlotTexture;
-    public ElementTexture trashTexture;
+    public ElementTexture[] trashTexture;
     public ElementTexture defaultTexture;
 
 
@@ -78,7 +78,7 @@ public class TextureAtlas : MonoBehaviour
                 return gpuTexture[element.level - 1];
 
             case Trash:
-                return trashTexture;
+                return trashTexture[element.GetComponent<Trash>().trashVariant];
 
             default:
                 Debug.LogWarning("There is no matching texture for: " + element);
