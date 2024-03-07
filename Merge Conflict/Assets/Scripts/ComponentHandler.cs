@@ -117,8 +117,6 @@ public class ComponentHandler : MonoBehaviour
             if (IsComponent(staticComponent.gameObject))
             {
 
-                CaseComponent newCase = Components.CreateCase(hdd: Components.HDD);
-                newCase.level = 3;
 
                 // TODO Daniel
                 // check if compnents can be merged
@@ -163,6 +161,8 @@ public class ComponentHandler : MonoBehaviour
                 // Nutze "mergeResult" als Rückgabewert der Merge()   => Gibt eine Klasse "Element" zurück oder NULL       
 
 
+                CaseComponent newCase = Components.CreateCase(hdd: Components.HDD);
+                newCase.level = 3;
 
                 // ---------------------     Test anlegen eines komplexen Objekts (CaseComponent) mittels Konstruktor der Klassen     --------------------------------
 
