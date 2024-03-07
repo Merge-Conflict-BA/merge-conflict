@@ -122,9 +122,9 @@ public class ComponentHandler : MonoBehaviour
                 // mergedComponent = draggedComponent.Element.Merge(staticComponent.Element)
                 // if(mergedComponent != null)
                 //      MERGE COMPONENTS
-                                                    
+                                                    /*
                                                     // TODO Daniel + Markus 
-                                                    /* 
+                                                    
                                                     // zum testen werden den GameObjects Klassen hinzugefügt
                                                     staticComponent.AddComponent<CaseComponent>();
                                                     draggedComponent.AddComponent<CPUComponent>();
@@ -158,8 +158,29 @@ public class ComponentHandler : MonoBehaviour
                                                         if (mergeResult == null) { Debug.Log(" - Components not mergable - ");}
                                                     }
                                                     // Nutze "mergeResult" als Rückgabewert der Merge()   => Gibt eine Klasse "Element" zurück oder NULL       
-                                                    */
+                                                    
 
+
+                                                    // ---------------------     Test anlegen eines komplexen Objekts (CaseComponent) mittels Konstruktor der Klassen     --------------------------------
+
+                                                    GameObject newGameObject = new("nameOfNewGameObject");
+
+                                                    CPUComponent newCPU = new("id","nameCPU",2,33,44,false);
+                                                    RAMComponent newRAM = new("id","nameRAM",2,33,44,false);
+                                                    GPUComponent newGPU = new("id","nameGPU",2,33,44,false);
+
+                                                    MBComponent newMB = new("id","nameMB",2,33,44,false,newCPU,newRAM,newGPU);
+
+                                                    CaseComponent newCase = new("id","nameCase",2,33,44,false,newMB,null,null);
+                                                    // Hmmmm ... hier gehts grad nicht weiter ... wie bekommt man die neue Klasse "newCase" auf das "newGameObject" ?
+
+                                                    
+                                                    // Variante ohne Konstruktor sondern mit selbst definierter Initialize() Funktion
+                                                    CaseComponent caseComponent = newGameObject.AddComponent<CaseComponent>();
+                                                    caseComponent.Initialize("id","nameCase",2,33,44,false,newMB,null,null);
+
+                                                    // ----------------------------------------------------------------------------------------------------------------------------------------------------
+                                                    */
 
 
                 // needs to get Element of ComponentHandler Script!!!
