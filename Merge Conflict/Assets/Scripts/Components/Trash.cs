@@ -8,6 +8,7 @@ Version:       V1.1
 TODO:          - /
 **********************************************************************************************************************/
 
+#nullable enable
 using System;
 using System.Collections;
 using System.Collections.Generic;

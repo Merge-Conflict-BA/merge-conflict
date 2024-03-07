@@ -2545,12 +2545,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094e33398e0a2d243827090a17cab54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 
-  name: 
-  level: 0
   trashValue: 0
   salesValue: 0
-  canMove: 0
   motherboard: {fileID: 0}
   powersupply: {fileID: 0}
   hdd: {fileID: 0}
@@ -2922,12 +2918,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 094e33398e0a2d243827090a17cab54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 
-  name: 
-  level: 0
   trashValue: 0
   salesValue: 0
-  canMove: 0
   motherboard: {fileID: 0}
   powersupply: {fileID: 0}
   hdd: {fileID: 0}

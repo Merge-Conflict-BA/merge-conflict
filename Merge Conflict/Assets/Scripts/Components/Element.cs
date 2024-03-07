@@ -14,9 +14,18 @@ using UnityEngine;
 
 public class Element : MonoBehaviour
 {
-    public int level {
+    /*  // caused stackoverflow error
+    public int level
+    {
         get { return level; }
         set { level = Mathf.Clamp(level, 1, 4); }
+    } */
+
+    private int _level;
+    public int level
+    {
+        get { return _level; }
+        set { _level = Mathf.Clamp(value, 1, 4); }
     }
     public int trashValue;
     public int salesValue;

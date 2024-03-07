@@ -8,6 +8,7 @@ Version:       V1.0
 TODO:          - /
 **********************************************************************************************************************/
 
+#nullable enable
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,7 @@ using UnityEngine;
  * Usage:
  * 
  * CPUComponent cpu = Components.CPU;
+ * cpu.level = 3;
  * 
  * MBComponent motherboard = Components.CreateMB();
  * MBComponent motherboardWithCPU = Components.CreateMB(cpu: cpu);
@@ -25,10 +27,11 @@ using UnityEngine;
  */
 public static class Components
 {
-    public static CPUComponent CPU =    new(1,  3,  5);
-    public static GPUComponent GPU =    new(1,  3,  5);
-    public static HDDComponent HDD =    new(1,  3,  5);
-    public static RAMComponent RAM =    new(1,  3,  5);
+    public static HDDComponent HDD = new(1, 3, 5);
+    public static PowersupplyComponent Powersupply = new(1, 3, 5);
+    public static CPUComponent CPU = new(1, 3, 5);
+    public static GPUComponent GPU = new(1, 3, 5);
+    public static RAMComponent RAM = new(1, 3, 5);
 
     public static CreateMBDelegate CreateMB = (cpu, ram, gpu)
         => new MBComponent(1, 3, 5, cpu, ram, gpu);

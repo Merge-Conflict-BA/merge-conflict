@@ -40,7 +40,6 @@ public class TextureAtlas : MonoBehaviour
 
     void Awake()
     {
-        //singleton -> only 1 instance
         if (_instance != null && _instance != this)
         {
             Destroy(this);
@@ -54,28 +53,31 @@ public class TextureAtlas : MonoBehaviour
 
     public ElementTexture GetComponentTexture(Element element)
     {
+
+        int index = element.level - 1;
+
         switch (element)
         {
             case CaseComponent:
-                return caseTexture[element.level - 1];
+                return caseTexture[index];
 
             case PowersupplyComponent:
-                return powersupplyTexture[element.level - 1];
+                return powersupplyTexture[index];
 
             case HDDComponent:
-                return hddTexture[element.level - 1];
+                return hddTexture[index];
 
             case MBComponent:
-                return mbTexture[element.level - 1];
+                return mbTexture[index];
 
             case CPUComponent:
-                return cpuTexture[element.level - 1];
+                return cpuTexture[index];
 
             case RAMComponent:
-                return ramTexture[element.level - 1];
+                return ramTexture[index];
 
             case GPUComponent:
-                return gpuTexture[element.level - 1];
+                return gpuTexture[index];
 
             case Trash trash:
                 return trashTexture[(int)trash.trashVariant];
@@ -90,22 +92,23 @@ public class TextureAtlas : MonoBehaviour
     {
 
         List<ElementTexture> listOfSlotComponentTextures = new();
+        int levelIndexIndicator = 1;
 
         if (element is MBComponent mb)
         {
-            if (mb.cpu != null) { listOfSlotComponentTextures.Add(mbCPUSlotTexture[mb.cpu.level - 1]); }
-            if (mb.gpu != null) { listOfSlotComponentTextures.Add(mbGPUSlotTexture[mb.gpu.level - 1]); }
-            if (mb.ram != null) { listOfSlotComponentTextures.Add(mbRAMSlotTexture[mb.ram.level - 1]); }
+            if (mb.cpu != null) { listOfSlotComponentTextures.Add(mbCPUSlotTexture[mb.cpu.level - levelIndexIndicator]); }
+            if (mb.gpu != null) { listOfSlotComponentTextures.Add(mbGPUSlotTexture[mb.gpu.level - levelIndexIndicator]); }
+            if (mb.ram != null) { listOfSlotComponentTextures.Add(mbRAMSlotTexture[mb.ram.level - levelIndexIndicator]); }
         }
 
         if (element is CaseComponent cs)
         {
-            if (cs.powersupply != null) { listOfSlotComponentTextures.Add(casePowersupplySlotTexture[cs.powersupply.level - 1]); }
-            if (cs.hdd != null) { listOfSlotComponentTextures.Add(caseHDDSlotTexture[cs.hdd.level - 1]); }
-            if (cs.motherboard != null) { listOfSlotComponentTextures.Add(caseMBSlotTexture[cs.motherboard.level - 1]); }
-            if (cs.motherboard.cpu != null) { listOfSlotComponentTextures.Add(caseCPUSlotTexture[cs.motherboard.cpu.level - 1]); }
-            if (cs.motherboard.ram != null) { listOfSlotComponentTextures.Add(caseRAMSlotTexture[cs.motherboard.ram.level - 1]); }
-            if (cs.motherboard.gpu != null) { listOfSlotComponentTextures.Add(caseGPUSlotTexture[cs.motherboard.gpu.level - 1]); }
+            if (cs.powersupply != null) { listOfSlotComponentTextures.Add(casePowersupplySlotTexture[cs.powersupply.level - levelIndexIndicator]); }
+            if (cs.hdd != null) { listOfSlotComponentTextures.Add(caseHDDSlotTexture[cs.hdd.level - levelIndexIndicator]); }
+            if (cs.motherboard != null) { listOfSlotComponentTextures.Add(caseMBSlotTexture[cs.motherboard.level - levelIndexIndicator]); }
+            if (cs.motherboard.cpu != null) { listOfSlotComponentTextures.Add(caseCPUSlotTexture[cs.motherboard.cpu.level - levelIndexIndicator]); }
+            if (cs.motherboard.ram != null) { listOfSlotComponentTextures.Add(caseRAMSlotTexture[cs.motherboard.ram.level - levelIndexIndicator]); }
+            if (cs.motherboard.gpu != null) { listOfSlotComponentTextures.Add(caseGPUSlotTexture[cs.motherboard.gpu.level - levelIndexIndicator]); }
         }
 
         if (listOfSlotComponentTextures.Count == 0)
