@@ -20,7 +20,7 @@ public class MBComponent : Element, IComponent
     public GPUComponent? gpu;
 
 
-    public MBComponent(string newID, string newName, int newLevel, int newTrashValue, int newSalesValue, bool newCanMove, CPUComponent newCPU, RAMComponent newRAM, GPUComponent newGPU)
+    public MBComponent(string newID, string newName, int newLevel, int newTrashValue, int newSalesValue, bool newCanMove, CPUComponent? newCPU, RAMComponent? newRAM, GPUComponent? newGPU)
     {
         id = newID;
         name = newName;

@@ -21,7 +21,7 @@ public class CaseComponent : Element, IComponent
     public HDDComponent? hdd;
 
 
-    public CaseComponent(string newID, string newName, int newLevel, int newTrashValue, int newSalesValue, bool newCanMove, MBComponent newMotherboard, PowersupplyComponent newPowersupply, HDDComponent newHDD)
+    public CaseComponent(string newID, string newName, int newLevel, int newTrashValue, int newSalesValue, bool newCanMove, MBComponent? newMotherboard, PowersupplyComponent? newPowersupply, HDDComponent? newHDD)
     {
         id = newID;
         name = newName;
