@@ -2,9 +2,9 @@
 Name:          MBComponent
 Description:   Elements data structure for motherboard.  
 
-Author(s):     Daniel Rittrich
+Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.0 
+Version:       V1.1
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -20,17 +20,12 @@ public class MBComponent : Element, IComponent
     public GPUComponent? gpu;
 
 
-    public MBComponent(string newID, string newName, int newLevel, int newTrashValue, int newSalesValue, bool newCanMove, CPUComponent? newCPU, RAMComponent? newRAM, GPUComponent? newGPU)
+    public MBComponent(int level, int trashValue, int salesValue, CPUComponent? cpu = null, RAMComponent? ram = null, GPUComponent? gpu = null)
+        : base(level, trashValue, salesValue)
     {
-        id = newID;
-        name = newName;
-        level = newLevel;
-        trashValue = newTrashValue;
-        salesValue = newSalesValue;
-        canMove = newCanMove;
-        cpu = newCPU;
-        ram = newRAM;
-        gpu = newGPU;
+        this.cpu = cpu;
+        this.ram = ram;
+        this.gpu = gpu;
     }
 
 

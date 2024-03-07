@@ -2,9 +2,9 @@
 Name:          Element
 Description:   Elements data structure.  
 
-Author(s):     Daniel Rittrich
+Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.0 
+Version:       V1.1
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -14,10 +14,17 @@ using UnityEngine;
 
 public class Element : MonoBehaviour
 {
-    public string id;
-    public new string name;
-    public int level;
+    public int level {
+        get { return level; }
+        set { level = Mathf.Clamp(level, 1, 4); }
+    }
     public int trashValue;
     public int salesValue;
-    public bool canMove; // shout be false when on conveyor belt
+
+    public Element(int level, int trashValue, int salesValue)
+    {
+        this.level = level;
+        this.trashValue = trashValue;
+        this.salesValue = salesValue;
+    }
 }

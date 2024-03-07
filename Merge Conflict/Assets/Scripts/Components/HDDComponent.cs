@@ -2,9 +2,9 @@
 Name:          HDDComponent
 Description:   Elements data structure for the HDD.  
 
-Author(s):     Daniel Rittrich
+Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.0 
+Version:       V1.1
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -16,15 +16,7 @@ using UnityEngine;
 public class HDDComponent : Element, IComponent
 {
 
-    public HDDComponent(string newID, string newName, int newLevel, int newTrashValue, int newSalesValue, bool newCanMove)
-    {
-        id = newID;
-        name = newName;
-        level = newLevel;
-        trashValue = newTrashValue;
-        salesValue = newSalesValue;
-        canMove = newCanMove;
-    }
+    public HDDComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
 
     public Element? Merge(Element element)
     {

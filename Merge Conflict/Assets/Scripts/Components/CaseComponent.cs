@@ -2,9 +2,9 @@
 Name:          CaseComponent
 Description:   Elements data structure for the case.  
 
-Author(s):     Daniel Rittrich
+Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V2.0 
+Version:       V2.1
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -21,30 +21,12 @@ public class CaseComponent : Element, IComponent
     public HDDComponent? hdd;
 
 
-    public CaseComponent(string newID, string newName, int newLevel, int newTrashValue, int newSalesValue, bool newCanMove, MBComponent? newMotherboard, PowersupplyComponent? newPowersupply, HDDComponent? newHDD)
+    public CaseComponent(int level, int trashValue, int salesValue, MBComponent? motherboard = null, PowersupplyComponent? powersupply = null, HDDComponent? hdd = null)
+        : base(level, trashValue, salesValue)
     {
-        id = newID;
-        name = newName;
-        level = newLevel;
-        trashValue = newTrashValue;
-        salesValue = newSalesValue;
-        canMove = newCanMove;
-        motherboard = newMotherboard;
-        powersupply = newPowersupply;
-        hdd = newHDD;
-    }
-
-    public void Initialize(string newID, string newName, int newLevel, int newTrashValue, int newSalesValue, bool newCanMove, MBComponent? newMotherboard, PowersupplyComponent? newPowersupply, HDDComponent? newHDD)
-    {
-        id = newID;
-        name = newName;
-        level = newLevel;
-        trashValue = newTrashValue;
-        salesValue = newSalesValue;
-        canMove = newCanMove;
-        motherboard = newMotherboard;
-        powersupply = newPowersupply;
-        hdd = newHDD;
+        this.motherboard = motherboard;
+        this.powersupply = powersupply;
+        this.hdd = hdd;
     }
 
 

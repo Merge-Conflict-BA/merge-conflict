@@ -78,7 +78,7 @@ public class TextureAtlas : MonoBehaviour
                 return gpuTexture[element.level - 1];
 
             case Trash trash:
-                return trashTexture[trash.trashVariant];
+                return trashTexture[(int)trash.trashVariant];
 
             default:
                 Debug.LogWarning("There is no matching texture for: " + element);

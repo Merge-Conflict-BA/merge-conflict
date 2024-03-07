@@ -2,9 +2,9 @@
 Name:          Trash
 Description:   Elements data structure for trash.  
 
-Author(s):     Daniel Rittrich
+Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.0 
+Version:       V1.1
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -13,19 +13,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum TrashVariant
+{
+    BananaPeel = 0,
+    Bug = 1,
+    Can = 2,
+}
+
 public class Trash : Element
 {
-    public int trashVariant;   // 0 == banana_peel     1 == bug     2 == can
+    public TrashVariant trashVariant;   
 
-    public Trash(string newID, string newName, int newTrashValue, int newSalesValue)
+    public Trash(int trashValue, int salesValue, TrashVariant? variant = null) : base(0, trashValue, salesValue)
     {
+        if (variant != null)
+        {
+            trashVariant = (TrashVariant)variant;
+            return;
+        }
+
         System.Random random = new();
 
-        id = newID;
-        name = newName;
-        trashValue = newTrashValue;
-        salesValue = newSalesValue;
-        canMove = false;
-        trashVariant = random.Next(0, 3);  // gives back a random value from 0 till 2
+        trashVariant = (TrashVariant)random.Next(0, 3);  // gives back a random value from 0 till 2
     }
 }
