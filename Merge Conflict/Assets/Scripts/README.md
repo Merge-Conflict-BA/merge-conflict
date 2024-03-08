@@ -19,6 +19,23 @@ Feel free to add some more methods if needed.
     - it contains the methods for the spawning at a custom postion and a method to spawn direct on  the belt
  
 ---
+## Compare GameObject tag
+To compare the tage from an GameObject, pls. use the static class [Tag](/Assets/Scripts/Tag.cs)! If there is a new tag upcoming, add it to the PossibleTags.<br><br>
+**Usage:**
+```
+/* Pseudo: 
+bool tagCheckResult = Tag.CompareTags(<GameObjectWhichShouldCheckedOnTag>, Tag.PossibleTags.<theTagWhichShouldItBe>)
+*/
+
+if (Tag.CompareTags(col.gameObject, Tag.PossibleTags.ConveyorBelt))
+{
+    Debug.Log("col.gameObject has the tag: ConveyorBelt")
+}
+```
+
+
+---
+
 ## [C# Coding Standards and Naming Conventions](https://github.com/ktaranov/naming-convention/blob/master/C%23%20Coding%20Standards%20and%20Naming%20Conventions.md#c-coding-standards-and-naming-conventions)
 | Object    | Name | Notation |
 | -------- | ------- | ------- |
