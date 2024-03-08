@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -6403054814937773629}
   m_Layer: 0
   m_Name: PowerSupply_1
-  m_TagString: component
+  m_TagString: Component
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -174,3 +174,4 @@ MonoBehaviour:
   spawnedObjectAfterMerge: {fileID: 0}
   componentToSpawn: {fileID: 0}
   CountCollisionConveyorBelt: 0
+  IsOnConveyorBeltDiagonal: 0
