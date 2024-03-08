@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class ComponentHandler : MonoBehaviour
 {
-    private bool isDraggingActive = false;
+    public bool isDraggingActive = false;
     // camera is located on the bottom left corner, so we have an offset to the mouse
     // gets set every time dragging starts
     private Vector3 offsetMouseToCamera;

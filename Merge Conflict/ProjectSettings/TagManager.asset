@@ -9,6 +9,7 @@ TagManager:
   - trashcan
   - ConveyorBelt
   - ConveyorBeltDiagonal
+  - desk
   layers:
   - Default
   - TransparentFX
