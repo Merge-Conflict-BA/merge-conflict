@@ -101,7 +101,7 @@ public class ComponentHandler : MonoBehaviour
             }
 
             //merge components if possible 
-            if (Tags.Component.CompareWithGameObjectTag(staticComponent.gameObject))
+            if (Tags.Component.UsedByGameObject(staticComponent.gameObject))
             {
                 Debugger.LogMessage("two components overlapp => merge?!");
                 Destroy(draggedComponent, timeToDestroyObject);
@@ -112,7 +112,7 @@ public class ComponentHandler : MonoBehaviour
             }
 
             //put component in the trashcan -> delete it
-            if (Tags.Trashcan.CompareWithGameObjectTag(staticComponent.gameObject))
+            if (Tags.Trashcan.UsedByGameObject(staticComponent.gameObject))
             {
                 Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
                 Destroy(draggedComponent, timeToDestroyObject);
@@ -123,12 +123,12 @@ public class ComponentHandler : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (Tags.ConveyorBelt.CompareWithGameObjectTag(col.gameObject))
+        if (Tags.ConveyorBelt.UsedByGameObject(col.gameObject))
         {
             CountCollisionConveyorBelt++;
         }
 
-        if (Tags.ConveyorBeltDiagonal.CompareWithGameObjectTag(col.gameObject))
+        if (Tags.ConveyorBeltDiagonal.UsedByGameObject(col.gameObject))
         {
             CountCollisionConveyorBelt++;
             IsOnConveyorBeltDiagonal = true;
@@ -137,12 +137,12 @@ public class ComponentHandler : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (Tags.ConveyorBelt.CompareWithGameObjectTag(other.gameObject))
+        if (Tags.ConveyorBelt.UsedByGameObject(other.gameObject))
         {
             CountCollisionConveyorBelt--;
         }
 
-        if (Tags.ConveyorBeltDiagonal.CompareWithGameObjectTag(other.gameObject))
+        if (Tags.ConveyorBeltDiagonal.UsedByGameObject(other.gameObject))
         {
             CountCollisionConveyorBelt--;
             IsOnConveyorBeltDiagonal = false;

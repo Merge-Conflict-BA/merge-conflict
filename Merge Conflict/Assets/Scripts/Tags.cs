@@ -1,10 +1,10 @@
 /**********************************************************************************************************************
 Name:          Tag
-Description:   Contains all tags, which are used to identify objects. With CompareWithGameObjectTag() its possible to compare the tag 
-               from the given GameObject with a tag from the Tags "list".
+Description:   Contains all tags, which are used to identify objects. With UsedByGameObject() its possible to compare the tag 
+               from the given GameObject with a tag from the Tags enum.
 Author(s):     Markus Haubold
-Date:          2024-03-06
-Version:       V1.2
+Date:          2024-03-08
+Version:       V1.3
 TODO:          - ongoing: add new tags
 **********************************************************************************************************************/
 
@@ -21,15 +21,8 @@ public enum Tags
 
 public static class TagComparator
 {
-    public static bool CompareWithGameObjectTag(this Tags tag, GameObject gameObject)
+    public static bool UsedByGameObject(this Tags tag, GameObject gameObject)
     {
-        return tag switch
-        {
-            Tags.Component => gameObject.CompareTag(tag.ToString()),
-            Tags.Trashcan => gameObject.CompareTag(tag.ToString()),
-            Tags.ConveyorBelt => gameObject.CompareTag(tag.ToString()),
-            Tags.ConveyorBeltDiagonal => gameObject.CompareTag(tag.ToString()),
-            _ => false,
-        };
+        return gameObject.CompareTag(tag.ToString());
     }
 }
