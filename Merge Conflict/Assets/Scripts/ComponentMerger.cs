@@ -17,7 +17,8 @@ public class ComponentMerger : MonoBehaviour
     private static ComponentMerger _instance;
     public static ComponentMerger Instance { get { return _instance; } }
 
-    public GameObject objectToSpawnAfterMerge;
+    public static GameObject objectToSpawnAfterMerge;
+
 
     void Awake()
     {
@@ -45,7 +46,17 @@ public class ComponentMerger : MonoBehaviour
      * Trash trashRandom = Components.CreateTrash();
      */
 
-    public Element InstantiateNewClass(Element element)
+    private bool CaseHasComponents(Element element)
+    {
+        MBComponent? motherboard = element.GetComponent<MBComponent>();
+        PowersupplyComponent? powersupply = element.GetComponent<PowersupplyComponent>();
+        HDDComponent? hdd = element.GetComponent<HDDComponent>();
+
+        return motherboard || powersupply || hdd;
+    }
+
+
+    public static Element InstantiateNewClass(Element element)
     {
 
         var (trashValue, salesValue) = ComponentValues.GetComponentValues(element);
@@ -53,7 +64,34 @@ public class ComponentMerger : MonoBehaviour
         switch (element)
         {
             case CaseComponent:
-                CaseComponent caseComp = Components.CreateCase(powersupply: element.GetComponent<PowersupplyComponent>(), hdd: element.GetComponent<HDDComponent>(), motherboard: element.GetComponent<MBComponent>());
+                PowersupplyComponent? powersupplyForCase = null;
+                HDDComponent? hddForCase = null;
+                MBComponent? mbForCase = null;
+
+                //case has powersupply
+                if (element.GetComponent<PowersupplyComponent>() != null)
+                {
+                    powersupplyForCase = Components.Powersupply;
+                    powersupplyForCase.level = element.GetComponent<PowersupplyComponent>().level;
+                    var (trashValueCaseWithPowersupply, salesValueCaseWithPowersupply) = ComponentValues.GetComponentValues(element.GetComponent<PowersupplyComponent>());
+                    powersupplyForCase.trashValue = trashValueCaseWithPowersupply;
+                    powersupplyForCase.salesValue = salesValueCaseWithPowersupply;
+                }
+
+                //case has hdd
+                if (element.GetComponent<HDDComponent>() != null)
+                {
+                    hddForCase = Components.HDD;
+                    hddForCase.level = element.GetComponent<HDDComponent>().level;
+                    var (trashValueHdd, salesValueHdd) = ComponentValues.GetComponentValues(element.GetComponent<HDDComponent>());
+                    hddForCase.trashValue = trashValueHdd;
+                    hddForCase.salesValue = salesValueHdd;
+                }
+
+                //case has motherboard
+                if (element.GetComponent<MBComponent>() != null) { mbForCase = InstantiateMotherboard(element); };
+
+                CaseComponent caseComp = Components.CreateCase(powersupply: powersupplyForCase, hdd: hddForCase, motherboard: mbForCase);
                 caseComp.level = element.level;
                 caseComp.trashValue = trashValue;
                 caseComp.salesValue = salesValue;
@@ -107,7 +145,63 @@ public class ComponentMerger : MonoBehaviour
         }
     }
 
-    public GameObject? Merge(GameObject staticObj, GameObject draggedObj)
+    //create an instance from motherboard
+    //depeds on the environment of the motherboard --> motherboard can be completed into an case or standalon
+    private static MBComponent InstantiateMotherboard(Element element)
+    {
+        CPUComponent? cpuForMb = null;
+        RAMComponent? ramForMb = null;
+        GPUComponent? gpuForMb = null;
+        MBComponent? motherboardInstance = null;
+
+        bool isCase = element is CaseComponent;
+        bool isMotherboard = element is MBComponent;
+
+        //case has motherboard and motherboard has cpu || motherboard has CPU 
+        if ((isCase && (element.GetComponent<MBComponent>().GetComponent<CPUComponent>() != null)) ||
+            (isMotherboard && (element.GetComponent<CPUComponent>() != null)))
+        {
+            cpuForMb = Components.CPU;
+            cpuForMb.level = element.GetComponent<CPUComponent>().level;
+            var (trashValueCpu, salesValueCpu) = isCase ? ComponentValues.GetComponentValues(element.GetComponent<MBComponent>().GetComponent<CPUComponent>()) : ComponentValues.GetComponentValues(element.GetComponent<CPUComponent>());
+            cpuForMb.trashValue = trashValueCpu;
+            cpuForMb.salesValue = salesValueCpu;
+        }
+
+        //case has motherboard and motherboard has ram || motherboard has RAM
+        if ((isCase && (element.GetComponent<MBComponent>().GetComponent<RAMComponent>() != null)) ||
+            (isMotherboard && (element.GetComponent<RAMComponent>() != null)))
+
+        {
+            ramForMb = Components.RAM;
+            ramForMb.level = element.GetComponent<MBComponent>().GetComponent<CPUComponent>().level;
+            var (trashValueRam, salesValueRam) = isCase ? ComponentValues.GetComponentValues(element.GetComponent<MBComponent>().GetComponent<CPUComponent>()) : ComponentValues.GetComponentValues(element.GetComponent<RAMComponent>());
+            ramForMb.trashValue = trashValueRam;
+            ramForMb.salesValue = salesValueRam;
+        }
+
+        //case has motherboard and motherboard has gpu || motherboard has gpu
+        if (isCase && (element.GetComponent<MBComponent>().GetComponent<GPUComponent>() != null) ||
+            (isMotherboard && (element.GetComponent<GPUComponent>() != null)))
+        {
+            gpuForMb = Components.GPU;
+            gpuForMb.level = element.GetComponent<MBComponent>().GetComponent<GPUComponent>().level;
+            var (trashValueGpu, salesValueGpu) = isCase ? ComponentValues.GetComponentValues(element.GetComponent<MBComponent>().GetComponent<GPUComponent>()) : ComponentValues.GetComponentValues(element.GetComponent<GPUComponent>());
+            gpuForMb.trashValue = trashValueGpu;
+            gpuForMb.salesValue = salesValueGpu;
+        }
+
+        motherboardInstance = Components.CreateMB(cpu: cpuForMb, ram: ramForMb, gpu: gpuForMb);
+        motherboardInstance.level = element.GetComponent<MBComponent>().level;
+        var (trashValueMb, salesValueMb) = ComponentValues.GetComponentValues(element.GetComponent<MBComponent>());
+        motherboardInstance.trashValue = trashValueMb;
+        motherboardInstance.salesValue = salesValueMb;
+
+        return motherboardInstance;
+    }
+
+
+    public static GameObject? Merge(GameObject staticObj, GameObject draggedObj)
     {
         var mergeResult = staticObj.GetComponent<IComponent>().Merge(draggedObj.GetComponent<Element>());
         if (mergeResult == null)
@@ -115,20 +209,24 @@ public class ComponentMerger : MonoBehaviour
             mergeResult = draggedObj.GetComponent<IComponent>().Merge(staticObj.GetComponent<Element>());
             if (mergeResult == null)
             {
-                Debug.Log(" - Components not mergable - ");
+                Debugger.LogMessage(" - Components not mergable - ");
             }
             else
             {
-                Debug.Log($" - Components {staticObj.GetComponent<Element>()} and {draggedObj.GetComponent<Element>()} are mergable - ");
+                Debugger.LogMessage($" - Components {staticObj.GetComponent<Element>()} and {draggedObj.GetComponent<Element>()} are mergable - ");
             }
         }
         if (mergeResult != null)
         {
             // TODO Daniel : hier weiter machen
 
-            // Element newClassComponent = InstantiateNewClass(mergeResult);
-            // objectToSpawnAfterMerge.AddComponent<newClassComponent>();
-            return objectToSpawnAfterMerge;
+            Element newClassComponent = InstantiateNewClass(mergeResult);
+            objectToSpawnAfterMerge.AddComponent(newClassComponent.GetType());
+
+            Debugger.LogMessage("spawn this: " + newClassComponent);
+            Debugger.LogMessage("from type: " + newClassComponent.GetType());
+
+            return objectToSpawnAfterMerge;  // dieses noch instanziieren
         }
 
         return null;

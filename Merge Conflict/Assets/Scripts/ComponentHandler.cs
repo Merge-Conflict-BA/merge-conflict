@@ -105,6 +105,10 @@ public class ComponentHandler : MonoBehaviour
             if (Tags.Trashcan.UsedByGameObject(staticComponent.gameObject))
             {
 
+                GameObject newGameObjectAfterMerge = ComponentMerger.Merge(staticComponent.gameObject, draggedComponent);
+
+                // Um diesen Fehler zu beheben, sollten Sie sicherstellen, dass Sie gültige Objekte als Parameter an die Methode übergeben und sicherstellen, dass es sich nicht um statische Elemente handelt, 
+                // für die kein Objektverweis benötigt wird. Überprüfen Sie die Implementierung von "ComponentMerger.Merge" und stellen Sie sicher, dass alle beteiligten Komponenten und Objekte ordnungsgemäß instanziiert und übergeben werden.
 
                 // TODO Daniel
                 // check if compnents can be merged
