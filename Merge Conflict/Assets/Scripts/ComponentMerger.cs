@@ -1,14 +1,15 @@
 /**********************************************************************************************************************
 Name:          ComponentMerger
 Description:   Merges the two given gameobject and returns a new one.
-Author(s):     Daniel Rittrich
+Author(s):     Daniel Rittrich, Markus Haubold
 Date:          2024-03-07
-Version:       V1.0
+Version:       V1.2
 TODO:          - 
 **********************************************************************************************************************/
 
 #nullable enable
 using ConveyorBelt;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,7 +18,10 @@ public class ComponentMerger : MonoBehaviour
     private static ComponentMerger _instance;
     public static ComponentMerger Instance { get { return _instance; } }
 
-    public static GameObject objectToSpawnAfterMerge;
+    public GameObject objectToSpawnAfterMerge;
+    public static GameObject ObjectToSpawnAfterMerge { get; private set; }
+    public GameObject emptyObjectToSpawnAfterMerge;
+    public static GameObject EmptyObjectToSpawnAfterMerge { get; private set; }
 
 
     void Awake()
@@ -31,6 +35,9 @@ public class ComponentMerger : MonoBehaviour
         {
             _instance = this;
         }
+
+        ObjectToSpawnAfterMerge = objectToSpawnAfterMerge;
+        EmptyObjectToSpawnAfterMerge = emptyObjectToSpawnAfterMerge;
     }
 
     /*
@@ -61,6 +68,9 @@ public class ComponentMerger : MonoBehaviour
 
         var (trashValue, salesValue) = ComponentValues.GetComponentValues(element);
 
+        int totalTrashValueNewClass = 0;
+        int totalSalesValueNewClass = 0;
+
         switch (element)
         {
             case CaseComponent:
@@ -76,6 +86,8 @@ public class ComponentMerger : MonoBehaviour
                     var (trashValueCaseWithPowersupply, salesValueCaseWithPowersupply) = ComponentValues.GetComponentValues(element.GetComponent<PowersupplyComponent>());
                     powersupplyForCase.trashValue = trashValueCaseWithPowersupply;
                     powersupplyForCase.salesValue = salesValueCaseWithPowersupply;
+                    totalTrashValueNewClass += trashValueCaseWithPowersupply;
+                    totalSalesValueNewClass += salesValueCaseWithPowersupply;
                 }
 
                 //case has hdd
@@ -86,6 +98,8 @@ public class ComponentMerger : MonoBehaviour
                     var (trashValueHdd, salesValueHdd) = ComponentValues.GetComponentValues(element.GetComponent<HDDComponent>());
                     hddForCase.trashValue = trashValueHdd;
                     hddForCase.salesValue = salesValueHdd;
+                    totalTrashValueNewClass += trashValueHdd;
+                    totalSalesValueNewClass += salesValueHdd;
                 }
 
                 //case has motherboard
@@ -93,8 +107,8 @@ public class ComponentMerger : MonoBehaviour
 
                 CaseComponent caseComp = Components.CreateCase(powersupply: powersupplyForCase, hdd: hddForCase, motherboard: mbForCase);
                 caseComp.level = element.level;
-                caseComp.trashValue = trashValue;
-                caseComp.salesValue = salesValue;
+                caseComp.trashValue = trashValue + totalTrashValueNewClass + (mbForCase != null ? mbForCase.trashValue : 0);
+                caseComp.salesValue = salesValue + totalSalesValueNewClass + (mbForCase != null ? mbForCase.salesValue : 0);
                 return caseComp;
 
             case PowersupplyComponent:
@@ -112,10 +126,10 @@ public class ComponentMerger : MonoBehaviour
                 return hdd;
 
             case MBComponent:
-                MBComponent mb = Components.CreateMB(cpu: element.GetComponent<CPUComponent>(), ram: element.GetComponent<RAMComponent>(), gpu: element.GetComponent<GPUComponent>());
+                MBComponent mb = InstantiateMotherboard(element);
                 mb.level = element.level;
-                mb.trashValue = trashValue;
-                mb.salesValue = salesValue;
+                mb.trashValue = trashValue + (mb != null ? mb.trashValue : 0);
+                mb.salesValue = salesValue + (mb != null ? mb.salesValue : 0);
                 return mb;
 
             case CPUComponent:
@@ -157,6 +171,9 @@ public class ComponentMerger : MonoBehaviour
         bool isCase = element is CaseComponent;
         bool isMotherboard = element is MBComponent;
 
+        int totalTrashValueMB = 0;
+        int totalSalesValueMB = 0;
+
         //case has motherboard and motherboard has cpu || motherboard has CPU 
         if ((isCase && (element.GetComponent<MBComponent>().GetComponent<CPUComponent>() != null)) ||
             (isMotherboard && (element.GetComponent<CPUComponent>() != null)))
@@ -166,18 +183,21 @@ public class ComponentMerger : MonoBehaviour
             var (trashValueCpu, salesValueCpu) = isCase ? ComponentValues.GetComponentValues(element.GetComponent<MBComponent>().GetComponent<CPUComponent>()) : ComponentValues.GetComponentValues(element.GetComponent<CPUComponent>());
             cpuForMb.trashValue = trashValueCpu;
             cpuForMb.salesValue = salesValueCpu;
+            totalTrashValueMB += trashValueCpu;
+            totalSalesValueMB += salesValueCpu;
         }
 
         //case has motherboard and motherboard has ram || motherboard has RAM
         if ((isCase && (element.GetComponent<MBComponent>().GetComponent<RAMComponent>() != null)) ||
             (isMotherboard && (element.GetComponent<RAMComponent>() != null)))
-
         {
             ramForMb = Components.RAM;
             ramForMb.level = element.GetComponent<MBComponent>().GetComponent<CPUComponent>().level;
             var (trashValueRam, salesValueRam) = isCase ? ComponentValues.GetComponentValues(element.GetComponent<MBComponent>().GetComponent<CPUComponent>()) : ComponentValues.GetComponentValues(element.GetComponent<RAMComponent>());
             ramForMb.trashValue = trashValueRam;
             ramForMb.salesValue = salesValueRam;
+            totalTrashValueMB += trashValueRam;
+            totalSalesValueMB += salesValueRam;
         }
 
         //case has motherboard and motherboard has gpu || motherboard has gpu
@@ -189,15 +209,53 @@ public class ComponentMerger : MonoBehaviour
             var (trashValueGpu, salesValueGpu) = isCase ? ComponentValues.GetComponentValues(element.GetComponent<MBComponent>().GetComponent<GPUComponent>()) : ComponentValues.GetComponentValues(element.GetComponent<GPUComponent>());
             gpuForMb.trashValue = trashValueGpu;
             gpuForMb.salesValue = salesValueGpu;
+            totalTrashValueMB += trashValueGpu;
+            totalSalesValueMB += salesValueGpu;
         }
 
         motherboardInstance = Components.CreateMB(cpu: cpuForMb, ram: ramForMb, gpu: gpuForMb);
         motherboardInstance.level = element.GetComponent<MBComponent>().level;
         var (trashValueMb, salesValueMb) = ComponentValues.GetComponentValues(element.GetComponent<MBComponent>());
-        motherboardInstance.trashValue = trashValueMb;
-        motherboardInstance.salesValue = salesValueMb;
+        motherboardInstance.trashValue = trashValueMb + totalTrashValueMB;
+        motherboardInstance.salesValue = salesValueMb + totalSalesValueMB;
 
         return motherboardInstance;
+    }
+
+
+    public static GameObject InstantiateGameObjectAndAddTexture(Element element, Vector2 position)
+    {
+        // instantiate new GameObject from prefab
+        GameObject newObject = Instantiate(ObjectToSpawnAfterMerge, position, Quaternion.Euler(0, 0, 0));
+        newObject.name = $"{element.GetType()}_lvl_{element.level}_merged";
+        newObject.AddComponent(element.GetType());
+
+        // get texture for main component and add it to the new GameObject
+        ElementTexture newObjectTexture = TextureAtlas.Instance.GetComponentTexture(element);
+        newObject.GetComponent<SpriteRenderer>().sprite = newObjectTexture.elementSprite;
+        newObject.GetComponent<RectTransform>().sizeDelta = new Vector2(newObjectTexture.sizeWidth, newObjectTexture.sizeHeight);
+        newObject.GetComponent<RectTransform>().localScale = new Vector2(newObjectTexture.sizeScaleX, newObjectTexture.sizeScaleY);
+        newObject.GetComponent<BoxCollider2D>().isTrigger = true;
+        newObject.GetComponent<BoxCollider2D>().size = new Vector2(newObjectTexture.sizeWidth, newObjectTexture.sizeHeight);
+
+        // check whether the element has subcomponents
+        List<ElementTexture> listOfSlotComponentTextures = TextureAtlas.Instance.GetSlotComponentTextures(element);
+        if (listOfSlotComponentTextures.Count > 0)
+        {
+            // instantiate a child GameObject for each subcomponent in the element to layer its sprite over the texture of the main element
+            foreach (ElementTexture slotTexture in listOfSlotComponentTextures)
+            {
+                GameObject newChildObject = Instantiate(EmptyObjectToSpawnAfterMerge, position, Quaternion.Euler(0, 0, 0), newObject.transform.parent);
+                newChildObject.transform.SetParent(newObject.transform, true);
+                newChildObject.name = $"{element.GetType()}_child";
+                newChildObject.GetComponent<SpriteRenderer>().sortingOrder = newObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
+                newChildObject.GetComponent<SpriteRenderer>().sprite = slotTexture.elementSprite;
+                newChildObject.GetComponent<RectTransform>().sizeDelta = new Vector2(slotTexture.sizeWidth, slotTexture.sizeHeight);
+                newChildObject.GetComponent<RectTransform>().localScale = new Vector2(slotTexture.sizeScaleX, slotTexture.sizeScaleY);
+            }
+        }
+
+        return newObject;
     }
 
 
@@ -218,21 +276,17 @@ public class ComponentMerger : MonoBehaviour
         }
         if (mergeResult != null)
         {
-
+            // instantiate the new class
             Element newClassComponent = InstantiateNewClass(mergeResult);
-            objectToSpawnAfterMerge.AddComponent(newClassComponent.GetType());
 
-            // TODO : add up all the trash and sales values of the subcomponents and add them to the values of the parent object
-
-            // TODO : instantiate the returning GameObject from prefab "objectToSpawnAfterMerge" 
-
-            // TODO : give GameObject his texture(s)
+            // TODO : set the correct spawn position in this function if I get it wrong   -Daniel-
+            // instantiate the new GameObject, add the texture to it, add child objects to it in case it has subcomponents
+            GameObject finalGameObjectAfterInstantiationAndTexturesWereAdded = InstantiateGameObjectAndAddTexture(newClassComponent, staticObj.GetComponent<RectTransform>().position);
 
             Debugger.LogMessage("spawn this: " + newClassComponent);
             Debugger.LogMessage("from type: " + newClassComponent.GetType());
 
-            // TODO : return the final GameObject
-            return objectToSpawnAfterMerge;
+            return finalGameObjectAfterInstantiationAndTexturesWereAdded;
         }
 
         return null;
