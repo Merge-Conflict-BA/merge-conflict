@@ -218,15 +218,21 @@ public class ComponentMerger : MonoBehaviour
         }
         if (mergeResult != null)
         {
-            // TODO Daniel : hier weiter machen
 
             Element newClassComponent = InstantiateNewClass(mergeResult);
             objectToSpawnAfterMerge.AddComponent(newClassComponent.GetType());
 
+            // TODO : add up all the trash and sales values of the subcomponents and add them to the values of the parent object
+
+            // TODO : instantiate the returning GameObject from prefab "objectToSpawnAfterMerge" 
+
+            // TODO : give GameObject his texture(s)
+
             Debugger.LogMessage("spawn this: " + newClassComponent);
             Debugger.LogMessage("from type: " + newClassComponent.GetType());
 
-            return objectToSpawnAfterMerge;  // dieses noch instanziieren
+            // TODO : return the final GameObject
+            return objectToSpawnAfterMerge;
         }
 
         return null;
