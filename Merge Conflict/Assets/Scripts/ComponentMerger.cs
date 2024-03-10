@@ -7,7 +7,6 @@ Version:       V1.2
 TODO:          - 
 **********************************************************************************************************************/
 
-#nullable enable
 using ConveyorBelt;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,6 +52,7 @@ public class ComponentMerger : MonoBehaviour
      * Trash trashRandom = Components.CreateTrash();
      */
 
+#nullable enable
 
     public static Element InstantiateNewClass(Element element)
     {
