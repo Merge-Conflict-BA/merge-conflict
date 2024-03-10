@@ -53,15 +53,6 @@ public class ComponentMerger : MonoBehaviour
      * Trash trashRandom = Components.CreateTrash();
      */
 
-    private bool CaseHasComponents(Element element)
-    {
-        MBComponent? motherboard = element.GetComponent<MBComponent>();
-        PowersupplyComponent? powersupply = element.GetComponent<PowersupplyComponent>();
-        HDDComponent? hdd = element.GetComponent<HDDComponent>();
-
-        return motherboard || powersupply || hdd;
-    }
-
 
     public static Element InstantiateNewClass(Element element)
     {
@@ -128,8 +119,6 @@ public class ComponentMerger : MonoBehaviour
             case MBComponent:
                 MBComponent mb = InstantiateMotherboard(element);
                 mb.level = element.level;
-                mb.trashValue = trashValue + (mb != null ? mb.trashValue : 0);
-                mb.salesValue = salesValue + (mb != null ? mb.salesValue : 0);
                 return mb;
 
             case CPUComponent:
