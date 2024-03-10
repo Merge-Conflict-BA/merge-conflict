@@ -7,10 +7,8 @@ Version:       V1.2
 TODO:          - 
 **********************************************************************************************************************/
 
-using ConveyorBelt;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class ComponentMerger : MonoBehaviour
 {
