@@ -215,11 +215,13 @@ public class ComponentMerger : MonoBehaviour
         // instantiate new GameObject from prefab
         GameObject newObject = Instantiate(ObjectToSpawnAfterMerge, position, Quaternion.Euler(0, 0, 0));
         newObject.name = $"{element.GetType()}_lvl_{element.level}_merged";
+        newObject.tag = "Component";
         newObject.AddComponent(element.GetType());
 
         // get texture for main component and add it to the new GameObject
         ElementTexture newObjectTexture = TextureAtlas.Instance.GetComponentTexture(element);
         newObject.GetComponent<SpriteRenderer>().sprite = newObjectTexture.elementSprite;
+        newObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         newObject.GetComponent<RectTransform>().sizeDelta = new Vector2(newObjectTexture.sizeWidth, newObjectTexture.sizeHeight);
         newObject.GetComponent<RectTransform>().localScale = new Vector2(newObjectTexture.sizeScaleX, newObjectTexture.sizeScaleY);
         newObject.GetComponent<BoxCollider2D>().isTrigger = true;
@@ -237,6 +239,7 @@ public class ComponentMerger : MonoBehaviour
                 newChildObject.name = $"{element.GetType()}_child";
                 newChildObject.GetComponent<SpriteRenderer>().sortingOrder = newObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
                 newChildObject.GetComponent<SpriteRenderer>().sprite = slotTexture.elementSprite;
+                newChildObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
                 newChildObject.GetComponent<RectTransform>().sizeDelta = new Vector2(slotTexture.sizeWidth, slotTexture.sizeHeight);
                 newChildObject.GetComponent<RectTransform>().localScale = new Vector2(slotTexture.sizeScaleX, slotTexture.sizeScaleY);
             }

@@ -102,7 +102,7 @@ public class ComponentHandler : MonoBehaviour
             }
 
             //merge components if possible 
-            if (Tags.Trashcan.UsedByGameObject(staticComponent.gameObject))
+            if (Tags.Component.UsedByGameObject(staticComponent.gameObject))
             {
 
                 GameObject newGameObjectAfterMerge = ComponentMerger.Merge(staticComponent.gameObject, draggedComponent);
@@ -158,7 +158,6 @@ public class ComponentHandler : MonoBehaviour
 
                 // needs to get Element of ComponentHandler Script!!!
 
-                // Beim instanziieren dran denken, dass das GameObject den Tag "Component" erhalten muss !!
 
                 //TODO: 4 markus
                 //wenn daniel fertig, dann Spawn mehtode anpassen
