@@ -29,12 +29,14 @@ public class TestHandler : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-           var t = Table.GetGameUnlockPrefabs(7);
+           var t = ExperienceHandler.GetGameUnlockGameObjects();
             foreach (var obj in t)
             {
                 Debug.LogError(obj.name);
             }
         }
+
+        
     }
     
 }
