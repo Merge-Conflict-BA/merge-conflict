@@ -39,7 +39,7 @@ namespace ExpirienceSystem
         {
             PlayerPrefs.SetInt("Experience", 0);
         }
-        public static ComponentHandler[] GetGameUnlockGameObjects()
+        public static ComponentHandler[] GetGameUnlockPrefabs()
         {
             return _levelsData.GetGameUnlockPrefabs(GetCurrentLevel());
         }

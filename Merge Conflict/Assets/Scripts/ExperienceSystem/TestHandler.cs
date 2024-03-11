@@ -1,10 +1,8 @@
-using ExperienceSystem;
 using ExpirienceSystem;
 using UnityEngine;
 
 public class TestHandler : MonoBehaviour
 {
-    public LevelTableSO Table;
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -29,7 +27,7 @@ public class TestHandler : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-           var t = ExperienceHandler.GetGameUnlockGameObjects();
+           var t = ExperienceHandler.GetGameUnlockPrefabs();
             foreach (var obj in t)
             {
                 Debug.LogError(obj.name);
