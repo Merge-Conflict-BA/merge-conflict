@@ -27,6 +27,7 @@ namespace ExperienceSystem
 
         public ComponentHandler[] GetGameUnlockPrefabs(int level)
         {
+            level++;
             if (level > LevelsDescription.Length) level = LevelsDescription.Length;
             ComponentHandler[] unlockedGameObjects = new ComponentHandler[level];
             for (int i = 0; i < level; i++)
