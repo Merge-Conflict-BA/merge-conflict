@@ -25,7 +25,7 @@ public class Element : MonoBehaviour
     public int level
     {
         get { return _level; }
-        set { _level = Mathf.Clamp(level, 1, 4); }
+        set { _level = Mathf.Clamp(value, 1, 4); }
     }
     public int trashValue;
     public int salesValue;
