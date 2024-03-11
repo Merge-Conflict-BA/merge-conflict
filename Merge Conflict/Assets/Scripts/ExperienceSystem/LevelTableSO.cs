@@ -9,7 +9,7 @@ namespace ExperienceSystem
 
         public int GetLevelByExperience(int exp)
         {
-            var currentLevel = 0;
+            int currentLevel = 0;
             int index = 0;
             do
             {
@@ -23,6 +23,18 @@ namespace ExperienceSystem
             while (LevelsDescription[index].RequirementExperience <= exp);
             
             return currentLevel;
+        }
+
+        public ComponentHandler[] GetGameUnlockPrefabs(int level)
+        {
+            if (level > LevelsDescription.Length) level = LevelsDescription.Length;
+            ComponentHandler[] unlockedGameObjects = new ComponentHandler[level];
+            for (int i = 0; i < level; i++)
+            {
+                unlockedGameObjects[i] = LevelsDescription[i].PartGameObject;
+            }
+
+            return unlockedGameObjects;
         }
     }
 }

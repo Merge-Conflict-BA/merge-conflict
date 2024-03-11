@@ -7,5 +7,6 @@ namespace ExperienceSystem
     {
         public int Level;
         public int RequirementExperience;
+        public ComponentHandler PartGameObject;
     }
 }
