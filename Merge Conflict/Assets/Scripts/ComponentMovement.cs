@@ -31,7 +31,7 @@ public class ComponentMovement : MonoBehaviour
     // Borders / desk
     private DeskCreator _deskData;
     private Vector2 _sizeOfGameObject;
-    private readonly float _borderOffsetComponent = 5;
+    private float _marginOfComponent = 5;
 
     private Vector3 _defaultScale;
     public float MaxScaleFactor = 1.5f;
@@ -59,9 +59,9 @@ public class ComponentMovement : MonoBehaviour
         }
 
         _deltaTimeToNextMove = TimeToStartMovement;
-
-        // todo: recalculate _borderOffsetComponent (use MaxScaleFactor)
+        
         MaxScaleFactor = 1.2f;
+        RecalculateMargin();
     }
 
     void Update()
@@ -129,6 +129,15 @@ public class ComponentMovement : MonoBehaviour
             }
         }
     }
+    
+    /// <summary>
+    /// Recalculate Border so the so the scaling doesn't effect the moving onto the conveyor belt.
+    /// </summary>
+    private void RecalculateMargin()
+    {
+        var deltaWidth = (_sizeOfGameObject.x * MaxScaleFactor) - _sizeOfGameObject.x;
+        _marginOfComponent += _marginOfComponent + deltaWidth;
+    }
 
     private void IdleMovement()
     {
@@ -193,7 +202,7 @@ public class ComponentMovement : MonoBehaviour
         {
             // left
             var leftSideDesk = _deskData.CenterPosition.x - _deskData.Width / 2;
-            var leftSideComp = nextPosition.x - _sizeOfGameObject.x / 2 - _borderOffsetComponent;
+            var leftSideComp = nextPosition.x - _sizeOfGameObject.x / 2 - _marginOfComponent;
 
             if (leftSideDesk > leftSideComp)
             {
@@ -204,7 +213,7 @@ public class ComponentMovement : MonoBehaviour
         {
             // right
             var rightSideDesk = _deskData.CenterPosition.x + _deskData.Width / 2;
-            var rightSideComp = nextPosition.x + _sizeOfGameObject.x / 2 + _borderOffsetComponent;
+            var rightSideComp = nextPosition.x + _sizeOfGameObject.x / 2 + _marginOfComponent;
 
             if (rightSideDesk < rightSideComp)
             {
@@ -217,7 +226,7 @@ public class ComponentMovement : MonoBehaviour
         {
             // bottom
             var bottomSideDesk = _deskData.CenterPosition.y - _deskData.Height / 2;
-            var bottomSideComp = nextPosition.y - _sizeOfGameObject.y / 2 - _borderOffsetComponent;
+            var bottomSideComp = nextPosition.y - _sizeOfGameObject.y / 2 - _marginOfComponent;
 
             if (bottomSideDesk > bottomSideComp)
             {
@@ -228,7 +237,7 @@ public class ComponentMovement : MonoBehaviour
         {
             // top
             var topSideDesk = _deskData.CenterPosition.y + _deskData.Height / 2;
-            var topSideComp = nextPosition.y + _sizeOfGameObject.y / 2 + _borderOffsetComponent;
+            var topSideComp = nextPosition.y + _sizeOfGameObject.y / 2 + _marginOfComponent;
 
             if (topSideDesk < topSideComp)
             {
