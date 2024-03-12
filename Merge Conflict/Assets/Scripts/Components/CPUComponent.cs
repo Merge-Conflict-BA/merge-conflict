@@ -33,4 +33,9 @@ public class CPUComponent : Element, IComponent
 
         return null;
     }
+
+    public CPUComponent Clone()
+    {
+        return new CPUComponent(level, trashValue, salesValue);
+    }
 }

@@ -33,4 +33,9 @@ public class PowersupplyComponent : Element, IComponent
 
         return null;
     }
+
+    public PowersupplyComponent Clone()
+    {
+        return new PowersupplyComponent(level, trashValue, salesValue);
+    }
 }

@@ -50,21 +50,21 @@ public class MBComponent : Element, IComponent
         }
         else if (element is CPUComponent otherCPU)
         {
-            if (cpu) { return null; }
+            if (cpu != null) { return null; }
 
             this.cpu = otherCPU;
             return this;
         }
         else if (element is RAMComponent otherRAM)
         {
-            if (ram) { return null; }
+            if (ram != null) { return null; }
 
             this.ram = otherRAM;
             return this;
         }
         else if (element is GPUComponent otherGPU)
         {
-            if (gpu) { return null; }
+            if (gpu != null) { return null; }
 
             this.gpu = otherGPU;
             return this;
@@ -75,6 +75,29 @@ public class MBComponent : Element, IComponent
 
     private bool HasComponents()
     {
-        return cpu || ram || gpu;
+        return cpu != null || ram != null || gpu != null;
+    }
+
+    override public int GetTrashValue()
+    {
+        int cpuTrashValue = cpu != null ? cpu.GetTrashValue() : 0;
+        int ramTrashValue = ram != null ? ram.GetTrashValue() : 0;
+        int gpuTrashValue = gpu != null ? gpu.GetTrashValue() : 0;
+
+        return this.GetTrashValue() + cpuTrashValue + ramTrashValue + gpuTrashValue;
+    }
+
+    override public int GetSalesValue()
+    {
+        int cpuSalesValue = cpu != null ? cpu.GetSalesValue() : 0;
+        int ramSalesValue = ram != null ? ram.GetSalesValue() : 0;
+        int gpuSalesValue = gpu != null ? gpu.GetSalesValue() : 0;
+
+        return this.GetSalesValue() + cpuSalesValue + ramSalesValue + gpuSalesValue;
+    }
+
+    public MBComponent Clone()
+    {
+        return new MBComponent(level, trashValue, salesValue, cpu, ram, gpu);
     }
 }

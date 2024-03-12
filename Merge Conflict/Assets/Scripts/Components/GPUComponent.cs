@@ -33,4 +33,9 @@ public class GPUComponent : Element, IComponent
 
         return null;
     }
+
+    public GPUComponent Clone()
+    {
+        return new GPUComponent(level, trashValue, salesValue);
+    }
 }

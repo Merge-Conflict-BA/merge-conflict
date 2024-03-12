@@ -111,21 +111,7 @@ public class TextureAtlas : MonoBehaviour
             if (cs.motherboard.gpu != null) { listOfSlotComponentTextures.Add(caseGPUSlotTexture[cs.motherboard.gpu.level - levelIndexIndicator]); }
         }
 
-        if (listOfSlotComponentTextures.Count == 0)
-        {
-            return null;
-        }
-
         return listOfSlotComponentTextures;
     }
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
 }

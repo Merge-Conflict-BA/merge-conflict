@@ -48,21 +48,21 @@ public class CaseComponent : Element, IComponent
         }
         else if (element is MBComponent otherMB)
         {
-            if (motherboard) { return null; }
+            if (motherboard != null) { return null; }
 
             this.motherboard = otherMB;
             return this;
         }
         else if (element is PowersupplyComponent otherPowersupply)
         {
-            if (powersupply) { return null; }
+            if (powersupply != null) { return null; }
 
             this.powersupply = otherPowersupply;
             return this;
         }
         else if (element is HDDComponent otherHDD)
         {
-            if (hdd) { return null; }
+            if (hdd != null) { return null; }
 
             this.hdd = otherHDD;
             return this;
@@ -73,58 +73,29 @@ public class CaseComponent : Element, IComponent
 
     private bool HasComponents()
     {
-        return motherboard || powersupply || hdd;
+        return motherboard != null || powersupply != null || hdd != null;
     }
 
+    override public int GetTrashValue()
+    {
+        int hddTrashValue           = hdd           != null ? hdd.GetTrashValue() : 0;
+        int powersupplyTrashValue   = powersupply   != null ? powersupply.GetTrashValue() : 0;
+        int motherboardTrashValue   = motherboard   != null ? motherboard.GetTrashValue() : 0;
 
-    /*
-        public void Merge(GameObject obj)
-        {
-            // TODO implement actual merge
+        return this.GetTrashValue() + hddTrashValue + powersupplyTrashValue + motherboardTrashValue;
+    }
 
-            // compare elements and decide if can merge
-            // example:
-            // element1 = Cpu
-            // element2 = MB
-            //
-            // returns MB (with CPU)
+    override public int GetSalesValue()
+    {
+        int hddSalesValue = hdd != null ? hdd.GetSalesValue() : 0;
+        int powersupplySalesValue = powersupply != null ? powersupply.GetSalesValue() : 0;
+        int motherboardSalesValue = motherboard != null ? motherboard.GetSalesValue() : 0;
 
-            Debug.Log("Test_Merge_CaseComponent");
+        return this.GetSalesValue() + hddSalesValue + powersupplySalesValue + motherboardSalesValue;
+    }
 
-            if ((obj.GetComponent<PowersupplyComponent>() != null) && (powersupplySlotElementLevel == 0))
-            {
-                ComponentSpawnerDaniel.Instance.SpawnObject(this.gameObject, this.gameObject.transform.position);
-            }
-            else if ((obj.GetComponent<HDDComponent>() != null) && (hddSlotElementLevel == 0))
-            {
-                // TODO weiter machen
-            }
-            else if ((obj.GetComponent<MBComponent>() != null) && (mbSlotElementLevel == 0))
-            {
-                // TODO weiter machen
-            }
-
-
-            // case 2
-            // element1 & element2 = MB
-            // if same lvl
-            // return MB (with lvl +1)
-            // if not
-            // return null
-
-            else if ((obj.GetComponent<CaseComponent>() != null) && (level == obj.GetComponent<CaseComponent>().level) && (level < 4))
-            {
-                // return element lvl+1;
-            }
-            else
-            {
-                Debugger.LogError("Merching not possible.");
-            }
-
-
-            // https://stackoverflow.com/questions/983030/type-checking-typeof-gettype-or-is
-
-        }
-        */
-
+    public CaseComponent Clone()
+    {
+        return new CaseComponent(level, trashValue, salesValue, motherboard, powersupply, hdd);
+    }
 }

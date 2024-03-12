@@ -13,6 +13,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
 
 public enum TrashVariant
 {
@@ -33,8 +35,11 @@ public class Trash : Element
             return;
         }
 
-        System.Random random = new();
+        trashVariant = (TrashVariant)Random.Range(0, 3);  // gives back a random value from 0 till 2
+    }
 
-        trashVariant = (TrashVariant)random.Next(0, 3);  // gives back a random value from 0 till 2
+    public Trash Clone()
+    {
+        return new Trash(trashValue, salesValue, trashVariant);
     }
 }

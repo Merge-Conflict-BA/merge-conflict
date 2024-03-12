@@ -12,6 +12,8 @@ using UnityEngine;
 
 public class ComponentHandler : MonoBehaviour
 {
+    public Element element;
+
     private bool isDraggingActive = false;
     // camera is located on the bottom left corner, so we have an offset to the mouse
     // gets set every time dragging starts
@@ -81,6 +83,26 @@ public class ComponentHandler : MonoBehaviour
         return highestSortingOrder;
     }
 
+    private Element? GetMergedElement(GameObject draggedComponentObject)
+    {
+        Element? mergedElement = null;
+
+        if (draggedComponentObject.TryGetComponent(out ComponentHandler draggedComponentHandler))
+        {
+            Element draggedElement = draggedComponentHandler.element;
+
+            if (draggedElement is not IComponent || this.element is not IComponent) { return null; }
+
+            mergedElement = ((IComponent)draggedElement).Merge(this.element);
+            if (mergedElement == null)
+            {
+                mergedElement = ((IComponent)this.element).Merge(draggedElement);
+            }
+        }
+
+        return mergedElement;
+    }
+
     private void HandleOverlappingObjects()
     {
         const float timeToDestroyObject = 0.5f;
@@ -104,73 +126,19 @@ public class ComponentHandler : MonoBehaviour
             //merge components if possible 
             if (Tags.Component.UsedByGameObject(staticComponent.gameObject))
             {
+                Element? mergedElement = GetMergedElement(staticComponent.gameObject);
 
-                GameObject newGameObjectAfterMerge = ComponentMerger.Merge(staticComponent.gameObject, draggedComponent);
+                if(mergedElement == null)
+                {
+                    return;
+                }
 
-                // Um diesen Fehler zu beheben, sollten Sie sicherstellen, dass Sie gültige Objekte als Parameter an die Methode übergeben und sicherstellen, dass es sich nicht um statische Elemente handelt, 
-                // für die kein Objektverweis benötigt wird. Überprüfen Sie die Implementierung von "ComponentMerger.Merge" und stellen Sie sicher, dass alle beteiligten Komponenten und Objekte ordnungsgemäß instanziiert und übergeben werden.
-
-                // TODO Daniel
-                // check if compnents can be merged
-                // mergedComponent = draggedComponent.Element.Merge(staticComponent.Element)
-                // if(mergedComponent != null)
-                //      MERGE COMPONENTS
-
-                // TODO Daniel + Markus 
-
-                /*
-                // zum testen werden den GameObjects Klassen hinzugefügt
-                staticComponent.AddComponent<CaseComponent>();
-                draggedComponent.AddComponent<CPUComponent>();
-
-                // prüfen der Klasse des ersten GameObjects
-                Debug.Log("staticComponent");
-                Debug.Log(staticComponent.GetComponent<Element>());
-
-                // setzen des Level's des Components
-                staticComponent.GetComponent<Element>().level = 1;
-                Debug.Log("staticComponent Level = " + staticComponent.GetComponent<Element>().level);
-
-                // hinzufügen der "Child"-Klassen für den Gehäuse-Component und setzen des Level's für die CPU
-                staticComponent.GetComponent<CaseComponent>().motherboard = staticComponent.gameObject.AddComponent<MBComponent>();
-                staticComponent.GetComponent<CaseComponent>().motherboard.cpu = staticComponent.gameObject.AddComponent<CPUComponent>();
-                staticComponent.GetComponent<CaseComponent>().motherboard.cpu.level = 3;
-                Debug.Log("staticComponent MB-CPU-Slot-Level = " + staticComponent.GetComponent<CaseComponent>().motherboard.cpu.level);
-
-                // prüfen der Klasse des zweiten GameObjects
-                Debug.Log("draggedComponent");
-                Debug.Log(draggedComponent.GetComponent<Element>());
-
-                // NUR EIN TEST : ausführen einer Mergefunktion in einer tieferen Ebene
-                // Debug.Log("(ComponentHandler) Test-Merge");
-                // Debug.Log(staticComponent.GetComponent<CaseComponent>().motherboard.cpu.Merge(draggedComponent.GetComponent<Element>()));
-
-
-
-                // -----     Test. Anlegen eines Objekts (CaseComponent) mittels Konstruktor der Klassen     --------------------------------
-
-                CaseComponent newCase = Components.CreateCase(hdd: Components.HDD);
-                newCase.level = 3;
-
-                // --------------------------------------------------------------------------------------------------------------------------
-                */
-
-
-                // needs to get Element of ComponentHandler Script!!!
-
-
-                //TODO: 4 markus
-                //wenn daniel fertig, dann Spawn mehtode anpassen
-                //es werden beide Merge() der KOmponenten aufgerufen 
-                //sobald eine Methode eine Klasse zurückgibt, werden die Beiden gelöscht und eine Instanz der erhaltenenen Klasse erstellt 
-                //(Klasse ist dann schon komplett vorbereitet)
-                //wenn nicht mergebar -> returnt Merge() null 
+                GameObject mergedComponentObject = mergedElement.InstantiateGameObjectAndAddTexture(staticComponent.transform.position);
 
                 Debugger.LogMessage("two components overlapp => merge?!");
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
 
-                ComponentSpawner.Instance.SpawnOnBelt(spawnedObjectAfterMerge);
                 return;
             }
 
@@ -186,6 +154,8 @@ public class ComponentHandler : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
+        Debugger.LogMessage("collided enter");
+
         if (Tags.ConveyorBelt.UsedByGameObject(col.gameObject))
         {
             CountCollisionConveyorBelt++;
@@ -200,6 +170,8 @@ public class ComponentHandler : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
+        Debugger.LogMessage("collided exit");
+
         if (Tags.ConveyorBelt.UsedByGameObject(other.gameObject))
         {
             CountCollisionConveyorBelt--;

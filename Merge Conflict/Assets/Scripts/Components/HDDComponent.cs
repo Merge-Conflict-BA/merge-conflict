@@ -33,4 +33,9 @@ public class HDDComponent : Element, IComponent
 
         return null;
     }
+
+    public HDDComponent Clone()
+    {
+        return new HDDComponent(level, trashValue, salesValue);
+    }
 }

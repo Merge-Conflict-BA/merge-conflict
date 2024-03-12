@@ -33,4 +33,9 @@ public class RAMComponent : Element, IComponent
 
         return null;
     }
+
+    public RAMComponent Clone()
+    {
+        return new RAMComponent(level, trashValue, salesValue);
+    }
 }
