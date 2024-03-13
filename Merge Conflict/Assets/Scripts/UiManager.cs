@@ -78,7 +78,9 @@ public class UiManager : MonoBehaviour
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
-        } else {
+        }
+        else
+        {
             _instance = this;
         }
 
@@ -116,11 +118,11 @@ public class UiManager : MonoBehaviour
     {
         if (clickedButton == EXIT_GAME)
         {
-            #if UNITY_EDITOR
-                            UnityEditor.EditorApplication.isPlaying = false;
-            #else
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
                         Application.Quit();
-            #endif
+#endif
             return;
         }
 
@@ -157,6 +159,12 @@ public class UiManager : MonoBehaviour
             case "Level":
                 LEVEL.enabled = true;
                 currentOpenedMenu = LEVEL;
+
+                LevelMenu LevelMenu = new LevelMenu(LEVEL); //TODO: use AdComponent<>()
+                LevelMenu.displayCurrentLevel = 2;
+                LevelMenu.displayCurrentXp = 100;
+
+
                 break;
 
             case "Upgrade":
