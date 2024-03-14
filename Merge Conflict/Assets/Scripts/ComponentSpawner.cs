@@ -16,6 +16,7 @@ public class ComponentSpawner : MonoBehaviour
 
     //define all spawnable components here!
     public GameObject componentPrefab;
+    public GameObject subComponentPrefab;
     private Vector3 spawnPositionOnBelt;
 
     public GameObject ConveyorBeltGameObject;
@@ -81,7 +82,7 @@ public class ComponentSpawner : MonoBehaviour
 
     public GameObject SpawnSlotComponent(Vector2 spawnPosition, GameObject parentComponentObject, Element element)
     {
-        GameObject slotComponentObject = Instantiate(new GameObject(""));
+        GameObject slotComponentObject = Instantiate(subComponentPrefab);
         slotComponentObject.name = $"{element.GetType()}_child";
         slotComponentObject.tag = Tags.SubComponent.ToString();
         slotComponentObject.transform.position = spawnPosition;
