@@ -160,6 +160,13 @@ public class UiManager : MonoBehaviour
                 Level.enabled = true;
                 currentOpenedMenu = Level;
                 LevelMenu LevelMenu = new LevelMenu(Level); //TODO: use AdComponent<>()
+
+                LevelMenu.SetDisplayedCurrentLevel(2);
+                LevelMenu.SetDisplayedCurrentXp(300);
+
+                Debugger.LogMessage("current level: " + LevelMenu.GetDisplayedCurrentLevel());
+                Debugger.LogMessage("current xp: " + LevelMenu.GetDisplayedCurrentXp());
+
                 break;
 
             case "Upgrade":
