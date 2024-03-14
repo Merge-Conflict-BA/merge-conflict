@@ -163,10 +163,7 @@ public class UiManager : MonoBehaviour
 
                 LevelMenu.SetDisplayedCurrentLevel(2);
                 LevelMenu.SetDisplayedCurrentXp(300);
-
-                Debugger.LogMessage("current level: " + LevelMenu.GetDisplayedCurrentLevel());
-                Debugger.LogMessage("current xp: " + LevelMenu.GetDisplayedCurrentXp());
-
+                
                 break;
 
             case "Upgrade":
@@ -192,3 +189,5 @@ public class UiManager : MonoBehaviour
         }
     }
 }
+
+
