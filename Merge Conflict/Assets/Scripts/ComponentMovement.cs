@@ -2,54 +2,64 @@
 Name:          ComponentMovement
 Description:   Manages the Movement of the components if they are on the desk
 Author(s):     Simeon Baumann
-Date:          2024-03-12
+Date:          2024-03-14
 Version:       V1.1
 **********************************************************************************************************************/
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ComponentMovement : MonoBehaviour
 {
+    // Distance to move from a position to another
     public float MinDistance = 30;
     public float MaxDistance = 70;
-    private float actualDistance;
+    // Distance by which the component should move during the current movement
+    private float _distanceToMove;
 
+    // Speed to move from a position to another
     public float MovingSpeed = 50;
 
+    // Time between Movement from a position to another
     public float MinSecondsWithoutMoving = 2;
     public float MaxSecondsWithoutMoving = 4;
     public float TimeToStartMovement = 2;
     private float _deltaTimeToNextMove;
+    
+    // Direction of the Movement from a position to another
+    private Vector3 _movingDirection;
+    private Vector3? _movingStartPosition;
 
-    private ComponentHandler ComponentHandler { get; set; }
-    private Vector3 MovingDirection { get; set; }
-    private bool _draggingWasInitiated = false;
-    private Vector3? StartPoint { get; set; }
+    private ComponentHandler _componentHandler;
 
     // Borders / desk
     private DeskCreator _deskData;
-    private Vector2 _sizeOfGameObject;
+    // Space between Component and border of desk
     private float _marginOfComponent = 5;
 
-    private Vector3 _defaultScale;
-    public float MaxScaleFactor = 1.5f;
+    // Default size and scale of the component
+    private Vector2 _sizeOfComponent;
+    private Vector3 _defaultScaleOfComponent;
+    
+    public float MaxScaleFactor = 1.05f;
+    private bool _scaleBackToDefault;
 
     private bool _firstFrameAfterDragging = false;
     private float _startTimeOfIdleMovement = 0;
 
-    private bool _scaleBackToDefault;
-
+    // Store the last positions of the component while dragging to calculate the direction of the further movement after dragging
+    private List<Vector3> _lastPositions;
 
     private void Start()
     {
-        ComponentHandler = gameObject.GetComponent<ComponentHandler>();
-        _sizeOfGameObject = GetComponent<RectTransform>().rect.size;
-        _defaultScale = gameObject.GetComponent<RectTransform>().localScale;
+        _componentHandler = gameObject.GetComponent<ComponentHandler>();
+        _sizeOfComponent = GetComponent<RectTransform>().rect.size;
+        _defaultScaleOfComponent = gameObject.GetComponent<RectTransform>().localScale;
 
-        _sizeOfGameObject.x *= _defaultScale.x;
-        _sizeOfGameObject.y *= _defaultScale.y;
+        _sizeOfComponent.x *= _defaultScaleOfComponent.x;
+        _sizeOfComponent.y *= _defaultScaleOfComponent.y;
 
         GameObject deskGameObject = GameObject.FindWithTag("desk");
         bool success = deskGameObject.TryGetComponent<DeskCreator>(out _deskData);
@@ -60,50 +70,61 @@ public class ComponentMovement : MonoBehaviour
 
         _deltaTimeToNextMove = TimeToStartMovement;
         
-        MaxScaleFactor = 1.2f;
+        // Recalculate Margin of Component because the size of the component is bigger if it is scaled
         RecalculateMargin();
+
+        _lastPositions = new List<Vector3>();
     }
 
     void Update()
     {
-        if (ComponentHandler.isDraggingActive)
+        if (_componentHandler.isDraggingActive)
         {
-            // reset everything
-            _draggingWasInitiated = true;
             _firstFrameAfterDragging = true;
             
-            ResetMovementProperties();
-            
-            ScaleToDragging();
+            ScaleToFactor(MaxScaleFactor);
+            // indicates that component should be scaled back to default after being dragged
             _scaleBackToDefault = true;
-            return;
-        }
-
-        // if the component first was dragged, they can be on the desk
-        // needs to be checked because the collision with the ConveyorBelt is checked later
-        if (_draggingWasInitiated == false)
-        {
+            
+            // Add position to array of last positions
+            if (_lastPositions.Count == 0)
+            {
+                _lastPositions.Add(transform.position);
+            }
+            else if (_lastPositions[^1] != transform.position)
+            {
+                _lastPositions.Add(transform.position);
+            }
+            
+            if (_lastPositions.Count > 5)
+            {
+                _lastPositions.RemoveAt(0);
+            }
             return;
         }
 
         if (_firstFrameAfterDragging)
         {
             _firstFrameAfterDragging = false;
+            
+            ResetMovementProperties();
             _startTimeOfIdleMovement = Time.time;
         }
 
         if (_scaleBackToDefault)
         {
-            ScaleToDefault();
-            if (transform.localScale.x <= _defaultScale.x + 0.0001f)
+            ScaleToFactor(1f);
+            MoveAfterDragging();
+            if (transform.localScale.x <= _defaultScaleOfComponent.x + 0.1f)
             {
                 _scaleBackToDefault = false;
+                _lastPositions = new List<Vector3>();
             }
             return;
         }
 
-        // component is not on ConveyorBelt && was dragged at least one time
-        if (ComponentHandler.CountCollisionConveyorBelt == 0)
+        // component is not on ConveyorBelt
+        if (_componentHandler.CountCollisionConveyorBelt == 0)
         {
             IdleMovement();
             
@@ -113,11 +134,11 @@ public class ComponentMovement : MonoBehaviour
             }
             else
             {
-                // distance between startPoint Location and currentLocation
                 Vector3 localPosition = transform.localPosition;
-                float movedDistance = ((StartPoint ?? localPosition) - localPosition).magnitude;
+                // distance between startPosition and currentPosition
+                float movedDistance = ((_movingStartPosition ?? localPosition) - localPosition).magnitude;
 
-                if (movedDistance >= actualDistance || StartPoint == null)
+                if (movedDistance >= _distanceToMove || _movingStartPosition == null)
                 {
                     CalculateNewDestination();
                     _deltaTimeToNextMove = Random.Range(MinSecondsWithoutMoving, MaxSecondsWithoutMoving);
@@ -130,61 +151,62 @@ public class ComponentMovement : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Recalculate Border so the so the scaling doesn't effect the moving onto the conveyor belt.
-    /// </summary>
     private void RecalculateMargin()
     {
-        float deltaWidth = (_sizeOfGameObject.x * MaxScaleFactor) - _sizeOfGameObject.x;
+        float deltaWidth = (_sizeOfComponent.x * MaxScaleFactor) - _sizeOfComponent.x;
         _marginOfComponent += _marginOfComponent + deltaWidth;
     }
 
     private void IdleMovement()
     {
+        // get a smooth scaleFactor to have a smooth scaling animation
         double scaleFactor = ((Math.Sin(Time.time - _startTimeOfIdleMovement - Math.PI / 2) + 1) * 0.5 * (MaxScaleFactor - 1)) + 1;
 
-        transform.localScale = _defaultScale * (float)scaleFactor;
+        transform.localScale = _defaultScaleOfComponent * (float)scaleFactor;
     }
 
-    private void ScaleToDefault()
+    private void ScaleToFactor(float scaleFactor)
     {
         Vector3 currentScale = transform.localScale;
-        Vector3 deltaScale = (_defaultScale - currentScale) * 10;
+        Vector3 targetScale = _defaultScaleOfComponent * scaleFactor;
+        Vector3 deltaScale = (targetScale - currentScale) * 10;
 
-        transform.localScale = Vector3.SmoothDamp(currentScale, _defaultScale, ref deltaScale, 0.1f, 1f);
+        transform.localScale = Vector3.SmoothDamp(currentScale, targetScale, ref deltaScale, 0.1f, 1f);
     }
 
-    private void ScaleToDragging()
+    private void MoveAfterDragging()
     {
-        Vector3 currentScale = transform.localScale;
-        Vector3 maxScale = _defaultScale * MaxScaleFactor;
-        Vector3 deltaScale = (maxScale - currentScale) * 10;
-
-        transform.localScale = Vector3.SmoothDamp(currentScale, maxScale, ref deltaScale, 0.1f, 1f);
+        // Direction of the movement after being dragged
+        Vector3 direction = (_lastPositions[^1] - _lastPositions[0]).normalized;
+        Vector3 vectorToNextPosition = direction * (MovingSpeed * Time.deltaTime);
+        
+        if (PositionIsStillOnDesk(vectorToNextPosition))
+        {
+            transform.Translate(vectorToNextPosition, Space.World);
+        }
     }
 
     void CalculateNewDestination()
     {
-        actualDistance = Random.Range(MinDistance, MaxDistance);
-        StartPoint = transform.localPosition;
+        _distanceToMove = Random.Range(MinDistance, MaxDistance);
+        _movingStartPosition = transform.localPosition;
+        _movingDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized;
 
-        MovingDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized;
-
-        Vector3 nextMove = MovingDirection * (actualDistance / 2);
-        while (!PositionIsStillOnDesk(nextMove))
+        Vector3 vectorToPositionInDirection = _movingDirection * (_distanceToMove / 2);
+        while (!PositionIsStillOnDesk(vectorToPositionInDirection))
         {
-            MovingDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized;
-            nextMove = MovingDirection * (actualDistance / 2);
+            _movingDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized;
+            vectorToPositionInDirection = _movingDirection * (_distanceToMove / 2);
         }
     }
 
     void MoveToDestination()
     {
-        Vector3 nextMove = MovingDirection * (MovingSpeed * Time.deltaTime);
+        Vector3 vectorToNextPosition = _movingDirection * (MovingSpeed * Time.deltaTime);
 
-        if (PositionIsStillOnDesk(nextMove))
+        if (PositionIsStillOnDesk(vectorToNextPosition))
         {
-            transform.Translate(nextMove, Space.World);
+            transform.Translate(vectorToNextPosition, Space.World);
         }
         else
         {
@@ -192,17 +214,16 @@ public class ComponentMovement : MonoBehaviour
         }
     }
 
-    bool PositionIsStillOnDesk(Vector3 nextMove)
+    bool PositionIsStillOnDesk(Vector3 vectorToNextPosition)
     {
-        Vector3 compPos = transform.position;
-        Vector3 nextPosition = compPos + nextMove;
+        Vector3 componentPosition = transform.position;
+        Vector3 nextPosition = componentPosition + vectorToNextPosition;
 
-        // todo: how to handle 0?
-        if (MovingDirection.x < 0)
+        if (_movingDirection.x < 0)
         {
             // left
             float leftSideDesk = _deskData.CenterPosition.x - _deskData.Width / 2;
-            float leftSideComp = nextPosition.x - _sizeOfGameObject.x / 2 - _marginOfComponent;
+            float leftSideComp = nextPosition.x - _sizeOfComponent.x / 2 - _marginOfComponent;
 
             if (leftSideDesk > leftSideComp)
             {
@@ -213,7 +234,7 @@ public class ComponentMovement : MonoBehaviour
         {
             // right
             float rightSideDesk = _deskData.CenterPosition.x + _deskData.Width / 2;
-            float rightSideComp = nextPosition.x + _sizeOfGameObject.x / 2 + _marginOfComponent;
+            float rightSideComp = nextPosition.x + _sizeOfComponent.x / 2 + _marginOfComponent;
 
             if (rightSideDesk < rightSideComp)
             {
@@ -222,11 +243,11 @@ public class ComponentMovement : MonoBehaviour
         }
 
 
-        if (MovingDirection.y < 0)
+        if (_movingDirection.y < 0)
         {
             // bottom
             float bottomSideDesk = _deskData.CenterPosition.y - _deskData.Height / 2;
-            float bottomSideComp = nextPosition.y - _sizeOfGameObject.y / 2 - _marginOfComponent;
+            float bottomSideComp = nextPosition.y - _sizeOfComponent.y / 2 - _marginOfComponent;
 
             if (bottomSideDesk > bottomSideComp)
             {
@@ -237,7 +258,7 @@ public class ComponentMovement : MonoBehaviour
         {
             // top
             float topSideDesk = _deskData.CenterPosition.y + _deskData.Height / 2;
-            float topSideComp = nextPosition.y + _sizeOfGameObject.y / 2 + _marginOfComponent;
+            float topSideComp = nextPosition.y + _sizeOfComponent.y / 2 + _marginOfComponent;
 
             if (topSideDesk < topSideComp)
             {
@@ -250,9 +271,9 @@ public class ComponentMovement : MonoBehaviour
 
     void ResetMovementProperties()
     {
-        StartPoint = null;
-        MovingDirection = Vector3.zero;
-        actualDistance = 0;
-        _deltaTimeToNextMove = TimeToStartMovement;
+        _movingStartPosition = null;
+        _movingDirection = Vector3.zero;
+        _distanceToMove = 0;
+        _deltaTimeToNextMove = Random.Range(MinSecondsWithoutMoving, MaxSecondsWithoutMoving);
     }
 }

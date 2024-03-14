@@ -198,3 +198,5 @@ MonoBehaviour:
   MovingSpeed: 50
   MinSecondsWithoutMoving: 2
   MaxSecondsWithoutMoving: 4
+  TimeToStartMovement: 2
+  MaxScaleFactor: 1.05
