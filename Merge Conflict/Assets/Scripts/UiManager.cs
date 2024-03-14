@@ -47,13 +47,13 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button buttonExitGame;
 
     //all menus
-    [SerializeField] private Canvas PLAYFIELD;
-    [SerializeField] private Canvas UI_MANAGER;
-    [SerializeField] private Canvas MAINMENU;
-    [SerializeField] private Canvas SETTINGS;
-    [SerializeField] private Canvas LEVEL;
-    [SerializeField] private Canvas UPGRADE;
-    [SerializeField] private Canvas ELEMENTS;
+    [SerializeField] private Canvas Playfield;
+    [SerializeField] private Canvas UiManagerCanvas;
+    [SerializeField] private Canvas Mainmenu;
+    [SerializeField] private Canvas Settings;
+    [SerializeField] private Canvas Level;
+    [SerializeField] private Canvas Upgrade;
+    [SerializeField] private Canvas Elements;
 
     //mapping buttons to the menu wich they should open
     List<KeyValuePair<string, string>> readableMenuName = new List<KeyValuePair<string, string>>
@@ -85,12 +85,12 @@ public class UiManager : MonoBehaviour
         }
 
         //set default menu states 
-        UI_MANAGER.enabled = true;
-        MAINMENU.enabled = false;
-        SETTINGS.enabled = false;
-        LEVEL.enabled = false;
-        UPGRADE.enabled = false;
-        ELEMENTS.enabled = false;
+        UiManagerCanvas.enabled = true;
+        Mainmenu.enabled = false;
+        Settings.enabled = false;
+        Level.enabled = false;
+        Upgrade.enabled = false;
+        Elements.enabled = false;
 
         //setup eventlisteners for all buttons
         setupButtonListener(buttonOpenMainmenu);
@@ -133,7 +133,7 @@ public class UiManager : MonoBehaviour
     {
         if (currentOpenedMenu == NO_MENU_OPENED)
         {
-            currentOpenedMenu = MAINMENU;
+            currentOpenedMenu = Mainmenu;
         }
 
         //close current opened menu
@@ -145,41 +145,36 @@ public class UiManager : MonoBehaviour
         switch (menuName.Value)
         {
             case "Mainmenu":
-                MAINMENU.enabled = true;
-                PLAYFIELD.enabled = false;
-                currentOpenedMenu = MAINMENU;
+                Mainmenu.enabled = true;
+                Playfield.enabled = false;
+                currentOpenedMenu = Mainmenu;
                 isMenuVisible = true;
                 break;
 
             case "Settings":
-                SETTINGS.enabled = true;
-                currentOpenedMenu = SETTINGS;
+                Settings.enabled = true;
+                currentOpenedMenu = Settings;
                 break;
 
             case "Level":
-                LEVEL.enabled = true;
-                currentOpenedMenu = LEVEL;
-
-                LevelMenu LevelMenu = new LevelMenu(LEVEL); //TODO: use AdComponent<>()
-                LevelMenu.displayCurrentLevel = 2;
-                LevelMenu.displayCurrentXp = 100;
-
-
+                Level.enabled = true;
+                currentOpenedMenu = Level;
+                LevelMenu LevelMenu = new LevelMenu(Level); //TODO: use AdComponent<>()
                 break;
 
             case "Upgrade":
-                UPGRADE.enabled = true;
-                currentOpenedMenu = UPGRADE;
+                Upgrade.enabled = true;
+                currentOpenedMenu = Upgrade;
                 break;
 
             case "Elements":
-                ELEMENTS.enabled = true;
-                currentOpenedMenu = ELEMENTS;
+                Elements.enabled = true;
+                currentOpenedMenu = Elements;
                 break;
 
             case "CloseMenu":
-                MAINMENU.enabled = false;
-                PLAYFIELD.enabled = true;
+                Mainmenu.enabled = false;
+                Playfield.enabled = true;
                 currentOpenedMenu = null;
                 isMenuVisible = false;
                 break;

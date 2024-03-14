@@ -973,7 +973,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Settings
+  m_text: Title
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1199,7 +1199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Elements
+  m_text: Title
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2997,7 +2997,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Your Level
+  m_text: Title
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3608,7 +3608,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Upgrade
+  m_text: Title
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3815,13 +3815,13 @@ MonoBehaviour:
   buttonOpenUpgrade: {fileID: 1080665956}
   buttonOpenElements: {fileID: 73737642}
   buttonExitGame: {fileID: 741769696}
-  PLAYFIELD: {fileID: 210138499}
-  UI_MANAGER: {fileID: 1933479629}
-  MAINMENU: {fileID: 1424940784}
-  SETTINGS: {fileID: 328338562}
-  LEVEL: {fileID: 2107363471}
-  UPGRADE: {fileID: 1975131580}
-  ELEMENTS: {fileID: 2088093585}
+  Playfield: {fileID: 210138499}
+  UiManagerCanvas: {fileID: 1933479629}
+  Mainmenu: {fileID: 1424940784}
+  Settings: {fileID: 328338562}
+  Level: {fileID: 2107363471}
+  Upgrade: {fileID: 1975131580}
+  Elements: {fileID: 2088093585}
 --- !u!1 &1954469039
 GameObject:
   m_ObjectHideFlags: 0

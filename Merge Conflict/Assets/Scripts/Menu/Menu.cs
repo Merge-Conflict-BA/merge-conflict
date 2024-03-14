@@ -25,6 +25,6 @@ public class Menu : MonoBehaviour
         };
 
         //set the title
-        menuTitle.text = "coded title";
+        menuTitle.text = this._canvas.name;
     }
 }
