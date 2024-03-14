@@ -3,7 +3,7 @@ Name:          ComponentHandler
 Description:   Contains the methode to drag the component-objects and the methode to merge them.
 Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
 Date:          2024-03-01
-Version:       V1.2
+Version:       V1.3
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
 using System;
@@ -60,14 +60,24 @@ public class ComponentHandler : MonoBehaviour
         if (hit.collider.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
         {
             //set current sprite on top of all
-            spriteRenderer.sortingOrder = GetHighestSpritePosition() + 1;
+            int highestSpritePosition = GetHighestSpritePosition();
+            spriteRenderer.sortingOrder = highestSpritePosition + 1;
+
+            // set sprites of current GameObject-Childs on top of all
+            SpriteRenderer childSpriteRenderer;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                childSpriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
+                if ((childSpriteRenderer != null) && Tags.SubComponent.UsedByGameObject(childSpriteRenderer.gameObject))
+                {
+                    childSpriteRenderer.sortingOrder = highestSpritePosition + 2;
+                }
+            }
         }
     }
 
     private int GetHighestSpritePosition()
     {
-        // TODO BUGFIX
-        // moving an object makes all slotcomponent textures dissappear
         SpriteRenderer[] allSprites = FindObjectsOfType<SpriteRenderer>();
         int highestSortingOrder = int.MinValue;
 
@@ -80,11 +90,17 @@ public class ComponentHandler : MonoBehaviour
             }
 
             spriteRenderer.sortingOrder--;
+
         }
 
         return highestSortingOrder;
     }
 
+    // ! TODO : fix
+    // ! is it not possible to equip a sub component to MB when MB is already in CASE
+
+    // ! TODO : fix
+    // ! it creates an empty GameObject with every merge
     private Element? GetMergedElement(GameObject draggedComponentObject)
     {
         Element? mergedElement = null;
@@ -130,7 +146,7 @@ public class ComponentHandler : MonoBehaviour
             {
                 Element? mergedElement = GetMergedElement(staticComponent.gameObject);
 
-                if(mergedElement == null)
+                if (mergedElement == null)
                 {
                     return;
                 }
@@ -155,7 +171,7 @@ public class ComponentHandler : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D col)
-    {        
+    {
         if (Tags.ConveyorBelt.UsedByGameObject(col.gameObject))
         {
             CountCollisionConveyorBelt++;

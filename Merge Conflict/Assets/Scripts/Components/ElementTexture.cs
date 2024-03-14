@@ -23,6 +23,11 @@ public class ElementTexture : ScriptableObject
 
     public GameObject ApplyTexture(GameObject gameObject)
     {
+        if (gameObject.TryGetComponent(out RectTransform _) == false || gameObject.TryGetComponent(out SpriteRenderer _) == false)
+        {
+            Debugger.LogError("ApplyTexture: gameObject does not have RectTransform or SpriteRenderer attached!!!");
+        }
+
         gameObject.GetComponent<SpriteRenderer>().sprite = elementSprite;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeWidth, sizeHeight);
