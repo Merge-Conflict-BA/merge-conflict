@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24063f94a03546ee9d03adbf64b144c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnedObjectAfterMerge: {fileID: 0}
-  componentToSpawn: {fileID: 0}
+  spawnedObjectAfterMerge: {fileID: 7110887825735875448, guid: d6f6a9e19cbee477bb0dbdaa8d2a6772, type: 3}
+  componentToSpawn: {fileID: 2556968358889389474, guid: 3e186cf2c6ff241ef85ddffea5dd44ec, type: 3}
   CountCollisionConveyorBelt: 0
   IsOnConveyorBeltDiagonal: 0

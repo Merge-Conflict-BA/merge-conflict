@@ -7,10 +7,13 @@ Version:       V1.2
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ComponentHandler : MonoBehaviour
 {
+    public Element element;
+
     private bool isDraggingActive = false;
     // camera is located on the bottom left corner, so we have an offset to the mouse
     // gets set every time dragging starts
@@ -63,6 +66,8 @@ public class ComponentHandler : MonoBehaviour
 
     private int GetHighestSpritePosition()
     {
+        // TODO BUGFIX
+        // moving an object makes all slotcomponent textures dissappear
         SpriteRenderer[] allSprites = FindObjectsOfType<SpriteRenderer>();
         int highestSortingOrder = int.MinValue;
 
@@ -78,6 +83,26 @@ public class ComponentHandler : MonoBehaviour
         }
 
         return highestSortingOrder;
+    }
+
+    private Element? GetMergedElement(GameObject draggedComponentObject)
+    {
+        Element? mergedElement = null;
+
+        if (draggedComponentObject.TryGetComponent(out ComponentHandler draggedComponentHandler))
+        {
+            Element draggedElement = draggedComponentHandler.element;
+
+            if (draggedElement is not IComponent || this.element is not IComponent) { return null; }
+
+            mergedElement = ((IComponent)draggedElement).Merge(this.element);
+            if (mergedElement == null)
+            {
+                mergedElement = ((IComponent)this.element).Merge(draggedElement);
+            }
+        }
+
+        return mergedElement;
     }
 
     private void HandleOverlappingObjects()
@@ -103,11 +128,19 @@ public class ComponentHandler : MonoBehaviour
             //merge components if possible 
             if (Tags.Component.UsedByGameObject(staticComponent.gameObject))
             {
+                Element? mergedElement = GetMergedElement(staticComponent.gameObject);
+
+                if(mergedElement == null)
+                {
+                    return;
+                }
+
+                GameObject mergedComponentObject = mergedElement.InstantiateGameObjectAndAddTexture(staticComponent.transform.position);
+
                 Debugger.LogMessage("two components overlapp => merge?!");
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
 
-                ComponentSpawner.Instance.SpawnOnBelt(spawnedObjectAfterMerge);
                 return;
             }
 
@@ -122,7 +155,7 @@ public class ComponentHandler : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D col)
-    {
+    {        
         if (Tags.ConveyorBelt.UsedByGameObject(col.gameObject))
         {
             CountCollisionConveyorBelt++;

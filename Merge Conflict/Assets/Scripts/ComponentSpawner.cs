@@ -7,9 +7,7 @@ Version:       V1.2
 TODO:          - 
 **********************************************************************************************************************/
 
-using ConveyorBelt;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class ComponentSpawner : MonoBehaviour
 {
@@ -17,8 +15,7 @@ public class ComponentSpawner : MonoBehaviour
     public static ComponentSpawner Instance { get { return _instance; } }
 
     //define all spawnable components here!
-    public GameObject testObjectToSpawn;
-    public GameObject[] ObjectsToSpawn;
+    public GameObject componentPrefab;
     private Vector3 spawnPositionOnBelt;
 
     public GameObject ConveyorBeltGameObject;
@@ -38,12 +35,18 @@ public class ComponentSpawner : MonoBehaviour
 
     void Start()
     {
+        // check if componentPrefab has ComponentHandler
+        if (componentPrefab.TryGetComponent(out ComponentHandler _) == false)
+        {
+            Debugger.LogError("ComponentSpawner: componentPrefab does not have ComponentHandler attached!!!");
+        }
+
         // set position of spawning (in the center of the conveyor belt)
         ConveyorBelt.ConveyorBelt conveyorBelt = ConveyorBeltGameObject.GetComponent<ConveyorBelt.ConveyorBelt>();
         var prefabSize = conveyorBelt.PrefabConveyorBeltVertical.GetComponent<RectTransform>().rect.size;
-        
+
         spawnPositionOnBelt = new Vector3(prefabSize.x / 2, Screen.height + prefabSize.y, 0);
-        
+
         // Current System of spawning: each 4 seconds a random component is spawning
         InvokeRepeating("SpawnRandomComponentOnBelt", 0f, 4f);
     }
@@ -54,45 +57,43 @@ public class ComponentSpawner : MonoBehaviour
         //TODO: delete this, if the gamelogic for the spawning is implemented!!!
         if (Input.GetKeyDown(KeyCode.S))
         {
-            SpawnComponent(GetRandomGameObject(), Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
         if (Input.GetKeyDown(KeyCode.B))
         {
-            SpawnOnBelt(GetRandomGameObject());
+            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(spawnPositionOnBelt);
         }
     }
 
-    public void SpawnComponent(GameObject componentToSpawn, Vector2 spawnPosition)
+    public GameObject SpawnComponent(Vector2 spawnPosition, Element element)
     {
-        if (spawnPosition.Equals(Vector2.zero))
-        {
-            Debugger.LogWarning("Spawnposition (0,0) given?!");
-            return;
-        }
+        GameObject componentObject = Instantiate(componentPrefab, spawnPosition, Quaternion.Euler(0, 0, 0), transform.parent);
+        componentObject.name = $"{element.GetType()}_lvl_{element.level}_merged";
+        componentObject.tag = Tags.Component.ToString();
+        ComponentHandler componentHandler = componentObject.GetComponent<ComponentHandler>();
+        componentHandler.element = element;
 
-        if (componentToSpawn.Equals(null))
-        {
-            Debugger.LogError("Prefab not assigned to SpawnComponent script. Please assign a prefab in the Unity Editor.");
-            return;
-        }
-
-        GameObject component = Instantiate(componentToSpawn, spawnPosition, Quaternion.identity, transform.parent);
         // move Component in Front of the Conveyor Belt
-        component.transform.position += new Vector3(0, 0, -1);
+        componentObject.transform.position += new Vector3(0, 0, -1);
+
+        return componentObject;
     }
 
-    public void SpawnOnBelt(GameObject componentToSpawn)
+    public GameObject SpawnSlotComponent(Vector2 spawnPosition, GameObject parentComponentObject, Element element)
     {
-        SpawnComponent(componentToSpawn, spawnPositionOnBelt);
+        GameObject slotComponentObject = Instantiate(new GameObject(""));
+        slotComponentObject.name = $"{element.GetType()}_child";
+        slotComponentObject.tag = Tags.Untagged.ToString();
+        slotComponentObject.transform.position = spawnPosition;
+        slotComponentObject.transform.SetParent(parentComponentObject.transform, true);
+        slotComponentObject.AddComponent<SpriteRenderer>();
+        slotComponentObject.AddComponent<RectTransform>();
+
+        return slotComponentObject;
     }
 
-    private void SpawnRandomComponentOnBelt()
+    public void SpawnRandomComponentOnBelt()
     {
-        SpawnOnBelt(GetRandomGameObject());
-    }
-
-    private GameObject GetRandomGameObject()
-    {
-        return ObjectsToSpawn[Random.Range(0, ObjectsToSpawn.Length)];
+        Components.GetRandomElement().InstantiateGameObjectAndAddTexture(spawnPositionOnBelt);
     }
 }
