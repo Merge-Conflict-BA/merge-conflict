@@ -4666,6 +4666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   componentPrefab: {fileID: 2556968358889389474, guid: 3e186cf2c6ff241ef85ddffea5dd44ec, type: 3}
+  subComponentPrefab: {fileID: 2556968358889389474, guid: bed2c97de10ab6c4fbcad3b824306c5c, type: 3}
   ConveyorBeltGameObject: {fileID: 1064727933}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

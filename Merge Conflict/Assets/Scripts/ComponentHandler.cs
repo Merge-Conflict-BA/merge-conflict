@@ -19,11 +19,6 @@ public class ComponentHandler : MonoBehaviour
     // gets set every time dragging starts
     private Vector3 offsetMouseToCamera;
 
-    // TODO remove, when spawning functionality is implemented
-    public GameObject spawnedObjectAfterMerge;
-    //for the testing only
-    public GameObject componentToSpawn;
-
     // store current count of collision with conveyor belt parts
     public int CountCollisionConveyorBelt = 0;
     public bool IsOnConveyorBeltDiagonal = false;
@@ -96,11 +91,6 @@ public class ComponentHandler : MonoBehaviour
         return highestSortingOrder;
     }
 
-    // ! TODO : fix
-    // ! is it not possible to equip a sub component to MB when MB is already in CASE
-
-    // ! TODO : fix
-    // ! it creates an empty GameObject with every merge
     private Element? GetMergedElement(GameObject draggedComponentObject)
     {
         Element? mergedElement = null;
