@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -14,17 +15,25 @@ public class Menu : MonoBehaviour
 
     }
 
-    private void SetTitle()
+    public TextMeshProUGUI GetTextfieldByName(string name)
     {
-        //find the TextMeshProUGUI from the title
-        TextMeshProUGUI menuTitle = this._canvas.transform.Find("Title")?.GetComponent<TextMeshProUGUI>();
-        if(menuTitle == null) 
+        TextMeshProUGUI textfield = this._canvas.transform.Find(name)?.GetComponent<TextMeshProUGUI>();
+        if(textfield == null) 
         {
-            Debugger.LogMessage("TextMeshPro object with name 'Title' not found in the canvas." + this._canvas);
-            return; 
+            Debugger.LogError($"The TextMeshPro field with name {name} can't be found in the canvas with the name {this._canvas}");
+            return null; 
         };
 
+        return textfield;
+    }
+
+    private void SetTitle()
+    {
+        //get the TextMeshPro field from the title or return 
+        TextMeshProUGUI textfield = GetTextfieldByName("Title");
+        if (textfield == null) {return;};
+
         //set the title
-        menuTitle.text = this._canvas.name;
+        textfield.text = this._canvas.name + " Menu";
     }
 }

@@ -25,11 +25,8 @@ public class LevelMenu : Menu
             _instance = this;
         } */
 
-        displayedCurrentLevel = menuCanvas.transform.Find("CurrentLevelValue")?.GetComponent<TextMeshProUGUI>();
-        displayedCurrentXp = menuCanvas.transform.Find("CurrentXpValue")?.GetComponent<TextMeshProUGUI>();
-
-        if(displayedCurrentLevel == null) {Debugger.LogError("Can't find TextMeshProUGUI with the name CurrentLevelValue from the parent canvas Level!");};
-        if(displayedCurrentXp == null) {Debugger.LogError("Can't find TextMeshProUGUI with the name CurrentLevelValue from the parent canvas Level!");};
+        displayedCurrentLevel = GetTextfieldByName("CurrentLevelValue");
+        displayedCurrentXp = GetTextfieldByName("CurrentXpValue");
     }
 
 
