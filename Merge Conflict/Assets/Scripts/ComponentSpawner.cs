@@ -8,6 +8,8 @@ TODO:          -
 **********************************************************************************************************************/
 
 using ConveyorBelt;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -22,6 +24,16 @@ public class ComponentSpawner : MonoBehaviour
     private Vector3 spawnPositionOnBelt;
 
     public GameObject ConveyorBeltGameObject;
+
+    [Header("Idle Movement of components")]
+    public bool SamePropertiesForEveryComponent = false;
+    public float MinDistance = 30;
+    public float MaxDistance = 70;
+    public float MovingSpeed = 50;
+    public float MinSecondsWithoutMoving = 2;
+    public float MaxSecondsWithoutMoving = 4;
+    public float TimeToStartMovement = 2;
+    public float MaxScaleFactor = 1.05f;
 
     void Awake()
     {
@@ -77,6 +89,7 @@ public class ComponentSpawner : MonoBehaviour
         }
 
         GameObject component = Instantiate(componentToSpawn, spawnPosition, Quaternion.identity, transform.parent);
+        SyncComponentMovementProperties(component);
         // move Component in Front of the Conveyor Belt
         component.transform.position += new Vector3(0, 0, -1);
     }
@@ -94,5 +107,24 @@ public class ComponentSpawner : MonoBehaviour
     private GameObject GetRandomGameObject()
     {
         return ObjectsToSpawn[Random.Range(0, ObjectsToSpawn.Length)];
+    }
+
+    private void SyncComponentMovementProperties(GameObject component)
+    {
+        if (SamePropertiesForEveryComponent)
+        {
+            bool success = component.TryGetComponent(out ComponentMovement componentMovement);
+
+            if (success)
+            {
+                componentMovement.MinDistance = MinDistance;
+                componentMovement.MaxDistance = MaxDistance;
+                componentMovement.MovingSpeed = MovingSpeed;
+                componentMovement.MinSecondsWithoutMoving = MinSecondsWithoutMoving;
+                componentMovement.MaxSecondsWithoutMoving = MaxSecondsWithoutMoving;
+                componentMovement.TimeToStartMovement = TimeToStartMovement;
+                componentMovement.MaxScaleFactor = MaxScaleFactor;
+            }
+        }
     }
 }

@@ -4613,6 +4613,14 @@ MonoBehaviour:
   ObjectsToSpawn:
   - {fileID: 3970239696843751595, guid: 69e9a6121c3fa7d43b236a6f27ad665a, type: 3}
   ConveyorBeltGameObject: {fileID: 1064727933}
+  SamePropertiesForEveryComponent: 1
+  MinDistance: 30
+  MaxDistance: 70
+  MovingSpeed: 50
+  MinSecondsWithoutMoving: 2
+  MaxSecondsWithoutMoving: 4
+  TimeToStartMovement: 2
+  MaxScaleFactor: 1.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
