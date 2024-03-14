@@ -30,8 +30,6 @@ public class CaseComponent : Element, IComponent
     }
 
 
-    // !  später mal noch testen : evtl. muss bei den Zeilen            if (motherboard) { return null; }     this.motherboard = otherMB;            erst der Component mit AddComponent<MBComponent>() hinzugefügt werden
-
     // Element in der funktion merge ist das Element, dass auf den CaseComponent drauf gemerged wird
     public Element? Merge(Element element)
     {

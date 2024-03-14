@@ -15,13 +15,6 @@ using UnityEngine;
 
 public class Element
 {
-    /*  // caused stackoverflow error
-    public int level
-    {
-        get { return level; }
-        set { level = Mathf.Clamp(level, 1, 4); }
-    } */
-
     private int _level;
     public int level
     {
