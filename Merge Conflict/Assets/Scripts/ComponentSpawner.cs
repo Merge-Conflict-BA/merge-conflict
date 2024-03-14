@@ -83,7 +83,7 @@ public class ComponentSpawner : MonoBehaviour
     {
         GameObject slotComponentObject = Instantiate(new GameObject(""));
         slotComponentObject.name = $"{element.GetType()}_child";
-        slotComponentObject.tag = Tags.Untagged.ToString();
+        slotComponentObject.tag = Tags.SubComponent.ToString();
         slotComponentObject.transform.position = spawnPosition;
         slotComponentObject.transform.SetParent(parentComponentObject.transform, true);
         slotComponentObject.AddComponent<SpriteRenderer>();

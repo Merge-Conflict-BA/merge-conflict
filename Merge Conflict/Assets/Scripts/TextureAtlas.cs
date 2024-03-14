@@ -4,7 +4,7 @@ Description:   Elements data structure for texture.
 
 Author(s):     Daniel Rittrich
 Date:          2024-02-27
-Version:       V2.1 
+Version:       V2.2 
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -58,7 +58,7 @@ public class TextureAtlas : MonoBehaviour
             new float[] { 4f, 4f, scale },
             new float[] { 3f, 3.5f, scale },
             new float[] { 3f, 4f, scale }
-        }; // banana, bug, can
+        }; // { {banana}, {bug}, {can} }
 
     public ElementTexture defaultTexture;
     public static float[] defaultTextureValues = { 5f, 5f, scale };

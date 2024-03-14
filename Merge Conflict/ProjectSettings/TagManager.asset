@@ -9,6 +9,7 @@ TagManager:
   - ConveyorBeltDiagonal
   - Component
   - Trashcan
+  - SubComponent
   layers:
   - Default
   - TransparentFX

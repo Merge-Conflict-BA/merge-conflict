@@ -15,6 +15,7 @@ public enum Tags
 {
     Untagged,
     Component,
+    SubComponent,
     Trashcan,
     ConveyorBelt,
     ConveyorBeltDiagonal
