@@ -7,9 +7,7 @@ Version:       V1.2
 TODO:          - 
 **********************************************************************************************************************/
 
-using ConveyorBelt;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class ComponentSpawner : MonoBehaviour
 {
@@ -69,7 +67,7 @@ public class ComponentSpawner : MonoBehaviour
 
     public GameObject SpawnComponent(Vector2 spawnPosition, Element element)
     {
-        GameObject componentObject = Instantiate(componentPrefab, spawnPosition, Quaternion.Euler(0, 0, 0));
+        GameObject componentObject = Instantiate(componentPrefab, spawnPosition, Quaternion.Euler(0, 0, 0), transform.parent);
         componentObject.name = $"{element.GetType()}_lvl_{element.level}_merged";
         componentObject.tag = Tags.Component.ToString();
         ComponentHandler componentHandler = componentObject.GetComponent<ComponentHandler>();

@@ -56,7 +56,7 @@ public class Element
         // get texture for main component and add it to the new GameObject
         ElementTexture componentTexture = TextureAtlas.Instance.GetComponentTexture(this);
         componentObject = componentTexture.ApplyTexture(componentObject);
-        componentObject.GetComponent<BoxCollider2D>().isTrigger = true;
+        componentObject.GetComponent<BoxCollider2D>().isTrigger = false;
         componentObject.GetComponent<BoxCollider2D>().size = new Vector2(componentTexture.sizeWidth, componentTexture.sizeHeight);
 
         // check whether the element has subcomponents
