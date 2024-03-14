@@ -1,4 +1,4 @@
-using ExpirienceSystem;
+using ExperienceSystem;
 using UnityEngine;
 
 public class TestHandler : MonoBehaviour
@@ -12,7 +12,7 @@ public class TestHandler : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.LogError(ExperienceHandler.GetExperiencePointsCount());
+            Debug.LogError(ExperienceHandler.GetExperiencePoints());
         }
 
         if (Input.GetMouseButtonDown(2))

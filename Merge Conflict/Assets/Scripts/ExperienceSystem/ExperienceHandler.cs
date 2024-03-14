@@ -1,7 +1,7 @@
 using ExperienceSystem;
 using UnityEngine;
 
-namespace ExpirienceSystem
+namespace ExperienceSystem
 {
     public static class ExperienceHandler
     {
@@ -16,14 +16,14 @@ namespace ExpirienceSystem
             }
         }
         
-        public static void AddExperiencePoints(int experiencePoint)
+        public static void AddExperiencePoints(int experiencePoints)
         {
             var currentExp = PlayerPrefs.GetInt("Experience");
-            currentExp += experiencePoint;
+            currentExp += experiencePoints;
             PlayerPrefs.SetInt("Experience", currentExp);
         }
 
-        public static int GetExperiencePointsCount()
+        public static int GetExperiencePoints()
         {
             return PlayerPrefs.GetInt("Experience");
         }
