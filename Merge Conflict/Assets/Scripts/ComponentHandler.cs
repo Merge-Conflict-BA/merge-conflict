@@ -66,6 +66,8 @@ public class ComponentHandler : MonoBehaviour
 
     private int GetHighestSpritePosition()
     {
+        // TODO BUGFIX
+        // moving an object makes all slotcomponent textures dissappear
         SpriteRenderer[] allSprites = FindObjectsOfType<SpriteRenderer>();
         int highestSortingOrder = int.MinValue;
 
@@ -153,9 +155,7 @@ public class ComponentHandler : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D col)
-    {
-        Debugger.LogMessage("collided enter");
-
+    {        
         if (Tags.ConveyorBelt.UsedByGameObject(col.gameObject))
         {
             CountCollisionConveyorBelt++;
@@ -170,8 +170,6 @@ public class ComponentHandler : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        Debugger.LogMessage("collided exit");
-
         if (Tags.ConveyorBelt.UsedByGameObject(other.gameObject))
         {
             CountCollisionConveyorBelt--;
