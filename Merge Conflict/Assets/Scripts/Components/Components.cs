@@ -110,7 +110,12 @@ public static class Components
         // only for testing purpose
         // TODO implement when needed for spawner logic
 
-        return GPU.Clone();
+        Element[] array = { CreateCase(), Powersupply.Clone(), HDD.Clone(), CreateMB(), CPU.Clone(), RAM.Clone(), GPU.Clone(), CreateTrash() };
+        int randomIndex = Random.Range(0, array.Length);
+        Element randomElement = array[randomIndex];
+
+
+        return randomElement;
     }
 
 }

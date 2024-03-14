@@ -18,13 +18,31 @@ public class TextureAtlas : MonoBehaviour
     private static TextureAtlas _instance;
     public static TextureAtlas Instance { get { return _instance; } }
 
+    public static float scale = 15f;
+    public static float scaleSubComponents = 1f;
+    public static float[] subComponentTextureValues = { 0f, 0f, scaleSubComponents }; //  float[] = {sizeWidth, sizeHeight, scale}
+
     public ElementTexture[] caseTexture;
+    public static float[] caseTextureValues = { 5f, 5f, scale };
+
     public ElementTexture[] powersupplyTexture;
+    public static float[] powersupplyTextureValues = { 5.5f, 4.5f, scale };
+
     public ElementTexture[] hddTexture;
+    public static float[] hddTextureValues = { 2.7f, 4.5f, scale };
+
     public ElementTexture[] mbTexture;
+    public static float[] mbTextureValues = { 4.5f, 6f, scale };
+
     public ElementTexture[] cpuTexture;
+    public static float[] cpuTextureValues = { 3f, 3.5f, scale };
+
     public ElementTexture[] ramTexture;
+    public static float[] ramTextureValues = { 3.5f, 2.5f, scale };
+
     public ElementTexture[] gpuTexture;
+    public static float[] gpuTextureValues = { 4.5f, 3f, scale };
+
     public ElementTexture[] mbCPUSlotTexture;
     public ElementTexture[] mbRAMSlotTexture;
     public ElementTexture[] mbGPUSlotTexture;
@@ -34,8 +52,16 @@ public class TextureAtlas : MonoBehaviour
     public ElementTexture[] caseCPUSlotTexture;
     public ElementTexture[] caseRAMSlotTexture;
     public ElementTexture[] caseGPUSlotTexture;
+
     public ElementTexture[] trashTexture;
+    public static float[][] trashTextureValues = {
+            new float[] { 4f, 4f, scale },
+            new float[] { 3f, 3.5f, scale },
+            new float[] { 3f, 4f, scale }
+        }; // banana, bug, can
+
     public ElementTexture defaultTexture;
+    public static float[] defaultTextureValues = { 5f, 5f, scale };
 
 
     void Awake()
@@ -55,37 +81,64 @@ public class TextureAtlas : MonoBehaviour
     {
 
         int index = element.level - 1;
+        ElementTexture texture = defaultTexture;
+        float[] textureValues = defaultTextureValues;
 
         switch (element)
         {
             case CaseComponent:
-                return caseTexture[index];
+                texture = caseTexture[index];
+                textureValues = caseTextureValues;
+                break;
 
             case PowersupplyComponent:
-                return powersupplyTexture[index];
+                texture = powersupplyTexture[index];
+                textureValues = powersupplyTextureValues;
+                break;
 
             case HDDComponent:
-                return hddTexture[index];
+                texture = hddTexture[index];
+                textureValues = hddTextureValues;
+                break;
 
             case MBComponent:
-                return mbTexture[index];
+                texture = mbTexture[index];
+                textureValues = mbTextureValues;
+                break;
 
             case CPUComponent:
-                return cpuTexture[index];
+                texture = cpuTexture[index];
+                textureValues = cpuTextureValues;
+                break;
 
             case RAMComponent:
-                return ramTexture[index];
+                texture = ramTexture[index];
+                textureValues = ramTextureValues;
+                break;
 
             case GPUComponent:
-                return gpuTexture[index];
+                texture = gpuTexture[index];
+                textureValues = gpuTextureValues;
+                break;
 
             case Trash trash:
-                return trashTexture[(int)trash.trashVariant];
+                texture = trashTexture[(int)trash.trashVariant];
+                textureValues = trashTextureValues[(int)trash.trashVariant];
+                break;
 
             default:
                 Debug.LogWarning("There is no matching texture for: " + element);
-                return defaultTexture;
+                texture = defaultTexture;
+                break;
         }
+
+        // Apply texture values for Component
+        texture.sizeWidth = textureValues[0];
+        texture.sizeHeight = textureValues[1];
+        texture.sizeScaleX = textureValues[2];
+        texture.sizeScaleY = textureValues[2];
+
+        return texture;
     }
 
     public List<ElementTexture> GetSlotComponentTextures(Element element)
@@ -109,6 +162,15 @@ public class TextureAtlas : MonoBehaviour
             if (cs.motherboard.cpu != null) { listOfSlotComponentTextures.Add(caseCPUSlotTexture[cs.motherboard.cpu.level - levelIndexIndicator]); }
             if (cs.motherboard.ram != null) { listOfSlotComponentTextures.Add(caseRAMSlotTexture[cs.motherboard.ram.level - levelIndexIndicator]); }
             if (cs.motherboard.gpu != null) { listOfSlotComponentTextures.Add(caseGPUSlotTexture[cs.motherboard.gpu.level - levelIndexIndicator]); }
+        }
+
+        // Apply texture values for sub components
+        foreach (ElementTexture texture in listOfSlotComponentTextures)
+        {
+            texture.sizeWidth = subComponentTextureValues[0];
+            texture.sizeHeight = subComponentTextureValues[1];
+            texture.sizeScaleX = subComponentTextureValues[2];
+            texture.sizeScaleY = subComponentTextureValues[2];
         }
 
         return listOfSlotComponentTextures;

@@ -44,9 +44,9 @@ public class ComponentSpawner : MonoBehaviour
         // set position of spawning (in the center of the conveyor belt)
         ConveyorBelt.ConveyorBelt conveyorBelt = ConveyorBeltGameObject.GetComponent<ConveyorBelt.ConveyorBelt>();
         var prefabSize = conveyorBelt.PrefabConveyorBeltVertical.GetComponent<RectTransform>().rect.size;
-        
+
         spawnPositionOnBelt = new Vector3(prefabSize.x / 2, Screen.height + prefabSize.y, 0);
-        
+
         // Current System of spawning: each 4 seconds a random component is spawning
         InvokeRepeating("SpawnRandomComponentOnBelt", 0f, 4f);
     }
@@ -83,6 +83,7 @@ public class ComponentSpawner : MonoBehaviour
     {
         GameObject slotComponentObject = Instantiate(new GameObject(""));
         slotComponentObject.name = $"{element.GetType()}_child";
+        slotComponentObject.tag = Tags.Untagged.ToString();
         slotComponentObject.transform.position = spawnPosition;
         slotComponentObject.transform.SetParent(parentComponentObject.transform, true);
 
