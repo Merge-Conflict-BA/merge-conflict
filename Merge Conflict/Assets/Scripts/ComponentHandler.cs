@@ -20,7 +20,7 @@ public class ComponentHandler : MonoBehaviour
     public GameObject spawnedObjectAfterMerge;
     //for the testing only
     public GameObject componentToSpawn;
-    
+
     // store current count of collision with conveyor belt parts
     public int CountCollisionConveyorBelt = 0;
     public bool IsOnConveyorBeltDiagonal = false;
@@ -44,18 +44,6 @@ public class ComponentHandler : MonoBehaviour
     {
         HandleOverlappingObjects();
         isDraggingActive = false;
-    }
-
-    // IsComponent compares Unity Tags, is useful for checking colissions
-    private bool IsComponent(GameObject gameObject)
-    {
-        return gameObject.CompareTag("component");
-    }
-
-    //unity object tagged with "trashcan"
-    private bool IsTrashcan(GameObject gameObject)
-    {
-        return gameObject.CompareTag("trashcan");
     }
 
     private void HandleSpriteSorting()
@@ -111,9 +99,9 @@ public class ComponentHandler : MonoBehaviour
             {
                 continue;
             }
-            
+
             //merge components if possible 
-            if (IsComponent(staticComponent.gameObject))
+            if (Tags.Component.UsedByGameObject(staticComponent.gameObject))
             {
                 Debugger.LogMessage("two components overlapp => merge?!");
                 Destroy(draggedComponent, timeToDestroyObject);
@@ -124,7 +112,7 @@ public class ComponentHandler : MonoBehaviour
             }
 
             //put component in the trashcan -> delete it
-            if (IsTrashcan(staticComponent.gameObject))
+            if (Tags.Trashcan.UsedByGameObject(staticComponent.gameObject))
             {
                 Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
                 Destroy(draggedComponent, timeToDestroyObject);
@@ -132,15 +120,15 @@ public class ComponentHandler : MonoBehaviour
             }
         }
     }
-    
+
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("ConveyorBelt"))
+        if (Tags.ConveyorBelt.UsedByGameObject(col.gameObject))
         {
             CountCollisionConveyorBelt++;
         }
 
-        if (col.gameObject.CompareTag("ConveyorBeltDiagonal"))
+        if (Tags.ConveyorBeltDiagonal.UsedByGameObject(col.gameObject))
         {
             CountCollisionConveyorBelt++;
             IsOnConveyorBeltDiagonal = true;
@@ -149,12 +137,12 @@ public class ComponentHandler : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("ConveyorBelt"))
+        if (Tags.ConveyorBelt.UsedByGameObject(other.gameObject))
         {
             CountCollisionConveyorBelt--;
         }
-        
-        if (other.gameObject.CompareTag("ConveyorBeltDiagonal"))
+
+        if (Tags.ConveyorBeltDiagonal.UsedByGameObject(other.gameObject))
         {
             CountCollisionConveyorBelt--;
             IsOnConveyorBeltDiagonal = false;

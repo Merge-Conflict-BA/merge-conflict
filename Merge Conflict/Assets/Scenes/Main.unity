@@ -1943,7 +1943,7 @@ GameObject:
   - component: {fileID: 1006736384}
   m_Layer: 5
   m_Name: Trashcan
-  m_TagString: trashcan
+  m_TagString: Trashcan
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
