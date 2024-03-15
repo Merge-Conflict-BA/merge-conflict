@@ -1,5 +1,4 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -60,11 +59,5 @@ public class LevelMenu : Menu
         Debugger.LogMessage("pb: " + progressbar.name);
         double scaledLevel = level * 0.1;
         progressbar.fillAmount = (float)scaledLevel;
-
-
-
     }
-
-
-
 }
