@@ -159,11 +159,10 @@ public class UiManager : MonoBehaviour
             case "Level":
                 Level.enabled = true;
                 currentOpenedMenu = Level;
-                LevelMenu LevelMenu = new LevelMenu(Level); //TODO: use AdComponent<>()
 
-                LevelMenu.SetDisplayedCurrentLevel(2);
-                LevelMenu.SetDisplayedCurrentXp(300);
-                
+                LevelMenu.GetSingleInstance().SetDisplayedCurrentLevel(3);
+                LevelMenu.GetSingleInstance().SetDisplayedCurrentXp(500);
+
                 break;
 
             case "Upgrade":
