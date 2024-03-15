@@ -16,8 +16,8 @@ public class LevelMenu : Menu
         _levelmenuCanvas = FindCanvasForMenu("Level");
 
         InitializeMenu(_levelmenuCanvas);
-        _levelTextfield = GetTextfieldByName("CurrentLevelValue");
-        _xpTextfield = GetTextfieldByName("CurrentXpValue");
+        _levelTextfield = GetComponentByName<TextMeshProUGUI>("CurrentLevelValue");
+        _xpTextfield = GetComponentByName<TextMeshProUGUI>("CurrentXpValue");
     }
 
     public static LevelMenu GetSingleInstance()

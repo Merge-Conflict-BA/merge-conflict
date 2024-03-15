@@ -24,16 +24,16 @@ public class Menu : MonoBehaviour
     }
 
 
-    public TextMeshProUGUI GetTextfieldByName(string name)
+    public T GetComponentByName<T>(string name) where T : Component
     {
-        TextMeshProUGUI textfield = this._canvas.transform.Find(name)?.GetComponent<TextMeshProUGUI>();
-        if (textfield == null)
+        Transform foundGameObject = _canvas.transform.Find(name);
+        if (!foundGameObject.TryGetComponent<T>(out var component))
         {
-            Debugger.LogError($"The TextMeshPro field with name {name} can't be found in the canvas with the name {this._canvas}");
+            Debugger.LogError($"The component of type {typeof(T)} with the name {name} can't be found in the canvas {_canvas} !");
             return null;
-        };
+        }
 
-        return textfield;
+        return component;
     }
 
     public Canvas FindCanvasForMenu(string menuname)
@@ -45,7 +45,7 @@ public class Menu : MonoBehaviour
     public void SetTitle()
     {
         //get the TextMeshPro field from the title or return 
-        TextMeshProUGUI textfield = GetTextfieldByName("Title");
+        TextMeshProUGUI textfield = GetComponentByName<TextMeshProUGUI>("Title");
         if (textfield == null) { return; };
 
         //set the title
