@@ -31,6 +31,12 @@ public class ComponentMovement : MonoBehaviour
     // Direction of the Movement from a position to another
     private Vector3 _movingDirection;
     private Vector3? _movingStartPosition;
+    
+    // Used for smooth movement
+    private Vector3 _leaderPosition;
+    private readonly float _smoothMovementFactor = 0.02f;
+
+    private bool _componentIsMoving = false;
 
     private ComponentHandler _componentHandler;
 
@@ -134,18 +140,15 @@ public class ComponentMovement : MonoBehaviour
             }
             else
             {
-                Vector3 localPosition = transform.localPosition;
-                // distance between startPosition and currentPosition
-                float movedDistance = ((_movingStartPosition ?? localPosition) - localPosition).magnitude;
-
-                if (movedDistance >= _distanceToMove || _movingStartPosition == null)
+                // check if component is currently moving
+                if (_componentIsMoving)
                 {
-                    CalculateNewDestination();
-                    _deltaTimeToNextMove = Random.Range(MinSecondsWithoutMoving, MaxSecondsWithoutMoving);
+                    MoveToDestination();
                 }
                 else
                 {
-                    MoveToDestination();
+                    CalculateNewDestination();
+                    _deltaTimeToNextMove = Random.Range(MinSecondsWithoutMoving, MaxSecondsWithoutMoving);
                 }
             }
         }
@@ -197,7 +200,7 @@ public class ComponentMovement : MonoBehaviour
         Vector3 direction = (_lastPositions[^1] - _lastPositions[0]).normalized;
         Vector3 vectorToNextPosition = direction * (MovingSpeed * Time.deltaTime);
         
-        if (PositionIsStillOnDesk(vectorToNextPosition))
+        if (PositionIsStillOnDesk(transform.position + vectorToNextPosition))
         {
             transform.Translate(vectorToNextPosition, Space.World);
         }
@@ -205,42 +208,48 @@ public class ComponentMovement : MonoBehaviour
 
     void CalculateNewDestination()
     {
+        Vector3 position = transform.position;
+        
         _distanceToMove = Random.Range(MinDistance, MaxDistance);
-        _movingStartPosition = transform.localPosition;
+        _movingStartPosition = position;
         _movingDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized;
+        _leaderPosition = position;
+        _componentIsMoving = true;
 
         Vector3 vectorToPositionInDirection = _movingDirection * (_distanceToMove / 2);
-        while (!PositionIsStillOnDesk(vectorToPositionInDirection))
+        while (!PositionIsStillOnDesk(position + vectorToPositionInDirection))
         {
             _movingDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized;
             vectorToPositionInDirection = _movingDirection * (_distanceToMove / 2);
         }
     }
-
+    
     void MoveToDestination()
     {
         Vector3 vectorToNextPosition = _movingDirection * (MovingSpeed * Time.deltaTime);
+        float movedDistance = ((_movingStartPosition ?? _leaderPosition) - _leaderPosition).magnitude;
 
-        if (PositionIsStillOnDesk(vectorToNextPosition))
+        if (PositionIsStillOnDesk(_leaderPosition + vectorToNextPosition) && movedDistance <= _distanceToMove)
         {
-            transform.Translate(vectorToNextPosition, Space.World);
+            _leaderPosition += vectorToNextPosition;
         }
-        else
+        
+        // follow _leaderPosition - is smooth because of the _smoothMovementFactor
+        transform.position += (_leaderPosition - transform.position) * _smoothMovementFactor;
+
+        if (Vector3.Distance(_leaderPosition, transform.position) <= 0.01 )
         {
             ResetMovementProperties();
         }
     }
 
-    bool PositionIsStillOnDesk(Vector3 vectorToNextPosition)
+    bool PositionIsStillOnDesk(Vector3 position)
     {
-        Vector3 componentPosition = transform.position;
-        Vector3 nextPosition = componentPosition + vectorToNextPosition;
-
         if (_movingDirection.x < 0)
         {
             // left
             float leftSideDesk = _deskData.CenterPosition.x - _deskData.Width / 2;
-            float leftSideComp = nextPosition.x - _sizeOfComponent.x / 2 - _marginOfComponent;
+            float leftSideComp = position.x - _sizeOfComponent.x / 2 - _marginOfComponent;
 
             if (leftSideDesk > leftSideComp)
             {
@@ -251,7 +260,7 @@ public class ComponentMovement : MonoBehaviour
         {
             // right
             float rightSideDesk = _deskData.CenterPosition.x + _deskData.Width / 2;
-            float rightSideComp = nextPosition.x + _sizeOfComponent.x / 2 + _marginOfComponent;
+            float rightSideComp = position.x + _sizeOfComponent.x / 2 + _marginOfComponent;
 
             if (rightSideDesk < rightSideComp)
             {
@@ -264,7 +273,7 @@ public class ComponentMovement : MonoBehaviour
         {
             // bottom
             float bottomSideDesk = _deskData.CenterPosition.y - _deskData.Height / 2;
-            float bottomSideComp = nextPosition.y - _sizeOfComponent.y / 2 - _marginOfComponent;
+            float bottomSideComp = position.y - _sizeOfComponent.y / 2 - _marginOfComponent;
 
             if (bottomSideDesk > bottomSideComp)
             {
@@ -275,7 +284,7 @@ public class ComponentMovement : MonoBehaviour
         {
             // top
             float topSideDesk = _deskData.CenterPosition.y + _deskData.Height / 2;
-            float topSideComp = nextPosition.y + _sizeOfComponent.y / 2 + _marginOfComponent;
+            float topSideComp = position.y + _sizeOfComponent.y / 2 + _marginOfComponent;
 
             if (topSideDesk < topSideComp)
             {
@@ -292,5 +301,6 @@ public class ComponentMovement : MonoBehaviour
         _movingDirection = Vector3.zero;
         _distanceToMove = 0;
         _deltaTimeToNextMove = Random.Range(MinSecondsWithoutMoving, MaxSecondsWithoutMoving);
+        _componentIsMoving = false;
     }
 }
