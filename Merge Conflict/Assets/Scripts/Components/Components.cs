@@ -68,9 +68,15 @@ public static class Components
 
 
     // ! catch the returning tuple like this :
-    //      var (trashValue, salesValue) = ComponentValues.GetComponentValues(MyComponentClass);
-    public static (int trashValue, int salesValue) GetComponentValues(Element element)
+    //      var (trashValue, salesValue) = Components.GetComponentValues(MyComponentClass);
+    public static (int trashValue, int salesValue) GetComponentValues(Element? element)
     {
+        if (element == null)
+        {
+            Debugger.LogError("No component existing for the return of trash and sales values.");
+            return (5, 10);
+        }
+
         int index = element.level - 1;
 
         switch (element)
@@ -118,6 +124,7 @@ public static class Components
         return randomElement;
     }
 
+    // function that checks if two components are equal ( => same type and same level) (it also checks the types and levels of the sub components )
     public static bool CompareElements(Element? element1, Element? element2)
     {
         if (element1 == null && element2 == null) return true;
