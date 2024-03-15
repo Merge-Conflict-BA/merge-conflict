@@ -22,6 +22,7 @@ public class OrderGenerator : MonoBehaviour
 
     void Update()
     {
+        ComponentParameter test = new ComponentParameter();
         
     }
 }
