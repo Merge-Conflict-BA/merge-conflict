@@ -2,8 +2,8 @@
 Name:          ComponentMovement
 Description:   Manages the Movement of the components if they are on the desk
 Author(s):     Simeon Baumann
-Date:          2024-03-14
-Version:       V1.1
+Date:          2024-03-15
+Version:       V1.2
 **********************************************************************************************************************/
 
 using System;
@@ -38,8 +38,6 @@ public class ComponentMovement : MonoBehaviour
 
     private bool _componentIsMoving = false;
 
-    private ComponentHandler _componentHandler;
-
     // Borders / desk
     private DeskCreator _deskData;
     // Space between Component and border of desk
@@ -50,9 +48,8 @@ public class ComponentMovement : MonoBehaviour
     private Vector3 _defaultScaleOfComponent;
     
     public float MaxScaleFactor = 1.05f;
-    private bool _scaleBackToDefault;
+    private bool _scaleBackToDefault = false;
 
-    private bool _firstFrameAfterDragging = false;
     private float _startTimeOfIdleMovement = 0;
 
     // Store the last positions of the component while dragging to calculate the direction of the further movement after dragging
@@ -60,7 +57,6 @@ public class ComponentMovement : MonoBehaviour
 
     private void Start()
     {
-        _componentHandler = gameObject.GetComponent<ComponentHandler>();
         _sizeOfComponent = GetComponent<RectTransform>().rect.size;
         _defaultScaleOfComponent = gameObject.GetComponent<RectTransform>().localScale;
 
@@ -82,16 +78,67 @@ public class ComponentMovement : MonoBehaviour
         _lastPositions = new List<Vector3>();
     }
 
-    void Update()
+    /// <summary>
+    /// Resets the moving properties if the component is released after being dragged
+    /// </summary>
+    public void ComponentIsReleased()
     {
-        if (_componentHandler.isDraggingActive)
+        ResetMovementProperties();
+        _startTimeOfIdleMovement = Time.time;
+    }
+
+    /// <summary>
+    /// Moves the component random over the desk
+    /// </summary>
+    public void IdleMovement()
+    {
+        if (_deltaTimeToNextMove > 0)
         {
-            _firstFrameAfterDragging = true;
-            
+            _deltaTimeToNextMove -= Time.deltaTime;
+        }
+        else
+        {
+            // check if component is currently moving
+            if (_componentIsMoving)
+            {
+                MoveToDestination();
+            }
+            else
+            {
+                CalculateNewDestination();
+                _deltaTimeToNextMove = Random.Range(MinSecondsWithoutMoving, MaxSecondsWithoutMoving);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Simulates a breathing animation of the component
+    /// </summary>
+    public void IdleScaling()
+    {
+        // check if component is currently scaling back to the default size
+        if (_scaleBackToDefault)
+        {
+            return;
+        }
+        
+        // get a smooth scaleFactor to have a smooth scaling animation
+        double scaleFactor = ((Math.Sin(Time.time - _startTimeOfIdleMovement - Math.PI / 2) + 1) * 0.5 * (MaxScaleFactor - 1)) + 1;
+
+        transform.localScale = _defaultScaleOfComponent * (float)scaleFactor;
+    }
+
+    /// <summary>
+    /// Dragging start: Scale the component up
+    /// Dragging end: Scale the component the to default and move it a little
+    /// </summary>
+    public void DraggingAnimation(bool isDraggingActive)
+    {
+        if (isDraggingActive)
+        {
             ScaleToFactor(MaxScaleFactor);
-            // indicates that component should be scaled back to default after being dragged
             _scaleBackToDefault = true;
-            
+
             // Add position to array of last positions
             if (_lastPositions.Count == 0)
             {
@@ -106,54 +153,26 @@ public class ComponentMovement : MonoBehaviour
             {
                 _lastPositions.RemoveAt(0);
             }
-            return;
-        }
-
-        if (_firstFrameAfterDragging)
-        {
-            _firstFrameAfterDragging = false;
             
-            ResetMovementProperties();
-            _startTimeOfIdleMovement = Time.time;
         }
-
-        if (_scaleBackToDefault)
+        else
         {
-            ScaleToFactor(1f);
-            MoveAfterDragging();
-            if (transform.localScale.x <= _defaultScaleOfComponent.x + 0.1f)
+            if (_scaleBackToDefault)
             {
-                _scaleBackToDefault = false;
-                _lastPositions = new List<Vector3>();
-            }
-            return;
-        }
-
-        // component is not on ConveyorBelt
-        if (_componentHandler.CountCollisionConveyorBelt == 0)
-        {
-            IdleMovement();
-            
-            if (_deltaTimeToNextMove > 0)
-            {
-                _deltaTimeToNextMove -= Time.deltaTime;
-            }
-            else
-            {
-                // check if component is currently moving
-                if (_componentIsMoving)
+                ScaleToFactor(1f);
+                MoveAfterDragging();
+                if (Vector3.Distance(transform.localScale, _defaultScaleOfComponent) <= 0.1f)
                 {
-                    MoveToDestination();
-                }
-                else
-                {
-                    CalculateNewDestination();
-                    _deltaTimeToNextMove = Random.Range(MinSecondsWithoutMoving, MaxSecondsWithoutMoving);
+                    _scaleBackToDefault = false;
+                    _lastPositions = new List<Vector3>();
                 }
             }
         }
     }
-
+    
+    /// <summary>
+    /// Changes important properties of the movement of the component
+    /// </summary>
     public void SyncComponentMovementProperties(float minDistance,
                                                 float maxDistance,
                                                 float movingSpeed, 
@@ -171,18 +190,13 @@ public class ComponentMovement : MonoBehaviour
         MaxScaleFactor = maxScaleFactor;
     }
     
+    
+    // PRIVATE METHODS //
+    
     private void RecalculateMargin()
     {
         float deltaWidth = (_sizeOfComponent.x * MaxScaleFactor) - _sizeOfComponent.x;
         _marginOfComponent += _marginOfComponent + deltaWidth;
-    }
-
-    private void IdleMovement()
-    {
-        // get a smooth scaleFactor to have a smooth scaling animation
-        double scaleFactor = ((Math.Sin(Time.time - _startTimeOfIdleMovement - Math.PI / 2) + 1) * 0.5 * (MaxScaleFactor - 1)) + 1;
-
-        transform.localScale = _defaultScaleOfComponent * (float)scaleFactor;
     }
 
     private void ScaleToFactor(float scaleFactor)
@@ -206,7 +220,7 @@ public class ComponentMovement : MonoBehaviour
         }
     }
 
-    void CalculateNewDestination()
+    private void CalculateNewDestination()
     {
         Vector3 position = transform.position;
         
@@ -224,7 +238,7 @@ public class ComponentMovement : MonoBehaviour
         }
     }
     
-    void MoveToDestination()
+    private void MoveToDestination()
     {
         Vector3 vectorToNextPosition = _movingDirection * (MovingSpeed * Time.deltaTime);
         float movedDistance = ((_movingStartPosition ?? _leaderPosition) - _leaderPosition).magnitude;
@@ -243,7 +257,7 @@ public class ComponentMovement : MonoBehaviour
         }
     }
 
-    bool PositionIsStillOnDesk(Vector3 position)
+    private bool PositionIsStillOnDesk(Vector3 position)
     {
         if (_movingDirection.x < 0)
         {
@@ -295,7 +309,7 @@ public class ComponentMovement : MonoBehaviour
         return true;
     }
 
-    void ResetMovementProperties()
+    private void ResetMovementProperties()
     {
         _movingStartPosition = null;
         _movingDirection = Vector3.zero;

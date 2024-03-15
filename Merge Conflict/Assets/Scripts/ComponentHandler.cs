@@ -1,9 +1,9 @@
 /**********************************************************************************************************************
 Name:          ComponentHandler
-Description:   Contains the methode to drag the component-objects and the methode to merge them.
+Description:   Contains the methode to drag the component-objects and the methode to merge them. Handles the movement of objects on the desk.
 Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
-Date:          2024-03-01
-Version:       V1.2
+Date:          2024-03-15
+Version:       V1.3
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
 using System;
@@ -24,12 +24,37 @@ public class ComponentHandler : MonoBehaviour
     // store current count of collision with conveyor belt parts
     public int CountCollisionConveyorBelt = 0;
     public bool IsOnConveyorBeltDiagonal = false;
+    // component is dragged at least once
+    private bool _isDraggedOnce = false;
+
+    // component movement
+    private ComponentMovement ComponentMovement;
+    
+    private void Start()
+    {
+        bool success = gameObject.TryGetComponent(out ComponentMovement);
+        if (!success)
+        {
+            Debugger.LogError("ComponentMovement is missing on Component.");
+        }
+    }
 
     private void Update()
     {
         if (isDraggingActive)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
+            _isDraggedOnce = true;
+            ComponentMovement.DraggingAnimation(isDraggingActive);
+        }
+        else
+        {
+            if (CountCollisionConveyorBelt == 0 && _isDraggedOnce)
+            {
+                ComponentMovement.DraggingAnimation(isDraggingActive);
+                ComponentMovement.IdleMovement();
+                ComponentMovement.IdleScaling();
+            }
         }
     }
 
@@ -44,6 +69,7 @@ public class ComponentHandler : MonoBehaviour
     {
         HandleOverlappingObjects();
         isDraggingActive = false;
+        ComponentMovement.ComponentIsReleased();
     }
 
     private void HandleSpriteSorting()
