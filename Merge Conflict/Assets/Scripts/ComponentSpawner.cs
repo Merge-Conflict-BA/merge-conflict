@@ -95,7 +95,7 @@ public class ComponentSpawner : MonoBehaviour
             bool success = component.TryGetComponent(out ComponentMovement componentMovement);
             if (success)
             {
-                componentMovement.SyncComponentMovementProperties(MinDistance, MaxDistance, MovingSpeed, MinSecondsWithoutMoving, MaxSecondsWithoutMoving, TimeToStartMovement, MaxScaleFactor);
+                componentMovement.InitializeProperties(MinDistance, MaxDistance, MovingSpeed, MinSecondsWithoutMoving, MaxSecondsWithoutMoving, TimeToStartMovement, MaxScaleFactor);
             }
         }
         // move Component in Front of the Conveyor Belt

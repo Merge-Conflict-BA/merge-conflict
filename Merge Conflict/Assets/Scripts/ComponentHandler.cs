@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class ComponentHandler : MonoBehaviour
 {
-    public bool isDraggingActive = false;
+    public bool isBeingDragged = false;
     // camera is located on the bottom left corner, so we have an offset to the mouse
     // gets set every time dragging starts
     private Vector3 offsetMouseToCamera;
@@ -41,35 +41,33 @@ public class ComponentHandler : MonoBehaviour
 
     private void Update()
     {
-        if (isDraggingActive)
+        if (isBeingDragged)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
             _isDraggedOnce = true;
-            ComponentMovement.DraggingAnimation(isDraggingActive);
+            ComponentMovement.HandleDraggingAnimation();
         }
-        else
+        else if (IsOnConveyorBelt() == false && _isDraggedOnce)
         {
-            if (CountCollisionConveyorBelt == 0 && _isDraggedOnce)
-            {
-                ComponentMovement.DraggingAnimation(isDraggingActive);
-                ComponentMovement.IdleMovement();
-                ComponentMovement.IdleScaling();
-            }
+            ComponentMovement.HandleDraggingAnimationEnd();
+            ComponentMovement.HandleIdleMovement();
+            ComponentMovement.HandleIdleScaling();
         }
+        
     }
 
     private void OnMouseDown()
     {
         HandleSpriteSorting();
         offsetMouseToCamera = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        isDraggingActive = true;
+        isBeingDragged = true;
     }
 
     private void OnMouseUp()
     {
         HandleOverlappingObjects();
-        isDraggingActive = false;
-        ComponentMovement.ComponentIsReleased();
+        isBeingDragged = false;
+        ComponentMovement.HandleDraggingStop();
     }
 
     private void HandleSpriteSorting()
@@ -145,6 +143,11 @@ public class ComponentHandler : MonoBehaviour
                 //TODO: call xp/money controller
             }
         }
+    }
+
+    private bool IsOnConveyorBelt()
+    {
+        return CountCollisionConveyorBelt > 0;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
