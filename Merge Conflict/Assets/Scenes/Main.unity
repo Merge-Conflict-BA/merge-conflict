@@ -2231,6 +2231,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864015477}
   m_CullTransparentMesh: 1
+--- !u!1 &935302682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 935302683}
+  m_Layer: 0
+  m_Name: 
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &935302683
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935302682}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &979635375
 GameObject:
   m_ObjectHideFlags: 0
@@ -5203,20 +5234,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8dd1e87564494fb6b473c56d3594aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testObjectToSpawn: {fileID: 0}
-  ObjectsToSpawn:
-  - {fileID: 3970239696843751595, guid: 69e9a6121c3fa7d43b236a6f27ad665a, type: 3}
-  - {fileID: 7998870965764047114, guid: 409b3834e12b75e43b5565125697bfd2, type: 3}
-  - {fileID: 8165882572672161432, guid: 961aff0f026846d4cbc8af3ba794319f, type: 3}
-  - {fileID: 4841512496508218501, guid: 05d1db96c2451c9498d977d1a29c14b8, type: 3}
-  - {fileID: 1081247404905760132, guid: 4dd6b1850b680414786796ce0f7d9f8d, type: 3}
-  - {fileID: 2403965842851558458, guid: d5b2230a7e1836d42bf53184bc0ec0d8, type: 3}
-  - {fileID: 5857601234661321950, guid: ce0aa7fe087df8641801ffe49c58cfc3, type: 3}
+  componentPrefab: {fileID: 2556968358889389474, guid: 3e186cf2c6ff241ef85ddffea5dd44ec, type: 3}
+  subComponentPrefab: {fileID: 2556968358889389474, guid: bed2c97de10ab6c4fbcad3b824306c5c, type: 3}
   ConveyorBeltGameObject: {fileID: 1064727933}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 935302683}
   - {fileID: 519420032}
   - {fileID: 1933479630}
   - {fileID: 540637954}
+  - {fileID: 1154819337}
