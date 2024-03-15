@@ -10,6 +10,7 @@ TagManager:
   - Component
   - Trashcan
   - SubComponent
+  - SellingStation
   layers:
   - Default
   - TransparentFX

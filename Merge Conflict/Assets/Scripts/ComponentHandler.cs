@@ -7,6 +7,7 @@ Version:       V1.3
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ public class ComponentHandler : MonoBehaviour
     public int CountCollisionConveyorBelt = 0;
     public bool IsOnConveyorBeltDiagonal = false;
 
+    private Coroutine moveComponent;
+
     private void Update()
     {
         if (isDraggingActive)
@@ -36,6 +39,13 @@ public class ComponentHandler : MonoBehaviour
         HandleSpriteSorting();
         offsetMouseToCamera = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         isDraggingActive = true;
+
+        // stops the automated movement of the component when component cannot be sold
+        if ((moveComponent != null) && isDraggingActive)
+        {
+            StopCoroutine(moveComponent);
+            moveComponent = null;
+        }
     }
 
     private void OnMouseUp()
@@ -155,8 +165,55 @@ public class ComponentHandler : MonoBehaviour
             {
                 Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
                 Destroy(draggedComponent, timeToDestroyObject);
-                //TODO: call xp/money controller
+                //TODO: call xp/money controller  =>  use trashValues of the components
             }
+
+            // drop component (PC) on the selling station -> if possible/matching with quest -> sells it
+#nullable enable
+            if (Tags.SellingStation.UsedByGameObject(staticComponent.gameObject))
+            {
+                // TODO: change this later to the correct "requiredQuestComponent" from actual quest
+                GameObject requiredQuestComponent = Components.CreateCase(powersupply: null, hdd: Components.HDD, motherboard: Components.CreateMB(cpu: null, ram: Components.RAM, gpu: Components.GPU)).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
+                
+                // function "Components.CompareElements()" returns a boolien for if query to check if component matches quest component
+                Element? requiredQuestElement = requiredQuestComponent.TryGetComponent(out ComponentHandler requiredQuestComponentHandler) ? requiredQuestComponentHandler.element : null;
+                Element? draggedElement = draggedComponent.TryGetComponent(out ComponentHandler draggedComponentHandler) ? draggedComponentHandler.element : null;
+                if (Components.CompareElements(requiredQuestElement, draggedElement))
+                {
+
+                    //TODO: call xp/money controller  ->  give more xp/money than putting it in trashcan  =>  use salesValues of the components
+
+                    Destroy(draggedComponent, timeToDestroyObject);
+                    Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
+                }
+                else
+                {
+                    Debugger.LogMessage("Component cannot be sold. It does not correspond to the required order from the quest.");
+                    // if component cannot be sold -> automatically move it back onto the playfield
+                    draggedComponent.GetComponent<ComponentHandler>().MoveComponent(new Vector2(200, 400), 100f);
+                }
+            }
+#nullable restore
+        }
+    }
+
+    public void MoveComponent(Vector2 targetPosition, float movingSpeed)
+    {
+        if (moveComponent != null)
+        {
+            StopCoroutine(moveComponent);
+        }
+
+        moveComponent = StartCoroutine(MoveToPosition(targetPosition, movingSpeed));
+    }
+
+    // coroutine for automated gameObject movement 
+    IEnumerator MoveToPosition(Vector2 targetPosition, float movingSpeed)
+    {
+        while ((Vector2)transform.position != targetPosition)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, movingSpeed * Time.deltaTime);
+            yield return null;
         }
     }
 
@@ -188,3 +245,17 @@ public class ComponentHandler : MonoBehaviour
         }
     }
 }
+
+/* 
+{
+    Trash,
+    CaseComponent:{
+        PowersupplyComponent,
+        HDDComponent,
+        MBComponent:{
+            CPUComponent,
+            RAMComponent,
+            GPUComponent
+        }
+    }
+} */
