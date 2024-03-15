@@ -150,6 +150,23 @@ public class ComponentMovement : MonoBehaviour
             }
         }
     }
+
+    public void SyncComponentMovementProperties(float minDistance,
+                                                float maxDistance,
+                                                float movingSpeed, 
+                                                float minSecondsWithoutMoving, 
+                                                float maxSecondsWithoutMoving,
+                                                float timeToStartMovement,
+                                                float maxScaleFactor)
+    {
+        MinDistance = minDistance;
+        MaxDistance = maxDistance;
+        MovingSpeed = movingSpeed;
+        MinSecondsWithoutMoving = minSecondsWithoutMoving;
+        MaxSecondsWithoutMoving = maxSecondsWithoutMoving;
+        TimeToStartMovement = timeToStartMovement;
+        MaxScaleFactor = maxScaleFactor;
+    }
     
     private void RecalculateMargin()
     {

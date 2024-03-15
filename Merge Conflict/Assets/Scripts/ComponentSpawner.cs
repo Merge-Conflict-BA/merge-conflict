@@ -89,7 +89,15 @@ public class ComponentSpawner : MonoBehaviour
         }
 
         GameObject component = Instantiate(componentToSpawn, spawnPosition, Quaternion.identity, transform.parent);
-        SyncComponentMovementProperties(component);
+        
+        if (SamePropertiesForEveryComponent)
+        {
+            bool success = component.TryGetComponent(out ComponentMovement componentMovement);
+            if (success)
+            {
+                componentMovement.SyncComponentMovementProperties(MinDistance, MaxDistance, MovingSpeed, MinSecondsWithoutMoving, MaxSecondsWithoutMoving, TimeToStartMovement, MaxScaleFactor);
+            }
+        }
         // move Component in Front of the Conveyor Belt
         component.transform.position += new Vector3(0, 0, -1);
     }
@@ -107,24 +115,5 @@ public class ComponentSpawner : MonoBehaviour
     private GameObject GetRandomGameObject()
     {
         return ObjectsToSpawn[Random.Range(0, ObjectsToSpawn.Length)];
-    }
-
-    private void SyncComponentMovementProperties(GameObject component)
-    {
-        if (SamePropertiesForEveryComponent)
-        {
-            bool success = component.TryGetComponent(out ComponentMovement componentMovement);
-
-            if (success)
-            {
-                componentMovement.MinDistance = MinDistance;
-                componentMovement.MaxDistance = MaxDistance;
-                componentMovement.MovingSpeed = MovingSpeed;
-                componentMovement.MinSecondsWithoutMoving = MinSecondsWithoutMoving;
-                componentMovement.MaxSecondsWithoutMoving = MaxSecondsWithoutMoving;
-                componentMovement.TimeToStartMovement = TimeToStartMovement;
-                componentMovement.MaxScaleFactor = MaxScaleFactor;
-            }
-        }
     }
 }
