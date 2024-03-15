@@ -160,8 +160,9 @@ public class UiManager : MonoBehaviour
                 Level.enabled = true;
                 currentOpenedMenu = Level;
 
-                LevelMenu.GetSingleInstance().SetDisplayedCurrentLevel(3);
+                LevelMenu.GetSingleInstance().SetDisplayedCurrentLevel(7);
                 LevelMenu.GetSingleInstance().SetDisplayedCurrentXp(500);
+                LevelMenu.GetSingleInstance().SetProgressbarValue(7);
 
                 break;
 

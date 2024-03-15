@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,7 @@ public class LevelMenu : Menu
         InitializeMenu(_levelmenuCanvas);
         _levelTextfield = GetComponentByName<TextMeshProUGUI>("CurrentLevelValue");
         _xpTextfield = GetComponentByName<TextMeshProUGUI>("CurrentXpValue");
+        _levelProgressbar = GetComponentByName<Image>("Progressbar_empty");
     }
 
     public static LevelMenu GetSingleInstance()
@@ -50,13 +52,18 @@ public class LevelMenu : Menu
         _xpTextfield.text = xp.ToString();
     }
 
-    /*
-    private void SetProgressbarValue(float level)
+    public void SetProgressbarValue(float level)
     {
+        Transform childimageTransform = _levelProgressbar.transform.Find("Progressbar_filled");
+        Image progressbar = childimageTransform.GetComponent<Image>();
+        
+        Debugger.LogMessage("pb: " + progressbar.name);
         double scaledLevel = level * 0.1;
-        _levelProgressbar.fillAmount = (float)scaledLevel;
+        progressbar.fillAmount = (float)scaledLevel;
+
+
+
     }
-    */
 
 
 
