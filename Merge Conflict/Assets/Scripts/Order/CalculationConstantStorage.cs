@@ -6,6 +6,8 @@ public class CalculationConstantStorage
     private int[,] _evolutionUnlockLevel = new int[7, 5];    //[1...7components, 1=unlocklevel for stage1, 2=unlocklevel for stage2,...]
     private int[,] _distanceMultiplier = new int[7, 5];      //[1...7components, 1=distance multiplier for stage1, 2=distance multiplier for stage2,...]
 
+    const byte offsetArrayindexToStage = 1;
+
     public CalculationConstantStorage()
     {
         componentList.Add("RAM", 0);
@@ -33,49 +35,49 @@ public class CalculationConstantStorage
         return componentList[componentName];
     }
 
-    public void SetEvolutionUnlocklevelForComponant(string componentName, int unlockLevel1, int unlockLevel2, int unlockLevel3, int unlockLevel4)
+    public void SetEvolutionUnlocklevelForComponent(string componentName, params int[] unlockLevels)
     {
-        if (ComponentNotListed(componentName)) { return; };
-
-        int componentIndexFromList = ComponentIndexFromList(componentName);
-        
-        _evolutionUnlockLevel[componentIndexFromList, 1] = unlockLevel1;
-        _evolutionUnlockLevel[componentIndexFromList, 2] = unlockLevel2;
-        _evolutionUnlockLevel[componentIndexFromList, 3] = unlockLevel3;
-        _evolutionUnlockLevel[componentIndexFromList, 4] = unlockLevel4;
-    }
-
-    public int GetEvolutionUnlocklevelFromComponant(string componentName, int stage)
-    {
-        if (ComponentNotListed(componentName)) { return 0; };
+        if (ComponentNotListed(componentName)) { return; }
 
         int componentIndexFromList = ComponentIndexFromList(componentName);
 
-        return _evolutionUnlockLevel[componentIndexFromList, stage];
+        for (int evolutionStage = 0; evolutionStage < unlockLevels.Length; evolutionStage++)
+        {
+            _evolutionUnlockLevel[componentIndexFromList, evolutionStage] = unlockLevels[evolutionStage];
+        }
     }
 
-    public void SetDistanceMultiplierForComponant(string componentName, int multiplierStage1, int multiplierStage2, int multiplierStage3, int multiplierStage4)
-    {
-        if (ComponentNotListed(componentName)) { return; };
-
-        int componentIndexFromList = ComponentIndexFromList(componentName);
-        
-        _distanceMultiplier[componentIndexFromList, 1] = multiplierStage1;
-        _distanceMultiplier[componentIndexFromList, 2] = multiplierStage2;
-        _distanceMultiplier[componentIndexFromList, 3] = multiplierStage3;
-        _distanceMultiplier[componentIndexFromList, 4] = multiplierStage4;
-    }
-
-    public int GetDistanceMultiplierForComponant(string componentName, int stage)
+    public int GetEvolutionUnlocklevelFromComponant(string componentName, int evolutionStage)
     {
         if (ComponentNotListed(componentName)) { return 0; };
 
         int componentIndexFromList = ComponentIndexFromList(componentName);
 
-        return _distanceMultiplier[componentIndexFromList, stage];
+        return _evolutionUnlockLevel[componentIndexFromList, evolutionStage - offsetArrayindexToStage];
     }
 
-    public int[] GetAllDistanceMultiplier(string componentName)
+    public void SetDistanceMultiplierForComponent(string componentName, params int[] distanceMultipliers)
+    {
+        if (ComponentNotListed(componentName)) { return; }
+
+        int componentIndexFromList = ComponentIndexFromList(componentName);
+
+        for (int stage = 0; stage < distanceMultipliers.Length; stage++)
+        {
+            _distanceMultiplier[componentIndexFromList, stage] = distanceMultipliers[stage];
+        }
+    }
+
+    public int GetDistanceMultiplierForComponant(string componentName, int evolutionStage)
+    {
+        if (ComponentNotListed(componentName)) { return 0; };
+
+        int componentIndexFromList = ComponentIndexFromList(componentName);
+
+        return _distanceMultiplier[componentIndexFromList, evolutionStage - offsetArrayindexToStage];
+    }
+
+    public int[] GetAllDistanceMultipliers(string componentName)
     {
         if (ComponentNotListed(componentName)) { return null; };
 
@@ -88,7 +90,7 @@ public class CalculationConstantStorage
         return multiplier;
     }
 
-    public int[] GetAllEvolutionUnlockLevel(string componentName)
+    public int[] GetAllEvolutionUnlockLevels(string componentName)
     {
         if (ComponentNotListed(componentName)) { return null; };
 
