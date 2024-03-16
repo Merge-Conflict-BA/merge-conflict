@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class CalculationConstantStorage
 {
     Dictionary<string, int> componentList = new Dictionary<string, int>();
-    private int[,] _evolutionUnlockLevel = new int[7, 5];    //[1...7components, 0=unlocklevel for stage1, 1=unlocklevel for stage2,...]
-    private int[,] _distanceMultiplier = new int[7, 5];      //[1...7components, 0=distance multiplier for stage1, 1=distance multiplier for stage2,...]
+    private int[,] _evolutionUnlockLevel = new int[7, 5];    //[1...7components, 1=unlocklevel for stage1, 2=unlocklevel for stage2,...]
+    private int[,] _distanceMultiplier = new int[7, 5];      //[1...7components, 1=distance multiplier for stage1, 2=distance multiplier for stage2,...]
 
     public CalculationConstantStorage()
     {
@@ -38,19 +37,12 @@ public class CalculationConstantStorage
     {
         if (ComponentNotListed(componentName)) { return; };
 
-        //int[] unlockLevels = { unlockLevel1, unlockLevel2, unlockLevel3, unlockLevel4 };
-
         int componentIndexFromList = ComponentIndexFromList(componentName);
         
         _evolutionUnlockLevel[componentIndexFromList, 1] = unlockLevel1;
         _evolutionUnlockLevel[componentIndexFromList, 2] = unlockLevel2;
         _evolutionUnlockLevel[componentIndexFromList, 3] = unlockLevel3;
         _evolutionUnlockLevel[componentIndexFromList, 4] = unlockLevel4;
-        
-        // for (int currentUnlockLevel = 1; currentUnlockLevel <= unlockLevels.Length; currentUnlockLevel++)
-        // {
-        //     _evolutionUnlockLevel[componentIndexFromList, currentUnlockLevel] = unlockLevels[currentUnlockLevel];
-        // }
     }
 
     public int GetEvolutionUnlocklevelFromComponant(string componentName, int stage)
@@ -66,19 +58,12 @@ public class CalculationConstantStorage
     {
         if (ComponentNotListed(componentName)) { return; };
 
-        //int[] multipliers = { multiplierStage1, multiplierStage2, multiplierStage3, multiplierStage4 };
-
         int componentIndexFromList = ComponentIndexFromList(componentName);
         
         _distanceMultiplier[componentIndexFromList, 1] = multiplierStage1;
         _distanceMultiplier[componentIndexFromList, 2] = multiplierStage2;
         _distanceMultiplier[componentIndexFromList, 3] = multiplierStage3;
         _distanceMultiplier[componentIndexFromList, 4] = multiplierStage4;
-        
-        // for (int currentMultiplier = 1; currentMultiplier <= multipliers.Length; currentMultiplier++)
-        // {
-        //     _distanceMultiplier[componentIndexFromList, currentMultiplier] = multipliers[currentMultiplier];
-        // }
     }
 
     public int GetDistanceMultiplierForComponant(string componentName, int stage)
@@ -115,9 +100,4 @@ public class CalculationConstantStorage
 
         return multiplier;
     }
-
-
-
-
-
 }

@@ -127,18 +127,11 @@ public class OrderGenerator : MonoBehaviour
 
     void Update()
     {
-        Debugger.LogMessage("case multiplier should be 2: " + _constantsStorage.GetDistanceMultiplierForComponant("Case", 2));
-        Debugger.LogMessage("case unlocklevel should be 4: " + _constantsStorage.GetEvolutionUnlocklevelFromComponant("Case", 3));
+        //debugging & test
+        // Debugger.LogMessage("case multiplier should be 2: " + _constantsStorage.GetDistanceMultiplierForComponant("Case", 2));
+        // Debugger.LogMessage("case unlocklevel should be 4: " + _constantsStorage.GetEvolutionUnlocklevelFromComponant("Case", 3));
 
-        if (setData)
-        {
-            _constantsStorage.SetDistanceMultiplierForComponant("Case", (int)Case.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
-            _constantsStorage.SetEvolutionUnlocklevelForComponant("Case", (int)Case.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
-
-            setData = false;
-        }
+        
 
     }
-
-
 }
