@@ -7,19 +7,18 @@ Version:       V1.3
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ComponentHandler : MonoBehaviour
 {
     public bool isBeingDragged = false;
+    public Element element;
+
+    private bool isDraggingActive = false;
     // camera is located on the bottom left corner, so we have an offset to the mouse
     // gets set every time dragging starts
     private Vector3 offsetMouseToCamera;
-
-    // TODO remove, when spawning functionality is implemented
-    public GameObject spawnedObjectAfterMerge;
-    //for the testing only
-    public GameObject componentToSpawn;
 
     // store current count of collision with conveyor belt parts
     public int CountCollisionConveyorBelt = 0;
@@ -81,7 +80,19 @@ public class ComponentHandler : MonoBehaviour
         if (hit.collider.TryGetComponent<SpriteRenderer>(out var spriteRenderer))
         {
             //set current sprite on top of all
-            spriteRenderer.sortingOrder = GetHighestSpritePosition() + 1;
+            int highestSpritePosition = GetHighestSpritePosition();
+            spriteRenderer.sortingOrder = highestSpritePosition + 1;
+
+            // set sprites of current GameObject-Childs on top of all
+            SpriteRenderer childSpriteRenderer;
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                childSpriteRenderer = transform.GetChild(i).GetComponent<SpriteRenderer>();
+                if ((childSpriteRenderer != null) && Tags.SubComponent.UsedByGameObject(childSpriteRenderer.gameObject))
+                {
+                    childSpriteRenderer.sortingOrder = highestSpritePosition + 2;
+                }
+            }
         }
     }
 
@@ -102,6 +113,26 @@ public class ComponentHandler : MonoBehaviour
         }
 
         return highestSortingOrder;
+    }
+
+    private Element? GetMergedElement(GameObject draggedComponentObject)
+    {
+        Element? mergedElement = null;
+
+        if (draggedComponentObject.TryGetComponent(out ComponentHandler draggedComponentHandler))
+        {
+            Element draggedElement = draggedComponentHandler.element;
+
+            if (draggedElement is not IComponent || this.element is not IComponent) { return null; }
+
+            mergedElement = ((IComponent)draggedElement).Merge(this.element);
+            if (mergedElement == null)
+            {
+                mergedElement = ((IComponent)this.element).Merge(draggedElement);
+            }
+        }
+
+        return mergedElement;
     }
 
     private void HandleOverlappingObjects()
@@ -127,11 +158,19 @@ public class ComponentHandler : MonoBehaviour
             //merge components if possible 
             if (Tags.Component.UsedByGameObject(staticComponent.gameObject))
             {
+                Element? mergedElement = GetMergedElement(staticComponent.gameObject);
+
+                if (mergedElement == null)
+                {
+                    return;
+                }
+
+                GameObject mergedComponentObject = mergedElement.InstantiateGameObjectAndAddTexture(staticComponent.transform.position);
+
                 Debugger.LogMessage("two components overlapp => merge?!");
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
 
-                ComponentSpawner.Instance.SpawnOnBelt(spawnedObjectAfterMerge);
                 return;
             }
 

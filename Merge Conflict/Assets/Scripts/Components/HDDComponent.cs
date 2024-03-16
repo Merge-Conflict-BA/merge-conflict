@@ -1,0 +1,41 @@
+/**********************************************************************************************************************
+Name:          HDDComponent
+Description:   Elements data structure for the HDD.  
+
+Author(s):     Daniel Rittrich, Hanno Witzleb
+Date:          2024-02-26
+Version:       V1.1
+TODO:          - /
+**********************************************************************************************************************/
+
+#nullable enable
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class HDDComponent : Element, IComponent
+{
+
+    public HDDComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+
+    public Element? Merge(Element element)
+    {
+
+        if (element is HDDComponent otherHDD)
+        {
+
+            if ((this.level == otherHDD.level) && this.level < 4)
+            {
+                this.level++;
+                return this;
+            }
+        }
+
+        return null;
+    }
+
+    public HDDComponent Clone()
+    {
+        return new HDDComponent(level, trashValue, salesValue);
+    }
+}

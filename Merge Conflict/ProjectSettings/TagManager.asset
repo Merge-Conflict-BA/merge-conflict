@@ -9,6 +9,7 @@ TagManager:
   - ConveyorBeltDiagonal
   - Component
   - Trashcan
+  - SubComponent
   - desk
   layers:
   - Default

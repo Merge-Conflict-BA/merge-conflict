@@ -13,7 +13,9 @@ using UnityEngine;
 //add all tags which are used in unity!
 public enum Tags
 {
+    Untagged,
     Component,
+    SubComponent,
     Trashcan,
     ConveyorBelt,
     ConveyorBeltDiagonal

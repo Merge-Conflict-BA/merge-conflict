@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -482082596872010598}
   - component: {fileID: 2556815013464163692}
   - component: {fileID: -6403054814937773629}
-  - component: {fileID: 3852225739424118196}
   m_Layer: 0
   m_Name: PowerSupply_1
   m_TagString: Component
@@ -21,13 +20,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &8210379771294406641
-RectTransform:
+--- !u!4 &8210379771294406641
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2403965842851558458}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 15, y: 15, z: 1}
@@ -35,11 +35,6 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 6.14, y: 5.54}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1064760088432282478
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -176,27 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a24063f94a03546ee9d03adbf64b144c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDraggingActive: 0
-  spawnedObjectAfterMerge: {fileID: 0}
-  componentToSpawn: {fileID: 0}
+  spawnedObjectAfterMerge: {fileID: 7110887825735875448, guid: d6f6a9e19cbee477bb0dbdaa8d2a6772, type: 3}
+  componentToSpawn: {fileID: 2556968358889389474, guid: 3e186cf2c6ff241ef85ddffea5dd44ec, type: 3}
   CountCollisionConveyorBelt: 0
   IsOnConveyorBeltDiagonal: 0
---- !u!114 &3852225739424118196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2403965842851558458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de564cb805eb34446be6c27fbcae8b17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MinDistance: 30
-  MaxDistance: 70
-  MovingSpeed: 50
-  MinSecondsWithoutMoving: 2
-  MaxSecondsWithoutMoving: 4
-  TimeToStartMovement: 2
-  MaxScaleFactor: 1.05
