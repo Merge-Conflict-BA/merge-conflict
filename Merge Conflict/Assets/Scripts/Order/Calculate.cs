@@ -18,16 +18,16 @@ public static class Calculate
         return distances;
     }
 
-    public static int[] DistanceMutlipliedDistanceMultiplier(int[] calculatedDistances, int[] distanceMultiplierParameters)
+    public static int[] ScaledDistance(int[] calculatedDistances, int[] distanceScalingFactors)
     {
-        int[] distanceProducts = new int[4];
+        int[] scaledDistances = new int[4];
 
         for (int stage = 0; stage < 4; stage++)
         {
-            distanceProducts[stage] = calculatedDistances[stage] * distanceMultiplierParameters[stage];
+            scaledDistances[stage] = calculatedDistances[stage] * distanceScalingFactors[stage];
         }
 
-        return distanceProducts;
+        return scaledDistances;
     }
 
 }
