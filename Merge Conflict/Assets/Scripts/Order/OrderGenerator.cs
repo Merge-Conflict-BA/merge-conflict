@@ -4,8 +4,8 @@ public class OrderGenerator : MonoBehaviour
 {
     private static OrderGenerator _instance;
     public static OrderGenerator Instance { get { return _instance; } }
-    private CalculationConstantStorage _constantsStorage;
-    public bool setData = false;
+    private ParameterStorage _parameterStorage;
+    public int currentLevel = 1;
 
 
     //define calculation parameters for component
@@ -99,29 +99,29 @@ public class OrderGenerator : MonoBehaviour
         else
         {
             _instance = this;
-            _constantsStorage = new CalculationConstantStorage();
+            _parameterStorage = new ParameterStorage();
 
             //case
-            _constantsStorage.SetDistanceMultiplierForComponent("Case", (int)Case.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
-            _constantsStorage.SetEvolutionUnlocklevelForComponent("Case", (int)Case.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceMultiplierForComponent("Case", (int)Case.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
+            _parameterStorage.SetEvolutionUnlocklevelForComponent("Case", (int)Case.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
             //hdd
-            _constantsStorage.SetDistanceMultiplierForComponent("HDD", (int)HDD.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
-            _constantsStorage.SetEvolutionUnlocklevelForComponent("HDD", (int)HDD.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceMultiplierForComponent("HDD", (int)HDD.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
+            _parameterStorage.SetEvolutionUnlocklevelForComponent("HDD", (int)HDD.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
             //powersupply
-            _constantsStorage.SetDistanceMultiplierForComponent("Powersupply", (int)Powersupply.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
-            _constantsStorage.SetEvolutionUnlocklevelForComponent("Powersupply", (int)Powersupply.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceMultiplierForComponent("Powersupply", (int)Powersupply.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
+            _parameterStorage.SetEvolutionUnlocklevelForComponent("Powersupply", (int)Powersupply.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
             //motherboard
-            _constantsStorage.SetDistanceMultiplierForComponent("Motherboard", (int)Motherboard.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
-            _constantsStorage.SetEvolutionUnlocklevelForComponent("Motherboard", (int)Motherboard.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceMultiplierForComponent("Motherboard", (int)Motherboard.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
+            _parameterStorage.SetEvolutionUnlocklevelForComponent("Motherboard", (int)Motherboard.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
             //gpu
-            _constantsStorage.SetDistanceMultiplierForComponent("GPU", (int)GPU.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
-            _constantsStorage.SetEvolutionUnlocklevelForComponent("GPU", (int)GPU.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceMultiplierForComponent("GPU", (int)GPU.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
+            _parameterStorage.SetEvolutionUnlocklevelForComponent("GPU", (int)GPU.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
             //cpu
-            _constantsStorage.SetDistanceMultiplierForComponent("CPU", (int)CPU.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
-            _constantsStorage.SetEvolutionUnlocklevelForComponent("CPU", (int)CPU.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceMultiplierForComponent("CPU", (int)CPU.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
+            _parameterStorage.SetEvolutionUnlocklevelForComponent("CPU", (int)CPU.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
             //ram
-            _constantsStorage.SetDistanceMultiplierForComponent("RAM", (int)RAM.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
-            _constantsStorage.SetEvolutionUnlocklevelForComponent("RAM", (int)RAM.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceMultiplierForComponent("RAM", (int)RAM.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
+            _parameterStorage.SetEvolutionUnlocklevelForComponent("RAM", (int)RAM.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
         }
     }
 
@@ -132,10 +132,18 @@ public class OrderGenerator : MonoBehaviour
         // Debugger.LogMessage("case unlocklevel should be 4: " + _constantsStorage.GetEvolutionUnlocklevelFromComponant("Case", 3));
 
 
-        int[] temp = _constantsStorage.GetAllEvolutionUnlockLevels("Case");
-        int[] temp2 = _constantsStorage.GetAllDistanceMultipliers("Case");
-        Debugger.LogMessage($"All unlockLevels case should be 1,2,4,6: {temp[0]}, {temp[1]}, {temp[2]}, {temp[3]}");
-        Debugger.LogMessage($"All distanceMulti case should be 1,2,3,4: {temp2[0]}, {temp2[1]}, {temp2[2]}, {temp2[3]}");
+        // int[] temp = _parameterStorage.GetAllEvolutionUnlockLevels("Case");
+        // int[] temp2 = _parameterStorage.GetAllDistanceMultipliers("Case");
+        // Debugger.LogMessage($"All unlockLevels case should be 1,2,4,6: {temp[0]}, {temp[1]}, {temp[2]}, {temp[3]}");
+        // Debugger.LogMessage($"All distanceMulti case should be 1,2,3,4: {temp2[0]}, {temp2[1]}, {temp2[2]}, {temp2[3]}");
+
+        
+        int[] distances = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(currentLevel, _parameterStorage.GetAllEvolutionUnlockLevels("Case"));
+        Debugger.LogMessage("Distance1: " + distances[0]);
+        Debugger.LogMessage("Distance2: " + distances[1]);
+        Debugger.LogMessage("Distance3: " + distances[2]);
+        Debugger.LogMessage("Distance4: " + distances[3]);
+
 
 
 

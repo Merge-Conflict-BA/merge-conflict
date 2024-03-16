@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class CalculationConstantStorage
+public class ParameterStorage
 {
     Dictionary<string, int> componentList = new Dictionary<string, int>();
     private int[,] _evolutionUnlockLevel = new int[7, 4];    //[1...7components, 1=unlocklevel for stage1, 2=unlocklevel for stage2,...]
@@ -8,7 +8,7 @@ public class CalculationConstantStorage
 
     const byte offsetArrayindexToStage = 1; //need this because the array counts from 0...3 but we will give the evolutionStages from 1...4 because its more natural for humans
 
-    public CalculationConstantStorage()
+    public ParameterStorage()
     {
         componentList.Add("RAM", 0);
         componentList.Add("HDD", 1);
