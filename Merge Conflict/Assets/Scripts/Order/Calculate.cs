@@ -1,3 +1,5 @@
+using System.Linq;
+
 public static class Calculate
 {
 
@@ -28,6 +30,11 @@ public static class Calculate
         }
 
         return scaledDistances;
+    }
+
+    public static int TotalScaledDistances(int[] scaledDistances)
+    {
+        return scaledDistances.Sum();
     }
 
 }

@@ -145,11 +145,14 @@ public class OrderGenerator : MonoBehaviour
         // Debugger.LogMessage("Distance4: " + distances[3]);
 
         //test DistanceCurrentLevelToEvolutionUnlockLevels()
-        int[] distancesMultiplied = Calculate.ScaledDistance(distances, _parameterStorage.GetAllDistanceScalingFactors("Case"));
-        Debugger.LogMessage("Distance1: " + distancesMultiplied[0]);
-        Debugger.LogMessage("Distance2: " + distancesMultiplied[1]);
-        Debugger.LogMessage("Distance3: " + distancesMultiplied[2]);
-        Debugger.LogMessage("Distance4: " + distancesMultiplied[3]);
+        int[] scaledDistances = Calculate.ScaledDistance(distances, _parameterStorage.GetAllDistanceScalingFactors("Case"));
+        // Debugger.LogMessage("Distance1: " + distancesMultiplied[0]);
+        // Debugger.LogMessage("Distance2: " + distancesMultiplied[1]);
+        // Debugger.LogMessage("Distance3: " + distancesMultiplied[2]);
+        // Debugger.LogMessage("Distance4: " + distancesMultiplied[3]);
+
+        //test TotalScaledDistances()
+        Debugger.LogMessage("total scaledDistances: " + Calculate.TotalScaledDistances(scaledDistances));
 
 
 
