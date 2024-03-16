@@ -137,12 +137,21 @@ public class OrderGenerator : MonoBehaviour
         // Debugger.LogMessage($"All unlockLevels case should be 1,2,4,6: {temp[0]}, {temp[1]}, {temp[2]}, {temp[3]}");
         // Debugger.LogMessage($"All distanceMulti case should be 1,2,3,4: {temp2[0]}, {temp2[1]}, {temp2[2]}, {temp2[3]}");
 
-        
-        int[] distances = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(currentLevel, _parameterStorage.GetAllEvolutionUnlockLevels("Case"));
-        Debugger.LogMessage("Distance1: " + distances[0]);
-        Debugger.LogMessage("Distance2: " + distances[1]);
-        Debugger.LogMessage("Distance3: " + distances[2]);
-        Debugger.LogMessage("Distance4: " + distances[3]);
+        //test DistanceCurrentLevelToEvolutionUnlockLevels()
+         int[] distances = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(currentLevel, _parameterStorage.GetAllEvolutionUnlockLevels("Case"));
+        // Debugger.LogMessage("Distance1: " + distances[0]);
+        // Debugger.LogMessage("Distance2: " + distances[1]);
+        // Debugger.LogMessage("Distance3: " + distances[2]);
+        // Debugger.LogMessage("Distance4: " + distances[3]);
+
+        //test DistanceCurrentLevelToEvolutionUnlockLevels()
+        int[] distancesMultiplied = Calculate.DistanceMutlipliedDistanceMultiplier(distances, _parameterStorage.GetAllDistanceMultipliers("Case"));
+        Debugger.LogMessage("Distance1: " + distancesMultiplied[0]);
+        Debugger.LogMessage("Distance2: " + distancesMultiplied[1]);
+        Debugger.LogMessage("Distance3: " + distancesMultiplied[2]);
+        Debugger.LogMessage("Distance4: " + distancesMultiplied[3]);
+
+
 
 
 

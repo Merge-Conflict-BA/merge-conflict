@@ -1,21 +1,33 @@
 public static class Calculate
 {
 
-    public static int[] DistanceCurrentLevelToEvolutionUnlockLevels(int currentLevel, int[] evolutionUnlockLevels)
+    public static int[] DistanceCurrentLevelToEvolutionUnlockLevels(int currentLevel, int[] evolutionUnlockLevelParameters)
     {
         int[] distances = new int[4];
 
         for (int stage = 0; stage < 4; stage++)
         {
-            if (currentLevel < evolutionUnlockLevels[stage]) //if the evolutionStage is locked, skip it
+            if (currentLevel < evolutionUnlockLevelParameters[stage]) //if the evolutionStage is locked, skip it
             {
                 distances[stage] = 0;
                 continue;
             }
-            distances[stage] = currentLevel - evolutionUnlockLevels[stage];
+            distances[stage] = currentLevel - evolutionUnlockLevelParameters[stage];
         }
 
         return distances;
+    }
+
+    public static int[] DistanceMutlipliedDistanceMultiplier(int[] calculatedDistances, int[] distanceMultiplierParameters)
+    {
+        int[] distanceProducts = new int[4];
+
+        for (int stage = 0; stage < 4; stage++)
+        {
+            distanceProducts[stage] = calculatedDistances[stage] * distanceMultiplierParameters[stage];
+        }
+
+        return distanceProducts;
     }
 
 }
