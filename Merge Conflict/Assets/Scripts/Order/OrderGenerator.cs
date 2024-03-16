@@ -100,7 +100,7 @@ public class OrderGenerator : MonoBehaviour
         {
             _instance = this;
             _constantsStorage = new CalculationConstantStorage();
-                            
+
             //case
             _constantsStorage.SetDistanceMultiplierForComponent("Case", (int)Case.DistanceMultiplierStage1, (int)Case.DistanceMultiplierStage2, (int)Case.DistanceMultiplierStage3, (int)Case.DistanceMultiplierStage4);
             _constantsStorage.SetEvolutionUnlocklevelForComponent("Case", (int)Case.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
@@ -128,8 +128,14 @@ public class OrderGenerator : MonoBehaviour
     void Update()
     {
         //debugging & test
-        Debugger.LogMessage("case multiplier should be 2: " + _constantsStorage.GetDistanceMultiplierForComponant("Case", 2));
-        Debugger.LogMessage("case unlocklevel should be 4: " + _constantsStorage.GetEvolutionUnlocklevelFromComponant("Case", 3));
+        // Debugger.LogMessage("case multiplier should be 2: " + _constantsStorage.GetDistanceMultiplierForComponant("Case", 2));
+        // Debugger.LogMessage("case unlocklevel should be 4: " + _constantsStorage.GetEvolutionUnlocklevelFromComponant("Case", 3));
+
+
+        int[] temp = _constantsStorage.GetAllEvolutionUnlockLevels("Case");
+        int[] temp2 = _constantsStorage.GetAllDistanceMultipliers("Case");
+        Debugger.LogMessage($"All unlockLevels case should be 1,2,4,6: {temp[0]}, {temp[1]}, {temp[2]}, {temp[3]}");
+        Debugger.LogMessage($"All distanceMulti case should be 1,2,3,4: {temp2[0]}, {temp2[1]}, {temp2[2]}, {temp2[3]}");
 
 
 

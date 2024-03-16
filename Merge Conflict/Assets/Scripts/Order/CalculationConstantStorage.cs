@@ -3,10 +3,10 @@ using System.Collections.Generic;
 public class CalculationConstantStorage
 {
     Dictionary<string, int> componentList = new Dictionary<string, int>();
-    private int[,] _evolutionUnlockLevel = new int[7, 5];    //[1...7components, 1=unlocklevel for stage1, 2=unlocklevel for stage2,...]
-    private int[,] _distanceMultiplier = new int[7, 5];      //[1...7components, 1=distance multiplier for stage1, 2=distance multiplier for stage2,...]
+    private int[,] _evolutionUnlockLevel = new int[7, 4];    //[1...7components, 1=unlocklevel for stage1, 2=unlocklevel for stage2,...]
+    private int[,] _distanceMultiplier = new int[7, 4];      //[1...7components, 1=distance multiplier for stage1, 2=distance multiplier for stage2,...]
 
-    const byte offsetArrayindexToStage = 1;
+    const byte offsetArrayindexToStage = 1; //need this because the array counts from 0...3 but we will give the evolutionStages from 1...4 because its more natural for humans
 
     public CalculationConstantStorage()
     {
@@ -81,25 +81,25 @@ public class CalculationConstantStorage
     {
         if (ComponentNotListed(componentName)) { return null; };
 
-        int[] multiplier = new int[4];
-        multiplier[0] = GetDistanceMultiplierForComponant(componentName, 1);
-        multiplier[1] = GetDistanceMultiplierForComponant(componentName, 2);
-        multiplier[2] = GetDistanceMultiplierForComponant(componentName, 3);
-        multiplier[3] = GetDistanceMultiplierForComponant(componentName, 4);
+        int[] multipliers = new int[4];
+        for (int evolutionStage = 0; evolutionStage < 4; evolutionStage++) 
+        {
+            multipliers[evolutionStage] = GetDistanceMultiplierForComponant(componentName, evolutionStage + offsetArrayindexToStage);
+        }
 
-        return multiplier;
+        return multipliers;
     }
 
     public int[] GetAllEvolutionUnlockLevels(string componentName)
     {
         if (ComponentNotListed(componentName)) { return null; };
 
-        int[] multiplier = new int[4];
-        multiplier[0] = GetEvolutionUnlocklevelFromComponant(componentName, 1);
-        multiplier[1] = GetEvolutionUnlocklevelFromComponant(componentName, 2);
-        multiplier[2] = GetEvolutionUnlocklevelFromComponant(componentName, 3);
-        multiplier[3] = GetEvolutionUnlocklevelFromComponant(componentName, 4);
-
-        return multiplier;
+        int[] unlockLevels = new int[4];
+        for (int evolutionStage = 0; evolutionStage < 4; evolutionStage++)
+        {
+            unlockLevels[evolutionStage] = GetEvolutionUnlocklevelFromComponant(componentName, evolutionStage + offsetArrayindexToStage);
+        }
+       
+        return unlockLevels;
     }
 }
