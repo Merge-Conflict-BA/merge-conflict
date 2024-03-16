@@ -50,3 +50,8 @@ if (Tag.CompareTags(col.gameObject, Tag.PossibleTags.ConveyorBelt))
 | Properties | name | PascalCase |
 | Delegate | name | PascalCase |
 | Enum | type name | PascalCase |
+
+
+
+
+
