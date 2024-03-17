@@ -1,12 +1,14 @@
 using System.Collections.Generic;
+using UnityEngine.PlayerLoop;
 
 public class ParameterStorage
 {
     Dictionary<string, int> componentList = new Dictionary<string, int>();
-    private int[,] _evolutionUnlockLevels = new int[7, 4];    //[1...7components, 1=unlocklevel for stage1, 2=unlocklevel for stage2,...]
-    private int[,] _distanceScalingfactors = new int[7, 4];      //[1...7components, 1=scaling factor for stage1, 2=scalingFactor for stage2,...]
-
     const byte offsetArrayindexToStage = 1; //need this because the array counts from 0...3 but we will give the evolutionStages from 1...4 because its more natural for humans
+    const byte AmountStages = 4;
+    const byte AmountComponents = 7;
+    private int[,] _evolutionUnlockLevels = new int[AmountComponents, AmountStages];    //[1...7components, 1=unlocklevel for stage1, 2=unlocklevel for stage2,...]
+    private int[,] _distanceScalingfactors = new int[AmountComponents, AmountStages];      //[1...7components, 1=scaling factor for stage1, 2=scalingFactor for stage2,...]
 
     public ParameterStorage()
     {
@@ -41,7 +43,7 @@ public class ParameterStorage
 
         int componentIndexFromList = ComponentIndexFromList(componentName);
 
-        for (int evolutionStage = 0; evolutionStage < unlockLevels.Length; evolutionStage++)
+        for (int evolutionStage = 0; evolutionStage < AmountStages; evolutionStage++)
         {
             _evolutionUnlockLevels[componentIndexFromList, evolutionStage] = unlockLevels[evolutionStage];
         }
@@ -56,13 +58,26 @@ public class ParameterStorage
         return _evolutionUnlockLevels[componentIndexFromList, evolutionStage - offsetArrayindexToStage];
     }
 
+    public int[] GetAllEvolutionUnlockLevels(string componentName)
+    {
+        if (ComponentNotListed(componentName)) { return null; };
+
+        int[] unlockLevels = new int[AmountStages];
+        for (int evolutionStage = 0; evolutionStage < AmountStages; evolutionStage++)
+        {
+            unlockLevels[evolutionStage] = GetEvolutionUnlocklevel(componentName, evolutionStage + offsetArrayindexToStage);
+        }
+
+        return unlockLevels;
+    }
+
     public void SetDistanceScalingFactor(string componentName, params int[] distanceScalingFactors)
     {
         if (ComponentNotListed(componentName)) { return; }
 
         int componentIndexFromList = ComponentIndexFromList(componentName);
 
-        for (int stage = 0; stage < distanceScalingFactors.Length; stage++)
+        for (int stage = 0; stage < AmountStages; stage++)
         {
             _distanceScalingfactors[componentIndexFromList, stage] = distanceScalingFactors[stage];
         }
@@ -81,8 +96,8 @@ public class ParameterStorage
     {
         if (ComponentNotListed(componentName)) { return null; };
 
-        int[] scalingFactors = new int[4];
-        for (int evolutionStage = 0; evolutionStage < 4; evolutionStage++)
+        int[] scalingFactors = new int[AmountStages];
+        for (int evolutionStage = 0; evolutionStage < AmountStages; evolutionStage++)
         {
             scalingFactors[evolutionStage] = GetDistanceScalingFactor(componentName, evolutionStage + offsetArrayindexToStage);
         }
@@ -90,16 +105,5 @@ public class ParameterStorage
         return scalingFactors;
     }
 
-    public int[] GetAllEvolutionUnlockLevels(string componentName)
-    {
-        if (ComponentNotListed(componentName)) { return null; };
 
-        int[] unlockLevels = new int[4];
-        for (int evolutionStage = 0; evolutionStage < 4; evolutionStage++)
-        {
-            unlockLevels[evolutionStage] = GetEvolutionUnlocklevel(componentName, evolutionStage + offsetArrayindexToStage);
-        }
-
-        return unlockLevels;
-    }
 }
