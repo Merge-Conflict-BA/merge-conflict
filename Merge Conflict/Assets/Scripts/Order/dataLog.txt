@@ -1,84 +1,462 @@
-Component: Case
+---[Component Case]---
+distanceScalingFactors:
 DistanceScalingFactor1: 1
 DistanceScalingFactor2: 2
 DistanceScalingFactor3: 3
 DistanceScalingFactor4: 4
--
-evolutionUnlockLEvel1: 1
-evolutionUnlockLEvel2: 2
-evolutionUnlockLEvel3: 4
-evolutionUnlockLEvel4: 6
--
-##########################
-Component: HDD
+ 
+unlockEvolutionLevels:
+evolutionUnlockLevel1: 1
+evolutionUnlockLevel2: 2
+evolutionUnlockLevel3: 4
+evolutionUnlockLevel4: 6
+ 
+DistanceCurrentLevelToEvolutionUnlockLevels:
+ Level 1
+ distance1: 0
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 2
+ distance1: 1
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 3
+ distance1: 2
+ distance2: 1
+ distance3: 0
+ distance4: 0
+ Level 4
+ distance1: 3
+ distance2: 2
+ distance3: 0
+ distance4: 0
+ Level 5
+ distance1: 4
+ distance2: 3
+ distance3: 1
+ distance4: 0
+ Level 6
+ distance1: 5
+ distance2: 4
+ distance3: 2
+ distance4: 0
+ Level 7
+ distance1: 6
+ distance2: 5
+ distance3: 3
+ distance4: 1
+ Level 8
+ distance1: 7
+ distance2: 6
+ distance3: 4
+ distance4: 2
+ Level 9
+ distance1: 8
+ distance2: 7
+ distance3: 5
+ distance4: 3
+ Level 10
+ distance1: 9
+ distance2: 8
+ distance3: 6
+ distance4: 4
+
+
+---[Component HDD]---
+distanceScalingFactors:
 DistanceScalingFactor1: 1
 DistanceScalingFactor2: 2
 DistanceScalingFactor3: 3
 DistanceScalingFactor4: 4
--
-evolutionUnlockLEvel1: 1
-evolutionUnlockLEvel2: 2
-evolutionUnlockLEvel3: 4
-evolutionUnlockLEvel4: 6
--
-##########################
-Component: Powersupply
+ 
+unlockEvolutionLevels:
+evolutionUnlockLevel1: 1
+evolutionUnlockLevel2: 3
+evolutionUnlockLevel3: 5
+evolutionUnlockLevel4: 7
+ 
+DistanceCurrentLevelToEvolutionUnlockLevels:
+ Level 1
+ distance1: 0
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 2
+ distance1: 1
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 3
+ distance1: 2
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 4
+ distance1: 3
+ distance2: 1
+ distance3: 0
+ distance4: 0
+ Level 5
+ distance1: 4
+ distance2: 2
+ distance3: 0
+ distance4: 0
+ Level 6
+ distance1: 5
+ distance2: 3
+ distance3: 1
+ distance4: 0
+ Level 7
+ distance1: 6
+ distance2: 4
+ distance3: 2
+ distance4: 0
+ Level 8
+ distance1: 7
+ distance2: 5
+ distance3: 3
+ distance4: 1
+ Level 9
+ distance1: 8
+ distance2: 6
+ distance3: 4
+ distance4: 2
+ Level 10
+ distance1: 9
+ distance2: 7
+ distance3: 5
+ distance4: 3
+
+
+---[Component Powersupply]---
+distanceScalingFactors:
 DistanceScalingFactor1: 1
 DistanceScalingFactor2: 2
 DistanceScalingFactor3: 3
 DistanceScalingFactor4: 4
--
-evolutionUnlockLEvel1: 1
-evolutionUnlockLEvel2: 2
-evolutionUnlockLEvel3: 4
-evolutionUnlockLEvel4: 6
--
-##########################
-Component: Motherboard
+ 
+unlockEvolutionLevels:
+evolutionUnlockLevel1: 1
+evolutionUnlockLevel2: 4
+evolutionUnlockLevel3: 6
+evolutionUnlockLevel4: 8
+ 
+DistanceCurrentLevelToEvolutionUnlockLevels:
+ Level 1
+ distance1: 0
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 2
+ distance1: 1
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 3
+ distance1: 2
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 4
+ distance1: 3
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 5
+ distance1: 4
+ distance2: 1
+ distance3: 0
+ distance4: 0
+ Level 6
+ distance1: 5
+ distance2: 2
+ distance3: 0
+ distance4: 0
+ Level 7
+ distance1: 6
+ distance2: 3
+ distance3: 1
+ distance4: 0
+ Level 8
+ distance1: 7
+ distance2: 4
+ distance3: 2
+ distance4: 0
+ Level 9
+ distance1: 8
+ distance2: 5
+ distance3: 3
+ distance4: 1
+ Level 10
+ distance1: 9
+ distance2: 6
+ distance3: 4
+ distance4: 2
+
+
+---[Component Motherboard]---
+distanceScalingFactors:
 DistanceScalingFactor1: 1
 DistanceScalingFactor2: 2
 DistanceScalingFactor3: 3
 DistanceScalingFactor4: 4
--
-evolutionUnlockLEvel1: 1
-evolutionUnlockLEvel2: 2
-evolutionUnlockLEvel3: 4
-evolutionUnlockLEvel4: 6
--
-##########################
-Component: GPU
+ 
+unlockEvolutionLevels:
+evolutionUnlockLevel1: 1
+evolutionUnlockLevel2: 5
+evolutionUnlockLevel3: 7
+evolutionUnlockLevel4: 9
+ 
+DistanceCurrentLevelToEvolutionUnlockLevels:
+ Level 1
+ distance1: 0
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 2
+ distance1: 1
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 3
+ distance1: 2
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 4
+ distance1: 3
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 5
+ distance1: 4
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 6
+ distance1: 5
+ distance2: 1
+ distance3: 0
+ distance4: 0
+ Level 7
+ distance1: 6
+ distance2: 2
+ distance3: 0
+ distance4: 0
+ Level 8
+ distance1: 7
+ distance2: 3
+ distance3: 1
+ distance4: 0
+ Level 9
+ distance1: 8
+ distance2: 4
+ distance3: 2
+ distance4: 0
+ Level 10
+ distance1: 9
+ distance2: 5
+ distance3: 3
+ distance4: 1
+
+
+---[Component GPU]---
+distanceScalingFactors:
 DistanceScalingFactor1: 1
 DistanceScalingFactor2: 2
 DistanceScalingFactor3: 3
 DistanceScalingFactor4: 4
--
-evolutionUnlockLEvel1: 1
-evolutionUnlockLEvel2: 2
-evolutionUnlockLEvel3: 4
-evolutionUnlockLEvel4: 6
--
-##########################
-Component: CPU
+ 
+unlockEvolutionLevels:
+evolutionUnlockLevel1: 1
+evolutionUnlockLevel2: 6
+evolutionUnlockLevel3: 8
+evolutionUnlockLevel4: 10
+ 
+DistanceCurrentLevelToEvolutionUnlockLevels:
+ Level 1
+ distance1: 0
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 2
+ distance1: 1
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 3
+ distance1: 2
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 4
+ distance1: 3
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 5
+ distance1: 4
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 6
+ distance1: 5
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 7
+ distance1: 6
+ distance2: 1
+ distance3: 0
+ distance4: 0
+ Level 8
+ distance1: 7
+ distance2: 2
+ distance3: 0
+ distance4: 0
+ Level 9
+ distance1: 8
+ distance2: 3
+ distance3: 1
+ distance4: 0
+ Level 10
+ distance1: 9
+ distance2: 4
+ distance3: 2
+ distance4: 0
+
+
+---[Component CPU]---
+distanceScalingFactors:
 DistanceScalingFactor1: 1
 DistanceScalingFactor2: 2
 DistanceScalingFactor3: 3
 DistanceScalingFactor4: 4
--
-evolutionUnlockLEvel1: 1
-evolutionUnlockLEvel2: 2
-evolutionUnlockLEvel3: 4
-evolutionUnlockLEvel4: 6
--
-##########################
-Component: RAM
+ 
+unlockEvolutionLevels:
+evolutionUnlockLevel1: 1
+evolutionUnlockLevel2: 6
+evolutionUnlockLevel3: 8
+evolutionUnlockLevel4: 10
+ 
+DistanceCurrentLevelToEvolutionUnlockLevels:
+ Level 1
+ distance1: 0
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 2
+ distance1: 1
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 3
+ distance1: 2
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 4
+ distance1: 3
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 5
+ distance1: 4
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 6
+ distance1: 5
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 7
+ distance1: 6
+ distance2: 1
+ distance3: 0
+ distance4: 0
+ Level 8
+ distance1: 7
+ distance2: 2
+ distance3: 0
+ distance4: 0
+ Level 9
+ distance1: 8
+ distance2: 3
+ distance3: 1
+ distance4: 0
+ Level 10
+ distance1: 9
+ distance2: 4
+ distance3: 2
+ distance4: 0
+
+
+---[Component RAM]---
+distanceScalingFactors:
 DistanceScalingFactor1: 1
 DistanceScalingFactor2: 2
 DistanceScalingFactor3: 3
 DistanceScalingFactor4: 4
--
-evolutionUnlockLEvel1: 1
-evolutionUnlockLEvel2: 2
-evolutionUnlockLEvel3: 4
-evolutionUnlockLEvel4: 6
--
-##########################
+ 
+unlockEvolutionLevels:
+evolutionUnlockLevel1: 1
+evolutionUnlockLevel2: 7
+evolutionUnlockLevel3: 9
+evolutionUnlockLevel4: 10
+ 
+DistanceCurrentLevelToEvolutionUnlockLevels:
+ Level 1
+ distance1: 0
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 2
+ distance1: 1
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 3
+ distance1: 2
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 4
+ distance1: 3
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 5
+ distance1: 4
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 6
+ distance1: 5
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 7
+ distance1: 6
+ distance2: 0
+ distance3: 0
+ distance4: 0
+ Level 8
+ distance1: 7
+ distance2: 1
+ distance3: 0
+ distance4: 0
+ Level 9
+ distance1: 8
+ distance2: 2
+ distance3: 0
+ distance4: 0
+ Level 10
+ distance1: 9
+ distance2: 3
+ distance3: 1
+ distance4: 0
+
+

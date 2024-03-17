@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -107,23 +108,23 @@ public class OrderGenerator : MonoBehaviour
             _parameterStorage.SetDistanceScalingFactor("Case", (int)Case.DistanceScalingFactor1, (int)Case.DistanceScalingFactor2, (int)Case.DistanceScalingFactor3, (int)Case.DistanceScalingFactor4);
             _parameterStorage.SetEvolutionUnlocklevel("Case", (int)Case.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
             //hdd
-            _parameterStorage.SetDistanceScalingFactor("HDD", (int)HDD.DistanceScalingFactor1, (int)Case.DistanceScalingFactor2, (int)Case.DistanceScalingFactor3, (int)Case.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("HDD", (int)HDD.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("HDD", (int)HDD.DistanceScalingFactor1, (int)HDD.DistanceScalingFactor2, (int)HDD.DistanceScalingFactor3, (int)HDD.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("HDD", (int)HDD.UnlocklevelStage1, (int)HDD.UnlocklevelStage2, (int)HDD.UnlocklevelStage3, (int)HDD.UnlocklevelStage4);
             //powersupply
-            _parameterStorage.SetDistanceScalingFactor("Powersupply", (int)Powersupply.DistanceScalingFactor1, (int)Case.DistanceScalingFactor2, (int)Case.DistanceScalingFactor3, (int)Case.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("Powersupply", (int)Powersupply.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("Powersupply", (int)Powersupply.DistanceScalingFactor1, (int)Powersupply.DistanceScalingFactor2, (int)Powersupply.DistanceScalingFactor3, (int)Powersupply.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("Powersupply", (int)Powersupply.UnlocklevelStage1, (int)Powersupply.UnlocklevelStage2, (int)Powersupply.UnlocklevelStage3, (int)Powersupply.UnlocklevelStage4);
             //motherboard
-            _parameterStorage.SetDistanceScalingFactor("Motherboard", (int)Motherboard.DistanceScalingFactor1, (int)Case.DistanceScalingFactor2, (int)Case.DistanceScalingFactor3, (int)Case.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("Motherboard", (int)Motherboard.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("Motherboard", (int)Motherboard.DistanceScalingFactor1, (int)Motherboard.DistanceScalingFactor2, (int)Motherboard.DistanceScalingFactor3, (int)Motherboard.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("Motherboard", (int)Motherboard.UnlocklevelStage1, (int)Motherboard.UnlocklevelStage2, (int)Motherboard.UnlocklevelStage3, (int)Motherboard.UnlocklevelStage4);
             //gpu
-            _parameterStorage.SetDistanceScalingFactor("GPU", (int)GPU.DistanceScalingFactor1, (int)Case.DistanceScalingFactor2, (int)Case.DistanceScalingFactor3, (int)Case.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("GPU", (int)GPU.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("GPU", (int)GPU.DistanceScalingFactor1, (int)GPU.DistanceScalingFactor2, (int)GPU.DistanceScalingFactor3, (int)GPU.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("GPU", (int)GPU.UnlocklevelStage1, (int)GPU.UnlocklevelStage2, (int)GPU.UnlocklevelStage3, (int)GPU.UnlocklevelStage4);
             //cpu
-            _parameterStorage.SetDistanceScalingFactor("CPU", (int)CPU.DistanceScalingFactor1, (int)Case.DistanceScalingFactor2, (int)Case.DistanceScalingFactor3, (int)Case.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("CPU", (int)CPU.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("CPU", (int)CPU.DistanceScalingFactor1, (int)CPU.DistanceScalingFactor2, (int)CPU.DistanceScalingFactor3, (int)CPU.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("CPU", (int)CPU.UnlocklevelStage1, (int)CPU.UnlocklevelStage2, (int)CPU.UnlocklevelStage3, (int)CPU.UnlocklevelStage4);
             //ram
-            _parameterStorage.SetDistanceScalingFactor("RAM", (int)RAM.DistanceScalingFactor1, (int)Case.DistanceScalingFactor2, (int)Case.DistanceScalingFactor3, (int)Case.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("RAM", (int)RAM.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("RAM", (int)RAM.DistanceScalingFactor1, (int)RAM.DistanceScalingFactor2, (int)RAM.DistanceScalingFactor3, (int)RAM.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("RAM", (int)RAM.UnlocklevelStage1, (int)RAM.UnlocklevelStage2, (int)RAM.UnlocklevelStage3, (int)RAM.UnlocklevelStage4);
         }
     }
 
@@ -172,41 +173,56 @@ public class OrderGenerator : MonoBehaviour
         }
 
 
-
     }
 
     private void WriteDataLogFile()
     {
         const string FilePath = "Assets/Scripts/Order/dataLog.txt";
+        const byte AmountLevel = 10;
 
         using (StreamWriter writer = new StreamWriter(FilePath))
         {
 
             string[] components = { "Case", "HDD", "Powersupply", "Motherboard", "GPU", "CPU", "RAM" };
 
+
             foreach (var component in components)
             {
-                writer.WriteLine("Component: " + component);
-                //distanceScalingFactors
+                writer.WriteLine($"---[Component {component}]---");
+                writer.WriteLine("distanceScalingFactors:");
                 int[] dsf = _parameterStorage.GetAllDistanceScalingFactors(component);
                 writer.WriteLine("DistanceScalingFactor1: " + dsf[0]);
                 writer.WriteLine("DistanceScalingFactor2: " + dsf[1]);
                 writer.WriteLine("DistanceScalingFactor3: " + dsf[2]);
                 writer.WriteLine("DistanceScalingFactor4: " + dsf[3]);
-                writer.WriteLine("-");
-
-                //unlockEvolutionLevels
+                writer.WriteLine(" ");
+                writer.WriteLine("unlockEvolutionLevels:");
                 int[] eul = _parameterStorage.GetAllEvolutionUnlockLevels(component);
-                writer.WriteLine("evolutionUnlockLEvel1: " + eul[0]);
-                writer.WriteLine("evolutionUnlockLEvel2: " + eul[1]);
-                writer.WriteLine("evolutionUnlockLEvel3: " + eul[2]);
-                writer.WriteLine("evolutionUnlockLEvel4: " + eul[3]);
-                writer.WriteLine("-");
-                writer.WriteLine("##########################");
+                writer.WriteLine("evolutionUnlockLevel1: " + eul[0]);
+                writer.WriteLine("evolutionUnlockLevel2: " + eul[1]);
+                writer.WriteLine("evolutionUnlockLevel3: " + eul[2]);
+                writer.WriteLine("evolutionUnlockLevel4: " + eul[3]);
+                writer.WriteLine(" ");
+                writer.WriteLine("DistanceCurrentLevelToEvolutionUnlockLevels:");
+                for (int level = 1; level <= AmountLevel; level++)
+                {
+                    int[] dist = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(level, _parameterStorage.GetAllEvolutionUnlockLevels(component));
+                    writer.WriteLine($" Level {level}");
+                    writer.WriteLine($"  distance1: " + dist[0]);
+                    writer.WriteLine($"  distance2: " + dist[1]);
+                    writer.WriteLine($"  distance3: " + dist[2]);
+                    writer.WriteLine($"  distance4: " + dist[3]);
+                }
+
+
+
+                writer.WriteLine("");
+                writer.WriteLine("");
+
+
             }
         }
 
-        Debugger.LogMessage("Inhalt wurde in die Datei geschrieben.");
+        Debugger.LogMessage("All data are written to the file: dataLog.txt");
     }
-
 }
