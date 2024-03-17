@@ -146,16 +146,21 @@ public class OrderGenerator : MonoBehaviour
 
         //test DistanceCurrentLevelToEvolutionUnlockLevels()
         int[] scaledDistances = Calculate.ScaledDistance(distances, _parameterStorage.GetAllDistanceScalingFactors("Case"));
-        // Debugger.LogMessage("Distance1: " + distancesMultiplied[0]);
-        // Debugger.LogMessage("Distance2: " + distancesMultiplied[1]);
-        // Debugger.LogMessage("Distance3: " + distancesMultiplied[2]);
-        // Debugger.LogMessage("Distance4: " + distancesMultiplied[3]);
+        // Debugger.LogMessage("Distance1: " + scaledDistances[0]);
+        // Debugger.LogMessage("Distance2: " + scaledDistances[1]);
+        // Debugger.LogMessage("Distance3: " + scaledDistances[2]);
+        // Debugger.LogMessage("Distance4: " + scaledDistances[3]);
 
         //test TotalScaledDistances()
-        Debugger.LogMessage("total scaledDistances: " + Calculate.TotalScaledDistances(scaledDistances));
+        int totalScaledDistance = Calculate.TotalScaledDistances(scaledDistances);
+        // Debugger.LogMessage("total scaledDistances: " + totalScaledDistance);
 
-
-
+        //test Probabilities()
+        int[] probabilities = Calculate.Probabilities(scaledDistances, totalScaledDistance);
+        Debugger.LogMessage("Probability1: " + probabilities[0]);
+        Debugger.LogMessage("Probability2: " + probabilities[1]);
+        Debugger.LogMessage("Probability3: " + probabilities[2]);
+        Debugger.LogMessage("Probability4: " + probabilities[3]);
 
 
 
