@@ -1,0 +1,84 @@
+Component: Case
+DistanceScalingFactor1: 1
+DistanceScalingFactor2: 2
+DistanceScalingFactor3: 3
+DistanceScalingFactor4: 4
+-
+evolutionUnlockLEvel1: 1
+evolutionUnlockLEvel2: 2
+evolutionUnlockLEvel3: 4
+evolutionUnlockLEvel4: 6
+-
+##########################
+Component: HDD
+DistanceScalingFactor1: 1
+DistanceScalingFactor2: 2
+DistanceScalingFactor3: 3
+DistanceScalingFactor4: 4
+-
+evolutionUnlockLEvel1: 1
+evolutionUnlockLEvel2: 2
+evolutionUnlockLEvel3: 4
+evolutionUnlockLEvel4: 6
+-
+##########################
+Component: Powersupply
+DistanceScalingFactor1: 1
+DistanceScalingFactor2: 2
+DistanceScalingFactor3: 3
+DistanceScalingFactor4: 4
+-
+evolutionUnlockLEvel1: 1
+evolutionUnlockLEvel2: 2
+evolutionUnlockLEvel3: 4
+evolutionUnlockLEvel4: 6
+-
+##########################
+Component: Motherboard
+DistanceScalingFactor1: 1
+DistanceScalingFactor2: 2
+DistanceScalingFactor3: 3
+DistanceScalingFactor4: 4
+-
+evolutionUnlockLEvel1: 1
+evolutionUnlockLEvel2: 2
+evolutionUnlockLEvel3: 4
+evolutionUnlockLEvel4: 6
+-
+##########################
+Component: GPU
+DistanceScalingFactor1: 1
+DistanceScalingFactor2: 2
+DistanceScalingFactor3: 3
+DistanceScalingFactor4: 4
+-
+evolutionUnlockLEvel1: 1
+evolutionUnlockLEvel2: 2
+evolutionUnlockLEvel3: 4
+evolutionUnlockLEvel4: 6
+-
+##########################
+Component: CPU
+DistanceScalingFactor1: 1
+DistanceScalingFactor2: 2
+DistanceScalingFactor3: 3
+DistanceScalingFactor4: 4
+-
+evolutionUnlockLEvel1: 1
+evolutionUnlockLEvel2: 2
+evolutionUnlockLEvel3: 4
+evolutionUnlockLEvel4: 6
+-
+##########################
+Component: RAM
+DistanceScalingFactor1: 1
+DistanceScalingFactor2: 2
+DistanceScalingFactor3: 3
+DistanceScalingFactor4: 4
+-
+evolutionUnlockLEvel1: 1
+evolutionUnlockLEvel2: 2
+evolutionUnlockLEvel3: 4
+evolutionUnlockLEvel4: 6
+-
+##########################

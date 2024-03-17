@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 
 public class OrderGenerator : MonoBehaviour
@@ -6,6 +7,7 @@ public class OrderGenerator : MonoBehaviour
     public static OrderGenerator Instance { get { return _instance; } }
     private ParameterStorage _parameterStorage;
     public int currentLevel = 1;
+    public bool writeLog = false;
 
 
     //define calculation parameters for component
@@ -128,13 +130,13 @@ public class OrderGenerator : MonoBehaviour
     void Update()
     {
         //debugging & test
-        // Debugger.LogMessage("case multiplier should be 2: " + _constantsStorage.GetDistanceMultiplierForComponant("Case", 2));
-        // Debugger.LogMessage("case unlocklevel should be 4: " + _constantsStorage.GetEvolutionUnlocklevelFromComponant("Case", 3));
+        // Debugger.LogMessage("case multiplier should be 2: " + _parameterStorage.GetDistanceScalingFactor("HDD", 2));
+        // Debugger.LogMessage("case unlocklevel should be 4: " + _parameterStorage.GetEvolutionUnlocklevel("HDD", 3));
 
 
-        // int[] temp = _parameterStorage.GetAllEvolutionUnlockLevels("Case");
+        // int[] temp = _parameterStorage.GetAllEvolutionUnlockLevels("HDD");
         // int[] temp2 = _parameterStorage.GetAllDistanceMultipliers("Case");
-        // Debugger.LogMessage($"All unlockLevels case should be 1,2,4,6: {temp[0]}, {temp[1]}, {temp[2]}, {temp[3]}");
+        //Debugger.LogMessage($"All unlockLevels case should be 1,2,4,6: {temp[0]}, {temp[1]}, {temp[2]}, {temp[3]}");
         // Debugger.LogMessage($"All distanceMulti case should be 1,2,3,4: {temp2[0]}, {temp2[1]}, {temp2[2]}, {temp2[3]}");
 
         //test DistanceCurrentLevelToEvolutionUnlockLevels()
@@ -157,19 +159,54 @@ public class OrderGenerator : MonoBehaviour
 
         //test Probabilities()
         int[] probabilities = Calculate.Probabilities(scaledDistances, totalScaledDistance);
-        Debugger.LogMessage("Probability1: " + probabilities[0]);
-        Debugger.LogMessage("Probability2: " + probabilities[1]);
-        Debugger.LogMessage("Probability3: " + probabilities[2]);
-        Debugger.LogMessage("Probability4: " + probabilities[3]);
+        // Debugger.LogMessage("Probability1: " + probabilities[0]);
+        // Debugger.LogMessage("Probability2: " + probabilities[1]);
+        // Debugger.LogMessage("Probability3: " + probabilities[2]);
+        // Debugger.LogMessage("Probability4: " + probabilities[3]);
+
+
+        if (writeLog)
+        {
+            WriteDataLogFile();
+            writeLog = false;
+        }
 
 
 
     }
 
+    private void WriteDataLogFile()
+    {
+        const string FilePath = "Assets/Scripts/Order/dataLog.txt";
 
+        using (StreamWriter writer = new StreamWriter(FilePath))
+        {
 
+            string[] components = { "Case", "HDD", "Powersupply", "Motherboard", "GPU", "CPU", "RAM" };
 
+            foreach (var component in components)
+            {
+                writer.WriteLine("Component: " + component);
+                //distanceScalingFactors
+                int[] dsf = _parameterStorage.GetAllDistanceScalingFactors(component);
+                writer.WriteLine("DistanceScalingFactor1: " + dsf[0]);
+                writer.WriteLine("DistanceScalingFactor2: " + dsf[1]);
+                writer.WriteLine("DistanceScalingFactor3: " + dsf[2]);
+                writer.WriteLine("DistanceScalingFactor4: " + dsf[3]);
+                writer.WriteLine("-");
 
+                //unlockEvolutionLevels
+                int[] eul = _parameterStorage.GetAllEvolutionUnlockLevels(component);
+                writer.WriteLine("evolutionUnlockLEvel1: " + eul[0]);
+                writer.WriteLine("evolutionUnlockLEvel2: " + eul[1]);
+                writer.WriteLine("evolutionUnlockLEvel3: " + eul[2]);
+                writer.WriteLine("evolutionUnlockLEvel4: " + eul[3]);
+                writer.WriteLine("-");
+                writer.WriteLine("##########################");
+            }
+        }
 
+        Debugger.LogMessage("Inhalt wurde in die Datei geschrieben.");
+    }
 
 }
