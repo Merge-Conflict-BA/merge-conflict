@@ -11,57 +11,187 @@ evolutionUnlockLevel2: 2
 evolutionUnlockLevel3: 4
 evolutionUnlockLevel4: 6
  
-DistanceCurrentLevelToEvolutionUnlockLevels:
+Data that depends on current level:
  Level 1
- distance1: 0
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 0
+  distance1: 0
+  scaledDistance1: 0
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 2
- distance1: 1
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 1
+  distance1: 1
+  scaledDistance1: 1
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 3
- distance1: 2
- distance2: 1
- distance3: 0
- distance4: 0
+  totalScaledDistance: 4
+  distance1: 2
+  scaledDistance1: 2
+  probability1: 50
+ 
+  distance2: 1
+  scaledDistance2: 2
+  probability2: 50
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 4
- distance1: 3
- distance2: 2
- distance3: 0
- distance4: 0
+  totalScaledDistance: 7
+  distance1: 3
+  scaledDistance1: 3
+  probability1: 43
+ 
+  distance2: 2
+  scaledDistance2: 4
+  probability2: 56
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 5
- distance1: 4
- distance2: 3
- distance3: 1
- distance4: 0
+  totalScaledDistance: 13
+  distance1: 4
+  scaledDistance1: 4
+  probability1: 31
+ 
+  distance2: 3
+  scaledDistance2: 6
+  probability2: 46
+ 
+  distance3: 1
+  scaledDistance3: 3
+  probability3: 23
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 6
- distance1: 5
- distance2: 4
- distance3: 2
- distance4: 0
+  totalScaledDistance: 19
+  distance1: 5
+  scaledDistance1: 5
+  probability1: 26
+ 
+  distance2: 4
+  scaledDistance2: 8
+  probability2: 42
+ 
+  distance3: 2
+  scaledDistance3: 6
+  probability3: 32
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 7
- distance1: 6
- distance2: 5
- distance3: 3
- distance4: 1
+  totalScaledDistance: 29
+  distance1: 6
+  scaledDistance1: 6
+  probability1: 21
+ 
+  distance2: 5
+  scaledDistance2: 10
+  probability2: 34
+ 
+  distance3: 3
+  scaledDistance3: 9
+  probability3: 31
+ 
+  distance4: 1
+  scaledDistance4: 4
+  probability4: 14
+ 
  Level 8
- distance1: 7
- distance2: 6
- distance3: 4
- distance4: 2
+  totalScaledDistance: 39
+  distance1: 7
+  scaledDistance1: 7
+  probability1: 18
+ 
+  distance2: 6
+  scaledDistance2: 12
+  probability2: 31
+ 
+  distance3: 4
+  scaledDistance3: 12
+  probability3: 31
+ 
+  distance4: 2
+  scaledDistance4: 8
+  probability4: 21
+ 
  Level 9
- distance1: 8
- distance2: 7
- distance3: 5
- distance4: 3
+  totalScaledDistance: 49
+  distance1: 8
+  scaledDistance1: 8
+  probability1: 16
+ 
+  distance2: 7
+  scaledDistance2: 14
+  probability2: 28
+ 
+  distance3: 5
+  scaledDistance3: 15
+  probability3: 31
+ 
+  distance4: 3
+  scaledDistance4: 12
+  probability4: 24
+ 
  Level 10
- distance1: 9
- distance2: 8
- distance3: 6
- distance4: 4
+  totalScaledDistance: 59
+  distance1: 9
+  scaledDistance1: 9
+  probability1: 15
+ 
+  distance2: 8
+  scaledDistance2: 16
+  probability2: 27
+ 
+  distance3: 6
+  scaledDistance3: 18
+  probability3: 31
+ 
+  distance4: 4
+  scaledDistance4: 16
+  probability4: 27
+ 
 
 
 ---[Component HDD]---
@@ -77,57 +207,187 @@ evolutionUnlockLevel2: 3
 evolutionUnlockLevel3: 5
 evolutionUnlockLevel4: 7
  
-DistanceCurrentLevelToEvolutionUnlockLevels:
+Data that depends on current level:
  Level 1
- distance1: 0
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 0
+  distance1: 0
+  scaledDistance1: 0
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 2
- distance1: 1
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 1
+  distance1: 1
+  scaledDistance1: 1
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 3
- distance1: 2
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 2
+  distance1: 2
+  scaledDistance1: 2
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 4
- distance1: 3
- distance2: 1
- distance3: 0
- distance4: 0
+  totalScaledDistance: 5
+  distance1: 3
+  scaledDistance1: 3
+  probability1: 60
+ 
+  distance2: 1
+  scaledDistance2: 2
+  probability2: 40
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 5
- distance1: 4
- distance2: 2
- distance3: 0
- distance4: 0
+  totalScaledDistance: 8
+  distance1: 4
+  scaledDistance1: 4
+  probability1: 50
+ 
+  distance2: 2
+  scaledDistance2: 4
+  probability2: 50
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 6
- distance1: 5
- distance2: 3
- distance3: 1
- distance4: 0
+  totalScaledDistance: 14
+  distance1: 5
+  scaledDistance1: 5
+  probability1: 36
+ 
+  distance2: 3
+  scaledDistance2: 6
+  probability2: 43
+ 
+  distance3: 1
+  scaledDistance3: 3
+  probability3: 21
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 7
- distance1: 6
- distance2: 4
- distance3: 2
- distance4: 0
+  totalScaledDistance: 20
+  distance1: 6
+  scaledDistance1: 6
+  probability1: 30
+ 
+  distance2: 4
+  scaledDistance2: 8
+  probability2: 40
+ 
+  distance3: 2
+  scaledDistance3: 6
+  probability3: 30
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 8
- distance1: 7
- distance2: 5
- distance3: 3
- distance4: 1
+  totalScaledDistance: 30
+  distance1: 7
+  scaledDistance1: 7
+  probability1: 23
+ 
+  distance2: 5
+  scaledDistance2: 10
+  probability2: 33
+ 
+  distance3: 3
+  scaledDistance3: 9
+  probability3: 30
+ 
+  distance4: 1
+  scaledDistance4: 4
+  probability4: 13
+ 
  Level 9
- distance1: 8
- distance2: 6
- distance3: 4
- distance4: 2
+  totalScaledDistance: 40
+  distance1: 8
+  scaledDistance1: 8
+  probability1: 20
+ 
+  distance2: 6
+  scaledDistance2: 12
+  probability2: 30
+ 
+  distance3: 4
+  scaledDistance3: 12
+  probability3: 30
+ 
+  distance4: 2
+  scaledDistance4: 8
+  probability4: 20
+ 
  Level 10
- distance1: 9
- distance2: 7
- distance3: 5
- distance4: 3
+  totalScaledDistance: 50
+  distance1: 9
+  scaledDistance1: 9
+  probability1: 18
+ 
+  distance2: 7
+  scaledDistance2: 14
+  probability2: 28
+ 
+  distance3: 5
+  scaledDistance3: 15
+  probability3: 30
+ 
+  distance4: 3
+  scaledDistance4: 12
+  probability4: 24
+ 
 
 
 ---[Component Powersupply]---
@@ -143,57 +403,187 @@ evolutionUnlockLevel2: 4
 evolutionUnlockLevel3: 6
 evolutionUnlockLevel4: 8
  
-DistanceCurrentLevelToEvolutionUnlockLevels:
+Data that depends on current level:
  Level 1
- distance1: 0
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 0
+  distance1: 0
+  scaledDistance1: 0
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 2
- distance1: 1
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 1
+  distance1: 1
+  scaledDistance1: 1
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 3
- distance1: 2
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 2
+  distance1: 2
+  scaledDistance1: 2
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 4
- distance1: 3
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 3
+  distance1: 3
+  scaledDistance1: 3
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 5
- distance1: 4
- distance2: 1
- distance3: 0
- distance4: 0
+  totalScaledDistance: 6
+  distance1: 4
+  scaledDistance1: 4
+  probability1: 67
+ 
+  distance2: 1
+  scaledDistance2: 2
+  probability2: 33
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 6
- distance1: 5
- distance2: 2
- distance3: 0
- distance4: 0
+  totalScaledDistance: 9
+  distance1: 5
+  scaledDistance1: 5
+  probability1: 56
+ 
+  distance2: 2
+  scaledDistance2: 4
+  probability2: 44
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 7
- distance1: 6
- distance2: 3
- distance3: 1
- distance4: 0
+  totalScaledDistance: 15
+  distance1: 6
+  scaledDistance1: 6
+  probability1: 40
+ 
+  distance2: 3
+  scaledDistance2: 6
+  probability2: 40
+ 
+  distance3: 1
+  scaledDistance3: 3
+  probability3: 20
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 8
- distance1: 7
- distance2: 4
- distance3: 2
- distance4: 0
+  totalScaledDistance: 21
+  distance1: 7
+  scaledDistance1: 7
+  probability1: 33
+ 
+  distance2: 4
+  scaledDistance2: 8
+  probability2: 38
+ 
+  distance3: 2
+  scaledDistance3: 6
+  probability3: 28
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 9
- distance1: 8
- distance2: 5
- distance3: 3
- distance4: 1
+  totalScaledDistance: 31
+  distance1: 8
+  scaledDistance1: 8
+  probability1: 26
+ 
+  distance2: 5
+  scaledDistance2: 10
+  probability2: 32
+ 
+  distance3: 3
+  scaledDistance3: 9
+  probability3: 28
+ 
+  distance4: 1
+  scaledDistance4: 4
+  probability4: 13
+ 
  Level 10
- distance1: 9
- distance2: 6
- distance3: 4
- distance4: 2
+  totalScaledDistance: 41
+  distance1: 9
+  scaledDistance1: 9
+  probability1: 22
+ 
+  distance2: 6
+  scaledDistance2: 12
+  probability2: 28
+ 
+  distance3: 4
+  scaledDistance3: 12
+  probability3: 28
+ 
+  distance4: 2
+  scaledDistance4: 8
+  probability4: 20
+ 
 
 
 ---[Component Motherboard]---
@@ -209,57 +599,187 @@ evolutionUnlockLevel2: 5
 evolutionUnlockLevel3: 7
 evolutionUnlockLevel4: 9
  
-DistanceCurrentLevelToEvolutionUnlockLevels:
+Data that depends on current level:
  Level 1
- distance1: 0
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 0
+  distance1: 0
+  scaledDistance1: 0
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 2
- distance1: 1
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 1
+  distance1: 1
+  scaledDistance1: 1
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 3
- distance1: 2
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 2
+  distance1: 2
+  scaledDistance1: 2
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 4
- distance1: 3
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 3
+  distance1: 3
+  scaledDistance1: 3
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 5
- distance1: 4
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 4
+  distance1: 4
+  scaledDistance1: 4
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 6
- distance1: 5
- distance2: 1
- distance3: 0
- distance4: 0
+  totalScaledDistance: 7
+  distance1: 5
+  scaledDistance1: 5
+  probability1: 71
+ 
+  distance2: 1
+  scaledDistance2: 2
+  probability2: 28
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 7
- distance1: 6
- distance2: 2
- distance3: 0
- distance4: 0
+  totalScaledDistance: 10
+  distance1: 6
+  scaledDistance1: 6
+  probability1: 60
+ 
+  distance2: 2
+  scaledDistance2: 4
+  probability2: 40
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 8
- distance1: 7
- distance2: 3
- distance3: 1
- distance4: 0
+  totalScaledDistance: 16
+  distance1: 7
+  scaledDistance1: 7
+  probability1: 44
+ 
+  distance2: 3
+  scaledDistance2: 6
+  probability2: 38
+ 
+  distance3: 1
+  scaledDistance3: 3
+  probability3: 19
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 9
- distance1: 8
- distance2: 4
- distance3: 2
- distance4: 0
+  totalScaledDistance: 22
+  distance1: 8
+  scaledDistance1: 8
+  probability1: 36
+ 
+  distance2: 4
+  scaledDistance2: 8
+  probability2: 36
+ 
+  distance3: 2
+  scaledDistance3: 6
+  probability3: 27
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 10
- distance1: 9
- distance2: 5
- distance3: 3
- distance4: 1
+  totalScaledDistance: 32
+  distance1: 9
+  scaledDistance1: 9
+  probability1: 28
+ 
+  distance2: 5
+  scaledDistance2: 10
+  probability2: 31
+ 
+  distance3: 3
+  scaledDistance3: 9
+  probability3: 28
+ 
+  distance4: 1
+  scaledDistance4: 4
+  probability4: 12
+ 
 
 
 ---[Component GPU]---
@@ -275,57 +795,187 @@ evolutionUnlockLevel2: 6
 evolutionUnlockLevel3: 8
 evolutionUnlockLevel4: 10
  
-DistanceCurrentLevelToEvolutionUnlockLevels:
+Data that depends on current level:
  Level 1
- distance1: 0
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 0
+  distance1: 0
+  scaledDistance1: 0
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 2
- distance1: 1
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 1
+  distance1: 1
+  scaledDistance1: 1
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 3
- distance1: 2
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 2
+  distance1: 2
+  scaledDistance1: 2
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 4
- distance1: 3
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 3
+  distance1: 3
+  scaledDistance1: 3
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 5
- distance1: 4
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 4
+  distance1: 4
+  scaledDistance1: 4
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 6
- distance1: 5
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 5
+  distance1: 5
+  scaledDistance1: 5
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 7
- distance1: 6
- distance2: 1
- distance3: 0
- distance4: 0
+  totalScaledDistance: 8
+  distance1: 6
+  scaledDistance1: 6
+  probability1: 75
+ 
+  distance2: 1
+  scaledDistance2: 2
+  probability2: 25
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 8
- distance1: 7
- distance2: 2
- distance3: 0
- distance4: 0
+  totalScaledDistance: 11
+  distance1: 7
+  scaledDistance1: 7
+  probability1: 64
+ 
+  distance2: 2
+  scaledDistance2: 4
+  probability2: 36
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 9
- distance1: 8
- distance2: 3
- distance3: 1
- distance4: 0
+  totalScaledDistance: 17
+  distance1: 8
+  scaledDistance1: 8
+  probability1: 47
+ 
+  distance2: 3
+  scaledDistance2: 6
+  probability2: 35
+ 
+  distance3: 1
+  scaledDistance3: 3
+  probability3: 18
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 10
- distance1: 9
- distance2: 4
- distance3: 2
- distance4: 0
+  totalScaledDistance: 23
+  distance1: 9
+  scaledDistance1: 9
+  probability1: 39
+ 
+  distance2: 4
+  scaledDistance2: 8
+  probability2: 35
+ 
+  distance3: 2
+  scaledDistance3: 6
+  probability3: 26
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
 
 
 ---[Component CPU]---
@@ -341,57 +991,187 @@ evolutionUnlockLevel2: 6
 evolutionUnlockLevel3: 8
 evolutionUnlockLevel4: 10
  
-DistanceCurrentLevelToEvolutionUnlockLevels:
+Data that depends on current level:
  Level 1
- distance1: 0
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 0
+  distance1: 0
+  scaledDistance1: 0
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 2
- distance1: 1
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 1
+  distance1: 1
+  scaledDistance1: 1
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 3
- distance1: 2
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 2
+  distance1: 2
+  scaledDistance1: 2
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 4
- distance1: 3
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 3
+  distance1: 3
+  scaledDistance1: 3
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 5
- distance1: 4
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 4
+  distance1: 4
+  scaledDistance1: 4
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 6
- distance1: 5
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 5
+  distance1: 5
+  scaledDistance1: 5
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 7
- distance1: 6
- distance2: 1
- distance3: 0
- distance4: 0
+  totalScaledDistance: 8
+  distance1: 6
+  scaledDistance1: 6
+  probability1: 75
+ 
+  distance2: 1
+  scaledDistance2: 2
+  probability2: 25
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 8
- distance1: 7
- distance2: 2
- distance3: 0
- distance4: 0
+  totalScaledDistance: 11
+  distance1: 7
+  scaledDistance1: 7
+  probability1: 64
+ 
+  distance2: 2
+  scaledDistance2: 4
+  probability2: 36
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 9
- distance1: 8
- distance2: 3
- distance3: 1
- distance4: 0
+  totalScaledDistance: 17
+  distance1: 8
+  scaledDistance1: 8
+  probability1: 47
+ 
+  distance2: 3
+  scaledDistance2: 6
+  probability2: 35
+ 
+  distance3: 1
+  scaledDistance3: 3
+  probability3: 18
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 10
- distance1: 9
- distance2: 4
- distance3: 2
- distance4: 0
+  totalScaledDistance: 23
+  distance1: 9
+  scaledDistance1: 9
+  probability1: 39
+ 
+  distance2: 4
+  scaledDistance2: 8
+  probability2: 35
+ 
+  distance3: 2
+  scaledDistance3: 6
+  probability3: 26
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
 
 
 ---[Component RAM]---
@@ -407,56 +1187,186 @@ evolutionUnlockLevel2: 7
 evolutionUnlockLevel3: 9
 evolutionUnlockLevel4: 10
  
-DistanceCurrentLevelToEvolutionUnlockLevels:
+Data that depends on current level:
  Level 1
- distance1: 0
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 0
+  distance1: 0
+  scaledDistance1: 0
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 2
- distance1: 1
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 1
+  distance1: 1
+  scaledDistance1: 1
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 3
- distance1: 2
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 2
+  distance1: 2
+  scaledDistance1: 2
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 4
- distance1: 3
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 3
+  distance1: 3
+  scaledDistance1: 3
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 5
- distance1: 4
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 4
+  distance1: 4
+  scaledDistance1: 4
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 6
- distance1: 5
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 5
+  distance1: 5
+  scaledDistance1: 5
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 7
- distance1: 6
- distance2: 0
- distance3: 0
- distance4: 0
+  totalScaledDistance: 6
+  distance1: 6
+  scaledDistance1: 6
+  probability1: 100
+ 
+  distance2: 0
+  scaledDistance2: 0
+  probability2: 0
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 8
- distance1: 7
- distance2: 1
- distance3: 0
- distance4: 0
+  totalScaledDistance: 9
+  distance1: 7
+  scaledDistance1: 7
+  probability1: 78
+ 
+  distance2: 1
+  scaledDistance2: 2
+  probability2: 22
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 9
- distance1: 8
- distance2: 2
- distance3: 0
- distance4: 0
+  totalScaledDistance: 12
+  distance1: 8
+  scaledDistance1: 8
+  probability1: 67
+ 
+  distance2: 2
+  scaledDistance2: 4
+  probability2: 33
+ 
+  distance3: 0
+  scaledDistance3: 0
+  probability3: 0
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
  Level 10
- distance1: 9
- distance2: 3
- distance3: 1
- distance4: 0
+  totalScaledDistance: 18
+  distance1: 9
+  scaledDistance1: 9
+  probability1: 50
+ 
+  distance2: 3
+  scaledDistance2: 6
+  probability2: 33
+ 
+  distance3: 1
+  scaledDistance3: 3
+  probability3: 17
+ 
+  distance4: 0
+  scaledDistance4: 0
+  probability4: 0
+ 
 
 
