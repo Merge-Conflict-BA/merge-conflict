@@ -130,17 +130,16 @@ public class OrderGenerator : MonoBehaviour
             //ram
             _parameterStorage.SetDistanceScalingFactor("RAM", (int)RAM.DistanceScalingFactor1, (int)RAM.DistanceScalingFactor2, (int)RAM.DistanceScalingFactor3, (int)RAM.DistanceScalingFactor4);
             _parameterStorage.SetEvolutionUnlocklevel("RAM", (int)RAM.UnlocklevelStage1, (int)RAM.UnlocklevelStage2, (int)RAM.UnlocklevelStage3, (int)RAM.UnlocklevelStage4);
+        
+            #if UNITY_EDITOR
+                WriteDataLogFile();  
+            #endif
+        
         }
     }
 
     void Update()
     {
-        if (writeLog)
-        {
-            WriteDataLogFile();
-            writeLog = false;
-        }
-
         if (calcProbs)
         {
             int caseProbs = SelectComponentstage("Case", 5);
@@ -189,9 +188,14 @@ public class OrderGenerator : MonoBehaviour
     {
         const string FilePath = "Assets/Scripts/Order/dataLog.txt";
         const byte AmountLevels = 10;
+        DateTime currentDateAndTime = DateTime.Now;
 
         using (StreamWriter writer = new StreamWriter(FilePath))
         {
+            writer.WriteLine("All data which are needed to generate the Order.");
+            writer.WriteLine("To understand what they data are used for, please checkout the Order/README.md!");
+            writer.WriteLine($"Generated: {currentDateAndTime.Day}.{currentDateAndTime.Month}.{currentDateAndTime.Year} at {currentDateAndTime.Hour}:{currentDateAndTime.Minute}:{currentDateAndTime.Second}");
+            writer.WriteLine(" ");
             foreach (var component in ComponentNames)
             {
                 writer.WriteLine($"---[Component {component}]---");

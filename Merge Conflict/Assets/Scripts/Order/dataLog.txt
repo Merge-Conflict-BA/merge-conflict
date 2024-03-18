@@ -1,4 +1,8 @@
----[Component Case]---
+All data which are needed to generate the Order.
+To understand what they data are used for, please checkout the Order/README.md!
+Generated: 19.3.2024 at 0.48.36
+ 
+---[Component RAM]---
 distanceScalingFactors:
 DistanceScalingFactor1: 1
 DistanceScalingFactor2: 2
@@ -7,9 +11,9 @@ DistanceScalingFactor4: 4
  
 unlockEvolutionLevels:
 evolutionUnlockLevel1: 1
-evolutionUnlockLevel2: 2
-evolutionUnlockLevel3: 4
-evolutionUnlockLevel4: 6
+evolutionUnlockLevel2: 7
+evolutionUnlockLevel3: 9
+evolutionUnlockLevel4: 10
  
 Data that depends on current level:
 |-Level 1
@@ -49,14 +53,14 @@ Data that depends on current level:
  |-probability4: 0
  
 |-Level 3
- |-totalScaledDistance: 4
+ |-totalScaledDistance: 2
  |-distanceToUnlockLevel1: 2
  |-scaledDistance1: 2
- |-probability1: 0.5
+ |-probability1: 1
  |
- |-distanceToUnlockLevel2: 1
- |-scaledDistance2: 2
- |-probability2: 0.5
+ |-distanceToUnlockLevel2: 0
+ |-scaledDistance2: 0
+ |-probability2: 0
  |
  |-distanceToUnlockLevel3: 0
  |-scaledDistance3: 0
@@ -67,14 +71,14 @@ Data that depends on current level:
  |-probability4: 0
  
 |-Level 4
- |-totalScaledDistance: 7
+ |-totalScaledDistance: 3
  |-distanceToUnlockLevel1: 3
  |-scaledDistance1: 3
- |-probability1: 0.43
+ |-probability1: 1
  |
- |-distanceToUnlockLevel2: 2
- |-scaledDistance2: 4
- |-probability2: 0.57
+ |-distanceToUnlockLevel2: 0
+ |-scaledDistance2: 0
+ |-probability2: 0
  |
  |-distanceToUnlockLevel3: 0
  |-scaledDistance3: 0
@@ -85,112 +89,112 @@ Data that depends on current level:
  |-probability4: 0
  
 |-Level 5
- |-totalScaledDistance: 13
+ |-totalScaledDistance: 4
  |-distanceToUnlockLevel1: 4
  |-scaledDistance1: 4
- |-probability1: 0.31
+ |-probability1: 1
  |
- |-distanceToUnlockLevel2: 3
- |-scaledDistance2: 6
- |-probability2: 0.46
+ |-distanceToUnlockLevel2: 0
+ |-scaledDistance2: 0
+ |-probability2: 0
  |
- |-distanceToUnlockLevel3: 1
- |-scaledDistance3: 3
- |-probability3: 0.23
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
  |
  |-distanceToUnlockLevel4: 0
  |-scaledDistance4: 0
  |-probability4: 0
  
 |-Level 6
- |-totalScaledDistance: 19
+ |-totalScaledDistance: 5
  |-distanceToUnlockLevel1: 5
  |-scaledDistance1: 5
- |-probability1: 0.26
+ |-probability1: 1
  |
- |-distanceToUnlockLevel2: 4
- |-scaledDistance2: 8
- |-probability2: 0.42
+ |-distanceToUnlockLevel2: 0
+ |-scaledDistance2: 0
+ |-probability2: 0
  |
- |-distanceToUnlockLevel3: 2
- |-scaledDistance3: 6
- |-probability3: 0.32
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
  |
  |-distanceToUnlockLevel4: 0
  |-scaledDistance4: 0
  |-probability4: 0
  
 |-Level 7
- |-totalScaledDistance: 29
+ |-totalScaledDistance: 6
  |-distanceToUnlockLevel1: 6
  |-scaledDistance1: 6
- |-probability1: 0.21
+ |-probability1: 1
  |
- |-distanceToUnlockLevel2: 5
- |-scaledDistance2: 10
- |-probability2: 0.34
+ |-distanceToUnlockLevel2: 0
+ |-scaledDistance2: 0
+ |-probability2: 0
  |
- |-distanceToUnlockLevel3: 3
- |-scaledDistance3: 9
- |-probability3: 0.31
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
  |
- |-distanceToUnlockLevel4: 1
- |-scaledDistance4: 4
- |-probability4: 0.14
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
  
 |-Level 8
- |-totalScaledDistance: 39
+ |-totalScaledDistance: 9
  |-distanceToUnlockLevel1: 7
  |-scaledDistance1: 7
- |-probability1: 0.18
+ |-probability1: 0.78
  |
- |-distanceToUnlockLevel2: 6
- |-scaledDistance2: 12
- |-probability2: 0.31
+ |-distanceToUnlockLevel2: 1
+ |-scaledDistance2: 2
+ |-probability2: 0.22
  |
- |-distanceToUnlockLevel3: 4
- |-scaledDistance3: 12
- |-probability3: 0.31
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
  |
- |-distanceToUnlockLevel4: 2
- |-scaledDistance4: 8
- |-probability4: 0.21
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
  
 |-Level 9
- |-totalScaledDistance: 49
+ |-totalScaledDistance: 12
  |-distanceToUnlockLevel1: 8
  |-scaledDistance1: 8
- |-probability1: 0.16
+ |-probability1: 0.67
  |
- |-distanceToUnlockLevel2: 7
- |-scaledDistance2: 14
- |-probability2: 0.29
+ |-distanceToUnlockLevel2: 2
+ |-scaledDistance2: 4
+ |-probability2: 0.33
  |
- |-distanceToUnlockLevel3: 5
- |-scaledDistance3: 15
- |-probability3: 0.31
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
  |
- |-distanceToUnlockLevel4: 3
- |-scaledDistance4: 12
- |-probability4: 0.24
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
  
 |-Level 10
- |-totalScaledDistance: 59
+ |-totalScaledDistance: 18
  |-distanceToUnlockLevel1: 9
  |-scaledDistance1: 9
- |-probability1: 0.15
+ |-probability1: 0.5
  |
- |-distanceToUnlockLevel2: 8
- |-scaledDistance2: 16
- |-probability2: 0.27
+ |-distanceToUnlockLevel2: 3
+ |-scaledDistance2: 6
+ |-probability2: 0.33
  |
- |-distanceToUnlockLevel3: 6
- |-scaledDistance3: 18
- |-probability3: 0.31
+ |-distanceToUnlockLevel3: 1
+ |-scaledDistance3: 3
+ |-probability3: 0.17
  |
- |-distanceToUnlockLevel4: 4
- |-scaledDistance4: 16
- |-probability4: 0.27
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
  
 
 
@@ -387,398 +391,6 @@ Data that depends on current level:
  |-distanceToUnlockLevel4: 3
  |-scaledDistance4: 12
  |-probability4: 0.24
- 
-
-
----[Component Powersupply]---
-distanceScalingFactors:
-DistanceScalingFactor1: 1
-DistanceScalingFactor2: 2
-DistanceScalingFactor3: 3
-DistanceScalingFactor4: 4
- 
-unlockEvolutionLevels:
-evolutionUnlockLevel1: 1
-evolutionUnlockLevel2: 4
-evolutionUnlockLevel3: 6
-evolutionUnlockLevel4: 8
- 
-Data that depends on current level:
-|-Level 1
- |-totalScaledDistance: 0
- |-distanceToUnlockLevel1: 0
- |-scaledDistance1: 0
- |-probability1: 1
- |
- |-distanceToUnlockLevel2: 0
- |-scaledDistance2: 0
- |-probability2: 0
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 2
- |-totalScaledDistance: 1
- |-distanceToUnlockLevel1: 1
- |-scaledDistance1: 1
- |-probability1: 1
- |
- |-distanceToUnlockLevel2: 0
- |-scaledDistance2: 0
- |-probability2: 0
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 3
- |-totalScaledDistance: 2
- |-distanceToUnlockLevel1: 2
- |-scaledDistance1: 2
- |-probability1: 1
- |
- |-distanceToUnlockLevel2: 0
- |-scaledDistance2: 0
- |-probability2: 0
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 4
- |-totalScaledDistance: 3
- |-distanceToUnlockLevel1: 3
- |-scaledDistance1: 3
- |-probability1: 1
- |
- |-distanceToUnlockLevel2: 0
- |-scaledDistance2: 0
- |-probability2: 0
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 5
- |-totalScaledDistance: 6
- |-distanceToUnlockLevel1: 4
- |-scaledDistance1: 4
- |-probability1: 0.67
- |
- |-distanceToUnlockLevel2: 1
- |-scaledDistance2: 2
- |-probability2: 0.33
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 6
- |-totalScaledDistance: 9
- |-distanceToUnlockLevel1: 5
- |-scaledDistance1: 5
- |-probability1: 0.56
- |
- |-distanceToUnlockLevel2: 2
- |-scaledDistance2: 4
- |-probability2: 0.44
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 7
- |-totalScaledDistance: 15
- |-distanceToUnlockLevel1: 6
- |-scaledDistance1: 6
- |-probability1: 0.4
- |
- |-distanceToUnlockLevel2: 3
- |-scaledDistance2: 6
- |-probability2: 0.4
- |
- |-distanceToUnlockLevel3: 1
- |-scaledDistance3: 3
- |-probability3: 0.2
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 8
- |-totalScaledDistance: 21
- |-distanceToUnlockLevel1: 7
- |-scaledDistance1: 7
- |-probability1: 0.33
- |
- |-distanceToUnlockLevel2: 4
- |-scaledDistance2: 8
- |-probability2: 0.38
- |
- |-distanceToUnlockLevel3: 2
- |-scaledDistance3: 6
- |-probability3: 0.29
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 9
- |-totalScaledDistance: 31
- |-distanceToUnlockLevel1: 8
- |-scaledDistance1: 8
- |-probability1: 0.26
- |
- |-distanceToUnlockLevel2: 5
- |-scaledDistance2: 10
- |-probability2: 0.32
- |
- |-distanceToUnlockLevel3: 3
- |-scaledDistance3: 9
- |-probability3: 0.29
- |
- |-distanceToUnlockLevel4: 1
- |-scaledDistance4: 4
- |-probability4: 0.13
- 
-|-Level 10
- |-totalScaledDistance: 41
- |-distanceToUnlockLevel1: 9
- |-scaledDistance1: 9
- |-probability1: 0.22
- |
- |-distanceToUnlockLevel2: 6
- |-scaledDistance2: 12
- |-probability2: 0.29
- |
- |-distanceToUnlockLevel3: 4
- |-scaledDistance3: 12
- |-probability3: 0.29
- |
- |-distanceToUnlockLevel4: 2
- |-scaledDistance4: 8
- |-probability4: 0.2
- 
-
-
----[Component Motherboard]---
-distanceScalingFactors:
-DistanceScalingFactor1: 1
-DistanceScalingFactor2: 2
-DistanceScalingFactor3: 3
-DistanceScalingFactor4: 4
- 
-unlockEvolutionLevels:
-evolutionUnlockLevel1: 1
-evolutionUnlockLevel2: 5
-evolutionUnlockLevel3: 7
-evolutionUnlockLevel4: 9
- 
-Data that depends on current level:
-|-Level 1
- |-totalScaledDistance: 0
- |-distanceToUnlockLevel1: 0
- |-scaledDistance1: 0
- |-probability1: 1
- |
- |-distanceToUnlockLevel2: 0
- |-scaledDistance2: 0
- |-probability2: 0
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 2
- |-totalScaledDistance: 1
- |-distanceToUnlockLevel1: 1
- |-scaledDistance1: 1
- |-probability1: 1
- |
- |-distanceToUnlockLevel2: 0
- |-scaledDistance2: 0
- |-probability2: 0
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 3
- |-totalScaledDistance: 2
- |-distanceToUnlockLevel1: 2
- |-scaledDistance1: 2
- |-probability1: 1
- |
- |-distanceToUnlockLevel2: 0
- |-scaledDistance2: 0
- |-probability2: 0
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 4
- |-totalScaledDistance: 3
- |-distanceToUnlockLevel1: 3
- |-scaledDistance1: 3
- |-probability1: 1
- |
- |-distanceToUnlockLevel2: 0
- |-scaledDistance2: 0
- |-probability2: 0
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 5
- |-totalScaledDistance: 4
- |-distanceToUnlockLevel1: 4
- |-scaledDistance1: 4
- |-probability1: 1
- |
- |-distanceToUnlockLevel2: 0
- |-scaledDistance2: 0
- |-probability2: 0
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 6
- |-totalScaledDistance: 7
- |-distanceToUnlockLevel1: 5
- |-scaledDistance1: 5
- |-probability1: 0.71
- |
- |-distanceToUnlockLevel2: 1
- |-scaledDistance2: 2
- |-probability2: 0.29
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 7
- |-totalScaledDistance: 10
- |-distanceToUnlockLevel1: 6
- |-scaledDistance1: 6
- |-probability1: 0.6
- |
- |-distanceToUnlockLevel2: 2
- |-scaledDistance2: 4
- |-probability2: 0.4
- |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 8
- |-totalScaledDistance: 16
- |-distanceToUnlockLevel1: 7
- |-scaledDistance1: 7
- |-probability1: 0.44
- |
- |-distanceToUnlockLevel2: 3
- |-scaledDistance2: 6
- |-probability2: 0.38
- |
- |-distanceToUnlockLevel3: 1
- |-scaledDistance3: 3
- |-probability3: 0.19
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 9
- |-totalScaledDistance: 22
- |-distanceToUnlockLevel1: 8
- |-scaledDistance1: 8
- |-probability1: 0.36
- |
- |-distanceToUnlockLevel2: 4
- |-scaledDistance2: 8
- |-probability2: 0.36
- |
- |-distanceToUnlockLevel3: 2
- |-scaledDistance3: 6
- |-probability3: 0.27
- |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
- 
-|-Level 10
- |-totalScaledDistance: 32
- |-distanceToUnlockLevel1: 9
- |-scaledDistance1: 9
- |-probability1: 0.28
- |
- |-distanceToUnlockLevel2: 5
- |-scaledDistance2: 10
- |-probability2: 0.31
- |
- |-distanceToUnlockLevel3: 3
- |-scaledDistance3: 9
- |-probability3: 0.28
- |
- |-distanceToUnlockLevel4: 1
- |-scaledDistance4: 4
- |-probability4: 0.12
  
 
 
@@ -1174,7 +786,7 @@ Data that depends on current level:
  
 
 
----[Component RAM]---
+---[Component Case]---
 distanceScalingFactors:
 DistanceScalingFactor1: 1
 DistanceScalingFactor2: 2
@@ -1183,9 +795,205 @@ DistanceScalingFactor4: 4
  
 unlockEvolutionLevels:
 evolutionUnlockLevel1: 1
-evolutionUnlockLevel2: 7
-evolutionUnlockLevel3: 9
-evolutionUnlockLevel4: 10
+evolutionUnlockLevel2: 2
+evolutionUnlockLevel3: 4
+evolutionUnlockLevel4: 6
+ 
+Data that depends on current level:
+|-Level 1
+ |-totalScaledDistance: 0
+ |-distanceToUnlockLevel1: 0
+ |-scaledDistance1: 0
+ |-probability1: 1
+ |
+ |-distanceToUnlockLevel2: 0
+ |-scaledDistance2: 0
+ |-probability2: 0
+ |
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 2
+ |-totalScaledDistance: 1
+ |-distanceToUnlockLevel1: 1
+ |-scaledDistance1: 1
+ |-probability1: 1
+ |
+ |-distanceToUnlockLevel2: 0
+ |-scaledDistance2: 0
+ |-probability2: 0
+ |
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 3
+ |-totalScaledDistance: 4
+ |-distanceToUnlockLevel1: 2
+ |-scaledDistance1: 2
+ |-probability1: 0.5
+ |
+ |-distanceToUnlockLevel2: 1
+ |-scaledDistance2: 2
+ |-probability2: 0.5
+ |
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 4
+ |-totalScaledDistance: 7
+ |-distanceToUnlockLevel1: 3
+ |-scaledDistance1: 3
+ |-probability1: 0.43
+ |
+ |-distanceToUnlockLevel2: 2
+ |-scaledDistance2: 4
+ |-probability2: 0.57
+ |
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 5
+ |-totalScaledDistance: 13
+ |-distanceToUnlockLevel1: 4
+ |-scaledDistance1: 4
+ |-probability1: 0.31
+ |
+ |-distanceToUnlockLevel2: 3
+ |-scaledDistance2: 6
+ |-probability2: 0.46
+ |
+ |-distanceToUnlockLevel3: 1
+ |-scaledDistance3: 3
+ |-probability3: 0.23
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 6
+ |-totalScaledDistance: 19
+ |-distanceToUnlockLevel1: 5
+ |-scaledDistance1: 5
+ |-probability1: 0.26
+ |
+ |-distanceToUnlockLevel2: 4
+ |-scaledDistance2: 8
+ |-probability2: 0.42
+ |
+ |-distanceToUnlockLevel3: 2
+ |-scaledDistance3: 6
+ |-probability3: 0.32
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 7
+ |-totalScaledDistance: 29
+ |-distanceToUnlockLevel1: 6
+ |-scaledDistance1: 6
+ |-probability1: 0.21
+ |
+ |-distanceToUnlockLevel2: 5
+ |-scaledDistance2: 10
+ |-probability2: 0.34
+ |
+ |-distanceToUnlockLevel3: 3
+ |-scaledDistance3: 9
+ |-probability3: 0.31
+ |
+ |-distanceToUnlockLevel4: 1
+ |-scaledDistance4: 4
+ |-probability4: 0.14
+ 
+|-Level 8
+ |-totalScaledDistance: 39
+ |-distanceToUnlockLevel1: 7
+ |-scaledDistance1: 7
+ |-probability1: 0.18
+ |
+ |-distanceToUnlockLevel2: 6
+ |-scaledDistance2: 12
+ |-probability2: 0.31
+ |
+ |-distanceToUnlockLevel3: 4
+ |-scaledDistance3: 12
+ |-probability3: 0.31
+ |
+ |-distanceToUnlockLevel4: 2
+ |-scaledDistance4: 8
+ |-probability4: 0.21
+ 
+|-Level 9
+ |-totalScaledDistance: 49
+ |-distanceToUnlockLevel1: 8
+ |-scaledDistance1: 8
+ |-probability1: 0.16
+ |
+ |-distanceToUnlockLevel2: 7
+ |-scaledDistance2: 14
+ |-probability2: 0.29
+ |
+ |-distanceToUnlockLevel3: 5
+ |-scaledDistance3: 15
+ |-probability3: 0.31
+ |
+ |-distanceToUnlockLevel4: 3
+ |-scaledDistance4: 12
+ |-probability4: 0.24
+ 
+|-Level 10
+ |-totalScaledDistance: 59
+ |-distanceToUnlockLevel1: 9
+ |-scaledDistance1: 9
+ |-probability1: 0.15
+ |
+ |-distanceToUnlockLevel2: 8
+ |-scaledDistance2: 16
+ |-probability2: 0.27
+ |
+ |-distanceToUnlockLevel3: 6
+ |-scaledDistance3: 18
+ |-probability3: 0.31
+ |
+ |-distanceToUnlockLevel4: 4
+ |-scaledDistance4: 16
+ |-probability4: 0.27
+ 
+
+
+---[Component Motherboard]---
+distanceScalingFactors:
+DistanceScalingFactor1: 1
+DistanceScalingFactor2: 2
+DistanceScalingFactor3: 3
+DistanceScalingFactor4: 4
+ 
+unlockEvolutionLevels:
+evolutionUnlockLevel1: 1
+evolutionUnlockLevel2: 5
+evolutionUnlockLevel3: 7
+evolutionUnlockLevel4: 9
  
 Data that depends on current level:
 |-Level 1
@@ -1279,14 +1087,14 @@ Data that depends on current level:
  |-probability4: 0
  
 |-Level 6
- |-totalScaledDistance: 5
+ |-totalScaledDistance: 7
  |-distanceToUnlockLevel1: 5
  |-scaledDistance1: 5
- |-probability1: 1
+ |-probability1: 0.71
  |
- |-distanceToUnlockLevel2: 0
- |-scaledDistance2: 0
- |-probability2: 0
+ |-distanceToUnlockLevel2: 1
+ |-scaledDistance2: 2
+ |-probability2: 0.29
  |
  |-distanceToUnlockLevel3: 0
  |-scaledDistance3: 0
@@ -1297,9 +1105,97 @@ Data that depends on current level:
  |-probability4: 0
  
 |-Level 7
- |-totalScaledDistance: 6
+ |-totalScaledDistance: 10
  |-distanceToUnlockLevel1: 6
  |-scaledDistance1: 6
+ |-probability1: 0.6
+ |
+ |-distanceToUnlockLevel2: 2
+ |-scaledDistance2: 4
+ |-probability2: 0.4
+ |
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 8
+ |-totalScaledDistance: 16
+ |-distanceToUnlockLevel1: 7
+ |-scaledDistance1: 7
+ |-probability1: 0.44
+ |
+ |-distanceToUnlockLevel2: 3
+ |-scaledDistance2: 6
+ |-probability2: 0.38
+ |
+ |-distanceToUnlockLevel3: 1
+ |-scaledDistance3: 3
+ |-probability3: 0.19
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 9
+ |-totalScaledDistance: 22
+ |-distanceToUnlockLevel1: 8
+ |-scaledDistance1: 8
+ |-probability1: 0.36
+ |
+ |-distanceToUnlockLevel2: 4
+ |-scaledDistance2: 8
+ |-probability2: 0.36
+ |
+ |-distanceToUnlockLevel3: 2
+ |-scaledDistance3: 6
+ |-probability3: 0.27
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 10
+ |-totalScaledDistance: 32
+ |-distanceToUnlockLevel1: 9
+ |-scaledDistance1: 9
+ |-probability1: 0.28
+ |
+ |-distanceToUnlockLevel2: 5
+ |-scaledDistance2: 10
+ |-probability2: 0.31
+ |
+ |-distanceToUnlockLevel3: 3
+ |-scaledDistance3: 9
+ |-probability3: 0.28
+ |
+ |-distanceToUnlockLevel4: 1
+ |-scaledDistance4: 4
+ |-probability4: 0.12
+ 
+
+
+---[Component Powersupply]---
+distanceScalingFactors:
+DistanceScalingFactor1: 1
+DistanceScalingFactor2: 2
+DistanceScalingFactor3: 3
+DistanceScalingFactor4: 4
+ 
+unlockEvolutionLevels:
+evolutionUnlockLevel1: 1
+evolutionUnlockLevel2: 4
+evolutionUnlockLevel3: 6
+evolutionUnlockLevel4: 8
+ 
+Data that depends on current level:
+|-Level 1
+ |-totalScaledDistance: 0
+ |-distanceToUnlockLevel1: 0
+ |-scaledDistance1: 0
  |-probability1: 1
  |
  |-distanceToUnlockLevel2: 0
@@ -1314,59 +1210,167 @@ Data that depends on current level:
  |-scaledDistance4: 0
  |-probability4: 0
  
-|-Level 8
- |-totalScaledDistance: 9
- |-distanceToUnlockLevel1: 7
- |-scaledDistance1: 7
- |-probability1: 0.78
+|-Level 2
+ |-totalScaledDistance: 1
+ |-distanceToUnlockLevel1: 1
+ |-scaledDistance1: 1
+ |-probability1: 1
  |
- |-distanceToUnlockLevel2: 1
- |-scaledDistance2: 2
- |-probability2: 0.22
+ |-distanceToUnlockLevel2: 0
+ |-scaledDistance2: 0
+ |-probability2: 0
  |
  |-distanceToUnlockLevel3: 0
  |-scaledDistance3: 0
  |-probability3: 0
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 3
+ |-totalScaledDistance: 2
+ |-distanceToUnlockLevel1: 2
+ |-scaledDistance1: 2
+ |-probability1: 1
+ |
+ |-distanceToUnlockLevel2: 0
+ |-scaledDistance2: 0
+ |-probability2: 0
+ |
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 4
+ |-totalScaledDistance: 3
+ |-distanceToUnlockLevel1: 3
+ |-scaledDistance1: 3
+ |-probability1: 1
+ |
+ |-distanceToUnlockLevel2: 0
+ |-scaledDistance2: 0
+ |-probability2: 0
+ |
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 5
+ |-totalScaledDistance: 6
+ |-distanceToUnlockLevel1: 4
+ |-scaledDistance1: 4
+ |-probability1: 0.67
+ |
+ |-distanceToUnlockLevel2: 1
+ |-scaledDistance2: 2
+ |-probability2: 0.33
+ |
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 6
+ |-totalScaledDistance: 9
+ |-distanceToUnlockLevel1: 5
+ |-scaledDistance1: 5
+ |-probability1: 0.56
+ |
+ |-distanceToUnlockLevel2: 2
+ |-scaledDistance2: 4
+ |-probability2: 0.44
+ |
+ |-distanceToUnlockLevel3: 0
+ |-scaledDistance3: 0
+ |-probability3: 0
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 7
+ |-totalScaledDistance: 15
+ |-distanceToUnlockLevel1: 6
+ |-scaledDistance1: 6
+ |-probability1: 0.4
+ |
+ |-distanceToUnlockLevel2: 3
+ |-scaledDistance2: 6
+ |-probability2: 0.4
+ |
+ |-distanceToUnlockLevel3: 1
+ |-scaledDistance3: 3
+ |-probability3: 0.2
+ |
+ |-distanceToUnlockLevel4: 0
+ |-scaledDistance4: 0
+ |-probability4: 0
+ 
+|-Level 8
+ |-totalScaledDistance: 21
+ |-distanceToUnlockLevel1: 7
+ |-scaledDistance1: 7
+ |-probability1: 0.33
+ |
+ |-distanceToUnlockLevel2: 4
+ |-scaledDistance2: 8
+ |-probability2: 0.38
+ |
+ |-distanceToUnlockLevel3: 2
+ |-scaledDistance3: 6
+ |-probability3: 0.29
  |
  |-distanceToUnlockLevel4: 0
  |-scaledDistance4: 0
  |-probability4: 0
  
 |-Level 9
- |-totalScaledDistance: 12
+ |-totalScaledDistance: 31
  |-distanceToUnlockLevel1: 8
  |-scaledDistance1: 8
- |-probability1: 0.67
+ |-probability1: 0.26
  |
- |-distanceToUnlockLevel2: 2
- |-scaledDistance2: 4
- |-probability2: 0.33
+ |-distanceToUnlockLevel2: 5
+ |-scaledDistance2: 10
+ |-probability2: 0.32
  |
- |-distanceToUnlockLevel3: 0
- |-scaledDistance3: 0
- |-probability3: 0
+ |-distanceToUnlockLevel3: 3
+ |-scaledDistance3: 9
+ |-probability3: 0.29
  |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
+ |-distanceToUnlockLevel4: 1
+ |-scaledDistance4: 4
+ |-probability4: 0.13
  
 |-Level 10
- |-totalScaledDistance: 18
+ |-totalScaledDistance: 41
  |-distanceToUnlockLevel1: 9
  |-scaledDistance1: 9
- |-probability1: 0.5
+ |-probability1: 0.22
  |
- |-distanceToUnlockLevel2: 3
- |-scaledDistance2: 6
- |-probability2: 0.33
+ |-distanceToUnlockLevel2: 6
+ |-scaledDistance2: 12
+ |-probability2: 0.29
  |
- |-distanceToUnlockLevel3: 1
- |-scaledDistance3: 3
- |-probability3: 0.17
+ |-distanceToUnlockLevel3: 4
+ |-scaledDistance3: 12
+ |-probability3: 0.29
  |
- |-distanceToUnlockLevel4: 0
- |-scaledDistance4: 0
- |-probability4: 0
+ |-distanceToUnlockLevel4: 2
+ |-scaledDistance4: 8
+ |-probability4: 0.2
  
 
 
