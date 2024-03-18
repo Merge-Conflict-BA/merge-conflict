@@ -1,13 +1,25 @@
 using System;
-using System.Diagnostics;
 using System.Linq;
 
 public static class Calculate
 {
     const byte AmountStages = 4;
+    const byte FirstLevel = 1;
+    const byte EndLevel = 10;
+    const byte Stage1 = 0;
+    const byte Stage2 = 1;
+    const byte Stage3 = 2;
+    const byte Stage4 = 3;
 
     public static int[] DistanceCurrentLevelToEvolutionUnlockLevels(int currentLevel, int[] evolutionUnlockLevelParameters)
     {
+        //return null if current level is not valid 
+        if (currentLevel != Math.Clamp(currentLevel, FirstLevel, EndLevel))
+        {
+            Debugger.LogError("The given level in DistanceCurrentLevelToEvolutionUnlockLevels() is not valid! Check if the value is within the borders FirstLevel and EndLevel.");
+            return null;
+        };
+
         int[] distances = new int[AmountStages];
 
         for (int stage = 0; stage < AmountStages; stage++)
@@ -47,18 +59,16 @@ public static class Calculate
         //edgecase: current level==1 => probability stage1=100% because all other stages are locked
         if (totalScaledDistance == 0)
         {
-            probabilities[0] = 1;
-            probabilities[1] = 0;
-            probabilities[2] = 0;
-            probabilities[3] = 0;
+            probabilities[Stage1] = 1;
+            probabilities[Stage2] = 0;
+            probabilities[Stage3] = 0;
+            probabilities[Stage4] = 0;
 
             return probabilities;
         }
 
         for (int stage = 0; stage < AmountStages; stage++)
         {
-
-
             if (scaledDistances[stage] == 0)    //stage is locked => probabilitie=0 to get in order
             {
                 probabilities[stage] = 0;
