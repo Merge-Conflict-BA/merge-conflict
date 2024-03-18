@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -9,6 +10,11 @@ public class OrderGenerator : MonoBehaviour
     private ParameterStorage _parameterStorage;
     public int currentLevel = 1;
     public bool writeLog = false;
+    const byte InitialLevel = 1;
+    const byte EndLevel = 10;
+
+
+    public bool calcProbs = false;
 
 
     //define calculation parameters for component
@@ -101,8 +107,9 @@ public class OrderGenerator : MonoBehaviour
         }
         else
         {
-            _instance = this;
-            _parameterStorage = new ParameterStorage();
+
+            string[] ComponentNames = { "RAM", "HDD", "GPU", "CPU", "Case", "Motherboard", "Powersupply" };
+            _parameterStorage = new ParameterStorage(ComponentNames);
 
             //case
             _parameterStorage.SetDistanceScalingFactor("Case", (int)Case.DistanceScalingFactor1, (int)Case.DistanceScalingFactor2, (int)Case.DistanceScalingFactor3, (int)Case.DistanceScalingFactor4);
@@ -130,49 +137,34 @@ public class OrderGenerator : MonoBehaviour
 
     void Update()
     {
-        //debugging & test
-        // Debugger.LogMessage("case multiplier should be 2: " + _parameterStorage.GetDistanceScalingFactor("HDD", 2));
-        // Debugger.LogMessage("case unlocklevel should be 4: " + _parameterStorage.GetEvolutionUnlocklevel("HDD", 3));
-
-
-        // int[] temp = _parameterStorage.GetAllEvolutionUnlockLevels("HDD");
-        // int[] temp2 = _parameterStorage.GetAllDistanceMultipliers("Case");
-        //Debugger.LogMessage($"All unlockLevels case should be 1,2,4,6: {temp[0]}, {temp[1]}, {temp[2]}, {temp[3]}");
-        // Debugger.LogMessage($"All distanceMulti case should be 1,2,3,4: {temp2[0]}, {temp2[1]}, {temp2[2]}, {temp2[3]}");
-
-        //test DistanceCurrentLevelToEvolutionUnlockLevels()
-        int[] distances = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(currentLevel, _parameterStorage.GetAllEvolutionUnlockLevels("Case"));
-        // Debugger.LogMessage("Distance1: " + distances[0]);
-        // Debugger.LogMessage("Distance2: " + distances[1]);
-        // Debugger.LogMessage("Distance3: " + distances[2]);
-        // Debugger.LogMessage("Distance4: " + distances[3]);
-
-        //test DistanceCurrentLevelToEvolutionUnlockLevels()
-        int[] scaledDistances = Calculate.ScaledDistance(distances, _parameterStorage.GetAllDistanceScalingFactors("Case"));
-        // Debugger.LogMessage("Distance1: " + scaledDistances[0]);
-        // Debugger.LogMessage("Distance2: " + scaledDistances[1]);
-        // Debugger.LogMessage("Distance3: " + scaledDistances[2]);
-        // Debugger.LogMessage("Distance4: " + scaledDistances[3]);
-
-        //test TotalScaledDistances()
-        int totalScaledDistance = Calculate.TotalScaledDistances(scaledDistances);
-        // Debugger.LogMessage("total scaledDistances: " + totalScaledDistance);
-
-        //test Probabilities()
-        int[] probabilities = Calculate.Probabilities(scaledDistances, totalScaledDistance);
-        // Debugger.LogMessage("Probability1: " + probabilities[0]);
-        // Debugger.LogMessage("Probability2: " + probabilities[1]);
-        // Debugger.LogMessage("Probability3: " + probabilities[2]);
-        // Debugger.LogMessage("Probability4: " + probabilities[3]);
-
-
         if (writeLog)
         {
             WriteDataLogFile();
             writeLog = false;
         }
 
+        if (calcProbs)
+        {
+            int[] caseProbs = CalculateComponentStageProbabilities(5, "Case");
+            Debugger.LogMessage("casePorbs1: " + caseProbs[0]);
+            Debugger.LogMessage("casePorbs2: " + caseProbs[1]);
+            Debugger.LogMessage("casePorbs3: " + caseProbs[2]);
+            Debugger.LogMessage("casePorbs4: " + caseProbs[3]);
+        }
+    }
 
+    private int[] CalculateComponentStageProbabilities(int currentLevel, string componentName)
+    {
+        //return null if current level is not valid 
+        if (currentLevel != Math.Clamp(currentLevel, InitialLevel, EndLevel)) { return null; };
+
+        int[] distances = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(currentLevel, _parameterStorage.GetAllEvolutionUnlockLevels(componentName)); ;
+
+        int[] scaledDistances = Calculate.ScaledDistance(distances, _parameterStorage.GetAllDistanceScalingFactors("Case"));
+
+        int totalScaledDistance = Calculate.TotalScaledDistances(scaledDistances);
+
+        return Calculate.Probabilities(scaledDistances, totalScaledDistance);
     }
 
     private void WriteDataLogFile()
@@ -217,30 +209,25 @@ public class OrderGenerator : MonoBehaviour
 
                     writer.WriteLine($" Level {level}");
                     writer.WriteLine($"  totalScaledDistance: " + totalScaledDist);
-                    writer.WriteLine($"  distance1: " + dist[stage1]);
+                    writer.WriteLine($"  distanceToUnlockLevel1: " + dist[stage1]);
                     writer.WriteLine($"  scaledDistance1: " + scaledDist[stage1]);
                     writer.WriteLine($"  probability1: " + prob[stage1]);
                     writer.WriteLine(" ");
-                    writer.WriteLine($"  distance2: " + dist[stage2]);
+                    writer.WriteLine($"  distanceToUnlockLevel2: " + dist[stage2]);
                     writer.WriteLine($"  scaledDistance2: " + scaledDist[stage2]);
                     writer.WriteLine($"  probability2: " + prob[stage2]);
                     writer.WriteLine(" ");
-                    writer.WriteLine($"  distance3: " + dist[stage3]);
+                    writer.WriteLine($"  distanceToUnlockLevel3: " + dist[stage3]);
                     writer.WriteLine($"  scaledDistance3: " + scaledDist[stage3]);
                     writer.WriteLine($"  probability3: " + prob[stage3]);
                     writer.WriteLine(" ");
-                    writer.WriteLine($"  distance4: " + dist[stage4]);
+                    writer.WriteLine($"  distanceToUnlockLevel4: " + dist[stage4]);
                     writer.WriteLine($"  scaledDistance4: " + scaledDist[stage4]);
                     writer.WriteLine($"  probability4: " + prob[stage4]);
                     writer.WriteLine(" ");
                 }
-
-
-
                 writer.WriteLine("");
                 writer.WriteLine("");
-
-
             }
         }
 

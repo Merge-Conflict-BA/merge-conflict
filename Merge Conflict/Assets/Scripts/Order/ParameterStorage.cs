@@ -10,15 +10,13 @@ public class ParameterStorage
     private int[,] _evolutionUnlockLevels = new int[AmountComponents, AmountStages];    //[1...7components, 1=unlocklevel for stage1, 2=unlocklevel for stage2,...]
     private int[,] _distanceScalingfactors = new int[AmountComponents, AmountStages];      //[1...7components, 1=scaling factor for stage1, 2=scalingFactor for stage2,...]
 
-    public ParameterStorage()
+    public ParameterStorage(params string[] componentNames)
     {
-        componentList.Add("RAM", 0);
-        componentList.Add("HDD", 1);
-        componentList.Add("GPU", 2);
-        componentList.Add("CPU", 3);
-        componentList.Add("Case", 4);
-        componentList.Add("Motherboard", 5);
-        componentList.Add("Powersupply", 6);
+
+        for (int listIndex = 0; listIndex < componentNames.Length; listIndex++)
+        {
+            componentList.Add(componentNames[listIndex], listIndex);
+        }
     }
 
     private bool ComponentNotListed(string componentName)
