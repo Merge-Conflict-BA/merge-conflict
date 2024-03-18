@@ -179,6 +179,10 @@ public class OrderGenerator : MonoBehaviour
     {
         const string FilePath = "Assets/Scripts/Order/dataLog.txt";
         const byte AmountLevel = 10;
+        const byte stage1 = 0;
+        const byte stage2 = 1;
+        const byte stage3 = 2;
+        const byte stage4 = 3;
 
         using (StreamWriter writer = new StreamWriter(FilePath))
         {
@@ -191,27 +195,44 @@ public class OrderGenerator : MonoBehaviour
                 writer.WriteLine($"---[Component {component}]---");
                 writer.WriteLine("distanceScalingFactors:");
                 int[] dsf = _parameterStorage.GetAllDistanceScalingFactors(component);
-                writer.WriteLine("DistanceScalingFactor1: " + dsf[0]);
-                writer.WriteLine("DistanceScalingFactor2: " + dsf[1]);
-                writer.WriteLine("DistanceScalingFactor3: " + dsf[2]);
-                writer.WriteLine("DistanceScalingFactor4: " + dsf[3]);
+                writer.WriteLine("DistanceScalingFactor1: " + dsf[stage1]);
+                writer.WriteLine("DistanceScalingFactor2: " + dsf[stage2]);
+                writer.WriteLine("DistanceScalingFactor3: " + dsf[stage3]);
+                writer.WriteLine("DistanceScalingFactor4: " + dsf[stage4]);
                 writer.WriteLine(" ");
                 writer.WriteLine("unlockEvolutionLevels:");
                 int[] eul = _parameterStorage.GetAllEvolutionUnlockLevels(component);
-                writer.WriteLine("evolutionUnlockLevel1: " + eul[0]);
-                writer.WriteLine("evolutionUnlockLevel2: " + eul[1]);
-                writer.WriteLine("evolutionUnlockLevel3: " + eul[2]);
-                writer.WriteLine("evolutionUnlockLevel4: " + eul[3]);
+                writer.WriteLine("evolutionUnlockLevel1: " + eul[stage1]);
+                writer.WriteLine("evolutionUnlockLevel2: " + eul[stage2]);
+                writer.WriteLine("evolutionUnlockLevel3: " + eul[stage3]);
+                writer.WriteLine("evolutionUnlockLevel4: " + eul[stage4]);
                 writer.WriteLine(" ");
-                writer.WriteLine("DistanceCurrentLevelToEvolutionUnlockLevels:");
+                writer.WriteLine("Data that depends on current level:");
                 for (int level = 1; level <= AmountLevel; level++)
                 {
                     int[] dist = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(level, _parameterStorage.GetAllEvolutionUnlockLevels(component));
+                    int[] scaledDist = Calculate.ScaledDistance(dist, _parameterStorage.GetAllDistanceScalingFactors(component));
+                    int totalScaledDist = Calculate.TotalScaledDistances(scaledDist);
+                    int[] prob = Calculate.Probabilities(scaledDist, totalScaledDist);
+
                     writer.WriteLine($" Level {level}");
-                    writer.WriteLine($"  distance1: " + dist[0]);
-                    writer.WriteLine($"  distance2: " + dist[1]);
-                    writer.WriteLine($"  distance3: " + dist[2]);
-                    writer.WriteLine($"  distance4: " + dist[3]);
+                    writer.WriteLine($"  totalScaledDistance: " + totalScaledDist);
+                    writer.WriteLine($"  distance1: " + dist[stage1]);
+                    writer.WriteLine($"  scaledDistance1: " + scaledDist[stage1]);
+                    writer.WriteLine($"  probability1: " + prob[stage1]);
+                    writer.WriteLine(" ");
+                    writer.WriteLine($"  distance2: " + dist[stage2]);
+                    writer.WriteLine($"  scaledDistance2: " + scaledDist[stage2]);
+                    writer.WriteLine($"  probability2: " + prob[stage2]);
+                    writer.WriteLine(" ");
+                    writer.WriteLine($"  distance3: " + dist[stage3]);
+                    writer.WriteLine($"  scaledDistance3: " + scaledDist[stage3]);
+                    writer.WriteLine($"  probability3: " + prob[stage3]);
+                    writer.WriteLine(" ");
+                    writer.WriteLine($"  distance4: " + dist[stage4]);
+                    writer.WriteLine($"  scaledDistance4: " + scaledDist[stage4]);
+                    writer.WriteLine($"  probability4: " + prob[stage4]);
+                    writer.WriteLine(" ");
                 }
 
 
