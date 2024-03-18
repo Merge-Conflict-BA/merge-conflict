@@ -40,14 +40,14 @@ public static class Calculate
         return scaledDistances.Sum();
     }
 
-    public static int[] Probabilities(int[] scaledDistances, int totalScaledDistance)
+    public static float[] Probabilities(int[] scaledDistances, int totalScaledDistance)
     {
-        int[] probabilities = new int[AmountStages];
+        float[] probabilities = new float[AmountStages];
 
         //edgecase: current level==1 => probability stage1=100% because all other stages are locked
         if (totalScaledDistance == 0)
         {
-            probabilities[0] = 100;
+            probabilities[0] = 1;
             probabilities[1] = 0;
             probabilities[2] = 0;
             probabilities[3] = 0;
@@ -65,7 +65,7 @@ public static class Calculate
                 continue;
             }
             float ratio = (float)scaledDistances[stage] / totalScaledDistance;
-            probabilities[stage] = (int)(Math.Round(ratio, 2) * 100);
+            probabilities[stage] = (float)Math.Round(ratio, 2);
         }
 
         return probabilities;

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -12,6 +11,10 @@ public class OrderGenerator : MonoBehaviour
     public bool writeLog = false;
     const byte InitialLevel = 1;
     const byte EndLevel = 10;
+    const byte stage1 = 0;
+    const byte stage2 = 1;
+    const byte stage3 = 2;
+    const byte stage4 = 3;
 
 
     public bool calcProbs = false;
@@ -145,26 +148,52 @@ public class OrderGenerator : MonoBehaviour
 
         if (calcProbs)
         {
-            int[] caseProbs = CalculateComponentStageProbabilities(5, "Case");
-            Debugger.LogMessage("casePorbs1: " + caseProbs[0]);
-            Debugger.LogMessage("casePorbs2: " + caseProbs[1]);
-            Debugger.LogMessage("casePorbs3: " + caseProbs[2]);
-            Debugger.LogMessage("casePorbs4: " + caseProbs[3]);
+            int caseProbs = SelectComponentstage("Case", 5);
+            Debugger.LogMessage("selected comp: " + caseProbs);
+
+            calcProbs = false;
         }
     }
 
-    private int[] CalculateComponentStageProbabilities(int currentLevel, string componentName)
+    private float[] CalculateComponentStageProbabilities(int currentLevel, string componentName)
     {
         //return null if current level is not valid 
-        if (currentLevel != Math.Clamp(currentLevel, InitialLevel, EndLevel)) { return null; };
+        if (currentLevel != Math.Clamp(currentLevel, InitialLevel, EndLevel)) 
+        { 
+            Debugger.LogError("The given level in CalculateComponentStageProbabilities() is not valid! Check if the value is within the borders InitialLevel and EndLEvel.");
+            return null; 
+            };
 
         int[] distances = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(currentLevel, _parameterStorage.GetAllEvolutionUnlockLevels(componentName)); ;
 
-        int[] scaledDistances = Calculate.ScaledDistance(distances, _parameterStorage.GetAllDistanceScalingFactors("Case"));
+        int[] scaledDistances = Calculate.ScaledDistance(distances, _parameterStorage.GetAllDistanceScalingFactors(componentName));
 
         int totalScaledDistance = Calculate.TotalScaledDistances(scaledDistances);
 
         return Calculate.Probabilities(scaledDistances, totalScaledDistance);
+    }
+
+    public int SelectComponentstage(string componentName, int currentLevel)
+    {
+        float[] stageProbabilities = CalculateComponentStageProbabilities(currentLevel, componentName);
+
+        float p1 = stageProbabilities[stage1];
+        float p2 = stageProbabilities[stage2];
+        float p3 = stageProbabilities[stage3];
+        float p4 = stageProbabilities[stage4];
+
+        float scaledP1 = p1;
+        float scaledP2 = scaledP1 + p2;
+        float scaledP3 = scaledP2 + p3;
+        float scaledP4 = scaledP3 + p4;
+
+        float randomNumber = UnityEngine.Random.value;
+
+        if (randomNumber < scaledP1){return 1;}
+        if (randomNumber < scaledP2){return 2;}
+        if (randomNumber < scaledP3){return 3;}
+        else{return 4;}
+
     }
 
     private void WriteDataLogFile()
@@ -205,7 +234,7 @@ public class OrderGenerator : MonoBehaviour
                     int[] dist = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(level, _parameterStorage.GetAllEvolutionUnlockLevels(component));
                     int[] scaledDist = Calculate.ScaledDistance(dist, _parameterStorage.GetAllDistanceScalingFactors(component));
                     int totalScaledDist = Calculate.TotalScaledDistances(scaledDist);
-                    int[] prob = Calculate.Probabilities(scaledDist, totalScaledDist);
+                    float[] prob = Calculate.Probabilities(scaledDist, totalScaledDist);
 
                     writer.WriteLine($" Level {level}");
                     writer.WriteLine($"  totalScaledDistance: " + totalScaledDist);
