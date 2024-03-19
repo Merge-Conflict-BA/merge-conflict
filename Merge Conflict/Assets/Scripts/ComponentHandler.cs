@@ -48,11 +48,11 @@ public class ComponentHandler : MonoBehaviour
         }
         else if (IsOnConveyorBelt() == false && _isDraggedOnce)
         {
-            ComponentMovement.HandleDraggingAnimationEnd();
             ComponentMovement.HandleIdleMovement();
             ComponentMovement.HandleIdleScaling();
         }
         
+        ComponentMovement.HandleDraggingAnimationEnd();
     }
 
     private void OnMouseDown()
