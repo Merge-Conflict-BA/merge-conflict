@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class LevelMenu : Menu
 {
     private static LevelMenu _instance;
-    private TextMeshProUGUI _levelTextfield;
-    private TextMeshProUGUI _xpTextfield;
+    private TextMeshProUGUI _currentLevelValueTextfield;
+    private TextMeshProUGUI _currentXpValueTextfield;
     private Image _levelProgressbar;
     private Canvas _levelmenuCanvas;
 
@@ -16,8 +16,8 @@ public class LevelMenu : Menu
         _levelmenuCanvas = FindCanvasForMenu("Level");
 
         InitializeMenu(_levelmenuCanvas);
-        _levelTextfield = GetComponentByName<TextMeshProUGUI>("CurrentLevelValue");
-        _xpTextfield = GetComponentByName<TextMeshProUGUI>("CurrentXpValue");
+        _currentLevelValueTextfield = GetComponentByName<TextMeshProUGUI>("CurrentLevelValue");
+        _currentXpValueTextfield = GetComponentByName<TextMeshProUGUI>("CurrentXpValue");
         _levelProgressbar = GetComponentByName<Image>("Progressbar_empty");
     }
 
@@ -33,22 +33,22 @@ public class LevelMenu : Menu
 
     public string GetDisplayedCurrentLevel()
     {
-        return _levelTextfield.text;
+        return _currentLevelValueTextfield.text;
     }
 
     public void SetDisplayedCurrentLevel(int level)
     {
-        _levelTextfield.text = level.ToString();
+        _currentLevelValueTextfield.text = level.ToString();
     }
 
     public string GetDisplayedCurrentXp()
     {
-        return _xpTextfield.text;
+        return _currentXpValueTextfield.text;
     }
 
     public void SetDisplayedCurrentXp(int xp)
     {
-        _xpTextfield.text = xp.ToString();
+        _currentXpValueTextfield.text = xp.ToString();
     }
 
     public void SetProgressbarValue(float level)
