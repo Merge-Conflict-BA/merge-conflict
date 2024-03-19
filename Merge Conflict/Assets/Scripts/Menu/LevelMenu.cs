@@ -56,7 +56,6 @@ public class LevelMenu : Menu
         Transform childimageTransform = _levelProgressbar.transform.Find("Progressbar_filled");
         Image progressbar = childimageTransform.GetComponent<Image>();
         
-        Debugger.LogMessage("pb: " + progressbar.name);
         double scaledLevel = level * 0.1;
         progressbar.fillAmount = (float)scaledLevel;
     }
