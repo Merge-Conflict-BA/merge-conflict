@@ -7,96 +7,8 @@ public class OrderGenerator : MonoBehaviour
     private static OrderGenerator _instance;
     public static OrderGenerator Instance { get { return _instance; } }
     private ParameterStorage _parameterStorage;
-    private readonly string[] ComponentNames = { "RAM", "HDD", "GPU", "CPU", "Case", "Motherboard", "Powersupply" };
     public byte currentLevel = 1;
     public bool writeLog = false;
-    const byte Stage1 = 0;
-    const byte Stage2 = 1;
-    const byte Stage3 = 2;
-    const byte Stage4 = 3;
-
-
-    public bool calcProbs = false;
-
-    //define calculation parameters for component
-    public enum Case
-    {
-        UnlocklevelStage1 = 1,
-        UnlocklevelStage2 = 2,
-        UnlocklevelStage3 = 4,
-        UnlocklevelStage4 = 6,
-        DistanceScalingFactor1 = 1,
-        DistanceScalingFactor2 = 2,
-        DistanceScalingFactor3 = 3,
-        DistanceScalingFactor4 = 4,
-    }
-    public enum HDD
-    {
-        UnlocklevelStage1 = 1,
-        UnlocklevelStage2 = 3,
-        UnlocklevelStage3 = 5,
-        UnlocklevelStage4 = 7,
-        DistanceScalingFactor1 = 1,
-        DistanceScalingFactor2 = 2,
-        DistanceScalingFactor3 = 3,
-        DistanceScalingFactor4 = 4,
-    }
-    public enum Powersupply
-    {
-        UnlocklevelStage1 = 1,
-        UnlocklevelStage2 = 4,
-        UnlocklevelStage3 = 6,
-        UnlocklevelStage4 = 8,
-        DistanceScalingFactor1 = 1,
-        DistanceScalingFactor2 = 2,
-        DistanceScalingFactor3 = 3,
-        DistanceScalingFactor4 = 4,
-    }
-    public enum Motherboard
-    {
-        UnlocklevelStage1 = 1,
-        UnlocklevelStage2 = 5,
-        UnlocklevelStage3 = 7,
-        UnlocklevelStage4 = 9,
-        DistanceScalingFactor1 = 1,
-        DistanceScalingFactor2 = 2,
-        DistanceScalingFactor3 = 3,
-        DistanceScalingFactor4 = 4,
-    }
-    public enum GPU
-    {
-        UnlocklevelStage1 = 1,
-        UnlocklevelStage2 = 6,
-        UnlocklevelStage3 = 8,
-        UnlocklevelStage4 = 10,
-        DistanceScalingFactor1 = 1,
-        DistanceScalingFactor2 = 2,
-        DistanceScalingFactor3 = 3,
-        DistanceScalingFactor4 = 4,
-    }
-    public enum CPU
-    {
-        UnlocklevelStage1 = 1,
-        UnlocklevelStage2 = 6,
-        UnlocklevelStage3 = 8,
-        UnlocklevelStage4 = 10,
-        DistanceScalingFactor1 = 1,
-        DistanceScalingFactor2 = 2,
-        DistanceScalingFactor3 = 3,
-        DistanceScalingFactor4 = 4,
-    }
-    public enum RAM
-    {
-        UnlocklevelStage1 = 1,
-        UnlocklevelStage2 = 7,
-        UnlocklevelStage3 = 9,
-        UnlocklevelStage4 = 10,
-        DistanceScalingFactor1 = 1,
-        DistanceScalingFactor2 = 2,
-        DistanceScalingFactor3 = 3,
-        DistanceScalingFactor4 = 4,
-    }
-
 
     void Awake()
     {
@@ -107,46 +19,34 @@ public class OrderGenerator : MonoBehaviour
         }
         else
         {
-            _parameterStorage = new ParameterStorage(ComponentNames);
+            _parameterStorage = new ParameterStorage(Const.ComponentNames);
 
             //case
-            _parameterStorage.SetDistanceScalingFactor("Case", (int)Case.DistanceScalingFactor1, (int)Case.DistanceScalingFactor2, (int)Case.DistanceScalingFactor3, (int)Case.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("Case", (int)Case.UnlocklevelStage1, (int)Case.UnlocklevelStage2, (int)Case.UnlocklevelStage3, (int)Case.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("Case", (int)Const.Case.DistanceScalingFactor1, (int)Const.Case.DistanceScalingFactor2, (int)Const.Case.DistanceScalingFactor3, (int)Const.Case.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("Case", (int)Const.Case.UnlocklevelStage1, (int)Const.Case.UnlocklevelStage2, (int)Const.Case.UnlocklevelStage3, (int)Const.Case.UnlocklevelStage4);
             //hdd
-            _parameterStorage.SetDistanceScalingFactor("HDD", (int)HDD.DistanceScalingFactor1, (int)HDD.DistanceScalingFactor2, (int)HDD.DistanceScalingFactor3, (int)HDD.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("HDD", (int)HDD.UnlocklevelStage1, (int)HDD.UnlocklevelStage2, (int)HDD.UnlocklevelStage3, (int)HDD.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("HDD", (int)Const.HDD.DistanceScalingFactor1, (int)Const.HDD.DistanceScalingFactor2, (int)Const.HDD.DistanceScalingFactor3, (int)Const.HDD.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("HDD", (int)Const.HDD.UnlocklevelStage1, (int)Const.HDD.UnlocklevelStage2, (int)Const.HDD.UnlocklevelStage3, (int)Const.HDD.UnlocklevelStage4);
             //powersupply
-            _parameterStorage.SetDistanceScalingFactor("Powersupply", (int)Powersupply.DistanceScalingFactor1, (int)Powersupply.DistanceScalingFactor2, (int)Powersupply.DistanceScalingFactor3, (int)Powersupply.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("Powersupply", (int)Powersupply.UnlocklevelStage1, (int)Powersupply.UnlocklevelStage2, (int)Powersupply.UnlocklevelStage3, (int)Powersupply.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("Powersupply", (int)Const.Powersupply.DistanceScalingFactor1, (int)Const.Powersupply.DistanceScalingFactor2, (int)Const.Powersupply.DistanceScalingFactor3, (int)Const.Powersupply.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("Powersupply", (int)Const.Powersupply.UnlocklevelStage1, (int)Const.Powersupply.UnlocklevelStage2, (int)Const.Powersupply.UnlocklevelStage3, (int)Const.Powersupply.UnlocklevelStage4);
             //motherboard
-            _parameterStorage.SetDistanceScalingFactor("Motherboard", (int)Motherboard.DistanceScalingFactor1, (int)Motherboard.DistanceScalingFactor2, (int)Motherboard.DistanceScalingFactor3, (int)Motherboard.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("Motherboard", (int)Motherboard.UnlocklevelStage1, (int)Motherboard.UnlocklevelStage2, (int)Motherboard.UnlocklevelStage3, (int)Motherboard.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("Motherboard", (int)Const.Motherboard.DistanceScalingFactor1, (int)Const.Motherboard.DistanceScalingFactor2, (int)Const.Motherboard.DistanceScalingFactor3, (int)Const.Motherboard.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("Motherboard", (int)Const.Motherboard.UnlocklevelStage1, (int)Const.Motherboard.UnlocklevelStage2, (int)Const.Motherboard.UnlocklevelStage3, (int)Const.Motherboard.UnlocklevelStage4);
             //gpu
-            _parameterStorage.SetDistanceScalingFactor("GPU", (int)GPU.DistanceScalingFactor1, (int)GPU.DistanceScalingFactor2, (int)GPU.DistanceScalingFactor3, (int)GPU.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("GPU", (int)GPU.UnlocklevelStage1, (int)GPU.UnlocklevelStage2, (int)GPU.UnlocklevelStage3, (int)GPU.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("GPU", (int)Const.GPU.DistanceScalingFactor1, (int)Const.GPU.DistanceScalingFactor2, (int)Const.GPU.DistanceScalingFactor3, (int)Const.GPU.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("GPU", (int)Const.GPU.UnlocklevelStage1, (int)Const.GPU.UnlocklevelStage2, (int)Const.GPU.UnlocklevelStage3, (int)Const.GPU.UnlocklevelStage4);
             //cpu
-            _parameterStorage.SetDistanceScalingFactor("CPU", (int)CPU.DistanceScalingFactor1, (int)CPU.DistanceScalingFactor2, (int)CPU.DistanceScalingFactor3, (int)CPU.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("CPU", (int)CPU.UnlocklevelStage1, (int)CPU.UnlocklevelStage2, (int)CPU.UnlocklevelStage3, (int)CPU.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("CPU", (int)Const.CPU.DistanceScalingFactor1, (int)Const.CPU.DistanceScalingFactor2, (int)Const.CPU.DistanceScalingFactor3, (int)Const.CPU.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("CPU", (int)Const.CPU.UnlocklevelStage1, (int)Const.CPU.UnlocklevelStage2, (int)Const.CPU.UnlocklevelStage3, (int)Const.CPU.UnlocklevelStage4);
             //ram
-            _parameterStorage.SetDistanceScalingFactor("RAM", (int)RAM.DistanceScalingFactor1, (int)RAM.DistanceScalingFactor2, (int)RAM.DistanceScalingFactor3, (int)RAM.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("RAM", (int)RAM.UnlocklevelStage1, (int)RAM.UnlocklevelStage2, (int)RAM.UnlocklevelStage3, (int)RAM.UnlocklevelStage4);
+            _parameterStorage.SetDistanceScalingFactor("RAM", (int)Const.RAM.DistanceScalingFactor1, (int)Const.RAM.DistanceScalingFactor2, (int)Const.RAM.DistanceScalingFactor3, (int)Const.RAM.DistanceScalingFactor4);
+            _parameterStorage.SetEvolutionUnlocklevel("RAM", (int)Const.RAM.UnlocklevelStage1, (int)Const.RAM.UnlocklevelStage2, (int)Const.RAM.UnlocklevelStage3, (int)Const.RAM.UnlocklevelStage4);
 
 #if UNITY_EDITOR
-            // WriteDataLogFile();
+    WriteDataLogFile();
 #endif
 
-        }
-    }
-
-    void Update()
-    {
-        //test
-        if (calcProbs)
-        {
-            int caseProbs = SelectComponentstage("Case", 5);
-            Debugger.LogMessage("selected comp: " + caseProbs);
-
-            calcProbs = false;
         }
     }
 
@@ -166,10 +66,10 @@ public class OrderGenerator : MonoBehaviour
         byte returnedStage = 0;
         float[] stageProbabilities = CalculateComponentstageProbabilities(currentLevel, componentName);
 
-        float p1 = stageProbabilities[Stage1];
-        float p2 = stageProbabilities[Stage2];
-        float p3 = stageProbabilities[Stage3];
-        float p4 = stageProbabilities[Stage4];
+        float p1 = stageProbabilities[Const.Stage1];
+        float p2 = stageProbabilities[Const.Stage2];
+        float p3 = stageProbabilities[Const.Stage3];
+        float p4 = stageProbabilities[Const.Stage4];
 
         float scaledP1 = p1;
         float scaledP2 = scaledP1 + p2;
@@ -197,22 +97,22 @@ public class OrderGenerator : MonoBehaviour
             writer.WriteLine("To understand what they data are used for, please checkout the Order/README.md!");
             writer.WriteLine($"Generated: {currentDateAndTime.Day}.{currentDateAndTime.Month}.{currentDateAndTime.Year} at {currentDateAndTime.Hour}:{currentDateAndTime.Minute}:{currentDateAndTime.Second}");
             writer.WriteLine(" ");
-            foreach (var component in ComponentNames)
+            foreach (var component in Const.ComponentNames)
             {
                 writer.WriteLine($"---[Component {component}]---");
                 writer.WriteLine("distanceScalingFactors:");
                 int[] dsf = _parameterStorage.GetAllDistanceScalingFactors(component);
-                writer.WriteLine("DistanceScalingFactor1: " + dsf[Stage1]);
-                writer.WriteLine("DistanceScalingFactor2: " + dsf[Stage2]);
-                writer.WriteLine("DistanceScalingFactor3: " + dsf[Stage3]);
-                writer.WriteLine("DistanceScalingFactor4: " + dsf[Stage4]);
+                writer.WriteLine("DistanceScalingFactor1: " + dsf[Const.Stage1]);
+                writer.WriteLine("DistanceScalingFactor2: " + dsf[Const.Stage2]);
+                writer.WriteLine("DistanceScalingFactor3: " + dsf[Const.Stage3]);
+                writer.WriteLine("DistanceScalingFactor4: " + dsf[Const.Stage4]);
                 writer.WriteLine(" ");
                 writer.WriteLine("unlockEvolutionLevels:");
                 int[] eul = _parameterStorage.GetAllEvolutionUnlockLevels(component);
-                writer.WriteLine("evolutionUnlockLevel1: " + eul[Stage1]);
-                writer.WriteLine("evolutionUnlockLevel2: " + eul[Stage2]);
-                writer.WriteLine("evolutionUnlockLevel3: " + eul[Stage3]);
-                writer.WriteLine("evolutionUnlockLevel4: " + eul[Stage4]);
+                writer.WriteLine("evolutionUnlockLevel1: " + eul[Const.Stage1]);
+                writer.WriteLine("evolutionUnlockLevel2: " + eul[Const.Stage2]);
+                writer.WriteLine("evolutionUnlockLevel3: " + eul[Const.Stage3]);
+                writer.WriteLine("evolutionUnlockLevel4: " + eul[Const.Stage4]);
                 writer.WriteLine(" ");
                 writer.WriteLine("Data that depends on current level:");
                 for (int level = 1; level <= AmountLevels; level++)
@@ -224,21 +124,21 @@ public class OrderGenerator : MonoBehaviour
 
                     writer.WriteLine($"|-Level {level}");
                     writer.WriteLine($" |-totalScaledDistance: " + totalScaledDist);
-                    writer.WriteLine($" |-distanceToUnlockLevel1: " + dist[Stage1]);
-                    writer.WriteLine($" |-scaledDistance1: " + scaledDist[Stage1]);
-                    writer.WriteLine($" |-probability1: " + prob[Stage1]);
+                    writer.WriteLine($" |-distanceToUnlockLevel1: " + dist[Const.Stage1]);
+                    writer.WriteLine($" |-scaledDistance1: " + scaledDist[Const.Stage1]);
+                    writer.WriteLine($" |-probability1: " + prob[Const.Stage1]);
                     writer.WriteLine(" |");
-                    writer.WriteLine($" |-distanceToUnlockLevel2: " + dist[Stage2]);
-                    writer.WriteLine($" |-scaledDistance2: " + scaledDist[Stage2]);
-                    writer.WriteLine($" |-probability2: " + prob[Stage2]);
+                    writer.WriteLine($" |-distanceToUnlockLevel2: " + dist[Const.Stage2]);
+                    writer.WriteLine($" |-scaledDistance2: " + scaledDist[Const.Stage2]);
+                    writer.WriteLine($" |-probability2: " + prob[Const.Stage2]);
                     writer.WriteLine(" |");
-                    writer.WriteLine($" |-distanceToUnlockLevel3: " + dist[Stage3]);
-                    writer.WriteLine($" |-scaledDistance3: " + scaledDist[Stage3]);
-                    writer.WriteLine($" |-probability3: " + prob[Stage3]);
+                    writer.WriteLine($" |-distanceToUnlockLevel3: " + dist[Const.Stage3]);
+                    writer.WriteLine($" |-scaledDistance3: " + scaledDist[Const.Stage3]);
+                    writer.WriteLine($" |-probability3: " + prob[Const.Stage3]);
                     writer.WriteLine(" |");
-                    writer.WriteLine($" |-distanceToUnlockLevel4: " + dist[Stage4]);
-                    writer.WriteLine($" |-scaledDistance4: " + scaledDist[Stage4]);
-                    writer.WriteLine($" |-probability4: " + prob[Stage4]);
+                    writer.WriteLine($" |-distanceToUnlockLevel4: " + dist[Const.Stage4]);
+                    writer.WriteLine($" |-scaledDistance4: " + scaledDist[Const.Stage4]);
+                    writer.WriteLine($" |-probability4: " + prob[Const.Stage4]);
                     writer.WriteLine(" ");
                 }
                 writer.WriteLine("");
