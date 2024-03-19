@@ -7,8 +7,10 @@ public class OrderGenerator : MonoBehaviour
     private static OrderGenerator _instance;
     public static OrderGenerator Instance { get { return _instance; } }
     private ParameterStorage _parameterStorage;
+    public int[] orderedComponents = new int[Const.ComponentNames.Length];
+
     public byte currentLevel = 1;
-    public bool writeLog = false;
+    public bool genOrder = false;
 
     void Awake()
     {
@@ -44,9 +46,23 @@ public class OrderGenerator : MonoBehaviour
             _parameterStorage.SetEvolutionUnlocklevel("RAM", (int)Const.RAM.UnlocklevelStage1, (int)Const.RAM.UnlocklevelStage2, (int)Const.RAM.UnlocklevelStage3, (int)Const.RAM.UnlocklevelStage4);
 
 #if UNITY_EDITOR
-    WriteDataLogFile();
+            WriteDataLogFile();
 #endif
 
+        }
+    }
+
+    private void Update()
+    {
+        if (genOrder)
+        {
+            int[] order;
+            order = SelectStageForAllComponents(currentLevel, Const.ComponentNames);
+            for (int i = 0; i < Const.ComponentNames.Length; i++)
+            {
+                Debugger.LogMessage($"Component {Const.ComponentNames[i]} ordered with stage {order[i]}");
+            }
+            genOrder = false;
         }
     }
 
@@ -61,7 +77,7 @@ public class OrderGenerator : MonoBehaviour
         return Calculate.Probabilities(scaledDistances, totalScaledDistance);
     }
 
-    public byte SelectComponentstage(string componentName, int currentLevel)
+    public byte SelectStageForSingleComponent(string componentName, int currentLevel)
     {
         byte returnedStage = 0;
         float[] stageProbabilities = CalculateComponentstageProbabilities(currentLevel, componentName);
@@ -84,6 +100,18 @@ public class OrderGenerator : MonoBehaviour
         if (randomNumber < scaledP4) { return returnedStage = 4; }
         return returnedStage;   //if the randomNumber fits with nothing, 0 will be return and the Component class should run into an error
     }
+
+    public int[] SelectStageForAllComponents(int level, string[] allComponents)
+    {
+        int[] selectedStageForComponents = new int[7];
+        for (int component = 0; component < allComponents.Length; component++)
+        {
+            selectedStageForComponents[component] = SelectStageForSingleComponent(allComponents[component], level);
+        }
+
+        return selectedStageForComponents;
+    }
+
 
     private void WriteDataLogFile()
     {
