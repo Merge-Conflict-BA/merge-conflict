@@ -154,6 +154,8 @@ public class UiManager : MonoBehaviour
             case "Settings":
                 Settings.enabled = true;
                 currentOpenedMenu = Settings;
+
+                SettingsMenu.Instance.SetDisplayedSettings();
                 break;
 
             case "Level":
