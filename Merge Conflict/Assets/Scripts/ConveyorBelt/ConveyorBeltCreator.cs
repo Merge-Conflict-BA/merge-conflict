@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace ConveyorBelt
 {
-    public class ConveyorBelt : MonoBehaviour
+    public class ConveyorBeltCreator : MonoBehaviour
     {
         [SerializeField] public GameObject PrefabConveyorBeltHorizontal;
         [SerializeField] public GameObject PrefabConveyorBeltVertical;
@@ -46,15 +46,19 @@ namespace ConveyorBelt
             {
                 float posX = centerOfPrefab.x + i * prefabWidth + _prefabSizeVertical.x;
                 Vector3 position = new Vector3(posX, centerOfPrefab.y, 0);
-                
-                var beltPart = Instantiate(PrefabConveyorBeltHorizontal, position, Quaternion.identity, transform);
+                              
+                var beltPart = Instantiate(PrefabConveyorBeltHorizontal, Vector3.zero, Quaternion.identity, transform);
+                beltPart.GetComponent<RectTransform>().anchoredPosition = position;
+
                 AddConveyorBeltMovementComponent(beltPart, MovingDirection.RIGHT);
             }
             
             // endPart (to destroy moving elements)
             Vector3 positionEndPart = new Vector3( centerOfPrefab.x + i * prefabWidth + _prefabSizeVertical.x, centerOfPrefab.y, 0);
 
-            var beltEndPart = Instantiate(PrefabConveyorBeltEnd, positionEndPart, Quaternion.identity, transform);
+            var beltEndPart = Instantiate(PrefabConveyorBeltEnd, Vector3.zero, Quaternion.identity, transform);
+            beltEndPart.GetComponent<RectTransform>().anchoredPosition = positionEndPart;
+
             AddConveyorBeltMovementComponent(beltEndPart, MovingDirection.RIGHT, true);
         }
     
@@ -69,7 +73,9 @@ namespace ConveyorBelt
                 float posY = centerOfPrefab.y + i * prefabHeight + _prefabSizeHorizontal.y;
                 Vector3 position = new Vector3(centerOfPrefab.x, posY, 0);
                 
-                var beltPart = Instantiate(PrefabConveyorBeltVertical, position, Quaternion.identity, transform);
+                var beltPart = Instantiate(PrefabConveyorBeltVertical, Vector3.zero, Quaternion.identity, transform);
+                beltPart.GetComponent<RectTransform>().anchoredPosition = position;
+
                 AddConveyorBeltMovementComponent(beltPart, MovingDirection.DOWN);
             }
         }
@@ -78,7 +84,9 @@ namespace ConveyorBelt
         {
             Vector2 centerOfPrefab = _prefabSizeDiagonal / 2;
 
-            var beltPart = Instantiate(PrefabConveyorBeltDiagonal, centerOfPrefab, Quaternion.identity, transform);
+            var beltPart = Instantiate(PrefabConveyorBeltDiagonal, Vector3.zero, Quaternion.identity, transform);
+            beltPart.GetComponent<RectTransform>().anchoredPosition = centerOfPrefab;
+
             AddConveyorBeltMovementComponent(beltPart, MovingDirection.DIAGONAL);
         }
 

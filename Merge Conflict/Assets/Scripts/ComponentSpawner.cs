@@ -57,13 +57,13 @@ public class ComponentSpawner : MonoBehaviour
         }
 
         // set position of spawning (in the center of the conveyor belt)
-        ConveyorBelt.ConveyorBelt conveyorBelt = ConveyorBeltGameObject.GetComponent<ConveyorBelt.ConveyorBelt>();
+        ConveyorBeltCreator conveyorBelt = ConveyorBeltGameObject.GetComponent<ConveyorBeltCreator>();
         var prefabSize = conveyorBelt.PrefabConveyorBeltVertical.GetComponent<RectTransform>().rect.size;
 
         spawnPositionOnBelt = new Vector3(prefabSize.x / 2, Screen.height + prefabSize.y, 0);
 
         // Current System of spawning: each 4 seconds a random component is spawning
-        InvokeRepeating("SpawnRandomComponentOnBelt", 0f, 4f);
+        InvokeRepeating(nameof(SpawnRandomComponentOnBelt), 0f, 4f);
     }
 
     void Update()
@@ -82,7 +82,8 @@ public class ComponentSpawner : MonoBehaviour
 
     public GameObject SpawnComponent(Vector2 spawnPosition, Element element)
     {
-        GameObject componentObject = Instantiate(componentPrefab, spawnPosition, Quaternion.Euler(0, 0, 0), transform.parent);
+        GameObject componentObject = Instantiate(componentPrefab, Vector3.zero, Quaternion.Euler(0, 0, 0), transform.parent);
+        componentObject.GetComponent<RectTransform>().anchoredPosition = spawnPosition;
         componentObject.name = $"{element.GetType()}_lvl_{element.level}_merged";
         componentObject.tag = Tags.Component.ToString();
         ComponentHandler componentHandler = componentObject.GetComponent<ComponentHandler>();
@@ -103,15 +104,13 @@ public class ComponentSpawner : MonoBehaviour
         return componentObject;
     }
 
-    public GameObject SpawnSlotComponent(Vector2 spawnPosition, GameObject parentComponentObject, Element element)
+    public GameObject SpawnSlotComponent(GameObject parentComponentObject, Element element)
     {
         GameObject slotComponentObject = Instantiate(subComponentPrefab);
         slotComponentObject.name = $"{element.GetType()}_child";
         slotComponentObject.tag = Tags.SubComponent.ToString();
-        slotComponentObject.transform.position = spawnPosition;
-        slotComponentObject.transform.SetParent(parentComponentObject.transform, true);
-        slotComponentObject.AddComponent<SpriteRenderer>();
-        slotComponentObject.AddComponent<RectTransform>();
+        slotComponentObject.transform.SetParent(parentComponentObject.transform, true);     
+        slotComponentObject.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
 
         return slotComponentObject;
     }

@@ -46,22 +46,22 @@ namespace ConveyorBelt
                     switch (MovingDirection)
                     {
                         case MovingDirection.DOWN:
-                            if (!componentHandler.IsOnConveyorBeltDiagonal)
+                            if (componentHandler.IsOnConveyorBeltDiagonal)
                             {
-                                var centerX = SizeOfPart.x / 2;
-                                var deltaX = centerX - collision.transform.position.x;
-
-                                translationToCenter = new Vector3(deltaX * Time.deltaTime * SpeedToCenter, 0, 0);
+                                translationToCenter = Vector3.zero;
                             }
                             else
                             {
-                                translationToCenter = Vector3.zero;
+                                var centerX = SizeOfPart.x / 2;
+                                var deltaX = centerX - collision.gameObject.GetComponent<RectTransform>().anchoredPosition.x;
+
+                                translationToCenter = new Vector3(deltaX * Time.deltaTime * SpeedToCenter, 0, 0);
                             }
                             break;
                         case MovingDirection.RIGHT:
                         case MovingDirection.DIAGONAL:
                             var centerY = SizeOfPart.y / 2;
-                            var deltaY = centerY - collision.transform.position.y;
+                            var deltaY = centerY - collision.gameObject.GetComponent<RectTransform>().anchoredPosition.y;
 
                             translationToCenter = new Vector3(0, deltaY * Time.deltaTime * SpeedToCenter, 0);
                             break;
