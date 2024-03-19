@@ -26,6 +26,8 @@ namespace ConveyorBelt
 
         public void Start()
         {
+            return;
+
             _prefabSizeHorizontal = PrefabConveyorBeltHorizontal.GetComponent<RectTransform>().rect.size;
             _prefabSizeVertical = PrefabConveyorBeltVertical.GetComponent<RectTransform>().rect.size;
             _prefabSizeDiagonal = PrefabConveyorBeltDiagonal.GetComponent<RectTransform>().rect.size;

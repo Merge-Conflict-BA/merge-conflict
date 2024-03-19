@@ -21,7 +21,7 @@ public class ComponentSpawner : MonoBehaviour
     //define all spawnable components here!
     public GameObject componentPrefab;
     public GameObject subComponentPrefab;
-    private Vector3 spawnPositionOnBelt;
+    public GameObject spawnPointObject;
 
     public GameObject ConveyorBeltGameObject;
 
@@ -56,11 +56,10 @@ public class ComponentSpawner : MonoBehaviour
             Debugger.LogError("ComponentSpawner: componentPrefab does not have ComponentHandler attached!!!");
         }
 
-        // set position of spawning (in the center of the conveyor belt)
-        ConveyorBeltCreator conveyorBelt = ConveyorBeltGameObject.GetComponent<ConveyorBeltCreator>();
-        var prefabSize = conveyorBelt.PrefabConveyorBeltVertical.GetComponent<RectTransform>().rect.size;
-
-        spawnPositionOnBelt = new Vector3(prefabSize.x / 2, Screen.height + prefabSize.y, 0);
+        if(spawnPointObject == null)
+        {
+            Debugger.LogError("ComponentSpawner: No Reference SpawnPoint GameObject has been set!");
+        }
 
         // Current System of spawning: each 4 seconds a random component is spawning
         InvokeRepeating(nameof(SpawnRandomComponentOnBelt), 0f, 4f);
@@ -76,7 +75,7 @@ public class ComponentSpawner : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(spawnPositionOnBelt);
+            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(spawnPointObject.GetComponent<RectTransform>().anchoredPosition);
         }
     }
 
@@ -117,6 +116,6 @@ public class ComponentSpawner : MonoBehaviour
 
     public void SpawnRandomComponentOnBelt()
     {
-        Components.GetRandomElement().InstantiateGameObjectAndAddTexture(spawnPositionOnBelt);
+        Components.GetRandomElement().InstantiateGameObjectAndAddTexture(spawnPointObject.GetComponent<RectTransform>().anchoredPosition);
     }
 }

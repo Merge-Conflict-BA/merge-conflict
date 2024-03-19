@@ -31,7 +31,7 @@ public class ComponentMovement : MonoBehaviour
     /*
      * [Header("Calculated in Start()")]
      */
-    private DeskCreator _deskData;
+    private Rect _deskRect;
     // Space between Component and border of desk
     private float _marginToDeskBorder = 5;
     // Default size and scale of the component
@@ -82,11 +82,7 @@ public class ComponentMovement : MonoBehaviour
         _size.y *= _defaultScale.y;
 
         GameObject deskObject = GameObject.FindWithTag("desk");
-        bool success = deskObject.TryGetComponent<DeskCreator>(out _deskData);
-        if (!success)
-        {
-            Debugger.LogError("Could not get DeskCreator-Component from Desk.");
-        }
+        _deskRect = deskObject.GetComponent<RectTransform>().rect;
 
         _remainingSecondsUntilIdleMoveStarts = IdleMoveStartDelay;
 
@@ -252,50 +248,17 @@ public class ComponentMovement : MonoBehaviour
 
     private bool IsPositionOnDesk(Vector3 position)
     {
-        if (_currentMoveDirection.x < 0) // left
-        {
-            float leftSideDesk = _deskData.CenterPosition.x - _deskData.Width / 2;
-            float leftSideComp = position.x - _size.x / 2 - _marginToDeskBorder;
+        float margin = _marginToDeskBorder;
 
-            if (leftSideDesk > leftSideComp)
-            {
-                return false;
-            }
-        }
-        else // right
-        {            
-            float rightSideDesk = _deskData.CenterPosition.x + _deskData.Width / 2;
-            float rightSideComp = position.x + _size.x / 2 + _marginToDeskBorder;
+        Vector2 topLeft =       (Vector2)position + new Vector2(-margin, -margin);
+        Vector2 bottomLeft =    (Vector2)position + new Vector2(-margin, +margin);
+        Vector2 topRight =      (Vector2)position + new Vector2(+margin, -margin);
+        Vector2 bottomRight =   (Vector2)position + new Vector2(+margin, +margin);
 
-            if (rightSideDesk < rightSideComp)
-            {
-                return false;
-            }
-        }
-
-
-        if (_currentMoveDirection.y < 0) // bottom
-        {            
-            float bottomSideDesk = _deskData.CenterPosition.y - _deskData.Height / 2;
-            float bottomSideComp = position.y - _size.y / 2 - _marginToDeskBorder;
-
-            if (bottomSideDesk > bottomSideComp)
-            {
-                return false;
-            }
-        }
-        else // top
-        {            
-            float topSideDesk = _deskData.CenterPosition.y + _deskData.Height / 2;
-            float topSideComp = position.y + _size.y / 2 + _marginToDeskBorder;
-
-            if (topSideDesk < topSideComp)
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return _deskRect.Contains(topLeft)
+            && _deskRect.Contains(bottomLeft)
+            && _deskRect.Contains(topRight)
+            && _deskRect.Contains(bottomRight);
     }
 
     private void ResetMovementProperties()

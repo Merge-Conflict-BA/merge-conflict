@@ -20,8 +20,20 @@ namespace ConveyorBelt
         [SerializeField] public bool IsEndPart = false;
         private const float SpeedToCenter = 1;
 
+        private void Start()
+        {
+            // scale collider to rect
+            BoxCollider2D boxCollider2D = GetComponent<BoxCollider2D>();
+            RectTransform rectTransform = GetComponent<RectTransform>();
+            var rect = rectTransform.rect;
+            boxCollider2D.size = new Vector2(rect.width, rect.height);
+        }
+
         private void OnCollisionStay2D(Collision2D collision)
         {
+            // TODO remove
+            //Debugger.LogMessage(collision.gameObject.name);
+
             // BeltParts could touch each other (Overlay of 1px)
             if (Tags.ConveyorBelt.UsedByGameObject(collision.gameObject))
             {

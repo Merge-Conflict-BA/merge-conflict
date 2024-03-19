@@ -108,8 +108,6 @@ public class ComponentHandler : MonoBehaviour
             {
                 highestSortingOrder = spriteRenderer.sortingOrder;
             }
-
-            spriteRenderer.sortingOrder--;
         }
 
         return highestSortingOrder;

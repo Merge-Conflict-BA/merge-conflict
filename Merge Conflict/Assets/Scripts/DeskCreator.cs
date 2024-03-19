@@ -22,6 +22,8 @@ public class DeskCreator : MonoBehaviour
 
     void Start()
     {
+        return;
+
         Vector2 conveyorBeltSize = ConveyorBeltDiagonalGameObject.GetComponent<RectTransform>().rect.size;
         int screenWidth = Screen.width;
         int screenHeight = Screen.height;
