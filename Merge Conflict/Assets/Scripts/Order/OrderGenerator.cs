@@ -130,16 +130,17 @@ public class OrderGenerator : MonoBehaviour
             //ram
             _parameterStorage.SetDistanceScalingFactor("RAM", (int)RAM.DistanceScalingFactor1, (int)RAM.DistanceScalingFactor2, (int)RAM.DistanceScalingFactor3, (int)RAM.DistanceScalingFactor4);
             _parameterStorage.SetEvolutionUnlocklevel("RAM", (int)RAM.UnlocklevelStage1, (int)RAM.UnlocklevelStage2, (int)RAM.UnlocklevelStage3, (int)RAM.UnlocklevelStage4);
-        
-            #if UNITY_EDITOR
-                WriteDataLogFile();  
-            #endif
-        
+
+#if UNITY_EDITOR
+            // WriteDataLogFile();
+#endif
+
         }
     }
 
     void Update()
     {
+        //test
         if (calcProbs)
         {
             int caseProbs = SelectComponentstage("Case", 5);
@@ -244,7 +245,5 @@ public class OrderGenerator : MonoBehaviour
                 writer.WriteLine("");
             }
         }
-
-        Debugger.LogMessage("All data are written to the file: dataLog.txt");
     }
 }
