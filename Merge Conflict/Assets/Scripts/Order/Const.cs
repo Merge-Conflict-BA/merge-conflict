@@ -8,7 +8,7 @@ public static class Const {
     public static byte FirstLevel = 1;
     public static byte EndLevel = 10;
 
-    public static string[] ComponentNames = { "RAM", "CPU", "GPU", "HDD", "Case", "Motherboard", "Powersupply" };
+    public static string[] ComponentNames = { "Case", "HDD", "Powersupply", "Motherboard", "GPU", "CPU", "RAM" }; //component with higher index == rarer in order (check parameters in the enum's)
 
     public enum Case
     {
