@@ -163,7 +163,6 @@ public class ComponentHandler : MonoBehaviour
 
                 mergedElement.InstantiateGameObjectAndAddTexture(staticComponent.GetComponent<RectTransform>().anchoredPosition);
 
-                Debugger.LogMessage("two components overlapp => merge?!");
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
 

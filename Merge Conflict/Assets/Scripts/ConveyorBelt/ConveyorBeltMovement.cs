@@ -22,10 +22,10 @@ namespace ConveyorBelt
         [SerializeField] public bool IsEndPart = false;
 
         [Header("Animation Settings")]
-        public float scrollSpeed = 1f;
+        public const float scrollSpeed = 1f;
         private CanvasRenderer? canvasRenderer;
 
-        private const float SpeedToCenter = 1;
+        private const float SpeedToCenterOfBelt = 1;
 
         private void Start()
         {
@@ -36,6 +36,7 @@ namespace ConveyorBelt
             boxCollider2D.size = new Vector2(rect.width, rect.height);
 
             transform.TryGetComponent(out canvasRenderer);
+            Debugger.LogErrorIf(canvasRenderer == null, "Couldn't get CanvasReader Component. Can't scroll textures!");
         }
 
         private void Update()
@@ -81,6 +82,7 @@ namespace ConveyorBelt
             if (Tags.Component.UsedByGameObject(collision.gameObject))
             {
                 bool success = collision.gameObject.TryGetComponent(out ComponentHandler componentHandler);
+                Vector2 componentPosition = collision.gameObject.GetComponent<RectTransform>().anchoredPosition;
 
                 if (success && componentHandler.CountCollisionConveyorBelt > 0)
                 {
@@ -88,38 +90,10 @@ namespace ConveyorBelt
                     // component can collide with multiple beltParts. Each beltPart can call this event.
                     // It could happen, that 2 beltParts add the same velocity --> the component is two times faster
                     float velocity = (MovingSpeed * Time.deltaTime) / componentHandler.CountCollisionConveyorBelt;
-                    Vector3 translationVector = MovingDirection.GetVector3() * velocity;
+                    Vector2 translationVector = MovingDirection.GetVector3() * velocity;
 
                     // vector to center of conveyor belt
-                    Vector3 translationToCenter;
-
-                    switch (MovingDirection)
-                    {
-                        case MovingDirection.DOWN:
-                            if (componentHandler.IsOnConveyorBeltDiagonal)
-                            {
-                                translationToCenter = Vector3.zero;
-                            }
-                            else
-                            {
-                                var centerX = SizeOfPart.x / 2;
-                                var deltaX = centerX - collision.gameObject.GetComponent<RectTransform>().anchoredPosition.x;
-
-                                translationToCenter = new Vector3(deltaX * Time.deltaTime * SpeedToCenter, 0, 0);
-                            }
-                            break;
-                        case MovingDirection.RIGHT:
-                        case MovingDirection.DIAGONAL:
-                            var centerY = SizeOfPart.y / 2;
-                            var deltaY = centerY - collision.gameObject.GetComponent<RectTransform>().anchoredPosition.y;
-
-                            translationToCenter = new Vector3(0, deltaY * Time.deltaTime * SpeedToCenter, 0);
-                            break;
-                        default:
-                            translationToCenter = Vector3.zero;
-                            break;
-                    }
-
+                    Vector2 translationToCenter = CalculateTranslationToCenterOfBelt(componentPosition, componentHandler.IsOnConveyorBeltDiagonal);
                     translationVector += translationToCenter;
 
                     collision.transform.Translate(translationVector, Space.World);
@@ -138,6 +112,36 @@ namespace ConveyorBelt
             if (IsEndPart)
             {
                 Destroy(collision.gameObject);
+            }
+        }
+
+        private Vector2 CalculateTranslationToCenterOfBelt(Vector2 componentPosition, bool isOnDiagonalBelt)
+        {
+            switch (MovingDirection)
+            {
+                case MovingDirection.DOWN:
+                    if (isOnDiagonalBelt)
+                    {
+                        return Vector3.zero;
+                    }
+                    else
+                    {
+                        float centerOfBeltX = SizeOfPart.x / 2;
+                        float deltaToCenterOfBeltX = centerOfBeltX - componentPosition.x;
+
+                        return new Vector2(deltaToCenterOfBeltX * Time.deltaTime * SpeedToCenterOfBelt, 0);
+                    }
+                    
+                case MovingDirection.RIGHT:
+                case MovingDirection.DIAGONAL:
+                    float centerOfBeltY = SizeOfPart.y / 2;
+                    float deltaToCenterOfBeltY = centerOfBeltY - componentPosition.y;
+
+                    return new Vector2(0, deltaToCenterOfBeltY * Time.deltaTime * SpeedToCenterOfBelt);
+                    
+                default:
+                    return Vector2.zero;
+                    
             }
         }
     }

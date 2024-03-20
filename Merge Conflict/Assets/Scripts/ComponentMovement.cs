@@ -32,6 +32,7 @@ public class ComponentMovement : MonoBehaviour
      * [Header("Calculated in Start()")]
      */
     private Rect _deskRect;
+    private Vector2 _deskOffsetFromBottomLeft = new(100, 100);
     // Space between Component and border of desk
     private float _marginToDeskBorder = 5;
     // Default size and scale of the component
@@ -82,7 +83,11 @@ public class ComponentMovement : MonoBehaviour
         GameObject deskObject = GameObject.FindWithTag("desk");
         _deskRect = deskObject.GetComponent<RectTransform>().rect;
         // move desk to its actual position. Values need to be updated here, everytime deskObject is moved
-        _deskRect.Set(_deskRect.x + 100, _deskRect.y + 100, _deskRect.width, _deskRect.height);
+        _deskRect.Set(
+            _deskRect.x + _deskOffsetFromBottomLeft.x,
+            _deskRect.y + _deskOffsetFromBottomLeft.y,
+            _deskRect.width,
+            _deskRect.height);
 
         _remainingSecondsUntilIdleMoveStarts = IdleMoveStartDelay;
 
