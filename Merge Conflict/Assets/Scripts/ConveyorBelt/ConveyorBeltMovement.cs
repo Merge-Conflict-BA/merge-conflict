@@ -12,12 +12,19 @@ namespace ConveyorBelt
 {
     public class ConveyorBeltMovement : MonoBehaviour
     {
+        [Header("Movement Settings")]
         [SerializeField] public float MovingSpeed;
         [SerializeField] public MovingDirection MovingDirection;
         [SerializeField] public Vector2 SizeOfPart;
 
+        [Header("Functional Settings")]
         // Indicates if this BeltPart is the end, so every item can be destroyed if they collide
         [SerializeField] public bool IsEndPart = false;
+
+        [Header("Animation Settings")]
+        public float scrollSpeed = 1f;
+        private CanvasRenderer? canvasRenderer;
+
         private const float SpeedToCenter = 1;
 
         private void Start()
@@ -27,6 +34,40 @@ namespace ConveyorBelt
             RectTransform rectTransform = GetComponent<RectTransform>();
             var rect = rectTransform.rect;
             boxCollider2D.size = new Vector2(rect.width, rect.height);
+
+            transform.TryGetComponent(out canvasRenderer);
+        }
+
+        private void Update()
+        {
+            ScrollTexture();
+        }
+
+        private void ScrollTexture()
+        {
+            if(canvasRenderer == null) { return; }
+
+            Vector2 textureOffset = new(Time.time * scrollSpeed, Time.time * scrollSpeed);
+
+            // different MovingDirections need to have individual materials!
+            // else this function will be called from 2 different ConveyorBelts and fight over their shared Material
+            switch (MovingDirection)
+            {
+                case MovingDirection.DOWN:
+                    textureOffset *= new Vector2(0, 1);
+                    break;
+
+                case MovingDirection.RIGHT:
+                    textureOffset *= new Vector2(-1, 0);
+                    break;
+
+                case MovingDirection.DIAGONAL:
+                default:
+                    textureOffset *= new Vector2(-1, 1).normalized;
+                    break;
+            }
+
+            canvasRenderer.GetMaterial().mainTextureOffset = textureOffset;
         }
 
         private void OnCollisionStay2D(Collision2D collision)

@@ -32,10 +32,8 @@ public class ComponentHandler : MonoBehaviour
     private void Start()
     {
         bool success = gameObject.TryGetComponent(out ComponentMovement);
-        if (!success)
-        {
-            Debugger.LogError("ComponentMovement is missing on Component.");
-        }
+        
+        Debugger.LogErrorIf(success == false, "ComponentMovement is missing on Component.");        
     }
 
     private void Update()
