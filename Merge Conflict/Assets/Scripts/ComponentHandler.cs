@@ -185,8 +185,10 @@ public class ComponentHandler : MonoBehaviour
                 {
 
                     //TODO: call xp/money controller  ->  give more xp/money than putting it in trashcan  =>  use salesValues of the components
-                    /* int? trash = requiredQuestElement?.GetTrashValue();
-                    int? sales = requiredQuestElement?.GetSalesValue();
+                    // ! ! ! When correct component is droped on the SellingStation --> Unity gets killed !
+                    // !     Save your current status in Unity before trying this commented-out function  ! ! !
+                    /* int trash = requiredQuestElement.GetTrashValue();
+                    int sales = requiredQuestElement.GetSalesValue();
                     Debug.Log($"     trashV : {trash}          salesV : {sales}"); */
 
                     Destroy(draggedComponent, timeToDestroyObject);
