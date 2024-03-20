@@ -4,11 +4,20 @@ public static class Const {
     public static byte Stage3 = 2;
     public static byte Stage4 = 3;
 
+    public static byte CaseIndex = 0;
+    public static byte HddIndex = 1;
+    public static byte PowersupplyIndex = 2;
+    public static byte MotherboardIndex = 3;
+    public static byte GpuIndex = 4;
+    public static byte CpuIndex = 5;
+    public static byte RamIndex = 6;
+
+    public static string[] ComponentNames = { "Case", "HDD", "Powersupply", "Motherboard", "GPU", "CPU", "RAM" }; //component with higher index == rarer in order (check parameters in the enum's)
+    public static int AmountComponents = ComponentNames.Length;
     public static byte AmountStages = 4;
     public static byte FirstLevel = 1;
     public static byte EndLevel = 10;
 
-    public static string[] ComponentNames = { "Case", "HDD", "Powersupply", "Motherboard", "GPU", "CPU", "RAM" }; //component with higher index == rarer in order (check parameters in the enum's)
 
     public enum Case
     {

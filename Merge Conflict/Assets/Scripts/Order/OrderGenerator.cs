@@ -7,8 +7,13 @@ public class OrderGenerator : MonoBehaviour
     private static OrderGenerator _instance;
     public static OrderGenerator Instance { get { return _instance; } }
     private ParameterStorage _parameterStorage;
-    public int[] orderedComponents = new int[Const.ComponentNames.Length];
-
+    public byte orderedCase;
+    public byte orderedHdd;
+    public byte orderedPowersupply;
+    public byte orderedMotherboard;
+    public byte orderedGpu;
+    public byte orderedCpu;
+    public byte orderedRam;
     public byte currentLevel = 1;
     public bool genOrder = false;
 
@@ -56,12 +61,7 @@ public class OrderGenerator : MonoBehaviour
     {
         if (genOrder)
         {
-            int[] order;
-            order = SelectStageForAllComponents(currentLevel, Const.ComponentNames);
-            for (int i = 0; i < Const.ComponentNames.Length; i++)
-            {
-                Debugger.LogMessage($"Component {Const.ComponentNames[i]} ordered with stage {order[i]}");
-            }
+            GenerateNewOrder(currentLevel, Const.ComponentNames);
             genOrder = false;
         }
     }
@@ -101,7 +101,7 @@ public class OrderGenerator : MonoBehaviour
         return returnedStage;   //if the randomNumber fits with nothing, 0 will be return and the Component class should run into an error
     }
 
-    public int[] SelectStageForAllComponents(int level, string[] allComponents)
+    public void GenerateNewOrder(int level, string[] allComponents)
     {
         int[] selectedStageForComponents = new int[7];
         for (int component = 0; component < allComponents.Length; component++)
@@ -109,9 +109,25 @@ public class OrderGenerator : MonoBehaviour
             selectedStageForComponents[component] = SelectStageForSingleComponent(allComponents[component], level);
         }
 
-        return selectedStageForComponents;
+        orderedCase = (byte)selectedStageForComponents[Const.CaseIndex];
+        orderedHdd = (byte)selectedStageForComponents[Const.HddIndex];
+        orderedPowersupply = (byte)selectedStageForComponents[Const.PowersupplyIndex];
+        orderedMotherboard = (byte)selectedStageForComponents[Const.MotherboardIndex];
+        orderedGpu = (byte)selectedStageForComponents[Const.GpuIndex];
+        orderedCpu= (byte)selectedStageForComponents[Const.CpuIndex];
+        orderedRam = (byte)selectedStageForComponents[Const.RamIndex];
     }
 
+    public void DeleteCurrentOrder()
+    {
+        orderedCase = 0;
+        orderedHdd = 0;
+        orderedPowersupply = 0;
+        orderedMotherboard = 0;
+        orderedGpu = 0;
+        orderedCpu= 0;
+        orderedRam = 0;
+    }
 
     private void WriteDataLogFile()
     {
