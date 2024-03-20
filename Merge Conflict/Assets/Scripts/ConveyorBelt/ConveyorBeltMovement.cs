@@ -72,9 +72,6 @@ namespace ConveyorBelt
 
         private void OnCollisionStay2D(Collision2D collision)
         {
-            // TODO remove
-            //Debugger.LogMessage(collision.gameObject.name);
-
             // BeltParts could touch each other (Overlay of 1px)
             if (Tags.ConveyorBelt.UsedByGameObject(collision.gameObject))
             {

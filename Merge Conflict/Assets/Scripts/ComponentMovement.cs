@@ -81,6 +81,7 @@ public class ComponentMovement : MonoBehaviour
 
         GameObject deskObject = GameObject.FindWithTag("desk");
         _deskRect = deskObject.GetComponent<RectTransform>().rect;
+        // move desk to its actual position. Values need to be updated here, everytime deskObject is moved
         _deskRect.Set(_deskRect.x + 100, _deskRect.y + 100, _deskRect.width, _deskRect.height);
 
         _remainingSecondsUntilIdleMoveStarts = IdleMoveStartDelay;

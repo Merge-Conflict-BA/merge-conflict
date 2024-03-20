@@ -51,15 +51,13 @@ public class ComponentSpawner : MonoBehaviour
     void Start()
     {
         // check if componentPrefab has ComponentHandler
-        if (componentPrefab.TryGetComponent(out ComponentHandler _) == false)
-        {
-            Debugger.LogError("ComponentSpawner: componentPrefab does not have ComponentHandler attached!!!");
-        }
-
-        if(spawnPointObject == null)
-        {
-            Debugger.LogError("ComponentSpawner: No Reference SpawnPoint GameObject has been set!");
-        }
+        Debugger.LogErrorIf(
+            componentPrefab.TryGetComponent(out ComponentHandler _) == false,
+            "ComponentSpawner: componentPrefab does not have ComponentHandler attached!!!");
+        
+        Debugger.LogErrorIf(
+            spawnPointObject == null,
+            "ComponentSpawner: No Reference SpawnPoint GameObject has been set!");     
 
         // Current System of spawning: each 4 seconds a random component is spawning
         InvokeRepeating(nameof(SpawnRandomComponentOnBelt), 0f, 4f);
