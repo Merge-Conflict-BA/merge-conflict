@@ -1,3 +1,14 @@
+/**********************************************************************************************************************
+Name:           ParameterStorage
+Description:    All parameters required to calculate the probability of the level to be selected are saved from the 
+                Const.Enum (Const.Case, Const.HDD,...) in the ParameterStorage. This simplifies the subsequent use of 
+                these values and enables smoother looping trough the values.   
+Author(s):      Markus Haubold
+Date:           2024-03-20
+Version:        V1.0
+TODO:           - 
+**********************************************************************************************************************/
+
 using System.Collections.Generic;
 
 public class ParameterStorage
@@ -35,6 +46,7 @@ public class ParameterStorage
     public void SetEvolutionUnlocklevel(string componentName, params int[] unlockLevels)
     {
         if (ComponentNotListed(componentName)) { return; }
+        if (ParameterArrayIsInvalid("SetEvolutionUnlocklevel", unlockLevels)) { return; };
 
         int componentIndexFromList = ComponentIndexFromList(componentName);
 
@@ -69,6 +81,7 @@ public class ParameterStorage
     public void SetDistanceScalingFactor(string componentName, params int[] distanceScalingFactors)
     {
         if (ComponentNotListed(componentName)) { return; }
+        if (ParameterArrayIsInvalid("SetDistanceScalingFactor", distanceScalingFactors)) { return; };
 
         int componentIndexFromList = ComponentIndexFromList(componentName);
 
@@ -100,5 +113,19 @@ public class ParameterStorage
         return scalingFactors;
     }
 
+    private bool ParameterArrayIsInvalid(string methodName, int[] parameters)
+    {
+        bool invalidParameter = false;
+        for (int index = 0; index < parameters.Length; index++)
+        {
+            if (parameters[index] == 0)
+            {
+                Debugger.LogError($"{methodName}: The Parameter with the array index {index} is 0 - thats not valid! Generation of order not possible!");
+                invalidParameter = true;
+            }
+        }
 
+        return invalidParameter;
+
+    }
 }
