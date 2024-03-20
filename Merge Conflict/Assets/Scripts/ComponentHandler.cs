@@ -174,14 +174,14 @@ public class ComponentHandler : MonoBehaviour
             {
                 // TODO: change this later to the correct "requiredQuestComponent" from actual quest
                 // GameObject requiredQuestComponent = Components.HDD.InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
-                GameObject requiredQuestComponent = Components.CreateCase().InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
+                // GameObject requiredQuestComponent = Components.CreateCase().InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
                 // GameObject requiredQuestComponent = Components.CreateCase(powersupply: null, hdd: Components.HDD, motherboard: null).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
-                // GameObject requiredQuestComponent = Components.CreateCase(powersupply: null, hdd: Components.HDD, motherboard: Components.CreateMB(cpu: null, ram: Components.RAM, gpu: Components.GPU)).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
+                GameObject requiredQuestComponent = Components.CreateCase(powersupply: null, hdd: Components.HDD, motherboard: Components.CreateMB(cpu: null, ram: Components.RAM, gpu: Components.GPU)).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
 
-                // function "Components.CompareElements()" returns a boolien for if query to check if component matches quest component
+                // function "someElement.CompareElements()" returns a boolien for if query to check if component matches quest component
                 Element? requiredQuestElement = requiredQuestComponent.TryGetComponent(out ComponentHandler requiredQuestComponentHandler) ? requiredQuestComponentHandler.element : null;
                 Element? draggedElement = draggedComponent.TryGetComponent(out ComponentHandler draggedComponentHandler) ? draggedComponentHandler.element : null;
-                if (Components.CompareElements(requiredQuestElement, draggedElement))
+                if (requiredQuestElement != null && requiredQuestElement.CompareElements(requiredQuestElement, draggedElement))
                 {
 
                     //TODO: call xp/money controller  ->  give more xp/money than putting it in trashcan  =>  use salesValues of the components

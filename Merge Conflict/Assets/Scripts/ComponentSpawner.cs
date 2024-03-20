@@ -87,8 +87,6 @@ public class ComponentSpawner : MonoBehaviour
         slotComponentObject.tag = Tags.SubComponent.ToString();
         slotComponentObject.transform.position = spawnPosition;
         slotComponentObject.transform.SetParent(parentComponentObject.transform, true);
-        slotComponentObject.AddComponent<SpriteRenderer>();
-        slotComponentObject.AddComponent<RectTransform>();
 
         return slotComponentObject;
     }
