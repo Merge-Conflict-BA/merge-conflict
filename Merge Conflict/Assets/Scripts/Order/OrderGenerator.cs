@@ -1,3 +1,15 @@
+/**********************************************************************************************************************
+Name:           OrderGenerator
+Description:    Create a new order with 7 components and the corresponding level. The level is selected with a 
+                probability which is calculated based on how long ago the respective level was unlocked. This means that
+                a level that has only recently been unlocked will be more likely to be filled than a component that has 
+                been unlocked for several levels.  
+Author(s):      Markus Haubold
+Date:           2024-03-20
+Version:        V1.0
+TODO:           - 
+**********************************************************************************************************************/
+
 using System;
 using System.IO;
 using UnityEngine;

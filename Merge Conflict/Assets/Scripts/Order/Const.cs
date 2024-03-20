@@ -1,3 +1,13 @@
+/**********************************************************************************************************************
+Name:           Const
+Description:    All const-values which are needed to calculate/generate a new order or make the code from this more 
+                readable. 
+Author(s):      Markus Haubold
+Date:           2024-03-20
+Version:        V1.0
+TODO:           - 
+**********************************************************************************************************************/
+
 public static class Const {
     public static byte Stage1 = 0;
     public static byte Stage2 = 1;

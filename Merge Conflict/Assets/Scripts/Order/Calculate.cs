@@ -1,3 +1,13 @@
+/**********************************************************************************************************************
+Name:           Calculate
+Description:    Contains all sub-calculations to calculate the probabilitie for the stages from an given component. 
+                It is needed to generate an new order.
+Author(s):      Markus Haubold
+Date:           2024-03-20
+Version:        V1.0
+TODO:           - 
+**********************************************************************************************************************/
+
 using System;
 using System.Linq;
 
