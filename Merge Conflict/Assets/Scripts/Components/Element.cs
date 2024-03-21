@@ -71,40 +71,9 @@ public class Element
         return componentObject;
     }
 
-    // function that checks if two components are equal ( => same type and same level) (it also checks the types and levels of the sub components )
-#nullable enable
-    public virtual bool CompareElements(Element? element1, Element? element2)
+    public virtual bool IsEqual(Element element)
     {
-        if (element1 == null && element2 == null) return true;
-        if (element1 == null || element2 == null) return false;
-
-        if (element1.GetType() != element2.GetType())
-        {
-            return false;
-        }
-
-        if (element1.level != element2.level)
-        {
-            return false;
-        }
-
-        if (element1 is CaseComponent case1 && element2 is CaseComponent case2)
-        {
-            return (case1.powersupply == null && case2.powersupply == null || CompareElements(case1.powersupply, case2.powersupply)) &&
-                   (case1.hdd == null && case2.hdd == null || CompareElements(case1.hdd, case2.hdd)) &&
-                   (case1.motherboard == null && case2.motherboard == null || CompareElements(case1.motherboard, case2.motherboard));
-        }
-        else if (element1 is MBComponent mb1 && element2 is MBComponent mb2)
-        {
-            return (mb1.cpu == null && mb2.cpu == null || CompareElements(mb1.cpu, mb2.cpu)) &&
-                   (mb1.ram == null && mb2.ram == null || CompareElements(mb1.ram, mb2.ram)) &&
-                   (mb1.gpu == null && mb2.gpu == null || CompareElements(mb1.gpu, mb2.gpu));
-        }
-        else
-        {
-            return true;
-        }
+        return GetType() == element.GetType()
+            && level == element.level;
     }
-#nullable restore
-
 }

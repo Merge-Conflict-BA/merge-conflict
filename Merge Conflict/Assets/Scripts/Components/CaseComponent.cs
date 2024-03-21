@@ -80,7 +80,7 @@ public class CaseComponent : Element, IComponent
         int powersupplyTrashValue   = powersupply   != null ? powersupply.GetTrashValue() : 0;
         int motherboardTrashValue   = motherboard   != null ? motherboard.GetTrashValue() : 0;
 
-        return this.GetTrashValue() + hddTrashValue + powersupplyTrashValue + motherboardTrashValue;
+        return base.GetTrashValue() + hddTrashValue + powersupplyTrashValue + motherboardTrashValue;
     }
 
     override public int GetSalesValue()
@@ -89,7 +89,23 @@ public class CaseComponent : Element, IComponent
         int powersupplySalesValue = powersupply != null ? powersupply.GetSalesValue() : 0;
         int motherboardSalesValue = motherboard != null ? motherboard.GetSalesValue() : 0;
 
-        return this.GetSalesValue() + hddSalesValue + powersupplySalesValue + motherboardSalesValue;
+        return base.GetSalesValue() + hddSalesValue + powersupplySalesValue + motherboardSalesValue;
+    }
+
+    public override bool IsEqual(Element element)
+    {
+        if (base.IsEqual(element) == false)
+        {
+            return false;
+        }
+
+        CaseComponent caseComponent = (CaseComponent)element;
+
+        bool isMotherboardEqual = motherboard != null && caseComponent.motherboard != null ? motherboard.IsEqual(caseComponent.motherboard) : true;
+        bool isHDDEqual = hdd != null && caseComponent.hdd != null ? hdd.IsEqual(caseComponent.hdd) : true;
+        bool isPowerSpplyEqual = powersupply != null && caseComponent.powersupply != null ? powersupply.IsEqual(caseComponent.powersupply) : true;
+
+        return isMotherboardEqual && isHDDEqual && isPowerSpplyEqual;
     }
 
     public CaseComponent Clone()

@@ -80,11 +80,11 @@ public class MBComponent : Element, IComponent
 
     override public int GetTrashValue()
     {
-        int cpuTrashValue = cpu != null ? cpu.GetTrashValue() : 0;
+        int cpuTrashValue = cpu != null ? cpu.GetTrashValue() : 0;        
         int ramTrashValue = ram != null ? ram.GetTrashValue() : 0;
         int gpuTrashValue = gpu != null ? gpu.GetTrashValue() : 0;
 
-        return this.GetTrashValue() + cpuTrashValue + ramTrashValue + gpuTrashValue;
+        return base.GetTrashValue() + cpuTrashValue + ramTrashValue + gpuTrashValue;
     }
 
     override public int GetSalesValue()
@@ -93,7 +93,23 @@ public class MBComponent : Element, IComponent
         int ramSalesValue = ram != null ? ram.GetSalesValue() : 0;
         int gpuSalesValue = gpu != null ? gpu.GetSalesValue() : 0;
 
-        return this.GetSalesValue() + cpuSalesValue + ramSalesValue + gpuSalesValue;
+        return base.GetSalesValue() + cpuSalesValue + ramSalesValue + gpuSalesValue;
+    }
+
+    public override bool IsEqual(Element element)
+    {
+        if (base.IsEqual(element) == false)
+        {
+            return false;
+        }
+
+        MBComponent mBComponent = (MBComponent)element;
+
+        bool isCpuEqual = cpu != null && mBComponent.cpu != null ? cpu.IsEqual(mBComponent.cpu) : true;
+        bool isGPUEqual = gpu != null && mBComponent.gpu != null ? gpu.IsEqual(mBComponent.gpu) : true;
+        bool isRAMEqual = ram != null && mBComponent.ram != null ? ram.IsEqual(mBComponent.ram) : true;
+
+        return isCpuEqual && isGPUEqual && isRAMEqual;
     }
 
     public MBComponent Clone()

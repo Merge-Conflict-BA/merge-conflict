@@ -172,28 +172,44 @@ public class ComponentHandler : MonoBehaviour
 #nullable enable
             if (Tags.SellingStation.UsedByGameObject(staticComponent.gameObject))
             {
+
                 // TODO: change this later to the correct "requiredQuestComponent" from actual quest
                 // GameObject requiredQuestComponent = Components.HDD.InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
                 // GameObject requiredQuestComponent = Components.CreateCase().InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
                 // GameObject requiredQuestComponent = Components.CreateCase(powersupply: null, hdd: Components.HDD, motherboard: null).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
-                GameObject requiredQuestComponent = Components.CreateCase(powersupply: null, hdd: Components.HDD, motherboard: Components.CreateMB(cpu: null, ram: Components.RAM, gpu: Components.GPU)).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
+                GameObject requiredQuestComponent = Components.CreateCase(
+                    powersupply: null,
+                    hdd: Components.HDD.Clone(),
+                    motherboard: Components.CreateMB(
+                        cpu: null,
+                        ram: Components.RAM.Clone(),
+                        gpu: Components.GPU.Clone())
+                    ).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
 
-                // function "someElement.CompareElements()" returns a boolien for if query to check if component matches quest component
-                Element? requiredQuestElement = requiredQuestComponent.TryGetComponent(out ComponentHandler requiredQuestComponentHandler) ? requiredQuestComponentHandler.element : null;
-                Element? draggedElement = draggedComponent.TryGetComponent(out ComponentHandler draggedComponentHandler) ? draggedComponentHandler.element : null;
-                if (draggedElement != null && draggedElement.CompareElements(requiredQuestElement, draggedElement))
+                Element? requiredQuestElement
+                    = requiredQuestComponent.TryGetComponent(out ComponentHandler requiredQuestComponentHandler)
+                    ? requiredQuestComponentHandler.element
+                    : null;
+
+                Element? draggedElement
+                    = draggedComponent.TryGetComponent(out ComponentHandler draggedComponentHandler)
+                    ? draggedComponentHandler.element
+                    : null;
+
+                if (draggedElement == null)
+                {
+                    return;
+                }
+
+                if (draggedElement.IsEqual(requiredQuestElement))
                 {
 
-                    //TODO: call xp/money controller  ->  give more xp/money than putting it in trashcan  =>  use salesValues of the components
-                    // ! ! ! When correct component is droped on the SellingStation --> Unity gets killed on Mac !
-                    // !     Save your current status in Unity before trying this commented-out function  ! ! !
-                    /* int trash = requiredQuestElement.GetTrashValue();
-                    int sales = requiredQuestElement.GetSalesValue();
-                    Debug.Log($"     trashV : {trash}          salesV : {sales}"); */
-                    // !     This Variant causes a Stackoverflow Error  ! ! !
+                    //TODO: call xp/money controller  ->  give more xp/money than putting it in trashcan  =>  use salesValues of the components                    
                     int trash = draggedElement.GetTrashValue();
                     int sales = draggedElement.GetSalesValue();
+
                     Debug.Log($"     trashV : {trash}          salesV : {sales}");
+
 
                     Destroy(draggedComponent, timeToDestroyObject);
                     Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
@@ -204,6 +220,7 @@ public class ComponentHandler : MonoBehaviour
                     // if component cannot be sold -> automatically move it back onto the playfield
                     draggedComponent.GetComponent<ComponentHandler>().MoveComponent(new Vector2(200, 400), 100f);
                 }
+                
             }
 #nullable restore
         }
