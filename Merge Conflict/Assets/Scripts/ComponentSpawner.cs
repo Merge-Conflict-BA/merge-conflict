@@ -7,7 +7,11 @@ Version:       V1.2
 TODO:          - 
 **********************************************************************************************************************/
 
+using ConveyorBelt;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ComponentSpawner : MonoBehaviour
 {
@@ -20,6 +24,16 @@ public class ComponentSpawner : MonoBehaviour
     private Vector3 spawnPositionOnBelt;
 
     public GameObject ConveyorBeltGameObject;
+
+    [Header("Idle Movement of components")]
+    public bool SamePropertiesForEveryComponent = false;
+    public float MinDistance = 30;
+    public float MaxDistance = 70;
+    public float MovingSpeed = 50;
+    public float MinSecondsWithoutMoving = 2;
+    public float MaxSecondsWithoutMoving = 4;
+    public float TimeToStartMovement = 2;
+    public float MaxScaleFactor = 1.05f;
 
     void Awake()
     {
@@ -74,6 +88,15 @@ public class ComponentSpawner : MonoBehaviour
         ComponentHandler componentHandler = componentObject.GetComponent<ComponentHandler>();
         componentHandler.element = element;
 
+        if (SamePropertiesForEveryComponent)
+        {
+            bool success = componentObject.TryGetComponent(out ComponentMovement componentMovement);
+            if (success)
+            {
+                componentMovement.InitializeProperties(MinDistance, MaxDistance, MovingSpeed, MinSecondsWithoutMoving, MaxSecondsWithoutMoving, TimeToStartMovement, MaxScaleFactor);
+            }
+        }
+        
         // move Component in Front of the Conveyor Belt
         componentObject.transform.position += new Vector3(0, 0, -1);
 
