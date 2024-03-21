@@ -6,7 +6,7 @@ public class LevelMenu : Menu
 {
     private static LevelMenu _instance;
     public static LevelMenu Instance { get { return _instance; } }
-    public Canvas _levelmenuCanvas; //connect to the level menu canvas
+    public Canvas levelmenuCanvas; //connect to the level menu canvas
     private TextMeshProUGUI _currentLevelValueTextfield;
     private TextMeshProUGUI _currentXpValueTextfield;
     private Image _levelProgressbar;
@@ -19,7 +19,7 @@ public class LevelMenu : Menu
         }
         else
         {
-            InitializeMenu(_levelmenuCanvas);
+            InitializeMenu(levelmenuCanvas);
             _currentLevelValueTextfield = GetComponentByName<TextMeshProUGUI>("CurrentLevelValue");
             _currentXpValueTextfield = GetComponentByName<TextMeshProUGUI>("CurrentXpValue");
             _levelProgressbar = GetComponentByName<Image>("Progressbar_empty");
