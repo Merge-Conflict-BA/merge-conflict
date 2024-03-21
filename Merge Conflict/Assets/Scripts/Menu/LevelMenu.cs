@@ -48,12 +48,13 @@ public class LevelMenu : Menu
         _currentXpValueTextfield.text = xp.ToString();
     }
 
-    public void SetProgressbarValue(float level)
+    public void SetProgressbarValue(int currentXp, int xpToNextLevel)
     {
         Transform childimageTransform = _levelProgressbar.transform.Find("Progressbar_filled");
         Image progressbar = childimageTransform.GetComponent<Image>();
 
-        double scaledLevel = level * 0.1;
-        progressbar.fillAmount = (float)scaledLevel;
+        //normalized progressbar: 0xp => 0 | xpToNextLevel => 1
+        float normalizedXp = Mathf.Clamp01(currentXp / (float)xpToNextLevel);
+        progressbar.fillAmount = normalizedXp;
     }
 }
