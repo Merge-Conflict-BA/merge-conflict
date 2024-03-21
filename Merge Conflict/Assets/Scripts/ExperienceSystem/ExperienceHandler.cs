@@ -1,4 +1,3 @@
-using ExperienceSystem;
 using UnityEngine;
 
 /**********************************************************************************************************************
@@ -54,9 +53,12 @@ namespace ExperienceSystem
             return _levelsData.GetGameUnlockPrefabs(GetCurrentLevel());
         }
 
-        public static int GetXpToUnlockNextLevel(int nextLevel)
+        public static int NeededXpToUnlockNextLevel(int currentLevel)
         {
-            return _levelsData.Levels[nextLevel].RequirementExperience;
+            //the LevelData array counts from 0...9; so we can use the 
+            //current level to get the xp from the upcoming level: current 
+            //level=2 => LevelData[2] means value from level 3
+            return _levelsData.Levels[currentLevel].RequirementExperience;
         }
     }
 }
