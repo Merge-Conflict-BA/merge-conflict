@@ -23,13 +23,13 @@ public class Menu : MonoBehaviour
         Transform foundGameObject = _canvas.transform.Find(name);
         if (foundGameObject == null)
         {
-            Debugger.LogError($"The GameObject with the name {name} can't be found!");
+            Debugger.LogError($"GetComponentByName: The GameObject with the name {name} can't be found!");
             return null;
         }
 
         if (!foundGameObject.TryGetComponent<T>(out var component))
         {
-            Debugger.LogError($"The component of type {typeof(T)} with the name {name} can't be found in the canvas {_canvas} !");
+            Debugger.LogError($"GetComponentByName: The component of type {typeof(T)} with the name {name} can't be found in the canvas {_canvas} !");
             return null;
         }
 

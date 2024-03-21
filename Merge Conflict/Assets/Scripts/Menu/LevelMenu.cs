@@ -5,30 +5,27 @@ using UnityEngine.UI;
 public class LevelMenu : Menu
 {
     private static LevelMenu _instance;
+    public static LevelMenu Instance { get { return _instance; } }
+    public Canvas _levelmenuCanvas; //connect to the level menu canvas
     private TextMeshProUGUI _currentLevelValueTextfield;
     private TextMeshProUGUI _currentXpValueTextfield;
     private Image _levelProgressbar;
-    private Canvas _levelmenuCanvas;
 
-
-    public LevelMenu()
+    private void Awake()
     {
-        _levelmenuCanvas = FindCanvasForMenu("Level");
-
-        InitializeMenu(_levelmenuCanvas);
-        _currentLevelValueTextfield = GetComponentByName<TextMeshProUGUI>("CurrentLevelValue");
-        _currentXpValueTextfield = GetComponentByName<TextMeshProUGUI>("CurrentXpValue");
-        _levelProgressbar = GetComponentByName<Image>("Progressbar_empty");
-    }
-
-    public static LevelMenu GetSingleInstance()
-    {
-        if (_instance == null)
+        if (_instance != null && _instance != this)
         {
-            _instance = new LevelMenu();
+            Destroy(gameObject);
         }
+        else
+        {
+            InitializeMenu(_levelmenuCanvas);
+            _currentLevelValueTextfield = GetComponentByName<TextMeshProUGUI>("CurrentLevelValue");
+            _currentXpValueTextfield = GetComponentByName<TextMeshProUGUI>("CurrentXpValue");
+            _levelProgressbar = GetComponentByName<Image>("Progressbar_empty");
 
-        return _instance;
+            _instance = this;
+        }
     }
 
     public string GetDisplayedCurrentLevel()
@@ -55,7 +52,7 @@ public class LevelMenu : Menu
     {
         Transform childimageTransform = _levelProgressbar.transform.Find("Progressbar_filled");
         Image progressbar = childimageTransform.GetComponent<Image>();
-        
+
         double scaledLevel = level * 0.1;
         progressbar.fillAmount = (float)scaledLevel;
     }

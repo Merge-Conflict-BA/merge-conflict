@@ -159,10 +159,13 @@ public class UiManager : MonoBehaviour
             case "Level":
                 Level.enabled = true;
                 currentOpenedMenu = Level;
-
-                LevelMenu.GetSingleInstance().SetDisplayedCurrentLevel(7);
-                LevelMenu.GetSingleInstance().SetDisplayedCurrentXp(500);
-                LevelMenu.GetSingleInstance().SetProgressbarValue(7);
+                //set the states
+                //TODO: connect to original sources (level manager eg.)
+                LevelMenu.Instance.SetDisplayedCurrentLevel(7);
+                LevelMenu.Instance.SetDisplayedCurrentXp(500);
+                LevelMenu.Instance.SetProgressbarValue(7);
+                //TODO: move the order generation to another point, here it's only for testing the menu
+                OrderGenerator.Instance.GenerateNewOrder(9);
 
                 break;
 
