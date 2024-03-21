@@ -32,10 +32,8 @@ public class ComponentHandler : MonoBehaviour
     private void Start()
     {
         bool success = gameObject.TryGetComponent(out ComponentMovement);
-        if (!success)
-        {
-            Debugger.LogError("ComponentMovement is missing on Component.");
-        }
+        
+        Debugger.LogErrorIf(success == false, "ComponentMovement is missing on Component.");        
     }
 
     private void Update()
@@ -108,8 +106,6 @@ public class ComponentHandler : MonoBehaviour
             {
                 highestSortingOrder = spriteRenderer.sortingOrder;
             }
-
-            spriteRenderer.sortingOrder--;
         }
 
         return highestSortingOrder;
@@ -165,9 +161,8 @@ public class ComponentHandler : MonoBehaviour
                     return;
                 }
 
-                GameObject mergedComponentObject = mergedElement.InstantiateGameObjectAndAddTexture(staticComponent.transform.position);
+                mergedElement.InstantiateGameObjectAndAddTexture(staticComponent.GetComponent<RectTransform>().anchoredPosition);
 
-                Debugger.LogMessage("two components overlapp => merge?!");
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
 

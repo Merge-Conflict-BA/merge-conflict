@@ -1,9 +1,9 @@
 /**********************************************************************************************************************
 Name:          ComponentMovement
 Description:   Manages the Movement of the components if they are on the desk
-Author(s):     Simeon Baumann
+Author(s):     Simeon Baumann, Hanno Witzleb
 Date:          2024-03-15
-Version:       V1.2
+Version:       V2.0
 **********************************************************************************************************************/
 
 using System;
@@ -31,7 +31,8 @@ public class ComponentMovement : MonoBehaviour
     /*
      * [Header("Calculated in Start()")]
      */
-    private DeskCreator _deskData;
+    private Rect _deskRect;
+    private Vector2 _deskOffsetFromBottomLeft = new(100, 100);
     // Space between Component and border of desk
     private float _marginToDeskBorder = 5;
     // Default size and scale of the component
@@ -42,15 +43,15 @@ public class ComponentMovement : MonoBehaviour
      * [Header("Constantly changing")]
      */
     private bool _isMoving = false;
-    private Vector3? _startPositionOfCurrentMove;   
-    private Vector3 _intermediateTargetForSmoothMovement;
-    private Vector3 _currentMoveDirection;
+    private Vector2? _startPositionOfCurrentMove;   
+    private Vector2 _intermediateTargetForSmoothMovement;
+    private Vector2 _currentMoveDirection;
     private float _currentRemainingMoveDistance;
     private float _startTimeOfIdleMovement = 0;
     private float _remainingSecondsUntilIdleMoveStarts;
     private bool _isCurrentlyScalingBackToDefault = false;
     // Store the last positions of the component while dragging to calculate the direction of the further movement after dragging
-    private List<Vector3> _lastPositionsWhileBeingDragged;
+    private List<Vector2> _lastPositionsWhileBeingDragged;
 
     /// <summary>
     /// Changes important properties of the movement of the component
@@ -77,16 +78,16 @@ public class ComponentMovement : MonoBehaviour
     {
         _size = GetComponent<RectTransform>().rect.size;
         _defaultScale = gameObject.GetComponent<RectTransform>().localScale;
-
-        _size.x *= _defaultScale.x;
-        _size.y *= _defaultScale.y;
+        _size *= _defaultScale;
 
         GameObject deskObject = GameObject.FindWithTag("desk");
-        bool success = deskObject.TryGetComponent<DeskCreator>(out _deskData);
-        if (!success)
-        {
-            Debugger.LogError("Could not get DeskCreator-Component from Desk.");
-        }
+        _deskRect = deskObject.GetComponent<RectTransform>().rect;
+        // move desk to its actual position. Values need to be updated here, everytime deskObject is moved
+        _deskRect.Set(
+            _deskRect.x + _deskOffsetFromBottomLeft.x,
+            _deskRect.y + _deskOffsetFromBottomLeft.y,
+            _deskRect.width,
+            _deskRect.height);
 
         _remainingSecondsUntilIdleMoveStarts = IdleMoveStartDelay;
 
@@ -94,7 +95,7 @@ public class ComponentMovement : MonoBehaviour
         float deltaWidth = (_size.x * MaxScaleFactor) - _size.x;
         _marginToDeskBorder += _marginToDeskBorder + deltaWidth;
 
-        _lastPositionsWhileBeingDragged = new List<Vector3>();
+        _lastPositionsWhileBeingDragged = new List<Vector2>();
     }
 
 
@@ -117,20 +118,20 @@ public class ComponentMovement : MonoBehaviour
         if (_remainingSecondsUntilIdleMoveStarts > 0)
         {
             _remainingSecondsUntilIdleMoveStarts -= Time.deltaTime;
+            return;
+        }
+
+        // check if component is currently moving
+        if (_isMoving)
+        {
+            IdleMoveToDestination();
         }
         else
         {
-            // check if component is currently moving
-            if (_isMoving)
-            {
-                IdleMoveToDestination();
-            }
-            else
-            {
-                CalculateNewIdleMoveDestination();
-                _remainingSecondsUntilIdleMoveStarts = Random.Range(MinSecondsWithoutIdleMove, MaxSecondsWithoutIdleMove);
-            }
+            CalculateNewIdleMoveDestination();
+            _remainingSecondsUntilIdleMoveStarts = Random.Range(MinSecondsWithoutIdleMove, MaxSecondsWithoutIdleMove);
         }
+        
     }
     
     /// <summary>
@@ -161,9 +162,9 @@ public class ComponentMovement : MonoBehaviour
 
         // Add position to array of last positions
         if (_lastPositionsWhileBeingDragged.Count == 0
-            || _lastPositionsWhileBeingDragged[^1] != transform.position)
+            || _lastPositionsWhileBeingDragged[^1] != GetCanvasPosition())
         {
-            _lastPositionsWhileBeingDragged.Add(transform.position);
+            _lastPositionsWhileBeingDragged.Add(GetCanvasPosition());
         }
             
         if (_lastPositionsWhileBeingDragged.Count > 5)
@@ -185,7 +186,7 @@ public class ComponentMovement : MonoBehaviour
         if (Vector3.Distance(transform.localScale, _defaultScale) <= 0.1f)
         {
             _isCurrentlyScalingBackToDefault = false;
-            _lastPositionsWhileBeingDragged = new List<Vector3>();
+            _lastPositionsWhileBeingDragged.Clear();
         }
     }
 
@@ -204,10 +205,10 @@ public class ComponentMovement : MonoBehaviour
     private void MoveAfterDragging()
     {
         // Direction of the movement after being dragged
-        Vector3 direction = (_lastPositionsWhileBeingDragged[^1] - _lastPositionsWhileBeingDragged[0]).normalized;
-        Vector3 vectorToNextPosition = direction * (MoveSpeed * Time.deltaTime);
+        Vector2 direction = (_lastPositionsWhileBeingDragged[^1] - _lastPositionsWhileBeingDragged[0]).normalized;
+        Vector2 vectorToNextPosition = direction * (MoveSpeed * Time.deltaTime);
         
-        if (IsPositionOnDesk(transform.position + vectorToNextPosition))
+        if (IsPositionOnDesk(GetCanvasPosition() + vectorToNextPosition))
         {
             transform.Translate(vectorToNextPosition, Space.World);
         }
@@ -215,7 +216,7 @@ public class ComponentMovement : MonoBehaviour
 
     private void CalculateNewIdleMoveDestination()
     {
-        Vector3 position = transform.position;
+        Vector3 position = GetCanvasPosition();
         
         _currentRemainingMoveDistance = Random.Range(MoveMinDistance, MoveMaxDistance);
         _startPositionOfCurrentMove = position;
@@ -223,79 +224,51 @@ public class ComponentMovement : MonoBehaviour
         _intermediateTargetForSmoothMovement = position;
         _isMoving = true;
 
+        int tries = 0, maxTries = 10;
         Vector3 vectorToPositionInDirection = _currentMoveDirection * (_currentRemainingMoveDistance / 2);
-        while (!IsPositionOnDesk(position + vectorToPositionInDirection))
+        while (!IsPositionOnDesk(position + vectorToPositionInDirection) && tries < maxTries)
         {
             _currentMoveDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized;
             vectorToPositionInDirection = _currentMoveDirection * (_currentRemainingMoveDistance / 2);
+            tries++;
         }
+
+        Debugger.LogWarningIf(tries == maxTries, "Couldn't find position on Desk for IdleMove");
     }
     
     private void IdleMoveToDestination()
     {
-        Vector3 vectorToNextPosition = _currentMoveDirection * (MoveSpeed * Time.deltaTime);
+        Vector2 vectorToNextPosition = _currentMoveDirection * (MoveSpeed * Time.deltaTime);
         float movedDistance = ((_startPositionOfCurrentMove ?? _intermediateTargetForSmoothMovement) - _intermediateTargetForSmoothMovement).magnitude;
 
         if (IsPositionOnDesk(_intermediateTargetForSmoothMovement + vectorToNextPosition) && movedDistance <= _currentRemainingMoveDistance)
         {
             _intermediateTargetForSmoothMovement += vectorToNextPosition;
         }
-        
-        // follow _leaderPosition - is smooth because of the _smoothMovementFactor
-        transform.position += (_intermediateTargetForSmoothMovement - transform.position) * _smoothMovementFactor;
 
-        if (Vector3.Distance(_intermediateTargetForSmoothMovement, transform.position) <= 0.01 )
+        // follow _leaderPosition - is smooth because of the _smoothMovementFactor
+        SetCanvasPosition(GetCanvasPosition() + (_intermediateTargetForSmoothMovement - GetCanvasPosition()) * _smoothMovementFactor);        
+
+        if (Vector3.Distance(_intermediateTargetForSmoothMovement, GetCanvasPosition()) <= 0.01 )
         {
             ResetMovementProperties();
         }
     }
 
-    private bool IsPositionOnDesk(Vector3 position)
+    public bool IsPositionOnDesk(Vector3 position)
     {
-        if (_currentMoveDirection.x < 0) // left
-        {
-            float leftSideDesk = _deskData.CenterPosition.x - _deskData.Width / 2;
-            float leftSideComp = position.x - _size.x / 2 - _marginToDeskBorder;
+        float marginX = _marginToDeskBorder + _size.x;
+        float marginY = _marginToDeskBorder + _size.y;      
 
-            if (leftSideDesk > leftSideComp)
-            {
-                return false;
-            }
-        }
-        else // right
-        {            
-            float rightSideDesk = _deskData.CenterPosition.x + _deskData.Width / 2;
-            float rightSideComp = position.x + _size.x / 2 + _marginToDeskBorder;
+        Vector2 topLeft =       ((Vector2)position) + new Vector2(-marginX, -marginY);
+        Vector2 bottomLeft =    ((Vector2)position) + new Vector2(-marginX, +marginY);
+        Vector2 topRight =      ((Vector2)position) + new Vector2(+marginX, -marginY);
+        Vector2 bottomRight =   ((Vector2)position) + new Vector2(+marginX, +marginY);
 
-            if (rightSideDesk < rightSideComp)
-            {
-                return false;
-            }
-        }
-
-
-        if (_currentMoveDirection.y < 0) // bottom
-        {            
-            float bottomSideDesk = _deskData.CenterPosition.y - _deskData.Height / 2;
-            float bottomSideComp = position.y - _size.y / 2 - _marginToDeskBorder;
-
-            if (bottomSideDesk > bottomSideComp)
-            {
-                return false;
-            }
-        }
-        else // top
-        {            
-            float topSideDesk = _deskData.CenterPosition.y + _deskData.Height / 2;
-            float topSideComp = position.y + _size.y / 2 + _marginToDeskBorder;
-
-            if (topSideDesk < topSideComp)
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return _deskRect.Contains(topLeft)
+            && _deskRect.Contains(bottomLeft)
+            && _deskRect.Contains(topRight)
+            && _deskRect.Contains(bottomRight);
     }
 
     private void ResetMovementProperties()
@@ -305,5 +278,15 @@ public class ComponentMovement : MonoBehaviour
         _currentRemainingMoveDistance = 0;
         _remainingSecondsUntilIdleMoveStarts = Random.Range(MinSecondsWithoutIdleMove, MaxSecondsWithoutIdleMove);
         _isMoving = false;
+    }
+
+    private Vector2 GetCanvasPosition()
+    {
+        return transform.GetComponent<RectTransform>().anchoredPosition;
+    }
+
+    private void SetCanvasPosition(Vector2 canvasPosition)
+    {
+        transform.GetComponent<RectTransform>().anchoredPosition = canvasPosition;
     }
 }
