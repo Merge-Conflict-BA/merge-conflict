@@ -903,7 +903,7 @@ GameObject:
   - component: {fileID: 276243388}
   - component: {fileID: 276243387}
   m_Layer: 5
-  m_Name: CurrentLevelValue
+  m_Name: CurrentXpValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -948,7 +948,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'CLV
+  m_text: 'CXV
 
 '
   m_isRightToLeft: 0
@@ -4140,7 +4140,7 @@ GameObject:
   - component: {fileID: 1764366209}
   - component: {fileID: 1764366208}
   m_Layer: 5
-  m_Name: CurrentXpValue
+  m_Name: CurrentLevelValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4185,7 +4185,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'CXV
+  m_text: 'CLV
 
 '
   m_isRightToLeft: 0
