@@ -181,15 +181,19 @@ public class ComponentHandler : MonoBehaviour
                 // function "someElement.CompareElements()" returns a boolien for if query to check if component matches quest component
                 Element? requiredQuestElement = requiredQuestComponent.TryGetComponent(out ComponentHandler requiredQuestComponentHandler) ? requiredQuestComponentHandler.element : null;
                 Element? draggedElement = draggedComponent.TryGetComponent(out ComponentHandler draggedComponentHandler) ? draggedComponentHandler.element : null;
-                if (requiredQuestElement != null && requiredQuestElement.CompareElements(requiredQuestElement, draggedElement))
+                if (draggedElement != null && draggedElement.CompareElements(requiredQuestElement, draggedElement))
                 {
 
                     //TODO: call xp/money controller  ->  give more xp/money than putting it in trashcan  =>  use salesValues of the components
-                    // ! ! ! When correct component is droped on the SellingStation --> Unity gets killed !
+                    // ! ! ! When correct component is droped on the SellingStation --> Unity gets killed on Mac !
                     // !     Save your current status in Unity before trying this commented-out function  ! ! !
                     /* int trash = requiredQuestElement.GetTrashValue();
                     int sales = requiredQuestElement.GetSalesValue();
                     Debug.Log($"     trashV : {trash}          salesV : {sales}"); */
+                    // !     This Variant causes a Stackoverflow Error  ! ! !
+                    int trash = draggedElement.GetTrashValue();
+                    int sales = draggedElement.GetSalesValue();
+                    Debug.Log($"     trashV : {trash}          salesV : {sales}");
 
                     Destroy(draggedComponent, timeToDestroyObject);
                     Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
