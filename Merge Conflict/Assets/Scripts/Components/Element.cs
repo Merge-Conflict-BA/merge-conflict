@@ -62,7 +62,7 @@ public class Element
         // instantiate a child GameObject for each subcomponent in the element to layer its sprite over the texture of the main element
         foreach (ElementTexture slotTexture in listOfSlotComponentTextures)
         {
-            GameObject slotComponentObject = ComponentSpawner.Instance.SpawnSlotComponent(position, componentObject, this);
+            GameObject slotComponentObject = ComponentSpawner.Instance.SpawnSlotComponent(componentObject, this);
 
             slotComponentObject = slotTexture.ApplyTexture(slotComponentObject);
             slotComponentObject.GetComponent<SpriteRenderer>().sortingOrder = componentObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
