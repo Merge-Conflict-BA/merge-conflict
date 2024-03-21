@@ -28,6 +28,7 @@ TODO:          - /
 
 using System.Collections;
 using System.Collections.Generic;
+using ExperienceSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -159,14 +160,21 @@ public class UiManager : MonoBehaviour
             case "Level":
                 Level.enabled = true;
                 currentOpenedMenu = Level;
-                //set the states
-                //TODO: connect to original sources (level manager eg.)
-                LevelMenu.Instance.SetDisplayedCurrentLevel(7);
-                LevelMenu.Instance.SetDisplayedCurrentXp(500);
-                LevelMenu.Instance.SetProgressbarValue(7);
-                //TODO: move the order generation to another point, here it's only for testing the menu
-                OrderGenerator.Instance.GenerateNewOrder(9);
 
+
+                //#### only for testing ######
+                ExperienceHandler.ResetCurrentPlayerExperience();
+                ExperienceHandler.AddExperiencePoints(180);
+                OrderGenerator.Instance.GenerateNewOrder(9); //TODO: move the order generation to another point, here it's only for testing the menu
+                //############################
+
+                int currentLevel = ExperienceHandler.GetCurrentLevel();
+                int currentXp = ExperienceHandler.GetExperiencePoints();
+                int xpToUnlockNextLevel = ExperienceHandler.NeededXpToUnlockNextLevel(currentLevel + 1);
+
+                LevelMenu.Instance.SetDisplayedCurrentLevel(currentLevel);
+                LevelMenu.Instance.SetDisplayedCurrentXp(currentXp);
+                LevelMenu.Instance.SetProgressbarValue(currentXp, xpToUnlockNextLevel);
                 break;
 
             case "Upgrade":
