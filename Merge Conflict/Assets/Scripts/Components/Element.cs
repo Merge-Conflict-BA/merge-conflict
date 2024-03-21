@@ -66,6 +66,15 @@ public class Element
 
             slotComponentObject = slotTexture.ApplyTexture(slotComponentObject);
             slotComponentObject.GetComponent<SpriteRenderer>().sortingOrder = componentObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
+            // this is to counteract the repositioning of the (anchoredPosition = Vector2.zero), as the SubComponents now need an offset
+            if (this is CaseComponent)
+            {
+                slotComponentObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(2.5f, 2.5f);
+            }
+            if (this is MBComponent)
+            {
+                slotComponentObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(2.25f, 3f);
+            }
         }
 
         return componentObject;

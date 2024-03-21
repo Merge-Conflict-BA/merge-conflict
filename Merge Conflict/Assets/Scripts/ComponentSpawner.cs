@@ -56,10 +56,10 @@ public class ComponentSpawner : MonoBehaviour
         Debugger.LogErrorIf(
             componentPrefab.TryGetComponent(out ComponentHandler _) == false,
             "ComponentSpawner: componentPrefab does not have ComponentHandler attached!!!");
-        
+
         Debugger.LogErrorIf(
             spawnPointObject == null,
-            "ComponentSpawner: No Reference SpawnPoint GameObject has been set!");     
+            "ComponentSpawner: No Reference SpawnPoint GameObject has been set!");
 
         // Current System of spawning: each 4 seconds a random component is spawning
         InvokeRepeating(nameof(SpawnRandomComponentOnBelt), initialSpawnDelaySeconds, spawnIntervalSeconds);
@@ -96,7 +96,7 @@ public class ComponentSpawner : MonoBehaviour
                 componentMovement.InitializeProperties(MinDistance, MaxDistance, MovingSpeed, MinSecondsWithoutMoving, MaxSecondsWithoutMoving, TimeToStartMovement, MaxScaleFactor);
             }
         }
-        
+
         // move Component in Front of the Conveyor Belt
         componentObject.transform.position += new Vector3(0, 0, -1);
 
@@ -108,8 +108,7 @@ public class ComponentSpawner : MonoBehaviour
         GameObject slotComponentObject = Instantiate(subComponentPrefab);
         slotComponentObject.name = $"{element.GetType()}_child";
         slotComponentObject.tag = Tags.SubComponent.ToString();
-        slotComponentObject.transform.SetParent(parentComponentObject.transform, true);     
-        slotComponentObject.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+        slotComponentObject.transform.SetParent(parentComponentObject.transform, true);
 
         return slotComponentObject;
     }
