@@ -1,9 +1,9 @@
 /**********************************************************************************************************************
 Name:          ComponentHandler
 Description:   Contains the methode to drag the component-objects and the methode to merge them.
-Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
+Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann, Daniel Rittrich
 Date:          2024-03-01
-Version:       V1.3
+Version:       V1.4
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
 using System;
@@ -173,7 +173,7 @@ public class ComponentHandler : MonoBehaviour
             if (Tags.SellingStation.UsedByGameObject(staticComponent.gameObject))
             {
 
-                // TODO: change this later to the correct "requiredQuestComponent" from actual quest
+                // TODO: change this ("requiredQuestComponent") later to the correct "requiredQuestComponent" from actual quest
                 // GameObject requiredQuestComponent = Components.HDD.InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
                 // GameObject requiredQuestComponent = Components.CreateCase().InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
                 // GameObject requiredQuestComponent = Components.CreateCase(powersupply: null, hdd: Components.HDD, motherboard: null).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
@@ -181,9 +181,10 @@ public class ComponentHandler : MonoBehaviour
                     powersupply: null,
                     hdd: Components.HDD.Clone(),
                     motherboard: Components.CreateMB(
-                        cpu: null,
-                        ram: Components.RAM.Clone(),
-                        gpu: Components.GPU.Clone())
+                            cpu: null,
+                            ram: Components.RAM.Clone(),
+                            gpu: Components.GPU.Clone()
+                        )
                     ).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
 
                 Element? requiredQuestElement
@@ -204,12 +205,9 @@ public class ComponentHandler : MonoBehaviour
                 if (draggedElement.IsEqual(requiredQuestElement))
                 {
 
-                    //TODO: call xp/money controller  ->  give more xp/money than putting it in trashcan  =>  use salesValues of the components                    
-                    int trash = draggedElement.GetTrashValue();
-                    int sales = draggedElement.GetSalesValue();
-
-                    Debug.Log($"     trashV : {trash}          salesV : {sales}");
-
+                    //TODO: call xp/money controller instead  ->  give more xp/money than putting it in trashcan  =>  use salesValues of the components                    
+                    int actualSalesValue = draggedElement.GetSalesValue();
+                    Debugger.LogMessage($"salesValue : {actualSalesValue}".ToString());
 
                     Destroy(draggedComponent, timeToDestroyObject);
                     Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
@@ -220,7 +218,7 @@ public class ComponentHandler : MonoBehaviour
                     // if component cannot be sold -> automatically move it back onto the playfield
                     draggedComponent.GetComponent<ComponentHandler>().MoveComponent(new Vector2(200, 400), 100f);
                 }
-                
+
             }
 #nullable restore
         }

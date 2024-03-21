@@ -4,7 +4,7 @@ Description:   Elements data structure for motherboard.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.3
 TODO:          - /
 **********************************************************************************************************************/
 

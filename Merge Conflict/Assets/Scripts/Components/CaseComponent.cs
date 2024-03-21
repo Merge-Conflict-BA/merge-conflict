@@ -4,7 +4,7 @@ Description:   Elements data structure for the case.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V2.1
+Version:       V2.2
 TODO:          - /
 **********************************************************************************************************************/
 
