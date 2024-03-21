@@ -6018,7 +6018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff732cdfea3d470490ba7c608879a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelmenuCanvas: {fileID: 2107363471}
+  levelmenuCanvas: {fileID: 2107363471}
 --- !u!1 &2119573305
 GameObject:
   m_ObjectHideFlags: 0
