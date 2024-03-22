@@ -174,6 +174,8 @@ public class UiManager : MonoBehaviour
             case "Elements":
                 Elements.enabled = true;
                 currentOpenedMenu = Elements;
+
+                ElementsMenu.Instance.OpenMenu();
                 break;
 
             case "CloseMenu":
