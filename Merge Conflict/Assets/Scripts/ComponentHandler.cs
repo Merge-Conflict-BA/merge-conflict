@@ -144,7 +144,6 @@ public class ComponentHandler : MonoBehaviour
 
     private void HandleOverlappingObjects()
     {
-        const float timeToDestroyObject = 0.5f;
         const float radiusToDetectSpritesOverlapping = 1.0f;
         GameObject draggedComponent = gameObject;
 
@@ -162,6 +161,7 @@ public class ComponentHandler : MonoBehaviour
                 continue;
             }
 
+
             //merge components if possible 
             if (Tags.Component.UsedByGameObject(staticComponent.gameObject))
             {
@@ -172,10 +172,13 @@ public class ComponentHandler : MonoBehaviour
                     return;
                 }
 
-                mergedElement.InstantiateGameObjectAndAddTexture(staticComponent.GetComponent<RectTransform>().anchoredPosition);
+                Vector2 staticObjectCanvasPosition = staticComponent.GetComponent<RectTransform>().anchoredPosition;
+                mergedElement.InstantiateGameObjectAndAddTexture(staticObjectCanvasPosition);
 
-                Destroy(draggedComponent, timeToDestroyObject);
-                Destroy(staticComponent.gameObject, timeToDestroyObject);
+                AnimationManager.Instance.PlayMergeAnimation(staticObjectCanvasPosition, mergedElement, element);
+
+                Destroy(draggedComponent);
+                Destroy(staticComponent.gameObject);
 
                 return;
             }
@@ -184,8 +187,11 @@ public class ComponentHandler : MonoBehaviour
             if (Tags.Trashcan.UsedByGameObject(staticComponent.gameObject))
             {
                 Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
-                Destroy(draggedComponent, timeToDestroyObject);
-                //TODO: call xp/money controller  =>  use trashValues of the components
+
+                AnimationManager.Instance.PlayTrashAnimation(GetComponent<RectTransform>().anchoredPosition);
+
+                Destroy(draggedComponent);
+                //TODO: call xp/money controller
             }
 
             // drop component (PC) on the selling station -> if possible/matching with quest -> sells it

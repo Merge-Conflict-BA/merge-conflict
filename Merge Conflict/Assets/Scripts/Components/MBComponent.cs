@@ -73,7 +73,7 @@ public class MBComponent : Element, IComponent
         return null;
     }
 
-    private bool HasComponents()
+    override public bool HasComponents()
     {
         return cpu != null || ram != null || gpu != null;
     }
