@@ -61,7 +61,7 @@ public class OrderGenerator : MonoBehaviour
             _parameterStorage.SetDistanceScalingFactor("RAM", (int)Const.RAM.DistanceScalingFactor1, (int)Const.RAM.DistanceScalingFactor2, (int)Const.RAM.DistanceScalingFactor3, (int)Const.RAM.DistanceScalingFactor4);
             _parameterStorage.SetEvolutionUnlocklevel("RAM", (int)Const.RAM.UnlocklevelStage1, (int)Const.RAM.UnlocklevelStage2, (int)Const.RAM.UnlocklevelStage3, (int)Const.RAM.UnlocklevelStage4);
 
-            
+
 
 #if UNITY_EDITOR
             WriteDataLogFile();
@@ -73,11 +73,11 @@ public class OrderGenerator : MonoBehaviour
 
     private float[] CalculateComponentstageProbabilities(int currentLevel, string componentName)
     {
-        int[] distances = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(currentLevel, _parameterStorage.GetAllEvolutionUnlockLevels(componentName)); ;
+        int[] distances = Calculate.CountLevelsSinceStagesAreUnlocked(currentLevel, _parameterStorage.GetAllEvolutionUnlockLevels(componentName)); ;
 
-        int[] scaledDistances = Calculate.ScaledDistance(distances, _parameterStorage.GetAllDistanceScalingFactors(componentName));
+        int[] scaledDistances = Calculate.MultiplyCountedLevelsSinceStagesAreUnlocked(distances, _parameterStorage.GetAllDistanceScalingFactors(componentName));
 
-        int totalScaledDistance = Calculate.TotalScaledDistances(scaledDistances);
+        int totalScaledDistance = Calculate.AllMultipliedLevelsSinceStagesAreUnlocked(scaledDistances);
 
         return Calculate.Probabilities(scaledDistances, totalScaledDistance);
     }
@@ -166,9 +166,9 @@ public class OrderGenerator : MonoBehaviour
                 writer.WriteLine("Data that depends on current level:");
                 for (int level = 1; level <= AmountLevels; level++)
                 {
-                    int[] dist = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(level, _parameterStorage.GetAllEvolutionUnlockLevels(component));
-                    int[] scaledDist = Calculate.ScaledDistance(dist, _parameterStorage.GetAllDistanceScalingFactors(component));
-                    int totalScaledDist = Calculate.TotalScaledDistances(scaledDist);
+                    int[] dist = Calculate.CountLevelsSinceStagesAreUnlocked(level, _parameterStorage.GetAllEvolutionUnlockLevels(component));
+                    int[] scaledDist = Calculate.MultiplyCountedLevelsSinceStagesAreUnlocked(dist, _parameterStorage.GetAllDistanceScalingFactors(component));
+                    int totalScaledDist = Calculate.AllMultipliedLevelsSinceStagesAreUnlocked(scaledDist);
                     float[] prob = Calculate.Probabilities(scaledDist, totalScaledDist);
 
                     writer.WriteLine($"|-Level {level}");
