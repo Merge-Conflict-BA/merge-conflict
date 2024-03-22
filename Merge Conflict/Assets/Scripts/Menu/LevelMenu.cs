@@ -9,6 +9,10 @@ public class LevelMenu : Menu
     public Canvas levelmenuCanvas; //connect to the level menu canvas
     private TextMeshProUGUI _currentLevelValueTextfield;
     private TextMeshProUGUI _currentXpValueTextfield;
+    private TextMeshProUGUI _currentTotalXpValueTextfield;
+
+    private TextMeshProUGUI _currentNextLevelValueTextfield;
+    
     private Image _levelProgressbar;
 
     private void Awake()
@@ -21,7 +25,9 @@ public class LevelMenu : Menu
         {
             InitializeMenu(levelmenuCanvas);
             _currentLevelValueTextfield = GetComponentByName<TextMeshProUGUI>("CurrentLevelValue");
+            _currentNextLevelValueTextfield = GetComponentByName<TextMeshProUGUI>("CurrentNextLevelValue");
             _currentXpValueTextfield = GetComponentByName<TextMeshProUGUI>("CurrentXpValue");
+            _currentTotalXpValueTextfield = GetComponentByName<TextMeshProUGUI>("CurrentTotalXpValue");
             _levelProgressbar = GetComponentByName<Image>("Progressbar_empty");
 
             _instance = this;
@@ -38,6 +44,16 @@ public class LevelMenu : Menu
         _currentLevelValueTextfield.text = level.ToString();
     }
 
+    public string GetDisplayedCurrentNextLevel()
+    {
+        return _currentNextLevelValueTextfield.text;
+    }
+
+    public void SetDisplayedCurrentNextLevel(int level)
+    {
+        _currentNextLevelValueTextfield.text = level.ToString();
+    }
+
     public string GetDisplayedCurrentXp()
     {
         return _currentXpValueTextfield.text;
@@ -46,6 +62,16 @@ public class LevelMenu : Menu
     public void SetDisplayedCurrentXp(int xp)
     {
         _currentXpValueTextfield.text = xp.ToString();
+    }
+
+    public string GetDisplayedCurrentTotalXp()
+    {
+        return _currentTotalXpValueTextfield.text;
+    }
+
+    public void SetDisplayedCurrentTotalXp(int xp)
+    {
+        _currentTotalXpValueTextfield.text = xp.ToString();
     }
 
     public void SetProgressbarValue(int currentXp, int xpToNextLevel)
