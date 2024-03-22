@@ -99,6 +99,9 @@ public class ComponentSpawner : MonoBehaviour
         
         // move Component in Front of the Conveyor Belt
         componentObject.transform.position += new Vector3(0, 0, -1);
+        
+        // 
+        GameState.Instance.ElementIsInstantiated(element);
 
         return componentObject;
     }
