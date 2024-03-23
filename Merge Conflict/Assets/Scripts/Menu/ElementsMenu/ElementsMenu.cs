@@ -7,6 +7,7 @@ Date:          2024-03-23
 Version:       V1.0
 **********************************************************************************************************************/
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ElementsMenu : Menu
@@ -66,6 +67,21 @@ public class ElementsMenu : Menu
             
             CardHandler cardHandler = cardObject.GetComponent<CardHandler>();
             cardHandler.UpdateSprite(foundElement);
+        }
+        
+        // Reorder cards
+        SortCards();
+    }
+
+    private void SortCards()
+    {
+        List<Transform> cardObjects = CardsListContentObject.transform.Cast<Transform>().ToList();
+
+        List<Transform> orderedCardObjects = cardObjects.OrderBy(p => p.name).ToList();
+
+        for (int i = 0; i < orderedCardObjects.Count; i++)
+        {
+            orderedCardObjects[i].SetSiblingIndex(i);
         }
     }
 }
