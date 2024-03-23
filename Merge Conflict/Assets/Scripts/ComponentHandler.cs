@@ -272,17 +272,3 @@ public class ComponentHandler : MonoBehaviour
         }
     }
 }
-
-/* 
-{
-    Trash,
-    CaseComponent:{
-        PowersupplyComponent,
-        HDDComponent,
-        MBComponent:{
-            CPUComponent,
-            RAMComponent,
-            GPUComponent
-        }
-    }
-} */
