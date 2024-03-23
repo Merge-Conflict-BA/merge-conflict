@@ -8,6 +8,7 @@ Version:       V1.0
 **********************************************************************************************************************/
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FoundElementsHandler : MonoBehaviour
@@ -15,11 +16,7 @@ public class FoundElementsHandler : MonoBehaviour
     #region Singleton
 
     private static FoundElementsHandler _instance;
-
-    public static FoundElementsHandler Instance
-    {
-        get { return _instance; }
-    }
+    public static FoundElementsHandler Instance => _instance;
 
     void Awake()
     {
@@ -36,7 +33,6 @@ public class FoundElementsHandler : MonoBehaviour
     #endregion
 
     private List<FoundElement> _foundElements;
-    private const string PlayerPrefsKey = "FoundElements";
     
     void Start()
     {
@@ -89,6 +85,14 @@ public class FoundElementsHandler : MonoBehaviour
     {
         return _foundElements;
     }
+    
+    /// <summary>
+    /// Updates the value of CountPurchased of the saved FoundElement
+    /// </summary>
+    public void UpdateCountPurchased(FoundElement element)
+    {
+        SaveFoundElementToPlayerPrefs(element);
+    }
 
     private void AddFoundElement(FoundElement element)
     {
@@ -98,30 +102,20 @@ public class FoundElementsHandler : MonoBehaviour
 
     private List<FoundElement> GetListFromPlayerPrefs()
     {
-        if (!PlayerPrefs.HasKey(PlayerPrefsKey))
-        {
-            return new List<FoundElement>();
-        }
-        
-        string savedFoundElements = PlayerPrefs.GetString(PlayerPrefsKey);
-        string[] foundElements = savedFoundElements.Split(",");
-
         List<FoundElement> foundElementsTemp = new List<FoundElement>();
-        foreach (var foundElementString in foundElements)
+        List<ElementName> elementNames = Enum.GetValues(typeof(ElementName)).Cast<ElementName>().ToList();
+
+        foreach (var elementName in elementNames)
         {
-            string[] foundElement = foundElementString.Split("_");
-
-            if (Enum.TryParse(foundElement[0], out ElementName elementName) == false)
+            for (int level = 1; level < 4; level++)
             {
-                continue;
+                string key = GetPlayerPrefsKey(new FoundElement(elementName, level));
+                if (PlayerPrefs.HasKey(key))
+                {
+                    int countPurchased = PlayerPrefs.GetInt(key);
+                    foundElementsTemp.Add(new FoundElement(elementName, level, countPurchased));
+                }
             }
-            
-            if (int.TryParse(foundElement[1], out int level) == false)
-            {
-                continue;
-            }
-
-            foundElementsTemp.Add(new FoundElement(elementName, level));
         }
 
         return foundElementsTemp;
@@ -129,14 +123,12 @@ public class FoundElementsHandler : MonoBehaviour
 
     private void SaveFoundElementToPlayerPrefs(FoundElement element)
     {
-        string savedFoundElements = "";
-        if (PlayerPrefs.HasKey(PlayerPrefsKey))
-        {
-            savedFoundElements = PlayerPrefs.GetString(PlayerPrefsKey);
-        }
+        string key = GetPlayerPrefsKey(element);
+        PlayerPrefs.SetInt(key, element.CountPurchased);
+    }
 
-        string newSavedFoundElements = $"{savedFoundElements}{element.ElementName}_{element.Level},";
-        
-        PlayerPrefs.SetString(PlayerPrefsKey, newSavedFoundElements);
+    private string GetPlayerPrefsKey(FoundElement element)
+    {
+        return $"{element.ElementName}_{element.Level}";
     }
 }

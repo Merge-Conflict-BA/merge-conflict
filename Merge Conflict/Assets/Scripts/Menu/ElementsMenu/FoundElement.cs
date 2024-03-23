@@ -3,10 +3,13 @@
     public ElementName ElementName { get; }
     public int Level { get; }
 
-    public FoundElement(ElementName elementName, int level)
+    public int CountPurchased { get; set; }
+
+    public FoundElement(ElementName elementName, int level, int countPurchased = 0)
     {
         ElementName = elementName;
         Level = level;
+        CountPurchased = countPurchased;
     }
 
     public string ToCardTitle()
