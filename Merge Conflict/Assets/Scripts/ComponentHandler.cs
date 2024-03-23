@@ -1,12 +1,13 @@
 /**********************************************************************************************************************
 Name:          ComponentHandler
 Description:   Contains the methode to drag the component-objects and the methode to merge them. Handles the movement of objects on the desk.
-Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
-Date:          2024-03-15
-Version:       V1.3
+Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann, Daniel Rittrich
+Date:          2024-03-21
+Version:       V1.4
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -28,12 +29,14 @@ public class ComponentHandler : MonoBehaviour
 
     // component movement
     private ComponentMovement ComponentMovement;
-    
+
+    private Coroutine moveComponent; // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
+
     private void Start()
     {
         bool success = gameObject.TryGetComponent(out ComponentMovement);
-        
-        Debugger.LogErrorIf(success == false, "ComponentMovement is missing on Component.");        
+
+        Debugger.LogErrorIf(success == false, "ComponentMovement is missing on Component.");
     }
 
     private void Update()
@@ -49,7 +52,7 @@ public class ComponentHandler : MonoBehaviour
             ComponentMovement.HandleIdleMovement();
             ComponentMovement.HandleIdleScaling();
         }
-        
+
         ComponentMovement.HandleDraggingAnimationEnd();
     }
 
@@ -58,6 +61,14 @@ public class ComponentHandler : MonoBehaviour
         HandleSpriteSorting();
         offsetMouseToCamera = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         isBeingDragged = true;
+
+        // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
+        // stops the automated movement of the component when component cannot be sold
+        if ((moveComponent != null) && isDraggingActive)
+        {
+            StopCoroutine(moveComponent);
+            moveComponent = null;
+        }
     }
 
     private void OnMouseUp()
@@ -174,8 +185,86 @@ public class ComponentHandler : MonoBehaviour
             {
                 Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
                 Destroy(draggedComponent, timeToDestroyObject);
-                //TODO: call xp/money controller
+                //TODO: call xp/money controller  =>  use trashValues of the components
             }
+
+            // drop component (PC) on the selling station -> if possible/matching with quest -> sells it
+#nullable enable
+            if (Tags.SellingStation.UsedByGameObject(staticComponent.gameObject))
+            {
+
+                // TODO: change this ("requiredQuestComponent") later to the correct "requiredQuestComponent" from actual quest
+                // GameObject requiredQuestComponent = Components.HDD.InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
+                // GameObject requiredQuestComponent = Components.CreateCase().InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
+                // GameObject requiredQuestComponent = Components.CreateCase(powersupply: null, hdd: Components.HDD, motherboard: null).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
+                GameObject requiredQuestComponent = Components.CreateCase(
+                    powersupply: null,
+                    hdd: Components.HDD.Clone(),
+                    motherboard: Components.CreateMB(
+                            cpu: null,
+                            ram: Components.RAM.Clone(),
+                            gpu: Components.GPU.Clone()
+                        )
+                    ).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
+
+                Element? requiredQuestElement
+                    = requiredQuestComponent.TryGetComponent(out ComponentHandler requiredQuestComponentHandler)
+                    ? requiredQuestComponentHandler.element
+                    : null;
+
+                Element? draggedElement
+                    = draggedComponent.TryGetComponent(out ComponentHandler draggedComponentHandler)
+                    ? draggedComponentHandler.element
+                    : null;
+
+                if (draggedElement == null)
+                {
+                    return;
+                }
+
+                if (draggedElement.IsEqual(requiredQuestElement))
+                {
+
+                    //TODO: call xp/money controller instead  ->  give more xp/money than putting it in trashcan  =>  use salesValues of the components                    
+                    int actualSalesValue = draggedElement.GetSalesValue();
+                    Debugger.LogMessage($"salesValue : {actualSalesValue}".ToString());
+
+                    Destroy(draggedComponent, timeToDestroyObject);
+                    Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
+                }
+                else
+                {
+                    // if component cannot be sold -> automatically move it back onto the playfield
+                    Debugger.LogMessage("Component cannot be sold. It does not correspond to the required order from the quest.");
+
+                    // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
+                    draggedComponent.GetComponent<ComponentHandler>().MoveComponent(new Vector2(500, 1000), 100f);
+                }
+
+            }
+#nullable restore
+        }
+    }
+
+    // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
+    public void MoveComponent(Vector2 targetPosition, float movingSpeed)
+    {
+        if (moveComponent != null)
+        {
+            StopCoroutine(moveComponent);
+        }
+
+        moveComponent = StartCoroutine(MoveToPosition(targetPosition, movingSpeed));
+    }
+
+    // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
+    // coroutine for automated gameObject movement 
+    IEnumerator MoveToPosition(Vector2 targetPosition, float movingSpeed)
+    {
+        while (GetComponent<RectTransform>().anchoredPosition != targetPosition)
+        {
+            GetComponent<RectTransform>().anchoredPosition = Vector2.MoveTowards(GetComponent<RectTransform>().anchoredPosition, targetPosition, movingSpeed * Time.deltaTime);
+            yield return null;
         }
     }
 

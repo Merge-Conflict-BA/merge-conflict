@@ -79,4 +79,10 @@ public class Element
 
         return componentObject;
     }
+
+    public virtual bool IsEqual(Element element)
+    {
+        return GetType() == element.GetType()
+            && level == element.level;
+    }
 }
