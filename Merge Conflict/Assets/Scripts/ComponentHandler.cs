@@ -3,7 +3,7 @@ Name:          ComponentHandler
 Description:   Contains the methode to drag the component-objects and the methode to merge them. Handles the movement of objects on the desk.
 Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
 Date:          2024-03-15
-Version:       V1.3
+Version:       V1.5
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
 using System;
@@ -28,12 +28,12 @@ public class ComponentHandler : MonoBehaviour
 
     // component movement
     private ComponentMovement ComponentMovement;
-    
+
     private void Start()
     {
         bool success = gameObject.TryGetComponent(out ComponentMovement);
-        
-        Debugger.LogErrorIf(success == false, "ComponentMovement is missing on Component.");        
+
+        Debugger.LogErrorIf(success == false, "ComponentMovement is missing on Component.");
     }
 
     private void Update()
@@ -44,12 +44,23 @@ public class ComponentHandler : MonoBehaviour
             _isDraggedOnce = true;
             ComponentMovement.HandleDraggingAnimation();
         }
-        else if (IsOnConveyorBelt() == false && _isDraggedOnce)
+        else if (
+            ComponentMovement.IsPositionOnDesk(GetComponent<RectTransform>().anchoredPosition) == true &&
+            _isDraggedOnce &&
+            ComponentMovement.GetIsReturningToDesk() == false
+            )
         {
             ComponentMovement.HandleIdleMovement();
             ComponentMovement.HandleIdleScaling();
         }
-        
+        else if (
+            _isDraggedOnce == true &&
+            IsOnConveyorBelt() == false
+            )
+        {
+            ComponentMovement.MoveBackToDesk();
+        }
+
         ComponentMovement.HandleDraggingAnimationEnd();
     }
 
@@ -111,6 +122,7 @@ public class ComponentHandler : MonoBehaviour
         return highestSortingOrder;
     }
 
+#nullable enable
     private Element? GetMergedElement(GameObject draggedComponentObject)
     {
         Element? mergedElement = null;
@@ -130,10 +142,11 @@ public class ComponentHandler : MonoBehaviour
 
         return mergedElement;
     }
+#nullable restore
 
     private void HandleOverlappingObjects()
     {
-        const float timeToDestroyObject = 0.5f;
+        const float timeToDestroyObject = 0.2f;
         const float radiusToDetectSpritesOverlapping = 1.0f;
         GameObject draggedComponent = gameObject;
 
@@ -151,6 +164,7 @@ public class ComponentHandler : MonoBehaviour
                 continue;
             }
 
+#nullable enable
             //merge components if possible 
             if (Tags.Component.UsedByGameObject(staticComponent.gameObject))
             {
@@ -168,12 +182,13 @@ public class ComponentHandler : MonoBehaviour
 
                 return;
             }
+#nullable restore
 
             //put component in the trashcan -> delete it
             if (Tags.Trashcan.UsedByGameObject(staticComponent.gameObject))
             {
                 Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
-                Destroy(draggedComponent, timeToDestroyObject);
+                Destroy(draggedComponent, 0f);
                 //TODO: call xp/money controller
             }
         }

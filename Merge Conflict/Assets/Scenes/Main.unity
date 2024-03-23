@@ -717,7 +717,6 @@ MonoBehaviour:
   MovingDirection: 0
   SizeOfPart: {x: 100, y: 100}
   IsEndPart: 0
-  scrollSpeed: 1
 --- !u!114 &329098967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2057,7 +2056,6 @@ MonoBehaviour:
   MovingDirection: 2
   SizeOfPart: {x: 100, y: 100}
   IsEndPart: 0
-  scrollSpeed: 1
 --- !u!114 &926658735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2695,7 +2693,6 @@ MonoBehaviour:
   MovingDirection: 1
   SizeOfPart: {x: 100, y: 100}
   IsEndPart: 0
-  scrollSpeed: 1
 --- !u!114 &1083088810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4440,7 +4437,6 @@ MonoBehaviour:
   MovingDirection: 1
   SizeOfPart: {x: 100, y: 100}
   IsEndPart: 1
-  scrollSpeed: 1
 --- !u!114 &1885867487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5364,11 +5360,11 @@ MonoBehaviour:
   componentPrefab: {fileID: 2556968358889389474, guid: 3e186cf2c6ff241ef85ddffea5dd44ec, type: 3}
   subComponentPrefab: {fileID: 2556968358889389474, guid: bed2c97de10ab6c4fbcad3b824306c5c, type: 3}
   spawnPointObject: {fileID: 1604206292}
-  ConveyorBeltGameObject: {fileID: 1064727933}
   SamePropertiesForEveryComponent: 1
   MinDistance: 30
   MaxDistance: 70
   MovingSpeed: 50
+  ReturningMovingSpeed: 2000
   MinSecondsWithoutMoving: 2
   MaxSecondsWithoutMoving: 4
   TimeToStartMovement: 2
