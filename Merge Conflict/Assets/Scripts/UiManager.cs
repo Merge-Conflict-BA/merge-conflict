@@ -137,6 +137,10 @@ public class UiManager : MonoBehaviour
         }
 
         //close current opened menu
+        if (Elements.enabled) // needs to be close menu separately, otherwise the collider will detect clicks and purchases can be done
+        {
+            ElementsMenu.Instance.CloseMenu();
+        }
         currentOpenedMenu.enabled = false;
 
         //open requested menu with usage of the mapping
@@ -181,6 +185,7 @@ public class UiManager : MonoBehaviour
             case "CloseMenu":
                 Mainmenu.enabled = false;
                 Playfield.enabled = true;
+                Elements.enabled = false;
                 currentOpenedMenu = null;
                 isMenuVisible = false;
                 break;

@@ -37,6 +37,7 @@ public class ElementsMenu : Menu
 
     public void OpenMenu()
     {
+        CardsListContentObject.SetActive(true);
         _elementsmenuCanvas = FindCanvasForMenu("Elements");
 
         InitializeMenu(_elementsmenuCanvas);
@@ -83,5 +84,10 @@ public class ElementsMenu : Menu
         {
             orderedCardObjects[i].SetSiblingIndex(i);
         }
+    }
+
+    public void CloseMenu()
+    {
+        CardsListContentObject.SetActive(false);
     }
 }
