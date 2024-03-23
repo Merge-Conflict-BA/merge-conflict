@@ -1,8 +1,13 @@
-using System;
-using System.Collections;
+/**********************************************************************************************************************
+Name:          ElementsMenu
+Description:   Menu of all found elements. There is an option to buy it 
+
+Author(s):     Simeon Baumann
+Date:          2024-03-23
+Version:       V1.0
+**********************************************************************************************************************/
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ElementsMenu : Menu
 {
@@ -47,7 +52,7 @@ public class ElementsMenu : Menu
         }
         
         // Instantiate all found elements if they aren't instantiated yet
-        foreach (var foundElement in GameState.Instance.FoundElements)
+        foreach (var foundElement in FoundElementsHandler.Instance.GetFoundElements())
         {
             string cardTitle = foundElement.ToCardTitle();
 

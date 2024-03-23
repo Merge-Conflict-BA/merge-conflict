@@ -100,8 +100,8 @@ public class ComponentSpawner : MonoBehaviour
         // move Component in Front of the Conveyor Belt
         componentObject.transform.position += new Vector3(0, 0, -1);
         
-        // 
-        GameState.Instance.ElementIsInstantiated(element);
+        // Update List with FoundElements to create a new card in the ElementsMenu if necessary
+        FoundElementsHandler.Instance.UpdateList(element);
 
         return componentObject;
     }
