@@ -11,6 +11,7 @@ TagManager:
   - Trashcan
   - SubComponent
   - desk
+  - SellingStation
   layers:
   - Default
   - TransparentFX
@@ -45,6 +46,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3301893047
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: ForeGround
+    uniqueID: 290624899
     locked: 0

@@ -337,12 +337,12 @@ public class ComponentMovement : MonoBehaviour
 
     private Vector2 GetCanvasPosition()
     {
-        return transform.GetComponent<RectTransform>().anchoredPosition;
+        return GetComponent<RectTransform>().anchoredPosition;
     }
 
     private void SetCanvasPosition(Vector2 canvasPosition)
     {
-        transform.GetComponent<RectTransform>().anchoredPosition = canvasPosition;
+        GetComponent<RectTransform>().anchoredPosition = canvasPosition;
     }
 
     public bool GetIsReturningToDesk()

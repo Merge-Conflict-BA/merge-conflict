@@ -41,6 +41,13 @@ public class Element
         return salesValue;
     }
 
+    // Is used to decide if a merging lvls up a component or adds one component to another.
+    // meant for CaseComponent and MBComponent to override. 
+    public virtual bool HasComponents()
+    {
+        return false;
+    }
+
     public GameObject InstantiateGameObjectAndAddTexture(Vector2 position)
     {
         // instantiate new GameObject from prefab
@@ -78,5 +85,11 @@ public class Element
         }
 
         return componentObject;
+    }
+
+    public virtual bool IsEqual(Element element)
+    {
+        return GetType() == element.GetType()
+            && level == element.level;
     }
 }

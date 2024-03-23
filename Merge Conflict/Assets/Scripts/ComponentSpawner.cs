@@ -82,10 +82,11 @@ public class ComponentSpawner : MonoBehaviour
 
     public GameObject SpawnComponent(Vector2 spawnPosition, Element element)
     {
-        GameObject componentObject = Instantiate(componentPrefab, Vector3.zero, Quaternion.identity, transform.parent);
+        GameObject componentObject = Instantiate(componentPrefab, transform.parent.position, Quaternion.identity, transform.parent);
         componentObject.GetComponent<RectTransform>().anchoredPosition = spawnPosition;
         componentObject.name = $"{element.GetType()}_lvl_{element.level}_merged";
         componentObject.tag = Tags.Component.ToString();
+
         ComponentHandler componentHandler = componentObject.GetComponent<ComponentHandler>();
         componentHandler.element = element;
 
