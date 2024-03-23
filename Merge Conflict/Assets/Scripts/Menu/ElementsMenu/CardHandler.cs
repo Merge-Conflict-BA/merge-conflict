@@ -101,7 +101,6 @@ public class CardHandler : MonoBehaviour
         }
 
         UpdatePrice();
-        gameObject.SetActive(true);
     }
 
     public void OnMouseUpAsButton()

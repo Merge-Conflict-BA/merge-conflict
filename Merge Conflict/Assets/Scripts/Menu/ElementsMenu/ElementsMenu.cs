@@ -9,6 +9,7 @@ Version:       V1.0
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ElementsMenu : Menu
 {
@@ -17,6 +18,8 @@ public class ElementsMenu : Menu
     
     private Canvas _elementsmenuCanvas;
     private GameObject[] FoundElementCardObjects;
+
+    private Vector2 _displayedCardSize;
     
     #region Singleton
     private static ElementsMenu _instance;
@@ -41,7 +44,35 @@ public class ElementsMenu : Menu
         _elementsmenuCanvas = FindCanvasForMenu("Elements");
 
         InitializeMenu(_elementsmenuCanvas);
+        UpdateContentViewport();
         InstantiateCardObjects();
+    }
+
+    private void UpdateContentViewport()
+    {
+        // Calculate CellSize for the GridLayoutGroup of the CardsListContentObject to handle different screen resolution
+        // so the Cards are displayed all in the center
+        
+        // Get sizes and GridLayoutGroup from CardsListContentObject
+        RectTransform contentRectTransform = CardsListContentObject.GetComponent<RectTransform>();
+        float width = contentRectTransform.rect.size.x;
+
+        GridLayoutGroup gridLayoutGroup = CardsListContentObject.GetComponent<GridLayoutGroup>();
+        float xSpacing = gridLayoutGroup.spacing.x;
+
+        int columnCount = gridLayoutGroup.constraintCount;
+        Vector2 cellSize = Vector2.zero;
+
+        cellSize.x = (width - (xSpacing * columnCount - 1)) / columnCount;
+
+        // Calculate cellHeight by using the size of the CardPrefab
+        RectTransform cardRectTransform = CardPrefab.GetComponent<RectTransform>();
+        Vector2 sizeOfCard = cardRectTransform.rect.size;
+        cellSize.y = (sizeOfCard.y * cellSize.x) / sizeOfCard.x;
+
+        // Set new calculated cellSize to the GridLayoutGroup
+        gridLayoutGroup.cellSize.Set(cellSize.x, cellSize.y);
+        _displayedCardSize = cellSize;
     }
 
     private void InstantiateCardObjects()
@@ -66,8 +97,13 @@ public class ElementsMenu : Menu
             GameObject cardObject = Instantiate(CardPrefab, Vector3.zero, Quaternion.identity, CardsListContentObject.transform);
             cardObject.name = cardTitle;
             
+            // Update the Sprite so that the right element is displayed on the card
             CardHandler cardHandler = cardObject.GetComponent<CardHandler>();
             cardHandler.UpdateSprite(foundElement);
+
+            // Set right size for boxCollider2D
+            BoxCollider2D boxCollider2D = cardObject.GetComponent<BoxCollider2D>();
+            boxCollider2D.size = _displayedCardSize;
         }
         
         // Reorder cards
