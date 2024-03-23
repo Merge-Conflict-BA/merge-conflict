@@ -511,7 +511,6 @@ RectTransform:
   m_Children:
   - {fileID: 1816797938}
   - {fileID: 1006736382}
-  - {fileID: 1431256802}
   - {fileID: 1064727935}
   - {fileID: 2139890876}
   - {fileID: 1618080309}
@@ -1654,7 +1653,7 @@ RectTransform:
   m_LocalScale: {x: 0.016666668, y: 0.016666668, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1431256802}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5568,7 +5567,6 @@ MonoBehaviour:
   buttonOpenUpgrade: {fileID: 1080665956}
   buttonOpenElements: {fileID: 73737642}
   buttonExitGame: {fileID: 741769696}
-  buttonSellingStation: {fileID: 1431256805}
   PLAYFIELD: {fileID: 210138499}
   UI_MANAGER: {fileID: 1933479629}
   MAINMENU: {fileID: 1424940784}
@@ -6217,3 +6215,4 @@ SceneRoots:
   - {fileID: 1933479630}
   - {fileID: 540637954}
   - {fileID: 1154819337}
+  - {fileID: 607022295}

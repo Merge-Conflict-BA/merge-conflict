@@ -235,7 +235,7 @@ public class ComponentHandler : MonoBehaviour
                     int actualSalesValue = draggedElement.GetSalesValue();
                     Debugger.LogMessage($"salesValue : {actualSalesValue}".ToString());
 
-                    Destroy(draggedComponent, timeToDestroyObject);
+                    Destroy(draggedComponent);
                     Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
                 }
                 else
