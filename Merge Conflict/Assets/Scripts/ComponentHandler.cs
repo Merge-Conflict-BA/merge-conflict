@@ -1,8 +1,8 @@
 /**********************************************************************************************************************
 Name:          ComponentHandler
-Description:   Contains the methode to drag the component-objects and the methode to merge them.
+Description:   Contains the methode to drag the component-objects and the methode to merge them. Handles the movement of objects on the desk.
 Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann, Daniel Rittrich
-Date:          2024-03-01
+Date:          2024-03-21
 Version:       V1.4
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
@@ -13,6 +13,7 @@ using UnityEngine;
 
 public class ComponentHandler : MonoBehaviour
 {
+    public bool isBeingDragged = false;
     public Element element;
 
     private bool isDraggingActive = false;
@@ -23,22 +24,43 @@ public class ComponentHandler : MonoBehaviour
     // store current count of collision with conveyor belt parts
     public int CountCollisionConveyorBelt = 0;
     public bool IsOnConveyorBeltDiagonal = false;
+    // component is dragged at least once
+    private bool _isDraggedOnce = false;
+
+    // component movement
+    private ComponentMovement ComponentMovement;
 
     private Coroutine moveComponent;
 
+    private void Start()
+    {
+        bool success = gameObject.TryGetComponent(out ComponentMovement);
+
+        Debugger.LogErrorIf(success == false, "ComponentMovement is missing on Component.");
+    }
+
     private void Update()
     {
-        if (isDraggingActive)
+        if (isBeingDragged)
         {
             transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + offsetMouseToCamera;
+            _isDraggedOnce = true;
+            ComponentMovement.HandleDraggingAnimation();
         }
+        else if (IsOnConveyorBelt() == false && _isDraggedOnce)
+        {
+            ComponentMovement.HandleIdleMovement();
+            ComponentMovement.HandleIdleScaling();
+        }
+
+        ComponentMovement.HandleDraggingAnimationEnd();
     }
 
     private void OnMouseDown()
     {
         HandleSpriteSorting();
         offsetMouseToCamera = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        isDraggingActive = true;
+        isBeingDragged = true;
 
         // stops the automated movement of the component when component cannot be sold
         if ((moveComponent != null) && isDraggingActive)
@@ -51,7 +73,8 @@ public class ComponentHandler : MonoBehaviour
     private void OnMouseUp()
     {
         HandleOverlappingObjects();
-        isDraggingActive = false;
+        isBeingDragged = false;
+        ComponentMovement.HandleDraggingStop();
     }
 
     private void HandleSpriteSorting()
@@ -93,9 +116,6 @@ public class ComponentHandler : MonoBehaviour
             {
                 highestSortingOrder = spriteRenderer.sortingOrder;
             }
-
-            spriteRenderer.sortingOrder--;
-
         }
 
         return highestSortingOrder;
@@ -151,9 +171,8 @@ public class ComponentHandler : MonoBehaviour
                     return;
                 }
 
-                GameObject mergedComponentObject = mergedElement.InstantiateGameObjectAndAddTexture(staticComponent.transform.position);
+                mergedElement.InstantiateGameObjectAndAddTexture(staticComponent.GetComponent<RectTransform>().anchoredPosition);
 
-                Debugger.LogMessage("two components overlapp => merge?!");
                 Destroy(draggedComponent, timeToDestroyObject);
                 Destroy(staticComponent.gameObject, timeToDestroyObject);
 
@@ -216,7 +235,7 @@ public class ComponentHandler : MonoBehaviour
                 {
                     Debugger.LogMessage("Component cannot be sold. It does not correspond to the required order from the quest.");
                     // if component cannot be sold -> automatically move it back onto the playfield
-                    draggedComponent.GetComponent<ComponentHandler>().MoveComponent(new Vector2(200, 400), 100f);
+                    draggedComponent.GetComponent<ComponentHandler>().MoveComponent(new Vector2(500, 1000), 100f);
                 }
 
             }
@@ -224,6 +243,7 @@ public class ComponentHandler : MonoBehaviour
         }
     }
 
+    // ! TODO: repair movement or adapt to the movement Simeon has built
     public void MoveComponent(Vector2 targetPosition, float movingSpeed)
     {
         if (moveComponent != null)
@@ -237,11 +257,16 @@ public class ComponentHandler : MonoBehaviour
     // coroutine for automated gameObject movement 
     IEnumerator MoveToPosition(Vector2 targetPosition, float movingSpeed)
     {
-        while ((Vector2)transform.position != targetPosition)
+        while (GetComponent<RectTransform>().anchoredPosition != targetPosition)
         {
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, movingSpeed * Time.deltaTime);
+            GetComponent<RectTransform>().anchoredPosition = Vector2.MoveTowards(GetComponent<RectTransform>().anchoredPosition, targetPosition, movingSpeed * Time.deltaTime);
             yield return null;
         }
+    }
+
+    private bool IsOnConveyorBelt()
+    {
+        return CountCollisionConveyorBelt > 0;
     }
 
     private void OnCollisionEnter2D(Collision2D col)
