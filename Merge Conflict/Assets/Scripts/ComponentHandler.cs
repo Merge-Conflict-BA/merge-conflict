@@ -30,7 +30,7 @@ public class ComponentHandler : MonoBehaviour
     // component movement
     private ComponentMovement ComponentMovement;
 
-    private Coroutine moveComponent;
+    private Coroutine moveComponent; // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
 
     private void Start()
     {
@@ -62,6 +62,7 @@ public class ComponentHandler : MonoBehaviour
         offsetMouseToCamera = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         isBeingDragged = true;
 
+        // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
         // stops the automated movement of the component when component cannot be sold
         if ((moveComponent != null) && isDraggingActive)
         {
@@ -233,8 +234,10 @@ public class ComponentHandler : MonoBehaviour
                 }
                 else
                 {
-                    Debugger.LogMessage("Component cannot be sold. It does not correspond to the required order from the quest.");
                     // if component cannot be sold -> automatically move it back onto the playfield
+                    Debugger.LogMessage("Component cannot be sold. It does not correspond to the required order from the quest.");
+
+                    // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
                     draggedComponent.GetComponent<ComponentHandler>().MoveComponent(new Vector2(500, 1000), 100f);
                 }
 
@@ -243,7 +246,7 @@ public class ComponentHandler : MonoBehaviour
         }
     }
 
-    // ! TODO: repair movement or adapt to the movement Simeon has built
+    // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
     public void MoveComponent(Vector2 targetPosition, float movingSpeed)
     {
         if (moveComponent != null)
@@ -254,6 +257,7 @@ public class ComponentHandler : MonoBehaviour
         moveComponent = StartCoroutine(MoveToPosition(targetPosition, movingSpeed));
     }
 
+    // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
     // coroutine for automated gameObject movement 
     IEnumerator MoveToPosition(Vector2 targetPosition, float movingSpeed)
     {
