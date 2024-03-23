@@ -69,7 +69,7 @@ public class CaseComponent : Element, IComponent
         return null;
     }
 
-    private bool HasComponents()
+    override public bool HasComponents()
     {
         return motherboard != null || powersupply != null || hdd != null;
     }
