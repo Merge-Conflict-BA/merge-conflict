@@ -202,18 +202,15 @@ public class ComponentHandler : MonoBehaviour
             {
 
                 // TODO: change this ("requiredQuestComponent") later to the correct "requiredQuestComponent" from actual quest
-                // GameObject requiredQuestComponent = Components.HDD.InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
-                // GameObject requiredQuestComponent = Components.CreateCase().InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
-                // GameObject requiredQuestComponent = Components.CreateCase(powersupply: null, hdd: Components.HDD, motherboard: null).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
                 GameObject requiredQuestComponent = Components.CreateCase(
-                    powersupply: null,
-                    hdd: Components.HDD.Clone(),
-                    motherboard: Components.CreateMB(
-                            cpu: null,
-                            ram: Components.RAM.Clone(),
-                            gpu: Components.GPU.Clone()
-                        )
-                    ).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
+                   powersupply: null,
+                   hdd: Components.HDD.Clone(),
+                   motherboard: Components.CreateMB(
+                           cpu: null,
+                           ram: Components.RAM.Clone(),
+                           gpu: Components.GPU.Clone()
+                       )
+                   ).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
 
                 Element? requiredQuestElement
                     = requiredQuestComponent.TryGetComponent(out ComponentHandler requiredQuestComponentHandler)
