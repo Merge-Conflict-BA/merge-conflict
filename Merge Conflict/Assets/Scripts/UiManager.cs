@@ -45,6 +45,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button buttonOpenUpgrade;
     [SerializeField] private Button buttonOpenElements;
     [SerializeField] private Button buttonExitGame;
+    [SerializeField] private Button buttonSellingStation;
 
     //all menus
     [SerializeField] private Canvas Playfield;
@@ -64,6 +65,7 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenLevel", "Level"),
         new KeyValuePair<string, string>("ButtonOpenUpgrade", "Upgrade"),
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
+        new KeyValuePair<string, string>("SellingStation", "Level"),
     };
 
     const Canvas NO_MENU_OPENED = null;
@@ -100,6 +102,7 @@ public class UiManager : MonoBehaviour
         setupButtonListener(buttonOpenUpgrade);
         setupButtonListener(buttonOpenElements);
         setupButtonListener(buttonExitGame);
+        setupButtonListener(buttonSellingStation);
     }
 
     private void setupButtonListener(Button button)

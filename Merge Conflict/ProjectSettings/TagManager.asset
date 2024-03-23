@@ -11,6 +11,7 @@ TagManager:
   - Trashcan
   - SubComponent
   - desk
+  - SellingStation
   layers:
   - Default
   - TransparentFX

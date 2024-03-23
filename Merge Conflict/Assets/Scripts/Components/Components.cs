@@ -68,9 +68,15 @@ public static class Components
 
 
     // ! catch the returning tuple like this :
-    //      var (trashValue, salesValue) = ComponentValues.GetComponentValues(MyComponentClass);
-    public static (int trashValue, int salesValue) GetComponentValues(Element element)
+    //      var (trashValue, salesValue) = Components.GetComponentValues(MyComponentClass);
+    public static (int trashValue, int salesValue) GetComponentValues(Element? element)
     {
+        if (element == null)
+        {
+            Debugger.LogError("No component existing for the return of trash and sales values.");
+            return (5, 10);
+        }
+
         int index = element.level - 1;
 
         switch (element)
@@ -117,7 +123,6 @@ public static class Components
 
         return randomElement;
     }
-
 }
 
 public delegate MBComponent CreateMBDelegate(CPUComponent? cpu = null, RAMComponent? ram = null, GPUComponent? gpu = null);
