@@ -20,7 +20,7 @@ public class ComponentMovement : MonoBehaviour
     public float ReturningMovingSpeed = 2000;
     private readonly float _smoothMovementFactor = 0.02f;
     // Distance by which the component should move during the current movement
-    private Vector2 CenterOfDesk = new(600f, 900f);
+    private Vector2 CenterOfDesk;
 
     [Header("Idle Movement Settings")]
     public float MinSecondsWithoutIdleMove = 2;
@@ -101,6 +101,8 @@ public class ComponentMovement : MonoBehaviour
         _marginToDeskBorder += _marginToDeskBorder + deltaWidth;
 
         _lastPositionsWhileBeingDragged = new List<Vector2>();
+
+        CenterOfDesk = GetPositionOfElementsCenter(deskObject);
     }
 
 
@@ -197,6 +199,27 @@ public class ComponentMovement : MonoBehaviour
 
     #endregion
 
+    // returns the position of the center of an object on playfield
+    private Vector2 GetPositionOfElementsCenter(GameObject objectOnPlayfield)
+    {
+        RectTransform playfieldRect = GameObject.FindWithTag("UIManager").GetComponent<RectTransform>();
+        RectTransform objectRect = objectOnPlayfield.GetComponent<RectTransform>();
+        Vector2 playfieldSize = playfieldRect.sizeDelta;
+
+        Vector2 objectSize = new Vector2(
+            playfieldSize.x - objectRect.offsetMin.x - objectRect.offsetMax.x,
+            playfieldSize.y - objectRect.offsetMin.y - objectRect.offsetMax.y
+        );
+
+        Vector2 objectCenter = new Vector2(
+            objectRect.offsetMin.x + (objectSize.x / 2) + objectRect.offsetMax.x,
+            objectRect.offsetMin.y + (objectSize.y / 2) + objectRect.offsetMax.y
+        );
+
+        // Debugger.LogMessage($"Position of the center of {objectOnPlayfield.name} on Playfield is :  {objectCenter}");
+
+        return objectCenter;
+    }
 
     private void ScaleToFactor(float scaleFactor)
     {
@@ -288,8 +311,9 @@ public class ComponentMovement : MonoBehaviour
         if (_isMoving)
         {
             Vector2 vectorToNextPosition = _currentMoveDirection * (ReturningMovingSpeed * Time.deltaTime);
+            float acceptedDistance = _deskRect.width < _deskRect.height ? _deskRect.width / 4 : _deskRect.height / 4;
 
-            if (Vector3.Distance(CenterOfDesk, GetCanvasPosition()) > 200)
+            if (Vector3.Distance(CenterOfDesk, GetCanvasPosition()) > acceptedDistance)
             {
                 _isReturningToDesk = true;
                 _intermediateTargetForSmoothMovement += vectorToNextPosition;
@@ -297,7 +321,7 @@ public class ComponentMovement : MonoBehaviour
 
             SetCanvasPosition(GetCanvasPosition() + (_intermediateTargetForSmoothMovement - GetCanvasPosition()) * _smoothMovementFactor);
 
-            if (Vector3.Distance(CenterOfDesk, GetCanvasPosition()) <= 200)
+            if (Vector3.Distance(CenterOfDesk, GetCanvasPosition()) <= acceptedDistance)
             {
                 ResetMovementProperties();
                 HandleDraggingStop();
@@ -314,10 +338,10 @@ public class ComponentMovement : MonoBehaviour
         float marginX = _marginToDeskBorder + _size.x;
         float marginY = _marginToDeskBorder + _size.y;
 
-        Vector2 topLeft =       ((Vector2)position) + new Vector2(-marginX, -marginY);
-        Vector2 bottomLeft =    ((Vector2)position) + new Vector2(-marginX, +marginY);
-        Vector2 topRight =      ((Vector2)position) + new Vector2(+marginX, -marginY);
-        Vector2 bottomRight =   ((Vector2)position) + new Vector2(+marginX, +marginY);
+        Vector2 topLeft = ((Vector2)position) + new Vector2(-marginX, -marginY);
+        Vector2 bottomLeft = ((Vector2)position) + new Vector2(-marginX, +marginY);
+        Vector2 topRight = ((Vector2)position) + new Vector2(+marginX, -marginY);
+        Vector2 bottomRight = ((Vector2)position) + new Vector2(+marginX, +marginY);
 
         return _deskRect.Contains(topLeft)
             && _deskRect.Contains(bottomLeft)
