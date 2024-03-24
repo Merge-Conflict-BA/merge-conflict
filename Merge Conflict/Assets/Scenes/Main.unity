@@ -4516,7 +4516,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2220.0002}
+  m_AnchoredPosition: {x: 0, y: 2100}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &1618080308
@@ -5567,6 +5567,7 @@ MonoBehaviour:
   buttonOpenUpgrade: {fileID: 1080665956}
   buttonOpenElements: {fileID: 73737642}
   buttonExitGame: {fileID: 741769696}
+  buttonSellingStation: {fileID: 0}
   PLAYFIELD: {fileID: 210138499}
   UI_MANAGER: {fileID: 1933479629}
   MAINMENU: {fileID: 1424940784}
