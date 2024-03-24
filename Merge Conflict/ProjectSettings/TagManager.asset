@@ -12,6 +12,7 @@ TagManager:
   - SubComponent
   - desk
   - SellingStation
+  - UIManager
   layers:
   - Default
   - TransparentFX

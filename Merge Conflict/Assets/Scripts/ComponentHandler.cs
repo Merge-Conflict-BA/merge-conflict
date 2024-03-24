@@ -3,11 +3,10 @@ Name:          ComponentHandler
 Description:   Contains the methode to drag the component-objects and the methode to merge them. Handles the movement of objects on the desk.
 Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann, Daniel Rittrich
 Date:          2024-03-21
-Version:       V1.4
+Version:       V1.5
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
 using System;
-using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,7 +15,6 @@ public class ComponentHandler : MonoBehaviour
     public bool isBeingDragged = false;
     public Element element;
 
-    private bool isDraggingActive = false;
     // camera is located on the bottom left corner, so we have an offset to the mouse
     // gets set every time dragging starts
     private Vector3 offsetMouseToCamera;
@@ -29,8 +27,6 @@ public class ComponentHandler : MonoBehaviour
 
     // component movement
     private ComponentMovement ComponentMovement;
-
-    private Coroutine moveComponent; // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
 
     private void Start()
     {
@@ -47,10 +43,21 @@ public class ComponentHandler : MonoBehaviour
             _isDraggedOnce = true;
             ComponentMovement.HandleDraggingAnimation();
         }
-        else if (IsOnConveyorBelt() == false && _isDraggedOnce)
+        else if (
+            ComponentMovement.IsPositionOnDesk(GetComponent<RectTransform>().anchoredPosition) == true &&
+            _isDraggedOnce &&
+            ComponentMovement.GetIsReturningToDesk() == false
+            )
         {
             ComponentMovement.HandleIdleMovement();
             ComponentMovement.HandleIdleScaling();
+        }
+        else if (
+            _isDraggedOnce == true &&
+            IsOnConveyorBelt() == false
+            )
+        {
+            ComponentMovement.MoveBackToDesk();
         }
 
         ComponentMovement.HandleDraggingAnimationEnd();
@@ -61,14 +68,6 @@ public class ComponentHandler : MonoBehaviour
         HandleSpriteSorting();
         offsetMouseToCamera = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         isBeingDragged = true;
-
-        // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
-        // stops the automated movement of the component when component cannot be sold
-        if ((moveComponent != null) && isDraggingActive)
-        {
-            StopCoroutine(moveComponent);
-            moveComponent = null;
-        }
     }
 
     private void OnMouseUp()
@@ -122,6 +121,7 @@ public class ComponentHandler : MonoBehaviour
         return highestSortingOrder;
     }
 
+#nullable enable
     private Element? GetMergedElement(GameObject draggedComponentObject)
     {
         Element? mergedElement = null;
@@ -141,6 +141,7 @@ public class ComponentHandler : MonoBehaviour
 
         return mergedElement;
     }
+#nullable restore
 
     private void HandleOverlappingObjects()
     {
@@ -161,7 +162,7 @@ public class ComponentHandler : MonoBehaviour
                 continue;
             }
 
-
+#nullable enable
             //merge components if possible 
             if (Tags.Component.UsedByGameObject(staticComponent.gameObject))
             {
@@ -182,6 +183,7 @@ public class ComponentHandler : MonoBehaviour
 
                 return;
             }
+#nullable restore
 
             //put component in the trashcan -> delete it
             if (Tags.Trashcan.UsedByGameObject(staticComponent.gameObject))
@@ -200,18 +202,15 @@ public class ComponentHandler : MonoBehaviour
             {
 
                 // TODO: change this ("requiredQuestComponent") later to the correct "requiredQuestComponent" from actual quest
-                // GameObject requiredQuestComponent = Components.HDD.InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
-                // GameObject requiredQuestComponent = Components.CreateCase().InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
-                // GameObject requiredQuestComponent = Components.CreateCase(powersupply: null, hdd: Components.HDD, motherboard: null).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
                 GameObject requiredQuestComponent = Components.CreateCase(
-                    powersupply: null,
-                    hdd: Components.HDD.Clone(),
-                    motherboard: Components.CreateMB(
-                            cpu: null,
-                            ram: Components.RAM.Clone(),
-                            gpu: Components.GPU.Clone()
-                        )
-                    ).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
+                   powersupply: null,
+                   hdd: Components.HDD.Clone(),
+                   motherboard: Components.CreateMB(
+                           cpu: null,
+                           ram: Components.RAM.Clone(),
+                           gpu: Components.GPU.Clone()
+                       )
+                   ).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
 
                 Element? requiredQuestElement
                     = requiredQuestComponent.TryGetComponent(out ComponentHandler requiredQuestComponentHandler)
@@ -235,6 +234,8 @@ public class ComponentHandler : MonoBehaviour
                     int actualSalesValue = draggedElement.GetSalesValue();
                     Debugger.LogMessage($"salesValue : {actualSalesValue}".ToString());
 
+                    AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
+
                     Destroy(draggedComponent);
                     Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
                 }
@@ -242,35 +243,10 @@ public class ComponentHandler : MonoBehaviour
                 {
                     // if component cannot be sold -> automatically move it back onto the playfield
                     Debugger.LogMessage("Component cannot be sold. It does not correspond to the required order from the quest.");
-
-                    // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
-                    draggedComponent.GetComponent<ComponentHandler>().MoveComponent(new Vector2(500, 1000), 100f);
                 }
 
             }
 #nullable restore
-        }
-    }
-
-    // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
-    public void MoveComponent(Vector2 targetPosition, float movingSpeed)
-    {
-        if (moveComponent != null)
-        {
-            StopCoroutine(moveComponent);
-        }
-
-        moveComponent = StartCoroutine(MoveToPosition(targetPosition, movingSpeed));
-    }
-
-    // TODO: Movement is WIP !   --> this will be deleted when new movement is finished
-    // coroutine for automated gameObject movement 
-    IEnumerator MoveToPosition(Vector2 targetPosition, float movingSpeed)
-    {
-        while (GetComponent<RectTransform>().anchoredPosition != targetPosition)
-        {
-            GetComponent<RectTransform>().anchoredPosition = Vector2.MoveTowards(GetComponent<RectTransform>().anchoredPosition, targetPosition, movingSpeed * Time.deltaTime);
-            yield return null;
         }
     }
 
