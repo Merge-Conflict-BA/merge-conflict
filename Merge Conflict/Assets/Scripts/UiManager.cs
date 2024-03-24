@@ -115,13 +115,13 @@ public class UiManager : MonoBehaviour
     }
 
     private void HandleButtonClick(string clickedButton)
-    {        
+    {
         if (clickedButton == ExitTheGame)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-                        Application.Quit();
+            Application.Quit();
 #endif
             return;
         }
@@ -142,10 +142,11 @@ public class UiManager : MonoBehaviour
         switch (menuName.Value)
         {
             case "Mainmenu":
-                if(previousOpenedMenu != _mainmenu)
+                if (previousOpenedMenu != _mainmenu)
                 {
                     OpenMenu(_mainmenu);
-                } else
+                }
+                else
                 {
                     _playfield.enabled = true;
                     ContinueGame();
@@ -200,12 +201,12 @@ public class UiManager : MonoBehaviour
         _upgrade.enabled = false;
         _settings.enabled = false;
 
-        if(_currentOpenedMenu != null)
+        if (_currentOpenedMenu != null)
         {
             _currentOpenedMenu.enabled = false;
             _currentOpenedMenu = null;
         }
- 
+
         isMenuVisible = false;
     }
 
@@ -215,10 +216,12 @@ public class UiManager : MonoBehaviour
         if (currentOpenedMenu == _mainmenu)
         {
             menuText = "Close";
-        } else if (currentOpenedMenu == null)
+        }
+        else if (currentOpenedMenu == null)
         {
             menuText = "Menu";
-        } else
+        }
+        else
         {
             menuText = "Back";
         }
@@ -232,7 +235,7 @@ public class UiManager : MonoBehaviour
     }
     private void ContinueGame()
     {
-        Time.timeScale = 1f; 
+        Time.timeScale = 1f;
     }
 }
 
