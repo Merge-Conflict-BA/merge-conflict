@@ -10,8 +10,10 @@ TODO:          - price to buy
 
 using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class CardHandler : MonoBehaviour
 {
@@ -47,6 +49,9 @@ public class CardHandler : MonoBehaviour
     private FoundElement _cardElement;
     private float _startPrice;
     private float _increaseFactor;
+    
+    private float _clickStartTime;
+    private const float MaxTimeOfClick = 0.3f;
 
     public void UpdateSprite(FoundElement element)
     {
@@ -105,9 +110,20 @@ public class CardHandler : MonoBehaviour
 
     public void OnMouseUpAsButton()
     {
+        // if the user clicks longer than _maxTimeOfClick on a card it is handled as a scroll - not as a click
+        if ((Time.time - _clickStartTime) > MaxTimeOfClick)
+        {
+            return;
+        }
+        
         // todo: check if the player has enough money
         // buy this particular Element
         BuyElement();
+    }
+
+    private void OnMouseDown()
+    {
+        _clickStartTime = Time.time;
     }
 
     private void BuyElement()
