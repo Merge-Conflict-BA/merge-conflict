@@ -80,7 +80,9 @@ public class UiManager : MonoBehaviour
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
-        } else {
+        }
+        else
+        {
             _instance = this;
         }
 
@@ -119,11 +121,11 @@ public class UiManager : MonoBehaviour
     {
         if (clickedButton == EXIT_GAME)
         {
-            #if UNITY_EDITOR
-                            UnityEditor.EditorApplication.isPlaying = false;
-            #else
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
                         Application.Quit();
-            #endif
+#endif
             return;
         }
 
@@ -153,6 +155,8 @@ public class UiManager : MonoBehaviour
                 break;
 
             case "Settings":
+                // TODO: add sound when click on button
+                Debugger.LogMessage($"PLAY SOOOOOOOOOOOOOUUUND ................");
                 SETTINGS.enabled = true;
                 currentOpenedMenu = SETTINGS;
                 break;
