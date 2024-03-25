@@ -19,6 +19,8 @@ public class AudioMixerLevels : MonoBehaviour
 
     // TODO: sound settings should be safed in playerprefs
 
+    // ! TODO: integrate a min volume value, so the loudness scaling in the settings will be better
+
     public void OnSliderChange(float input)
     {
         audioMixer.SetFloat(exposedParameter, input);
