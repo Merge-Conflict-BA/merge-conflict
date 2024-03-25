@@ -12,6 +12,5 @@ using UnityEngine;
 public enum PlayMode
 {
     Sequential,
-    Random,
-    Single
+    Random
 }

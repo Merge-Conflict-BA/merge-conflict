@@ -148,6 +148,8 @@ public class UiManager : MonoBehaviour
         switch (menuName.Value)
         {
             case "Mainmenu":
+                AudioManager.Instance.PlayButtonSound();
+                Debugger.LogMessage($"PLAY SOOOOOOOOOOOOOUUUND ........{menuName.Value}........");
                 MAINMENU.enabled = true;
                 PLAYFIELD.enabled = false;
                 currentOpenedMenu = MAINMENU;
@@ -156,27 +158,36 @@ public class UiManager : MonoBehaviour
 
             case "Settings":
                 // TODO: add sound when click on button
-                Debugger.LogMessage($"PLAY SOOOOOOOOOOOOOUUUND ................");
+                AudioManager.Instance.PlayButtonSound();
+                Debugger.LogMessage($"PLAY SOOOOOOOOOOOOOUUUND ........{menuName.Value}........");
                 SETTINGS.enabled = true;
                 currentOpenedMenu = SETTINGS;
                 break;
 
             case "Level":
+                AudioManager.Instance.PlayButtonSound();
+                Debugger.LogMessage($"PLAY SOOOOOOOOOOOOOUUUND ........{menuName.Value}........");
                 LEVEL.enabled = true;
                 currentOpenedMenu = LEVEL;
                 break;
 
             case "Upgrade":
+                AudioManager.Instance.PlayButtonSound();
+                Debugger.LogMessage($"PLAY SOOOOOOOOOOOOOUUUND ........{menuName.Value}........");
                 UPGRADE.enabled = true;
                 currentOpenedMenu = UPGRADE;
                 break;
 
             case "Elements":
+                AudioManager.Instance.PlayButtonSound();
+                Debugger.LogMessage($"PLAY SOOOOOOOOOOOOOUUUND ........{menuName.Value}........");
                 ELEMENTS.enabled = true;
                 currentOpenedMenu = ELEMENTS;
                 break;
 
             case "CloseMenu":
+                AudioManager.Instance.PlayButtonSound();
+                Debugger.LogMessage($"PLAY SOOOOOOOOOOOOOUUUND ........{menuName.Value}........");
                 MAINMENU.enabled = false;
                 PLAYFIELD.enabled = true;
                 currentOpenedMenu = null;
