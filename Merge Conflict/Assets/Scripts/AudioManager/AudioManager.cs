@@ -41,8 +41,6 @@ public class AudioManager : MonoBehaviour
     /*    (conveyorbelt, component walking, component dragging, component dropping, individual sounds for upgrades, 
            open menu, close menu, component returning to desk, trash walkin on desk, ... )  */
 
-    private AudioSource audioSource;
-
     private Coroutine playNextSongCoroutine;
 
     private void Awake()
@@ -55,8 +53,6 @@ public class AudioManager : MonoBehaviour
         _instance = this;
 
         DontDestroyOnLoad(gameObject);
-
-        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -86,10 +82,10 @@ public class AudioManager : MonoBehaviour
 
             if (clip)
             {
-                audioSource.clip = clip;
-                audioSource.Play();
+                backgroundAudioSource.clip = clip;
+                backgroundAudioSource.Play();
 
-                yield return new WaitForSecondsRealtime(audioSource.clip.length);
+                yield return new WaitForSecondsRealtime(backgroundAudioSource.clip.length);
             }
 
             yield return null;
