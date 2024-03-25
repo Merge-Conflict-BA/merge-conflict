@@ -17,6 +17,8 @@ public class AudioMixerLevels : MonoBehaviour
     public AudioMixer audioMixer;
     public string exposedParameter;
 
+    // TODO: sound settings should be safed in playerprefs
+
     public void OnSliderChange(float input)
     {
         audioMixer.SetFloat(exposedParameter, input);

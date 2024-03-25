@@ -1,9 +1,9 @@
 /**********************************************************************************************************************
-Name:          SoundManager
+Name:          AudioManager
 Description:   Manages all sounds and background music that will be played.  
 Author(s):     Daniel Rittrich
 Date:          2024-03-24
-Version:       V1.0
+Version:       V1.1
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -11,14 +11,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class SoundManager : MonoBehaviour
+public class AudioManager : MonoBehaviour
 {
+    private static AudioManager _instance;
+    public static AudioManager Instance { get { return _instance; } }
+
+    [Header("Playlist BG Music")]
     public Playlist playlist;
     public PlayMode playMode;
 
+    [Header("Music")]
+    public AudioSource backgroundAudioSource;
+    public AudioSource gameAudioSource;
+    public AudioSource menuAudioSource;
+    // TODO check if these bools are useful
+    private bool backgroundMusicIsPlaying = false;
+    private bool gameMusicIsPlaying = false;
+    private bool menuMusicIsPlaying = false;
+
+    [Header("Effects")]
+    public AudioSource buttonAudioSource; // ?  Maybe separate AudioSources for different buttons
+    public AudioClip[] buttonSounds;
+
+    public AudioSource mergeAudioSource;  // ?  Maybe separate sounds for lvl  2, 3, 4 
+    public AudioSource combineComponentsAudioSource;
+    public AudioSource sellAudioSource;
+    public AudioSource throwAwayAudioSource; // trash
+    // ?  Maybe other sounds or environment sounds 
+    /*    (conveyorbelt, component walking, component dragging, component dropping, individual sounds for upgrades, 
+           open menu, close menu, component returning to desk, trash walkin on desk, ... )  */
+
     private AudioSource audioSource;
-    private static SoundManager _instance;
 
     private Coroutine playNextSongCoroutine;
 
@@ -27,10 +50,10 @@ public class SoundManager : MonoBehaviour
         if (_instance)
         {
             Destroy(gameObject);
-            return;
         }
 
         _instance = this;
+
         DontDestroyOnLoad(gameObject);
 
         audioSource = GetComponent<AudioSource>();
@@ -52,6 +75,8 @@ public class SoundManager : MonoBehaviour
             playNextSongCoroutine = StartCoroutine(PlayNextSong());
         }
     }
+
+    // ! ! !  audioSource for BGMusic is not connected anymore ! ! !
 
     private IEnumerator PlayNextSong()
     {
@@ -84,5 +109,10 @@ public class SoundManager : MonoBehaviour
             default:
                 return null;
         }
+    }
+
+    public void PlayButtonSound()
+    {
+        buttonAudioSource.PlayOneShot(buttonSounds[0]);
     }
 }
