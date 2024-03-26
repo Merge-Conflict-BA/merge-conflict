@@ -1,10 +1,10 @@
 /**********************************************************************************************************************
-Name:           Const
-Description:    All const-values which are needed to calculate/generate a new order or make the code from this more 
+Name:           OrderParameterAtlas
+Description:    All parameters which are needed to calculate/generate a new order or make the code from this more 
                 readable. 
 Author(s):      Markus Haubold
-Date:           2024-03-20
-Version:        V1.0
+Date:           2024-03-26
+Version:        V1.1
 TODO:           - 
 **********************************************************************************************************************/
 
