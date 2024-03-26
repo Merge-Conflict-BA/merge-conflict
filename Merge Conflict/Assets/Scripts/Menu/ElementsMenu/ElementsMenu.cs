@@ -55,7 +55,7 @@ public class ElementsMenu : Menu
         
         // Get sizes and GridLayoutGroup from CardsListContentObject
         RectTransform contentRectTransform = CardsListContentObject.GetComponent<RectTransform>();
-        float width = contentRectTransform.rect.size.x;
+        float width = contentRectTransform.rect.size.x - contentRectTransform.sizeDelta.x;
 
         GridLayoutGroup gridLayoutGroup = CardsListContentObject.GetComponent<GridLayoutGroup>();
         float xSpacing = gridLayoutGroup.spacing.x;
@@ -63,7 +63,7 @@ public class ElementsMenu : Menu
         int columnCount = gridLayoutGroup.constraintCount;
         Vector2 cellSize = Vector2.zero;
 
-        cellSize.x = (width - (xSpacing * columnCount - 1)) / columnCount;
+        cellSize.x = (width - (xSpacing * (columnCount - 1))) / columnCount;
 
         // Calculate cellHeight by using the size of the CardPrefab
         RectTransform cardRectTransform = CardPrefab.GetComponent<RectTransform>();
@@ -71,7 +71,7 @@ public class ElementsMenu : Menu
         cellSize.y = (sizeOfCard.y * cellSize.x) / sizeOfCard.x;
 
         // Set new calculated cellSize to the GridLayoutGroup
-        gridLayoutGroup.cellSize.Set(cellSize.x, cellSize.y);
+        gridLayoutGroup.cellSize = cellSize;
         _displayedCardSize = cellSize;
     }
 
