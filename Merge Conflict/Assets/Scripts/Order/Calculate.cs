@@ -3,13 +3,14 @@ Name:           Calculate
 Description:    Contains all sub-calculations to calculate the probabilitie for the stages from an given component. 
                 It is needed to generate an new order.
 Author(s):      Markus Haubold
-Date:           2024-03-20
-Version:        V1.0
+Date:           2024-03-26
+Version:        V1.1
 TODO:           - 
 **********************************************************************************************************************/
 
 using System;
 using System.Linq;
+using static OrderParametersAtlas;
 
 public static class Calculate
 {
@@ -29,15 +30,15 @@ public static class Calculate
     public static int[] CountLevelsSinceStagesAreUnlocked(int currentLevel, int[] levelsWhenStagesWillUnlocked)
     {
         //return null if current level is not valid 
-        if (currentLevel != Math.Clamp(currentLevel, Const.FirstLevel, Const.EndLevel))
+        if (currentLevel != Math.Clamp(currentLevel, MinLevel, MaxLevel))
         {
-            Debugger.LogError("The given level in CountLevelsSinceStageIsUnlocked() is not valid! Check if the value is within the borders Const.FirstLevel and Const.EndLevel.");
+            Debugger.LogError("The given level in CountLevelsSinceStageIsUnlocked() is not valid! Check if the value is within the borders OrderConstantsAtlas.FirstLevel and OrderConstantsAtlas.EndLevel.");
             return null;
         };
 
-        int[] countedLevelsSinceStagesAreUnlocked = new int[Const.AmountStages];
+        int[] countedLevelsSinceStagesAreUnlocked = new int[StagesCount];
 
-        for (int stage = 0; stage < Const.AmountStages; stage++)
+        for (int stage = 0; stage < StagesCount; stage++)
         {
             if (currentLevel < levelsWhenStagesWillUnlocked[stage]) //if the evolutionStage is locked, skip it
             {
@@ -50,13 +51,15 @@ public static class Calculate
         return countedLevelsSinceStagesAreUnlocked;
     }
 
-    //multiply the counted levels, which gives us later the possibility the set a "probability weight" for every stage
-    // 
-    public static int[] MultiplyCountedLevelsSinceStagesAreUnlocked(int[] countedLevelsSinceStagesAreUnlocked, int[] multiplicationFactors)
+    /*Multiply the counted levels from all stages (corresponding to the level for which they are counted) with a 
+        customizable factor (=multiplicationFactors). This makes it possibility to set a "probability weight" for every stage.
+        The multiplicationFactors are stored in the OrderConstantsAtlas class with the names MultiplicationFactoreForLevelToUnlockStage1...4 
+    */
+    public static int[] MultiplyCountedLevels(int[] countedLevelsSinceStagesAreUnlocked, int[] multiplicationFactors)
     {
-        int[] multipliedLevelsSinceStagesAreUnlocked = new int[Const.AmountStages];
+        int[] multipliedLevelsSinceStagesAreUnlocked = new int[StagesCount];
 
-        for (int stage = 0; stage < Const.AmountStages; stage++)
+        for (int stage = 0; stage < StagesCount; stage++)
         {
             multipliedLevelsSinceStagesAreUnlocked[stage] = countedLevelsSinceStagesAreUnlocked[stage] * multiplicationFactors[stage];
         }
@@ -64,37 +67,41 @@ public static class Calculate
         return multipliedLevelsSinceStagesAreUnlocked;
     }
 
-    public static int AllMultipliedLevelsSinceStagesAreUnlocked(int[] multipliedLevelsSinceStagesAreUnlocked)
+    //Sum up all multiplied levels (=return from MultiplyCountedLevels()) - it will be the divisor to calculate the probabilities
+    public static int SumOfMultipliedLevels(int[] multipliedLevelsSinceStagesAreUnlocked)
     {
         return multipliedLevelsSinceStagesAreUnlocked.Sum();
     }
 
-    public static float[] Probabilities(int[] multipliedLevelsSinceStagesAreUnlocked, int allLevelsSinceStageIsUnlocked)
+    /*Calculate the probability for every stage of an level by using the therefore calculatet parameters
+        probability = multipliedLevelsSinceStagesAreUnlocked[stage] / sumOfMultipliedLevels
+    */
+    public static float[] ProbabilitieOfAnStageToBeInOrder(int[] multipliedLevelsSinceStagesAreUnlocked, int sumOfMultipliedLevels)
     {
-        float[] probabilities = new float[Const.AmountStages];
+        float[] probabilitieStageIsInOrder = new float[StagesCount];
 
         //edgecase: current level==1 => probability stage1=100% because all other stages are locked
-        if (allLevelsSinceStageIsUnlocked == 0)
+        if (sumOfMultipliedLevels == 0)
         {
-            probabilities[Const.Stage1] = 1;
-            probabilities[Const.Stage2] = 0;
-            probabilities[Const.Stage3] = 0;
-            probabilities[Const.Stage4] = 0;
+            probabilitieStageIsInOrder[Stage1] = 1;
+            probabilitieStageIsInOrder[Stage2] = 0;
+            probabilitieStageIsInOrder[Stage3] = 0;
+            probabilitieStageIsInOrder[Stage4] = 0;
 
-            return probabilities;
+            return probabilitieStageIsInOrder;
         }
 
-        for (int stage = 0; stage < Const.AmountStages; stage++)
+        for (int stage = 0; stage < StagesCount; stage++)
         {
             if (multipliedLevelsSinceStagesAreUnlocked[stage] == 0)    //stage is locked => probabilitie=0 to get in order
             {
-                probabilities[stage] = 0;
+                probabilitieStageIsInOrder[stage] = 0;
                 continue;
             }
-            float ratio = (float)multipliedLevelsSinceStagesAreUnlocked[stage] / allLevelsSinceStageIsUnlocked;
-            probabilities[stage] = (float)Math.Round(ratio, 2);
+            float ratio = (float)multipliedLevelsSinceStagesAreUnlocked[stage] / sumOfMultipliedLevels;
+            probabilitieStageIsInOrder[stage] = (float)Math.Round(ratio, 2);
         }
 
-        return probabilities;
+        return probabilitieStageIsInOrder;
     }
 }
