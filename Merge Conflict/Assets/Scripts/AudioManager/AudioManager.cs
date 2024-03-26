@@ -30,11 +30,17 @@ public class AudioManager : MonoBehaviour
     private bool menuMusicIsPlaying = false;
 
     [Header("Effects")]
-    public AudioSource buttonAudioSource; // ?  Maybe separate AudioSources for different buttons
-    public AudioClip[] buttonSounds;
+    public AudioSource buttonClickAudioSource; // ?  Maybe separate AudioSources for different buttons
+    public AudioClip buttonClickSound;
+
+    public AudioSource openMenuAudioSource; 
+    public AudioClip openMenuSound;
+
+    public AudioSource closeMenuAudioSource; 
+    public AudioClip closeMenuSound;
 
     public AudioSource mergeAudioSource;  // ?  Maybe separate sounds for lvl  2, 3, 4 
-    public AudioClip mergeSound;
+    public AudioClip[] mergeSound;
 
     public AudioSource combineComponentsAudioSource;
     public AudioClip combineComponentsSound;
@@ -46,7 +52,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip throwAwaySound;
     // ?  Maybe other sounds or environment sounds 
     /*    (conveyorbelt, component walking, component dragging, component dropping, individual sounds for upgrades, 
-           open menu, close menu, component returning to desk, trash walkin on desk, ... )  */
+           open menu, close menu, component returning to desk, trash walkin on desk, level up, close menu ... )  */
 
     private Coroutine playNextSongCoroutine;
 
@@ -112,14 +118,24 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayButtonSound()
+    public void PlayButtonClickSound()
     {
-        buttonAudioSource.PlayOneShot(buttonSounds[0]);
+        buttonClickAudioSource.PlayOneShot(buttonClickSound);
+    }
+
+    public void PlayOpenMenuSound()
+    {
+        openMenuAudioSource.PlayOneShot(openMenuSound);
+    }
+
+    public void PlayCloseMenuSound()
+    {
+        closeMenuAudioSource.PlayOneShot(closeMenuSound);
     }
 
     public void PlayMergeSound()
     {
-        mergeAudioSource.PlayOneShot(mergeSound);
+        mergeAudioSource.PlayOneShot(mergeSound[0]);
     }
 
     public void PlayCombineComponentsSound()

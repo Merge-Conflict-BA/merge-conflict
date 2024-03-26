@@ -730,7 +730,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 648088022}
   m_HandleRect: {fileID: 562746544}
   m_Direction: 0
-  m_MinValue: -80
+  m_MinValue: -41
   m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 0
@@ -763,6 +763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: ef52626a21f4ab7488657b542ae398b5, type: 2}
   exposedParameter: volumeEffects
+  threshold: -40
 --- !u!1 &303300704
 GameObject:
   m_ObjectHideFlags: 0
@@ -4639,13 +4640,20 @@ MonoBehaviour:
   backgroundAudioSource: {fileID: 500145965}
   gameAudioSource: {fileID: 571176037}
   menuAudioSource: {fileID: 382163156}
-  buttonAudioSource: {fileID: 1027533971}
-  buttonSounds:
-  - {fileID: 8300000, guid: ce198ddf9580e4700a410d5d8c22f2dd, type: 3}
+  buttonClickAudioSource: {fileID: 1027533971}
+  buttonClickSound: {fileID: 8300000, guid: e8338c34f86bb445f8561ab6e2221a64, type: 3}
+  openMenuAudioSource: {fileID: 0}
+  openMenuSound: {fileID: 0}
+  closeMenuAudioSource: {fileID: 0}
+  closeMenuSound: {fileID: 0}
   mergeAudioSource: {fileID: 1653540629}
+  mergeSound: []
   combineComponentsAudioSource: {fileID: 0}
+  combineComponentsSound: {fileID: 0}
   sellAudioSource: {fileID: 2120886215}
+  sellSound: {fileID: 0}
   throwAwayAudioSource: {fileID: 2060724124}
+  throwAwaySound: {fileID: 0}
 --- !u!1 &1154819335
 GameObject:
   m_ObjectHideFlags: 0
@@ -6373,7 +6381,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 1355381006}
   m_HandleRect: {fileID: 1079283016}
   m_Direction: 0
-  m_MinValue: -80
+  m_MinValue: -41
   m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 0
@@ -6406,6 +6414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: ef52626a21f4ab7488657b542ae398b5, type: 2}
   exposedParameter: volumeMusic
+  threshold: -40
 --- !u!1 &1651539446
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,17 +12,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+
+// TODO: sound settings should be safed in playerprefs
+
 public class AudioMixerLevels : MonoBehaviour
 {
     public AudioMixer audioMixer;
     public string exposedParameter;
-
-    // TODO: sound settings should be safed in playerprefs
-
-    // ! TODO: integrate a min volume value, so the loudness scaling in the settings will be better
+    
+    // The threshold value below which the sound should be switched off
+    public float threshold = -40f;
 
     public void OnSliderChange(float input)
     {
-        audioMixer.SetFloat(exposedParameter, input);
+        if (input < threshold)
+        {
+            audioMixer.SetFloat(exposedParameter, -80f);
+        }
+        else
+        {
+            audioMixer.SetFloat(exposedParameter, input);
+        }
     }
 }
+
