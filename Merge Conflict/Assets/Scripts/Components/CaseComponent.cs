@@ -4,7 +4,7 @@ Description:   Elements data structure for the case.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V2.2
+Version:       V2.3
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -69,16 +69,16 @@ public class CaseComponent : Element, IComponent
         return null;
     }
 
-    private bool HasComponents()
+    override public bool HasComponents()
     {
         return motherboard != null || powersupply != null || hdd != null;
     }
 
     override public int GetTrashValue()
     {
-        int hddTrashValue           = hdd           != null ? hdd.GetTrashValue() : 0;
-        int powersupplyTrashValue   = powersupply   != null ? powersupply.GetTrashValue() : 0;
-        int motherboardTrashValue   = motherboard   != null ? motherboard.GetTrashValue() : 0;
+        int hddTrashValue = hdd != null ? hdd.GetTrashValue() : 0;
+        int powersupplyTrashValue = powersupply != null ? powersupply.GetTrashValue() : 0;
+        int motherboardTrashValue = motherboard != null ? motherboard.GetTrashValue() : 0;
 
         return base.GetTrashValue() + hddTrashValue + powersupplyTrashValue + motherboardTrashValue;
     }
@@ -101,11 +101,11 @@ public class CaseComponent : Element, IComponent
 
         CaseComponent caseComponent = (CaseComponent)element;
 
-        bool isMotherboardEqual = motherboard != null && caseComponent.motherboard != null ? motherboard.IsEqual(caseComponent.motherboard) : true;
-        bool isHDDEqual = hdd != null && caseComponent.hdd != null ? hdd.IsEqual(caseComponent.hdd) : true;
-        bool isPowerSpplyEqual = powersupply != null && caseComponent.powersupply != null ? powersupply.IsEqual(caseComponent.powersupply) : true;
+        bool isMotherboardEqual     = (motherboard  == null  && caseComponent.motherboard   == null)   ? true   : (motherboard  != null     && caseComponent.motherboard    != null)    ? motherboard.IsEqual(caseComponent.motherboard)    : false;
+        bool isHDDEqual             = (hdd          == null  && caseComponent.hdd           == null)   ? true   : (hdd          != null     && caseComponent.hdd            != null)    ? hdd.IsEqual(caseComponent.hdd)                    : false;
+        bool isPowerSupplyEqual     = (powersupply  == null  && caseComponent.powersupply   == null)   ? true   : (powersupply  != null     && caseComponent.powersupply    != null)    ? powersupply.IsEqual(caseComponent.powersupply)    : false;
 
-        return isMotherboardEqual && isHDDEqual && isPowerSpplyEqual;
+        return isMotherboardEqual && isHDDEqual && isPowerSupplyEqual;
     }
 
     public CaseComponent Clone()

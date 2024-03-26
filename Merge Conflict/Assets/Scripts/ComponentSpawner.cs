@@ -3,7 +3,7 @@ Name:          ComponentSpawner
 Description:   Spawn the given object at the conveor-belt-object or at an custom postion
 Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
 Date:          2024-02-28
-Version:       V1.2
+Version:       V1.3
 TODO:          - 
 **********************************************************************************************************************/
 
@@ -32,6 +32,7 @@ public class ComponentSpawner : MonoBehaviour
     public float MinDistance = 30;
     public float MaxDistance = 70;
     public float MovingSpeed = 50;
+    public float ReturningMovingSpeed = 2000;
     public float MinSecondsWithoutMoving = 2;
     public float MaxSecondsWithoutMoving = 4;
     public float TimeToStartMovement = 2;
@@ -81,10 +82,11 @@ public class ComponentSpawner : MonoBehaviour
 
     public GameObject SpawnComponent(Vector2 spawnPosition, Element element)
     {
-        GameObject componentObject = Instantiate(componentPrefab, Vector3.zero, Quaternion.identity, transform.parent);
+        GameObject componentObject = Instantiate(componentPrefab, transform.parent.position, Quaternion.identity, transform.parent);
         componentObject.GetComponent<RectTransform>().anchoredPosition = spawnPosition;
         componentObject.name = $"{element.GetType()}_lvl_{element.level}_merged";
         componentObject.tag = Tags.Component.ToString();
+
         ComponentHandler componentHandler = componentObject.GetComponent<ComponentHandler>();
         componentHandler.element = element;
 
@@ -93,7 +95,7 @@ public class ComponentSpawner : MonoBehaviour
             bool success = componentObject.TryGetComponent(out ComponentMovement componentMovement);
             if (success)
             {
-                componentMovement.InitializeProperties(MinDistance, MaxDistance, MovingSpeed, MinSecondsWithoutMoving, MaxSecondsWithoutMoving, TimeToStartMovement, MaxScaleFactor);
+                componentMovement.InitializeProperties(MinDistance, MaxDistance, MovingSpeed, ReturningMovingSpeed, MinSecondsWithoutMoving, MaxSecondsWithoutMoving, TimeToStartMovement, MaxScaleFactor);
             }
         }
 

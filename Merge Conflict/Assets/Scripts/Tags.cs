@@ -19,7 +19,9 @@ public enum Tags
     Trashcan,
     ConveyorBelt,
     ConveyorBeltDiagonal,
-    SellingStation
+    SellingStation,
+    desk,
+    UIManager
 }
 
 public static class TagComparator

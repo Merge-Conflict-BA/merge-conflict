@@ -4,7 +4,7 @@ Description:   Elements data structure for motherboard.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.3
+Version:       V1.4
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -73,7 +73,7 @@ public class MBComponent : Element, IComponent
         return null;
     }
 
-    private bool HasComponents()
+    override public bool HasComponents()
     {
         return cpu != null || ram != null || gpu != null;
     }
@@ -105,9 +105,9 @@ public class MBComponent : Element, IComponent
 
         MBComponent mBComponent = (MBComponent)element;
 
-        bool isCpuEqual = cpu != null && mBComponent.cpu != null ? cpu.IsEqual(mBComponent.cpu) : true;
-        bool isGPUEqual = gpu != null && mBComponent.gpu != null ? gpu.IsEqual(mBComponent.gpu) : true;
-        bool isRAMEqual = ram != null && mBComponent.ram != null ? ram.IsEqual(mBComponent.ram) : true;
+        bool isCpuEqual     = (cpu  == null  && mBComponent.cpu   == null)   ? true   : (cpu  != null     && mBComponent.cpu    != null)    ? cpu.IsEqual(mBComponent.cpu)    : false;
+        bool isGPUEqual     = (gpu  == null  && mBComponent.gpu   == null)   ? true   : (gpu  != null     && mBComponent.gpu    != null)    ? gpu.IsEqual(mBComponent.gpu)    : false;
+        bool isRAMEqual     = (ram  == null  && mBComponent.ram   == null)   ? true   : (ram  != null     && mBComponent.ram    != null)    ? ram.IsEqual(mBComponent.ram)    : false;
 
         return isCpuEqual && isGPUEqual && isRAMEqual;
     }
