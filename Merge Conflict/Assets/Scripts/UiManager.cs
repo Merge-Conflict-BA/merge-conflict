@@ -174,8 +174,18 @@ public class UiManager : MonoBehaviour
                 int xpToUnlockNextLevel = ExperienceHandler.NeededXpToUnlockNextLevel(currentLevel + 1);
 
                 LevelMenu.Instance.SetDisplayedCurrentLevel(currentLevel);
+                LevelMenu.Instance.SetDisplayedNextLevel(currentLevel + 1);
                 LevelMenu.Instance.SetDisplayedCurrentXp(currentXp);
                 LevelMenu.Instance.SetProgressbarValue(currentXp, xpToUnlockNextLevel);
+
+                LevelMenu.Instance.SetDisplayedCaseStage(OrderGenerator.Instance.OrderedCase);
+                LevelMenu.Instance.SetDisplayedCpuStage(OrderGenerator.Instance.OrderedCpu);
+                LevelMenu.Instance.SetDisplayedGpuStage(OrderGenerator.Instance.OrderedGpu);
+                LevelMenu.Instance.SetDisplayedMotherboardStage(OrderGenerator.Instance.OrderedMotherboard);
+                LevelMenu.Instance.SetDisplayedPowerStage(OrderGenerator.Instance.OrderedPowersupply);
+                LevelMenu.Instance.SetDisplayedRamStage(OrderGenerator.Instance.OrderedRam);
+                LevelMenu.Instance.SetDisplayedHddStage(OrderGenerator.Instance.OrderedHdd);
+
                 break;
 
             case "Upgrade":
