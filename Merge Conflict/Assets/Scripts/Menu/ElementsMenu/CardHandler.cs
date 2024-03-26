@@ -151,7 +151,7 @@ public class CardHandler : MonoBehaviour
         
         // Update count of purchased elements and the price of the next card
         _cardElement.CountPurchased++;
-        FoundElementsHandler.Instance.UpdateCountPurchased(_cardElement);
+        FoundElementsHandler.Instance.UpdateStoredElement(_cardElement);
         UpdatePrice();
     }
 

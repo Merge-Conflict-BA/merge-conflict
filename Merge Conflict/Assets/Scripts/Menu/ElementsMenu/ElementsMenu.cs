@@ -78,10 +78,10 @@ public class ElementsMenu : Menu
     private void InstantiateCardObjects()
     {
         // get all current instantiated cards as a list<string>
-        List<string> cards = new List<string>();
-        foreach (Transform card in CardsListContentObject.transform)
+        List<string> cardNames = new List<string>();
+        foreach (Transform cardTransform in CardsListContentObject.transform)
         {
-            cards.Add(card.gameObject.name);
+            cardNames.Add(cardTransform.gameObject.name);
         }
         
         // Instantiate all found elements if they aren't instantiated yet
@@ -89,7 +89,7 @@ public class ElementsMenu : Menu
         {
             string cardTitle = foundElement.ToCardTitle();
 
-            if (cards.Contains(cardTitle))
+            if (cardNames.Contains(cardTitle))
             {
                 continue;
             }
@@ -114,7 +114,7 @@ public class ElementsMenu : Menu
     {
         List<Transform> cardObjects = CardsListContentObject.transform.Cast<Transform>().ToList();
 
-        List<Transform> orderedCardObjects = cardObjects.OrderBy(p => p.name).ToList();
+        List<Transform> orderedCardObjects = cardObjects.OrderBy(card => card.name).ToList();
 
         for (int i = 0; i < orderedCardObjects.Count; i++)
         {

@@ -101,7 +101,7 @@ public class ComponentSpawner : MonoBehaviour
         componentObject.transform.position += new Vector3(0, 0, -1);
         
         // Update List with FoundElements to create a new card in the ElementsMenu if necessary
-        FoundElementsHandler.Instance.UpdateList(element);
+        FoundElementsHandler.Instance.ElementIsFound(element);
 
         return componentObject;
     }

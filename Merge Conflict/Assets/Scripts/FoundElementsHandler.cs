@@ -40,10 +40,10 @@ public class FoundElementsHandler : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks whether the element has already been found or not --> adds it to the list if not
+    /// Adds element to list of FoundElements if the given element is new and not been found yet.
     /// </summary>
     /// <param name="element">Element that is to be checked</param>
-    public void UpdateList(Element element)
+    public void ElementIsFound(Element element)
     {
         FoundElement foundElement = element switch
         {
@@ -63,6 +63,7 @@ public class FoundElementsHandler : MonoBehaviour
             return;
         }
 
+        // Check if the foundElement is already in the list of FoundElements
         var isNotFoundYet = true;
         foreach (var savedFoundElement in _foundElements)
         {
@@ -72,6 +73,7 @@ public class FoundElementsHandler : MonoBehaviour
             }
         }
 
+        // Add element to List of FoundElements if it is not been found yet
         if (isNotFoundYet)
         {
             AddFoundElement(foundElement);
@@ -87,19 +89,24 @@ public class FoundElementsHandler : MonoBehaviour
     }
     
     /// <summary>
-    /// Updates the value of CountPurchased of the saved FoundElement
+    /// Updates the saved item (current saved item should be overwritten -> CountPurchased can be updated)
     /// </summary>
-    public void UpdateCountPurchased(FoundElement element)
+    public void UpdateStoredElement(FoundElement element)
     {
         SaveFoundElementToPlayerPrefs(element);
     }
 
     private void AddFoundElement(FoundElement element)
     {
+        // Add new element to list and saves it to the PlayerPrefs
         _foundElements.Add(element);
         SaveFoundElementToPlayerPrefs(element);
     }
 
+    /// <summary>
+    /// Returns the list of all FoundElements which are stored into the PlayerPrefs
+    /// </summary>
+    /// <returns></returns>
     private List<FoundElement> GetListFromPlayerPrefs()
     {
         List<FoundElement> foundElementsTemp = new List<FoundElement>();
