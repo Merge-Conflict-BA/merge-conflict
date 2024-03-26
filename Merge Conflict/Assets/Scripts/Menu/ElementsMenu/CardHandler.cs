@@ -5,15 +5,14 @@ Description:   Updates the cards with sprite and price for each found element
 Author(s):     Simeon Baumann
 Date:          2024-03-23
 Version:       V1.0
-TODO:          - price to buy
+TODO:          - check if the player has enough money
 **********************************************************************************************************************/
 
 using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
+using Random = UnityEngine.Random;
 
 public class CardHandler : MonoBehaviour
 {
@@ -128,9 +127,6 @@ public class CardHandler : MonoBehaviour
 
     private void BuyElement()
     {
-        // todo: get random Position on Desk
-        Vector2 positionOnDesk = new Vector2(Screen.width / 2, Screen.height / 2);
-
         Element element = _cardElement.ElementName switch
         {
             ElementName.Case => Components.CreateCase(),
@@ -150,9 +146,10 @@ public class CardHandler : MonoBehaviour
         }
 
         element.level = _cardElement.Level;
-
-        element.InstantiateGameObjectAndAddTexture(positionOnDesk);
         
+        element.InstantiateGameObjectAndAddTexture(GetRandomPositionOnDesk());
+        
+        // Update count of purchased elements and the price of the next card
         _cardElement.CountPurchased++;
         FoundElementsHandler.Instance.UpdateCountPurchased(_cardElement);
         UpdatePrice();
@@ -162,7 +159,20 @@ public class CardHandler : MonoBehaviour
     {
         float currentPrice = (float)Math.Floor(_startPrice * Math.Pow(_increaseFactor, _cardElement.CountPurchased));
         
-        var s = GetComponentInChildren<TextMeshProUGUI>();
-        s.text = $"$ {currentPrice}";
+        var priceText = GetComponentInChildren<TextMeshProUGUI>();
+        priceText.text = $"$ {currentPrice}";
+    }
+    
+    private Vector2 GetRandomPositionOnDesk()
+    {
+        GameObject deskObject = GameObject.FindWithTag("desk");
+        RectTransform rectTransform = deskObject.GetComponent<RectTransform>();
+        Vector2 anchoredPosition = rectTransform.anchoredPosition;
+        int padding = 100;
+
+        float x = Random.Range(anchoredPosition.x + padding, anchoredPosition.x + rectTransform.rect.width - padding);
+        float y = Random.Range(anchoredPosition.y + padding, anchoredPosition.y + rectTransform.rect.height - padding);
+
+        return new Vector2(x, y);
     }
 }
