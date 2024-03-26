@@ -3,7 +3,7 @@ Name:          AudioManager
 Description:   Manages all sounds and background music that will be played.  
 Author(s):     Daniel Rittrich
 Date:          2024-03-24
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -34,9 +34,16 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] buttonSounds;
 
     public AudioSource mergeAudioSource;  // ?  Maybe separate sounds for lvl  2, 3, 4 
+    public AudioClip mergeSound;
+
     public AudioSource combineComponentsAudioSource;
+    public AudioClip combineComponentsSound;
+
     public AudioSource sellAudioSource;
+    public AudioClip sellSound;
+
     public AudioSource throwAwayAudioSource; // trash
+    public AudioClip throwAwaySound;
     // ?  Maybe other sounds or environment sounds 
     /*    (conveyorbelt, component walking, component dragging, component dropping, individual sounds for upgrades, 
            open menu, close menu, component returning to desk, trash walkin on desk, ... )  */
@@ -71,8 +78,6 @@ public class AudioManager : MonoBehaviour
             playNextSongCoroutine = StartCoroutine(PlayNextSong());
         }
     }
-
-    // ! ! !  audioSource for BGMusic is not connected anymore ! ! !
 
     private IEnumerator PlayNextSong()
     {
@@ -110,5 +115,25 @@ public class AudioManager : MonoBehaviour
     public void PlayButtonSound()
     {
         buttonAudioSource.PlayOneShot(buttonSounds[0]);
+    }
+
+    public void PlayMergeSound()
+    {
+        mergeAudioSource.PlayOneShot(mergeSound);
+    }
+
+    public void PlayCombineComponentsSound()
+    {
+        combineComponentsAudioSource.PlayOneShot(combineComponentsSound);
+    }
+
+    public void PlaySellSound()
+    {
+        sellAudioSource.PlayOneShot(sellSound);
+    }
+
+    public void PlayThrowAwaySound()
+    {
+        throwAwayAudioSource.PlayOneShot(throwAwaySound);
     }
 }
