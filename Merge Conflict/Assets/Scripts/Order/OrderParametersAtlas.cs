@@ -10,10 +10,10 @@ TODO:           -
 
 public static class OrderParametersAtlas
 {
-    public static int Stage1 = 0;
-    public static int Stage2 = 1;
-    public static int Stage3 = 2;
-    public static int Stage4 = 3;
+    public static int Tier1 = 0;
+    public static int Tier2 = 1;
+    public static int Tier3 = 2;
+    public static int Tier4 = 3;
 
     public enum ComponentNamesWithListIndex
     {
@@ -27,7 +27,7 @@ public static class OrderParametersAtlas
     }
 
     public static int ComponentsCount = ComponentNamesWithListIndex.GetValues(typeof(ComponentNamesWithListIndex)).Length;
-    public static int StagesCount = 4;
+    public static int TiersCount = 4;
     public static int MinLevel = 1;
     public static int MaxLevel = 10;
 

@@ -16,7 +16,7 @@ using UnityEngine;
 public class PowersupplyComponent : Element, IComponent
 {
 
-    public PowersupplyComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+    public PowersupplyComponent(int tier, int trashValue, int salesValue) : base(tier, trashValue, salesValue) { }
 
     public Element? Merge(Element element)
     {
@@ -24,9 +24,9 @@ public class PowersupplyComponent : Element, IComponent
         if (element is PowersupplyComponent otherPowersupply)
         {
 
-            if ((this.level == otherPowersupply.level) && this.level < 4)
+            if ((this.tier == otherPowersupply.tier) && this.tier < 4)
             {
-                this.level++;
+                this.tier++;
                 return this;
             }
         }
@@ -36,6 +36,6 @@ public class PowersupplyComponent : Element, IComponent
 
     public PowersupplyComponent Clone()
     {
-        return new PowersupplyComponent(level, trashValue, salesValue);
+        return new PowersupplyComponent(tier, trashValue, salesValue);
     }
 }

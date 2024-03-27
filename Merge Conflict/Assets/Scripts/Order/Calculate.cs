@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
 Name:           Calculate
-Description:    Contains all sub-calculations to calculate the probability for the stages from an given component. 
+Description:    Contains all sub-calculations to calculate the probability for the Tiers from an given component. 
                 It is needed to generate an new order.
 Author(s):      Markus Haubold
 Date:           2024-03-26
@@ -15,96 +15,96 @@ using static OrderParametersAtlas;
 public static class Calculate
 {
     /*
-     * count how long the stages are still unlocked (in levels)
+     * count how long the Tiers are still unlocked (in levels)
      * example: 
      *  current level=5 and count for case
-     *  unlock stage 1 in level 1: levelsWhenStagesWillUnlocked[0] = 1
-     *  unlock stage 2 in level 2: levelsWhenStagesWillUnlocked[1] = 2
-     *  unlock stage 3 in level 4: levelsWhenStagesWillUnlocked[2] = 4
-     *  unlock stage 4 in level 6: levelsWhenStagesWillUnlocked[3] = 6
+     *  unlock Tier 1 in level 1: levelsWhenTiersWillUnlocked[0] = 1
+     *  unlock Tier 2 in level 2: levelsWhenTiersWillUnlocked[1] = 2
+     *  unlock Tier 3 in level 4: levelsWhenTiersWillUnlocked[2] = 4
+     *  unlock Tier 4 in level 6: levelsWhenTiersWillUnlocked[3] = 6
      *
-     *  counted levels stage 1: countedLevelsSinceStagesAreUnlocked[0] = (current level - unlocklevel stage 1) = 4
-     *  counted levels stage 2: countedLevelsSinceStagesAreUnlocked[1] = (current level - unlocklevel stage 2) = 2
-     *  counted levels stage 3: countedLevelsSinceStagesAreUnlocked[2] = (current level - unlocklevel stage 3) = 1 
-     *  counted levels stage 4: countedLevelsSinceStagesAreUnlocked[3] = (current level - unlocklevel stage 4) = 0 skip because its locked
+     *  counted levels Tier 1: countedLevelsSinceTiersAreUnlocked[0] = (current level - unlocklevel Tier 1) = 4
+     *  counted levels Tier 2: countedLevelsSinceTiersAreUnlocked[1] = (current level - unlocklevel Tier 2) = 2
+     *  counted levels Tier 3: countedLevelsSinceTiersAreUnlocked[2] = (current level - unlocklevel Tier 3) = 1 
+     *  counted levels Tier 4: countedLevelsSinceTiersAreUnlocked[3] = (current level - unlocklevel Tier 4) = 0 skip because its locked
     */
-    public static int[] CountLevelsSinceStagesAreUnlocked(int currentLevel, int[] levelsWhenStagesWillUnlocked)
+    public static int[] GetLevelCountSinceTierUnlock(int currentLevel, int[] levelsWhenTiersWillUnlocked)
     {
         //return null if current level is not valid 
         if (currentLevel != Math.Clamp(currentLevel, MinLevel, MaxLevel))
         {
-            Debugger.LogError("The given level in CountLevelsSinceStageIsUnlocked() is not valid! Check if the value is within the borders OrderConstantsAtlas.FirstLevel and OrderConstantsAtlas.EndLevel.");
+            Debugger.LogError("The given level in CountLevelsSinceTierIsUnlocked() is not valid! Check if the value is within the borders OrderConstantsAtlas.FirstLevel and OrderConstantsAtlas.EndLevel.");
             return null;
         };
 
-        int[] countedLevelsSinceStagesAreUnlocked = new int[StagesCount];
+        int[] countedLevelsSinceTiersAreUnlocked = new int[TiersCount];
 
-        for (int stage = 0; stage < StagesCount; stage++)
+        for (int Tier = 0; Tier < TiersCount; Tier++)
         {
-            if (currentLevel < levelsWhenStagesWillUnlocked[stage]) //if the evolutionStage is locked, skip it
+            if (currentLevel < levelsWhenTiersWillUnlocked[Tier]) //if the evolutionTier is locked, skip it
             {
-                countedLevelsSinceStagesAreUnlocked[stage] = 0;
+                countedLevelsSinceTiersAreUnlocked[Tier] = 0;
                 continue;
             }
-            countedLevelsSinceStagesAreUnlocked[stage] = currentLevel - levelsWhenStagesWillUnlocked[stage];
+            countedLevelsSinceTiersAreUnlocked[Tier] = currentLevel - levelsWhenTiersWillUnlocked[Tier];
         }
 
-        return countedLevelsSinceStagesAreUnlocked;
+        return countedLevelsSinceTiersAreUnlocked;
     }
 
     /*
-     * Multiply the counted levels from all stages (corresponding to the level for which they are counted) with a 
-     * customizable factor (=multiplicationFactors). This makes it possibility to set a "probability weight" for every stage.
-     * The multiplicationFactors are stored in the OrderConstantsAtlas class with the names MultiplicationFactoreForLevelToUnlockStage1...4 
+     * Multiply the counted levels from all Tiers (corresponding to the level for which they are counted) with a 
+     * customizable factor (=multiplicationFactors). This makes it possibility to set a "probability weight" for every Tier.
+     * The multiplicationFactors are stored in the OrderConstantsAtlas class with the names MultiplicationFactoreForLevelToUnlockTier1...4 
     */
-    public static int[] MultiplyCountedLevels(int[] countedLevelsSinceStagesAreUnlocked, int[] multiplicationFactors)
+    public static int[] MultiplyLevelCountSinceTierUnlock(int[] countedLevelsSinceTiersAreUnlocked, int[] multiplicationFactors)
     {
-        int[] multipliedCountedLevels = new int[StagesCount];
+        int[] multipliedCountedLevels = new int[TiersCount];
 
-        for (int stage = 0; stage < StagesCount; stage++)
+        for (int Tier = 0; Tier < TiersCount; Tier++)
         {
-            multipliedCountedLevels[stage] = countedLevelsSinceStagesAreUnlocked[stage] * multiplicationFactors[stage];
+            multipliedCountedLevels[Tier] = countedLevelsSinceTiersAreUnlocked[Tier] * multiplicationFactors[Tier];
         }
 
         return multipliedCountedLevels;
     }
 
     //Sum up all multiplied levels (=return from MultiplyCountedLevels()) - it will be the divisor to calculate the probabilities
-    public static int SumOfMultipliedCountedLevels(int[] multipliedCountedLevels)
+    public static int SumOfMultipliedLevelCountSinceTierUnlock(int[] multipliedCountedLevels)
     {
         return multipliedCountedLevels.Sum();
     }
 
     /*
-     * Calculate the probability for every stage of an level by using the therefore calculatet parameters
-     * probability = multipliedCountedLevels[stage1...4] / sumOfMultipliedLevels
+     * Calculate the probability for every Tier of an level by using the therefore calculatet parameters
+     * probability = multipliedCountedLevels[Tier1...4] / sumOfMultipliedLevels
     */
-    public static float[] ProbabilityStageIsInOrder(int[] multipliedCountedLevels, int sumOfMultipliedLevels)
+    public static float[] ProbabilityTierIsInOrder(int[] multipliedCountedLevels, int sumOfMultipliedLevels)
     {
-        float[] probabilityStageIsInOrder = new float[StagesCount];
+        float[] probabilityTierIsInOrder = new float[TiersCount];
 
-        //edgecase: current level==1 => probability stage1=100% because all other stages are locked
+        //edgecase: current level==1 => probability Tier1=100% because all other Tiers are locked
         if (sumOfMultipliedLevels == 0)
         {
-            probabilityStageIsInOrder[Stage1] = 1;
-            probabilityStageIsInOrder[Stage2] = 0;
-            probabilityStageIsInOrder[Stage3] = 0;
-            probabilityStageIsInOrder[Stage4] = 0;
+            probabilityTierIsInOrder[Tier1] = 1;
+            probabilityTierIsInOrder[Tier2] = 0;
+            probabilityTierIsInOrder[Tier3] = 0;
+            probabilityTierIsInOrder[Tier4] = 0;
 
-            return probabilityStageIsInOrder;
+            return probabilityTierIsInOrder;
         }
 
-        for (int stage = 0; stage < StagesCount; stage++)
+        for (int Tier = 0; Tier < TiersCount; Tier++)
         {
-            if (multipliedCountedLevels[stage] == 0)    //stage is locked => probability=0 to get in order
+            if (multipliedCountedLevels[Tier] == 0)    //Tier is locked => probability=0 to get in order
             {
-                probabilityStageIsInOrder[stage] = 0;
+                probabilityTierIsInOrder[Tier] = 0;
                 continue;
             }
-            float ratio = (float)multipliedCountedLevels[stage] / sumOfMultipliedLevels;
-            probabilityStageIsInOrder[stage] = (float)Math.Round(ratio, 2);
+            float ratio = (float)multipliedCountedLevels[Tier] / sumOfMultipliedLevels;
+            probabilityTierIsInOrder[Tier] = (float)Math.Round(ratio, 2);
         }
 
-        return probabilityStageIsInOrder;
+        return probabilityTierIsInOrder;
     }
 }

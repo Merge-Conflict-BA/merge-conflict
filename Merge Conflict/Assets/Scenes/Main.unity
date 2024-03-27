@@ -1081,7 +1081,7 @@ GameObject:
   - component: {fileID: 165587880}
   - component: {fileID: 165587879}
   m_Layer: 5
-  m_Name: CaseStageDescription
+  m_Name: CaseTierDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2082,7 +2082,7 @@ GameObject:
   - component: {fileID: 474715749}
   - component: {fileID: 474715748}
   m_Layer: 5
-  m_Name: PowerSupplyStageValue
+  m_Name: PowerSupplyTierValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2899,7 +2899,7 @@ GameObject:
   - component: {fileID: 771004412}
   - component: {fileID: 771004411}
   m_Layer: 5
-  m_Name: RamStageValue
+  m_Name: RamTierValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3312,7 +3312,7 @@ GameObject:
   - component: {fileID: 857000395}
   - component: {fileID: 857000394}
   m_Layer: 5
-  m_Name: RamStageDescription
+  m_Name: RamTierDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3777,7 +3777,7 @@ GameObject:
   - component: {fileID: 965526529}
   - component: {fileID: 965526528}
   m_Layer: 5
-  m_Name: HddStageDescription
+  m_Name: HddTierDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4376,7 +4376,7 @@ GameObject:
   - component: {fileID: 1042523029}
   - component: {fileID: 1042523028}
   m_Layer: 5
-  m_Name: HddStageValue
+  m_Name: HddTierValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5566,16 +5566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e13a3b581ea34645884b74088acac4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orderedCase: 0
-  orderedHdd: 0
-  orderedPowersupply: 0
-  orderedMotherboard: 0
-  orderedGpu: 0
-  orderedCpu: 0
-  orderedRam: 0
   currentLevel: 1
-  genOrder: 0
-  delOrder: 0
 --- !u!4 &1285074949
 Transform:
   m_ObjectHideFlags: 0
@@ -5971,7 +5962,7 @@ GameObject:
   - component: {fileID: 1444020653}
   - component: {fileID: 1444020652}
   m_Layer: 5
-  m_Name: CpuStageDescription
+  m_Name: CpuTierDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6239,7 +6230,7 @@ GameObject:
   - component: {fileID: 1459485308}
   - component: {fileID: 1459485307}
   m_Layer: 5
-  m_Name: MotherboardStageDescription
+  m_Name: MotherboardTierDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6775,7 +6766,7 @@ GameObject:
   - component: {fileID: 1553702533}
   - component: {fileID: 1553702532}
   m_Layer: 5
-  m_Name: PowerSupplyStageDescription
+  m_Name: PowerSupplyTierDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6909,7 +6900,7 @@ GameObject:
   - component: {fileID: 1581742461}
   - component: {fileID: 1581742460}
   m_Layer: 5
-  m_Name: 'GpuStageDescription '
+  m_Name: 'GpuTierDescription '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7199,7 +7190,7 @@ GameObject:
   - component: {fileID: 1644123411}
   - component: {fileID: 1644123410}
   m_Layer: 5
-  m_Name: MotherboardStageValue
+  m_Name: MotherboardTierValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7812,7 +7803,7 @@ GameObject:
   - component: {fileID: 1813339628}
   - component: {fileID: 1813339627}
   m_Layer: 5
-  m_Name: CaseStageValue
+  m_Name: CaseTierValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8839,7 +8830,7 @@ GameObject:
   - component: {fileID: 2002371018}
   - component: {fileID: 2002371017}
   m_Layer: 5
-  m_Name: CpuStageValue
+  m_Name: CpuTierValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9518,7 +9509,7 @@ GameObject:
   - component: {fileID: 2124143285}
   - component: {fileID: 2124143284}
   m_Layer: 5
-  m_Name: GpuStageValue
+  m_Name: GpuTierValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

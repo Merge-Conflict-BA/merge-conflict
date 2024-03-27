@@ -21,8 +21,8 @@ public class CaseComponent : Element, IComponent
     public HDDComponent? hdd;
 
 
-    public CaseComponent(int level, int trashValue, int salesValue, MBComponent? motherboard = null, PowersupplyComponent? powersupply = null, HDDComponent? hdd = null)
-        : base(level, trashValue, salesValue)
+    public CaseComponent(int tier, int trashValue, int salesValue, MBComponent? motherboard = null, PowersupplyComponent? powersupply = null, HDDComponent? hdd = null)
+        : base(tier, trashValue, salesValue)
     {
         this.motherboard = motherboard;
         this.powersupply = powersupply;
@@ -38,9 +38,9 @@ public class CaseComponent : Element, IComponent
         {
             if (HasComponents() || otherCase.HasComponents()) { return null; }
 
-            if ((this.level == otherCase.level) && this.level < 4)
+            if ((this.tier == otherCase.tier) && this.tier < 4)
             {
-                this.level++;
+                this.tier++;
                 return this;
             }
         }
@@ -94,6 +94,6 @@ public class CaseComponent : Element, IComponent
 
     public CaseComponent Clone()
     {
-        return new CaseComponent(level, trashValue, salesValue, motherboard, powersupply, hdd);
+        return new CaseComponent(tier, trashValue, salesValue, motherboard, powersupply, hdd);
     }
 }

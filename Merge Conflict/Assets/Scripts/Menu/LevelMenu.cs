@@ -19,13 +19,13 @@ public class LevelMenu : Menu
     const string CurrentLevelValueObjectName = "CurrentLevelValue";
     private TextMeshProUGUI _xpRatioCurrentToNextLevel;
     private TextMeshProUGUI _nextLevelValueTextfield;
-    private TextMeshProUGUI _caseStageValue;
-    private TextMeshProUGUI _cpuStageValue;
-    private TextMeshProUGUI _gpuStageValue;
-    private TextMeshProUGUI _motherboardStageValue;
-    private TextMeshProUGUI _ramStageValue;
-    private TextMeshProUGUI _hddStageValue;
-    private TextMeshProUGUI _powerSupplyStageValue;
+    private TextMeshProUGUI _caseTierValue;
+    private TextMeshProUGUI _cpuTierValue;
+    private TextMeshProUGUI _gpuTierValue;
+    private TextMeshProUGUI _motherboardTierValue;
+    private TextMeshProUGUI _ramTierValue;
+    private TextMeshProUGUI _hddTierValue;
+    private TextMeshProUGUI _powerSupplyTierValue;
     private Image _levelProgressbar;
 
 
@@ -43,13 +43,13 @@ public class LevelMenu : Menu
     const string FilledProgressbarObjectName = "Progressbar_filled";
     const string NextLevelValueObjectName = "NextLevelValue";
     const string XpRatioCurrentToNextLevelObjectName = "XpRatio";
-    const string CaseStageValueObjectName = "CaseStageValue";
-    const string CpuStageValueObjectName = "CpuStageValue";
-    const string GpuStageValueObjectName = "GpuStageValue";
-    const string MotherboardStageValueObjectName = "MotherboardStageValue";
-    const string RamStageValueObjectName = "RamStageValue";
-    const string HddStageValueObjectName = "HddStageValue";
-    const string PowerSupplyStageValueObjectName = "PowerSupplyStageValue";
+    const string CaseTierValueObjectName = "CaseTierValue";
+    const string CpuTierValueObjectName = "CpuTierValue";
+    const string GpuTierValueObjectName = "GpuTierValue";
+    const string MotherboardTierValueObjectName = "MotherboardTierValue";
+    const string RamTierValueObjectName = "RamTierValue";
+    const string HddTierValueObjectName = "HddTierValue";
+    const string PowerSupplyTierValueObjectName = "PowerSupplyTierValue";
 
     const string OrderedCaseImageObjectName = "Case";
     const string OrderedCpuImageObjectName = "CPU";
@@ -73,13 +73,13 @@ public class LevelMenu : Menu
             _currentLevelValueTextfield = GetComponentbyObjectName<TextMeshProUGUI>(CurrentLevelValueObjectName);
             _nextLevelValueTextfield = GetComponentbyObjectName<TextMeshProUGUI>(NextLevelValueObjectName);
             _xpRatioCurrentToNextLevel = GetComponentbyObjectName<TextMeshProUGUI>(XpRatioCurrentToNextLevelObjectName);
-            _caseStageValue = GetComponentbyObjectName<TextMeshProUGUI>(CaseStageValueObjectName);
-            _cpuStageValue = GetComponentbyObjectName<TextMeshProUGUI>(CpuStageValueObjectName);
-            _gpuStageValue = GetComponentbyObjectName<TextMeshProUGUI>(GpuStageValueObjectName);
-            _motherboardStageValue = GetComponentbyObjectName<TextMeshProUGUI>(MotherboardStageValueObjectName);
-            _ramStageValue = GetComponentbyObjectName<TextMeshProUGUI>(RamStageValueObjectName);
-            _hddStageValue = GetComponentbyObjectName<TextMeshProUGUI>(HddStageValueObjectName);
-            _powerSupplyStageValue = GetComponentbyObjectName<TextMeshProUGUI>(PowerSupplyStageValueObjectName);
+            _caseTierValue = GetComponentbyObjectName<TextMeshProUGUI>(CaseTierValueObjectName);
+            _cpuTierValue = GetComponentbyObjectName<TextMeshProUGUI>(CpuTierValueObjectName);
+            _gpuTierValue = GetComponentbyObjectName<TextMeshProUGUI>(GpuTierValueObjectName);
+            _motherboardTierValue = GetComponentbyObjectName<TextMeshProUGUI>(MotherboardTierValueObjectName);
+            _ramTierValue = GetComponentbyObjectName<TextMeshProUGUI>(RamTierValueObjectName);
+            _hddTierValue = GetComponentbyObjectName<TextMeshProUGUI>(HddTierValueObjectName);
+            _powerSupplyTierValue = GetComponentbyObjectName<TextMeshProUGUI>(PowerSupplyTierValueObjectName);
             _levelProgressbar = GetComponentbyObjectName<Image>(EmptyProgressbarObjectName);
             //ordered component images
 
@@ -129,45 +129,45 @@ public class LevelMenu : Menu
         _xpRatioCurrentToNextLevel.text = currentXpSlashXpToNextLevel;
     }
 
-    public void SetDisplayedCaseStageAndImage(int caseStage, Sprite orderedCaseSprite)
+    public void SetDisplayedCaseTierAndImage(int caseTier, Sprite orderedCaseSprite)
     {
-        _caseStageValue.text = caseStage.ToString();
+        _caseTierValue.text = caseTier.ToString();
         _orderedCaseImage.sprite = orderedCaseSprite;
     }
 
-    public void SetDisplayedCpuStageAndImage(int cpuStage, Sprite orderedCpuSprite)
+    public void SetDisplayedCpuTierAndImage(int cpuTier, Sprite orderedCpuSprite)
     {
-        _cpuStageValue.text = cpuStage.ToString();
+        _cpuTierValue.text = cpuTier.ToString();
         _orderedCpuImage.sprite = orderedCpuSprite;
     }
 
-    public void SetDisplayedGpuStageAndImage(int gpuStage, Sprite orderedGpuSprite)
+    public void SetDisplayedGpuTierAndImage(int gpuTier, Sprite orderedGpuSprite)
     {
-        _gpuStageValue.text = gpuStage.ToString();
+        _gpuTierValue.text = gpuTier.ToString();
         _orderedGpuImage.sprite = orderedGpuSprite;
     }
 
-    public void SetDisplayedMotherboardStageAndImage(int motherStage, Sprite orderedMotherboardSprite)
+    public void SetDisplayedMotherboardTierAndImage(int motherTier, Sprite orderedMotherboardSprite)
     {
-        _motherboardStageValue.text = motherStage.ToString();
+        _motherboardTierValue.text = motherTier.ToString();
         _orderedMotherboardImage.sprite = orderedMotherboardSprite;
     }
 
-    public void SetDisplayedRamStageAndImage(int ramStage, Sprite orderedRamSprite)
+    public void SetDisplayedRamTierAndImage(int ramTier, Sprite orderedRamSprite)
     {
-        _ramStageValue.text = ramStage.ToString();
+        _ramTierValue.text = ramTier.ToString();
         _orderedRamImage.sprite = orderedRamSprite;
     }
 
-    public void SetDisplayedHddStageAndImage(int hddStage, Sprite orderedHddSprite)
+    public void SetDisplayedHddTierAndImage(int hddTier, Sprite orderedHddSprite)
     {
-        _hddStageValue.text = hddStage.ToString();
+        _hddTierValue.text = hddTier.ToString();
         _orderedHddImage.sprite = orderedHddSprite;
     }
 
-    public void SetDisplayedPowersupplyStageAndImage(int powerStage, Sprite orderedPowersupplySprite)
+    public void SetDisplayedPowersupplyTierAndImage(int powerTier, Sprite orderedPowersupplySprite)
     {
-        _powerSupplyStageValue.text = powerStage.ToString();
+        _powerSupplyTierValue.text = powerTier.ToString();
         _orderedPowersupplyImage.sprite = orderedPowersupplySprite;
     }
 

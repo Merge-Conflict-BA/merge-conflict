@@ -16,7 +16,7 @@ using UnityEngine;
 public class HDDComponent : Element, IComponent
 {
 
-    public HDDComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+    public HDDComponent(int tier, int trashValue, int salesValue) : base(tier, trashValue, salesValue) { }
 
     public Element? Merge(Element element)
     {
@@ -24,9 +24,9 @@ public class HDDComponent : Element, IComponent
         if (element is HDDComponent otherHDD)
         {
 
-            if ((this.level == otherHDD.level) && this.level < 4)
+            if ((this.tier == otherHDD.tier) && this.tier < 4)
             {
-                this.level++;
+                this.tier++;
                 return this;
             }
         }
@@ -36,6 +36,6 @@ public class HDDComponent : Element, IComponent
 
     public HDDComponent Clone()
     {
-        return new HDDComponent(level, trashValue, salesValue);
+        return new HDDComponent(tier, trashValue, salesValue);
     }
 }

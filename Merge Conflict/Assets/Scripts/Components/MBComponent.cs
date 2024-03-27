@@ -20,8 +20,8 @@ public class MBComponent : Element, IComponent
     public GPUComponent? gpu;
 
 
-    public MBComponent(int level, int trashValue, int salesValue, CPUComponent? cpu = null, RAMComponent? ram = null, GPUComponent? gpu = null)
-        : base(level, trashValue, salesValue)
+    public MBComponent(int tier, int trashValue, int salesValue, CPUComponent? cpu = null, RAMComponent? ram = null, GPUComponent? gpu = null)
+        : base(tier, trashValue, salesValue)
     {
         this.cpu = cpu;
         this.ram = ram;
@@ -42,9 +42,9 @@ public class MBComponent : Element, IComponent
         {
             if (HasComponents() || otherMB.HasComponents()) { return null; }
 
-            if ((this.level == otherMB.level) && this.level < 4)
+            if ((this.tier == otherMB.tier) && this.tier < 4)
             {
-                this.level++;
+                this.tier++;
                 return this;
             }
         }
@@ -98,6 +98,6 @@ public class MBComponent : Element, IComponent
 
     public MBComponent Clone()
     {
-        return new MBComponent(level, trashValue, salesValue, cpu, ram, gpu);
+        return new MBComponent(tier, trashValue, salesValue, cpu, ram, gpu);
     }
 }

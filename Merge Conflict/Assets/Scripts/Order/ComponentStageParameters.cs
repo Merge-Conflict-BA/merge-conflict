@@ -1,50 +1,36 @@
 /**********************************************************************************************************************
-Name:           ComponentStageParameters
-Description:    Store all component-specific stage parameters. 
+Name:           ComponentTierParameters
+Description:    Store all component-specific Tier parameters. 
 Author(s):      Markus Haubold
 Date:           2024-03-26
 Version:        V1.1
 TODO:           - 
 **********************************************************************************************************************/
 
-public class ComponentStageParameters
+public class ComponentTierParameters
 {
-    private int[] levelsToUnlockStages; //contains the levels that unlocks the stages1...stage4 (checkout the Readme)
+    public int[] LevelsToUnlockTiers { get; private set; } //contains the levels that unlocks the Tiers1...Tier4 (checkout the Readme)
 
     /*
-     * During the probability-calcultion the levels from the current level to the level with which a stage was unlocked
-     * will be count. To get the possibility to tune/controle the probabilities of the 4 stages, the counted levels will
+     * During the probability-calcultion the levels from the current level to the level with which a Tier was unlocked
+     * will be count. To get the possibility to tune/controle the probabilities of the 4 Tiers, the counted levels will
      * multiply with an factor (it's a kind of probability-weigh).
     */
-    private int[] countedLevelsMultiplicationFactor;
+    public int[] CountedLevelsMultiplicationFactor { get; private set; }
 
-    public ComponentStageParameters(int[] levelsToUnlockStages, int[] countedLevelsMultiplicationFactor)
+    public ComponentTierParameters(int[] levelsToUnlockTiers, int[] countedLevelsMultiplicationFactor)
     {
-        SetLevelsToUnlockStages(levelsToUnlockStages);
+        SetLevelsToUnlockTiers(levelsToUnlockTiers);
         SetCountedLevelsMultiplicationFactor(countedLevelsMultiplicationFactor);
     }
 
-    public int[] GetLevelsToUnlockStages()
+    public void SetLevelsToUnlockTiers(int[] LevelToUnlockTiers)
     {
-        return this.levelsToUnlockStages;
-    }
-
-    public void SetLevelsToUnlockStages(int[] LevelToUnlockStages)
-    {
-        this.levelsToUnlockStages = LevelToUnlockStages;
-    }
-
-
-    public int[] GetCountedLevelsMultiplicationFactor()
-    {
-        return this.countedLevelsMultiplicationFactor;
+        LevelsToUnlockTiers = LevelToUnlockTiers;
     }
 
     public void SetCountedLevelsMultiplicationFactor(int[] multiplicationFactors)
     {
-        this.countedLevelsMultiplicationFactor = multiplicationFactors;
+        CountedLevelsMultiplicationFactor = multiplicationFactors;
     }
-
-
-
 }

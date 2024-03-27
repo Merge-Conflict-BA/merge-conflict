@@ -16,7 +16,7 @@ using UnityEngine;
 public class GPUComponent : Element, IComponent
 {
 
-    public GPUComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+    public GPUComponent(int tier, int trashValue, int salesValue) : base(tier, trashValue, salesValue) { }
 
     public Element? Merge(Element element)
     {
@@ -24,9 +24,9 @@ public class GPUComponent : Element, IComponent
         if (element is GPUComponent otherGPU)
         {
 
-            if ((this.level == otherGPU.level) && this.level < 4)
+            if ((this.tier == otherGPU.tier) && this.tier < 4)
             {
-                this.level++;
+                this.tier++;
                 return this;
             }
         }
@@ -36,6 +36,6 @@ public class GPUComponent : Element, IComponent
 
     public GPUComponent Clone()
     {
-        return new GPUComponent(level, trashValue, salesValue);
+        return new GPUComponent(tier, trashValue, salesValue);
     }
 }

@@ -16,7 +16,7 @@ using UnityEngine;
 public class RAMComponent : Element, IComponent
 {
 
-    public RAMComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+    public RAMComponent(int tier, int trashValue, int salesValue) : base(tier, trashValue, salesValue) { }
 
     public Element? Merge(Element element)
     {
@@ -24,9 +24,9 @@ public class RAMComponent : Element, IComponent
         if (element is RAMComponent otherRAM)
         {
 
-            if ((this.level == otherRAM.level) && this.level < 4)
+            if ((this.tier == otherRAM.tier) && this.tier < 4)
             {
-                this.level++;
+                this.tier++;
                 return this;
             }
         }
@@ -36,6 +36,6 @@ public class RAMComponent : Element, IComponent
 
     public RAMComponent Clone()
     {
-        return new RAMComponent(level, trashValue, salesValue);
+        return new RAMComponent(tier, trashValue, salesValue);
     }
 }

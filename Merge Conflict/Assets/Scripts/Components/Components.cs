@@ -71,7 +71,7 @@ public static class Components
     //      var (trashValue, salesValue) = ComponentValues.GetComponentValues(MyComponentClass);
     public static (int trashValue, int salesValue) GetComponentValues(Element element)
     {
-        int index = element.level - 1;
+        int index = element.tier - 1;
 
         switch (element)
         {

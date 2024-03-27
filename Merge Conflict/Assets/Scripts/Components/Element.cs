@@ -15,18 +15,18 @@ using UnityEngine;
 
 public class Element
 {
-    private int _level;
-    public int level
+    private int _tier;
+    public int tier
     {
-        get { return _level; }
-        set { _level = Mathf.Clamp(value, 1, 4); }
+        get { return _tier; }
+        set { _tier = Mathf.Clamp(value, 1, 4); }
     }
     public readonly int trashValue;
     public readonly int salesValue;
 
-    public Element(int level, int trashValue, int salesValue)
+    public Element(int tier, int trashValue, int salesValue)
     {
-        this.level = level;
+        this.tier = tier;
         this.trashValue = trashValue;
         this.salesValue = salesValue;
     }

@@ -77,7 +77,7 @@ public class UiManager : MonoBehaviour
     };
 
     const Canvas NoMenuOpened = null;
-    const int OffsetStageToArrayIndex = 1;
+    const int OffsetTierToArrayIndex = 1;
     const string ExitTheGame = "ButtonExitGame";
 
     private Canvas _currentOpenedMenu;
@@ -177,13 +177,13 @@ public class UiManager : MonoBehaviour
                 //############################
 
                 //read dat from level manager
-                int currentLevel = ExperienceHandler.GetCurrentLevel();
+                int currentLevel = 9;// ExperienceHandler.GetCurrentLevel();
                 int currentXp = ExperienceHandler.GetExperiencePoints();
                 int xpToUnlockNextLevel = ExperienceHandler.NeededXpToUnlockNextLevel(currentLevel);
                 string xpRatioString = $"{currentXp} / {xpToUnlockNextLevel}";
 
                 //#### only for testing ######
-                OrderGenerator.Instance.GenerateNewOrder(currentLevel); //TODO: move the order generation to another point, here it's only for testing the menu
+                Order order = OrderGenerator.Instance.GenerateNewOrder(currentLevel); //TODO: move the order generation to another point, here it's only for testing the menu
                 //############################
 
                 //set level and xp values
@@ -192,14 +192,14 @@ public class UiManager : MonoBehaviour
                 LevelMenu.Instance.SetXpRatioCurrentToNextLevel(xpRatioString);
                 LevelMenu.Instance.SetProgressbarValue(currentXp, xpToUnlockNextLevel);
 
-                //set current stage and image of the ordered component
-                LevelMenu.Instance.SetDisplayedCaseStageAndImage(OrderGenerator.Instance.orderedCase, caseImages[OrderGenerator.Instance.orderedCase - OffsetStageToArrayIndex]);
-                LevelMenu.Instance.SetDisplayedCpuStageAndImage(OrderGenerator.Instance.orderedCpu, cpuImages[OrderGenerator.Instance.orderedCpu - OffsetStageToArrayIndex]);
-                LevelMenu.Instance.SetDisplayedGpuStageAndImage(OrderGenerator.Instance.orderedGpu, gpuImages[OrderGenerator.Instance.orderedGpu - OffsetStageToArrayIndex]);
-                LevelMenu.Instance.SetDisplayedMotherboardStageAndImage(OrderGenerator.Instance.orderedMotherboard, motherboardImages[OrderGenerator.Instance.orderedMotherboard - OffsetStageToArrayIndex]);
-                LevelMenu.Instance.SetDisplayedPowersupplyStageAndImage(OrderGenerator.Instance.orderedPowersupply, powersupplyImages[OrderGenerator.Instance.orderedPowersupply - OffsetStageToArrayIndex]);
-                LevelMenu.Instance.SetDisplayedRamStageAndImage(OrderGenerator.Instance.orderedRam, ramImages[OrderGenerator.Instance.orderedRam - OffsetStageToArrayIndex]);
-                LevelMenu.Instance.SetDisplayedHddStageAndImage(OrderGenerator.Instance.orderedHdd, hddImages[OrderGenerator.Instance.orderedHdd - OffsetStageToArrayIndex]);
+                //set current Tier and image of the ordered component
+                LevelMenu.Instance.SetDisplayedCaseTierAndImage(order.CaseTier, caseImages[order.CaseTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedCpuTierAndImage(order.CpuTier, cpuImages[order.CpuTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedGpuTierAndImage(order.GpuTier, gpuImages[order.GpuTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedMotherboardTierAndImage(order.MotherboardTier, motherboardImages[order.MotherboardTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedPowersupplyTierAndImage(order.PowersupplyTier, powersupplyImages[order.MotherboardTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedRamTierAndImage(order.RamTier, ramImages[order.RamTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedHddTierAndImage(order.HddTier, hddImages[order.HddTier - OffsetTierToArrayIndex]);
 
                 break;
 
