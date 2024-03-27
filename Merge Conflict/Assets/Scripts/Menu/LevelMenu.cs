@@ -85,7 +85,7 @@ public class LevelMenu : Menu
             _orderedGpuImage = GetComponentbyObjectName<Image>(OrderedGpuImageObjectName);
             _orderedRamImage = GetComponentbyObjectName<Image>(OrderedRamImageObjectName);
 
-            
+
 
             _instance = this;
         }
@@ -121,74 +121,46 @@ public class LevelMenu : Menu
         _xpRatioCurrentToNextLevel.text = currentXpSlashXpToNextLevel;
     }
 
-    public string GetDisplayedCaseStage()
-    {
-        return _caseStageValue.text;
-    }
-
-    public void SetDisplayedCaseStage(int caseStage)
+    public void SetDisplayedCaseStageAndImage(int caseStage, Sprite orderedCaseSprite)
     {
         _caseStageValue.text = caseStage.ToString();
+        _orderedCaseImage.sprite = orderedCaseSprite;
     }
 
-    public string GetDisplayedCpuStage()
-    {
-        return _cpuStageValue.text;
-    }
-
-    public void SetDisplayedCpuStage(int cpuStage)
+    public void SetDisplayedCpuStageAndImage(int cpuStage, Sprite orderedCpuSprite)
     {
         _cpuStageValue.text = cpuStage.ToString();
+        _orderedCpuImage.sprite = orderedCpuSprite;
     }
 
-    public string GetDisplayedGpuStage()
-    {
-        return _gpuStageValue.text;
-    }
-
-    public void SetDisplayedGpuStage(int gpuStage)
+    public void SetDisplayedGpuStageAndImage(int gpuStage, Sprite orderedGpuSprite)
     {
         _gpuStageValue.text = gpuStage.ToString();
+        _orderedGpuImage.sprite = orderedGpuSprite;
     }
 
-    public string GetDisplayedMotherboardStage()
-    {
-        return _motherboardStageValue.text;
-    }
-
-    public void SetDisplayedMotherboardStage(int motherStage)
+    public void SetDisplayedMotherboardStageAndImage(int motherStage, Sprite orderedMotherboardSprite)
     {
         _motherboardStageValue.text = motherStage.ToString();
+        _orderedMotherboardImage.sprite = orderedMotherboardSprite;
     }
 
-    public string GetDisplayedRamStage()
-    {
-        return _ramStageValue.text;
-    }
-
-    public void SetDisplayedRamStage(int ramStage)
+    public void SetDisplayedRamStageAndImage(int ramStage, Sprite orderedRamSprite)
     {
         _ramStageValue.text = ramStage.ToString();
+        _orderedRamImage.sprite = orderedRamSprite;
     }
 
-    public string GetDisplayedHddStage()
-    {
-        return _hddStageValue.text;
-    }
-
-    public void SetDisplayedHddStage(int hddStage)
+    public void SetDisplayedHddStageAndImage(int hddStage, Sprite orderedHddSprite)
     {
         _hddStageValue.text = hddStage.ToString();
+        _orderedHddImage.sprite = orderedHddSprite;
     }
 
-    public string GetDisplayedPowerStage()
-    {
-        return _powerSupplyStageValue.text;
-    }
-
-    public void SetDisplayedPowerStage(int powerStage)
+    public void SetDisplayedPowersupplyStageAndImage(int powerStage, Sprite orderedPowersupplySprite)
     {
         _powerSupplyStageValue.text = powerStage.ToString();
+        _orderedPowersupplyImage.sprite = orderedPowersupplySprite;
     }
 
     public void SetProgressbarValue(int currentXp, int xpToNextLevel)
@@ -205,41 +177,5 @@ public class LevelMenu : Menu
         //normalized progressbar: 0xp => 0 | xpToNextLevel => 1
         float normalizedXp = Mathf.Clamp01(currentXp / (float)xpToNextLevel);
         progressbar.fillAmount = normalizedXp;
-    }
-
-    public void SetOrderedCaseImage(Sprite orderdCaseImage)
-    {
-        Debugger.LogMessage("case image: " + orderdCaseImage.name);
-        _orderedCaseImage.sprite = orderdCaseImage;
-    }
-
-    public void SetOrderedHddImage(Sprite orderdHddImage)
-    {
-        _orderedHddImage.sprite = orderdHddImage;
-    }
-
-    public void SetOrderedMotherboardImage(Sprite orderdMotherboardImage)
-    {
-        _orderedMotherboardImage.sprite = orderdMotherboardImage;
-    }
-
-    public void SetOrderedPowersupplyImage(Sprite orderdPowersupplyImage)
-    {
-        _orderedPowersupplyImage.sprite = orderdPowersupplyImage;
-    }
-
-    public void SetOrderedCpuImage(Sprite orderdCpuImage)
-    {
-        _orderedCpuImage.sprite = orderdCpuImage;
-    }
-
-    public void SetOrderedGpuImage(Sprite orderdGpuImage)
-    {
-        _orderedGpuImage.sprite = orderdGpuImage;
-    }
-
-    public void SetOrderedRamImage(Sprite orderdRamImage)
-    {
-        _orderedRamImage.sprite = orderdRamImage;
     }
 }

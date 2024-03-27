@@ -45,7 +45,7 @@ public class UiManager : MonoBehaviour
     public Sprite[] cpuImages = new Sprite[4];
     public Sprite[] gpuImages = new Sprite[4];
     public Sprite[] ramImages = new Sprite[4];
-    
+
     //default buttons to orchestrate the menu
     [SerializeField] private Button _buttonOpenMainmenu;
     [SerializeField] private Button _buttonCloseMainmenu;
@@ -189,23 +189,15 @@ public class UiManager : MonoBehaviour
                 LevelMenu.Instance.SetXpRatioCurrentToNextLevel(xpRatioString);
                 LevelMenu.Instance.SetProgressbarValue(currentXp, xpToUnlockNextLevel);
 
-                //set current ordered stages
-                LevelMenu.Instance.SetDisplayedCaseStage(OrderGenerator.Instance.orderedCase);
-                LevelMenu.Instance.SetDisplayedCpuStage(OrderGenerator.Instance.orderedCpu);
-                LevelMenu.Instance.SetDisplayedGpuStage(OrderGenerator.Instance.orderedGpu);
-                LevelMenu.Instance.SetDisplayedMotherboardStage(OrderGenerator.Instance.orderedMotherboard);
-                LevelMenu.Instance.SetDisplayedPowerStage(OrderGenerator.Instance.orderedPowersupply);
-                LevelMenu.Instance.SetDisplayedRamStage(OrderGenerator.Instance.orderedRam);
-                LevelMenu.Instance.SetDisplayedHddStage(OrderGenerator.Instance.orderedHdd);
-
-                //set the image of ordered component
-                LevelMenu.Instance.SetOrderedCaseImage(caseImages[OrderGenerator.Instance.orderedCase - OffsetStageToArrayindex]);                
-                LevelMenu.Instance.SetOrderedHddImage(hddImages[OrderGenerator.Instance.orderedHdd - OffsetStageToArrayindex]); 
-                LevelMenu.Instance.SetOrderedRamImage(ramImages[OrderGenerator.Instance.orderedRam - OffsetStageToArrayindex]); 
-                LevelMenu.Instance.SetOrderedCpuImage(cpuImages[OrderGenerator.Instance.orderedCpu - OffsetStageToArrayindex]); 
-                LevelMenu.Instance.SetOrderedGpuImage(gpuImages[OrderGenerator.Instance.orderedGpu - OffsetStageToArrayindex]); 
-                LevelMenu.Instance.SetOrderedMotherboardImage(motherboardImages[OrderGenerator.Instance.orderedMotherboard - OffsetStageToArrayindex]); 
-                LevelMenu.Instance.SetOrderedPowersupplyImage(powersupplyImages[OrderGenerator.Instance.orderedPowersupply - OffsetStageToArrayindex]); 
+                //set current stage and image of the ordered component
+                LevelMenu.Instance.SetDisplayedCaseStageAndImage(OrderGenerator.Instance.orderedCase, caseImages[OrderGenerator.Instance.orderedCase - OffsetStageToArrayindex]);
+                LevelMenu.Instance.SetDisplayedCpuStageAndImage(OrderGenerator.Instance.orderedCpu, cpuImages[OrderGenerator.Instance.orderedCpu - OffsetStageToArrayindex]);
+                LevelMenu.Instance.SetDisplayedGpuStageAndImage(OrderGenerator.Instance.orderedGpu, gpuImages[OrderGenerator.Instance.orderedGpu - OffsetStageToArrayindex]);
+                LevelMenu.Instance.SetDisplayedMotherboardStageAndImage(OrderGenerator.Instance.orderedMotherboard, motherboardImages[OrderGenerator.Instance.orderedMotherboard - OffsetStageToArrayindex]);
+                LevelMenu.Instance.SetDisplayedPowersupplyStageAndImage(OrderGenerator.Instance.orderedPowersupply, powersupplyImages[OrderGenerator.Instance.orderedPowersupply - OffsetStageToArrayindex]);
+                LevelMenu.Instance.SetDisplayedRamStageAndImage(OrderGenerator.Instance.orderedRam, ramImages[OrderGenerator.Instance.orderedRam - OffsetStageToArrayindex]);
+                LevelMenu.Instance.SetDisplayedHddStageAndImage(OrderGenerator.Instance.orderedHdd, hddImages[OrderGenerator.Instance.orderedHdd - OffsetStageToArrayindex]);
+                
                 break;
 
             case "Upgrade":
