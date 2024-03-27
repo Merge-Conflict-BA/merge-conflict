@@ -216,6 +216,7 @@ public class ComponentHandler : MonoBehaviour
         }
 
         AnimationManager.Instance.PlayTrashAnimation(GetComponent<RectTransform>().anchoredPosition);
+        AudioManager.Instance.PlayThrowAwaySound();
 
         int actualTrashPrice = draggedElement.GetTrashPrice() * (Upgrades.MoneyWhenTrashedUpgrade.GetCurrentPercentageOfTrashMoney() / 100);
         MoneyHandler.Instance.AddMoney(actualTrashPrice);
@@ -259,9 +260,6 @@ public class ComponentHandler : MonoBehaviour
             ExperienceHandler.AddExperiencePoints(actualSalesXP);
 
             AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
-            OrderGenerator.Instance.GenerateNewOrder(ExperienceHandler.GetCurrentLevel());
-
-            Destroy(draggedComponentObject);
 
             Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
             Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
