@@ -21,13 +21,13 @@ public class OrderGenerator : MonoBehaviour
     public static OrderGenerator Instance { get { return _instance; } }
 
     //application interface to get the number from the stage which is in the current order
-    public int OrderedCase;
-    public int OrderedHdd;
-    public int OrderedPowersupply;
-    public int OrderedMotherboard;
-    public int OrderedGpu;
-    public int OrderedCpu;
-    public int OrderedRam;
+    public int orderedCase;
+    public int orderedHdd;
+    public int orderedPowersupply;
+    public int orderedMotherboard;
+    public int orderedGpu;
+    public int orderedCpu;
+    public int orderedRam;
 
     private readonly ComponentStageParameters[] _allComponentStageParameters = new ComponentStageParameters[ComponentsCount];
 
@@ -128,24 +128,24 @@ public class OrderGenerator : MonoBehaviour
             selectedStageForComponents[component] = SelectStageForSingleComponent(_componentNames[component], currentLevel);
         }
 
-        OrderedCase = selectedStageForComponents[(int)ComponentNamesWithListIndex.Case];
-        OrderedHdd = selectedStageForComponents[(int)ComponentNamesWithListIndex.HDD];
-        OrderedPowersupply = selectedStageForComponents[(int)ComponentNamesWithListIndex.Powersupply];
-        OrderedMotherboard = selectedStageForComponents[(int)ComponentNamesWithListIndex.Motherboard];
-        OrderedGpu = selectedStageForComponents[(int)ComponentNamesWithListIndex.GPU];
-        OrderedCpu = selectedStageForComponents[(int)ComponentNamesWithListIndex.CPU];
-        OrderedRam = selectedStageForComponents[(int)ComponentNamesWithListIndex.RAM];
+        orderedCase = selectedStageForComponents[(int)ComponentNamesWithListIndex.Case];
+        orderedHdd = selectedStageForComponents[(int)ComponentNamesWithListIndex.HDD];
+        orderedPowersupply = selectedStageForComponents[(int)ComponentNamesWithListIndex.Powersupply];
+        orderedMotherboard = selectedStageForComponents[(int)ComponentNamesWithListIndex.Motherboard];
+        orderedGpu = selectedStageForComponents[(int)ComponentNamesWithListIndex.GPU];
+        orderedCpu = selectedStageForComponents[(int)ComponentNamesWithListIndex.CPU];
+        orderedRam = selectedStageForComponents[(int)ComponentNamesWithListIndex.RAM];
     }
 
     public void DeleteCurrentOrder()
     {
-        OrderedCase = 0;
-        OrderedHdd = 0;
-        OrderedPowersupply = 0;
-        OrderedMotherboard = 0;
-        OrderedGpu = 0;
-        OrderedCpu = 0;
-        OrderedRam = 0;
+        orderedCase = 0;
+        orderedHdd = 0;
+        orderedPowersupply = 0;
+        orderedMotherboard = 0;
+        orderedGpu = 0;
+        orderedCpu = 0;
+        orderedRam = 0;
     }
 
     /*

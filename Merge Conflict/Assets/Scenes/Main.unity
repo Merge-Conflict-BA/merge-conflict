@@ -5566,13 +5566,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e13a3b581ea34645884b74088acac4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OrderedCase: 0
-  OrderedHdd: 0
-  OrderedPowersupply: 0
-  OrderedMotherboard: 0
-  OrderedGpu: 0
-  OrderedCpu: 0
-  OrderedRam: 0
+  orderedCase: 0
+  orderedHdd: 0
+  orderedPowersupply: 0
+  orderedMotherboard: 0
+  orderedGpu: 0
+  orderedCpu: 0
+  orderedRam: 0
   currentLevel: 1
 --- !u!4 &1285074949
 Transform:
@@ -8622,20 +8622,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de28df44c1dff4ed69310e826535e912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonOpenMainmenu: {fileID: 979635377}
-  buttonCloseMainmenu: {fileID: 2046992378}
-  buttonOpenSettings: {fileID: 215222514}
-  buttonOpenLevel: {fileID: 1265005520}
-  buttonOpenUpgrade: {fileID: 1080665956}
-  buttonOpenElements: {fileID: 73737642}
-  buttonExitGame: {fileID: 741769696}
-  Playfield: {fileID: 210138499}
-  UiManagerCanvas: {fileID: 1933479629}
-  Mainmenu: {fileID: 1424940784}
-  Settings: {fileID: 328338562}
-  Level: {fileID: 2107363471}
-  Upgrade: {fileID: 1975131580}
-  Elements: {fileID: 2088093585}
+  _buttonOpenMainmenu: {fileID: 979635377}
+  _buttonCloseMainmenu: {fileID: 2046992378}
+  _buttonOpenSettings: {fileID: 215222514}
+  _buttonOpenLevel: {fileID: 1265005520}
+  _buttonOpenUpgrade: {fileID: 1080665956}
+  _buttonOpenElements: {fileID: 73737642}
+  _buttonExitGame: {fileID: 741769696}
+  _playfield: {fileID: 210138499}
+  _uiManagerCanvas: {fileID: 1933479629}
+  _mainmenu: {fileID: 1424940784}
+  _settings: {fileID: 328338562}
+  _level: {fileID: 2107363471}
+  _upgrade: {fileID: 2107363471}
+  _elements: {fileID: 2088093585}
 --- !u!1 &1954469039
 GameObject:
   m_ObjectHideFlags: 0
@@ -9299,7 +9299,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107363467}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}

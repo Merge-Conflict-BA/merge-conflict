@@ -21,14 +21,12 @@ Description:   Open and close the menu playfield, settings, level, elements, upg
                is opened; otherwise it returns false.
 
 Author(s):     Markus Haubold
-Date:          2024-02-19
-Version:       V1.1 
+Date:          2024-03-27
+Version:       V2.0
 TODO:          - /
 **********************************************************************************************************************/
 
-using System.Collections;
 using System.Collections.Generic;
-using ExperienceSystem;
 using ExperienceSystem;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,22 +38,22 @@ public class UiManager : MonoBehaviour
     public static UiManager Instance { get { return _instance; } }
 
     //default buttons to orchestrate the menu
-    [SerializeField] private Button buttonOpenMainmenu;
-    [SerializeField] private Button buttonCloseMainmenu;
-    [SerializeField] private Button buttonOpenSettings;
-    [SerializeField] private Button buttonOpenLevel;
-    [SerializeField] private Button buttonOpenUpgrade;
-    [SerializeField] private Button buttonOpenElements;
-    [SerializeField] private Button buttonExitGame;
+    [SerializeField] private Button _buttonOpenMainmenu;
+    [SerializeField] private Button _buttonCloseMainmenu;
+    [SerializeField] private Button _buttonOpenSettings;
+    [SerializeField] private Button _buttonOpenLevel;
+    [SerializeField] private Button _buttonOpenUpgrade;
+    [SerializeField] private Button _buttonOpenElements;
+    [SerializeField] private Button _buttonExitGame;
 
     //all menus
-    [SerializeField] private Canvas Playfield;
-    [SerializeField] private Canvas UiManagerCanvas;
-    [SerializeField] private Canvas Mainmenu;
-    [SerializeField] private Canvas Settings;
-    [SerializeField] private Canvas Level;
-    [SerializeField] private Canvas Upgrade;
-    [SerializeField] private Canvas Elements;
+    [SerializeField] private Canvas _playfield;
+    [SerializeField] private Canvas _uiManagerCanvas;
+    [SerializeField] private Canvas _mainmenu;
+    [SerializeField] private Canvas _settings;
+    [SerializeField] private Canvas _level;
+    [SerializeField] private Canvas _upgrade;
+    [SerializeField] private Canvas _elements;
 
     //mapping buttons to the menu wich they should open
     List<KeyValuePair<string, string>> readableMenuName = new List<KeyValuePair<string, string>>
@@ -68,10 +66,10 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
     };
 
-    const Canvas NO_MENU_OPENED = null;
-    const string EXIT_GAME = "ButtonExitGame";
+    const Canvas NoMenuOpened = null;
+    const string ExitTheGame = "ButtonExitGame";
 
-    private Canvas currentOpenedMenu;
+    private Canvas _currentOpenedMenu;
     public bool isMenuVisible { get; private set; }
 
     void Awake()
@@ -87,28 +85,28 @@ public class UiManager : MonoBehaviour
         }
 
         //set default menu states 
-        UiManagerCanvas.enabled = true;
-        Mainmenu.enabled = false;
-        Settings.enabled = false;
-        Level.enabled = false;
-        Upgrade.enabled = false;
-        Elements.enabled = false;
+        _uiManagerCanvas.enabled = true;
+        _mainmenu.enabled = false;
+        _settings.enabled = false;
+        _level.enabled = false;
+        _upgrade.enabled = false;
+        _elements.enabled = false;
 
         //setup eventlisteners for all buttons
-        setupButtonListener(buttonOpenMainmenu);
-        setupButtonListener(buttonCloseMainmenu);
-        setupButtonListener(buttonOpenSettings);
-        setupButtonListener(buttonOpenLevel);
-        setupButtonListener(buttonOpenUpgrade);
-        setupButtonListener(buttonOpenElements);
-        setupButtonListener(buttonExitGame);
+        SetupButtonListener(_buttonOpenMainmenu);
+        SetupButtonListener(_buttonCloseMainmenu);
+        SetupButtonListener(_buttonOpenSettings);
+        SetupButtonListener(_buttonOpenLevel);
+        SetupButtonListener(_buttonOpenUpgrade);
+        SetupButtonListener(_buttonOpenElements);
+        SetupButtonListener(_buttonExitGame);
     }
 
-    private void setupButtonListener(Button button)
+    private void SetupButtonListener(Button button)
     {
         if (button != null)
         {
-            button.onClick.AddListener(() => handleButtonClick(button.name));
+            button.onClick.AddListener(() => HandleButtonClick(button.name));
         }
         else
         {
@@ -116,9 +114,9 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    private void handleButtonClick(string clickedButton)
+    private void HandleButtonClick(string clickedButton)
     {
-        if (clickedButton == EXIT_GAME)
+        if (clickedButton == ExitTheGame)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -128,18 +126,18 @@ public class UiManager : MonoBehaviour
             return;
         }
 
-        switchMenu(clickedButton);
+        SwitchMenu(clickedButton);
     }
 
-    private void switchMenu(string requestedMenu)
+    private void SwitchMenu(string requestedMenu)
     {
-        if (currentOpenedMenu == NO_MENU_OPENED)
+        if (_currentOpenedMenu == NoMenuOpened)
         {
-            currentOpenedMenu = Mainmenu;
+            _currentOpenedMenu = _mainmenu;
         }
 
         //close current opened menu
-        currentOpenedMenu.enabled = false;
+        _currentOpenedMenu.enabled = false;
 
         //open requested menu with usage of the mapping
         KeyValuePair<string, string> menuName = readableMenuName.Find(pair => pair.Key == requestedMenu);
@@ -147,21 +145,20 @@ public class UiManager : MonoBehaviour
         switch (menuName.Value)
         {
             case "Mainmenu":
-                Mainmenu.enabled = true;
-                Playfield.enabled = false;
-                currentOpenedMenu = Mainmenu;
+                _mainmenu.enabled = true;
+                _playfield.enabled = false;
+                _currentOpenedMenu = _mainmenu;
                 isMenuVisible = true;
                 break;
 
             case "Settings":
-                Settings.enabled = true;
-                currentOpenedMenu = Settings;
+                _settings.enabled = true;
+                _currentOpenedMenu = _settings;
                 break;
 
             case "Level":
-                Level.enabled = true;
-                currentOpenedMenu = Level;
-
+                _level.enabled = true;
+                _currentOpenedMenu = _level;
 
                 //#### only for testing ######
                 ExperienceHandler.ResetCurrentPlayerExperience();
@@ -169,6 +166,7 @@ public class UiManager : MonoBehaviour
                 OrderGenerator.Instance.GenerateNewOrder(9); //TODO: move the order generation to another point, here it's only for testing the menu
                 //############################
 
+                //read dat from level manager
                 int currentLevel = ExperienceHandler.GetCurrentLevel();
                 int currentXp = ExperienceHandler.GetExperiencePoints();
                 int xpToUnlockNextLevel = ExperienceHandler.NeededXpToUnlockNextLevel(currentLevel + 1);
@@ -179,31 +177,32 @@ public class UiManager : MonoBehaviour
                 LevelMenu.Instance.SetDisplayedNextLevel(currentLevel + 1);
                 LevelMenu.Instance.SetXpRatioCurrentToNextLevel(xpRatioString);
                 LevelMenu.Instance.SetProgressbarValue(currentXp, xpToUnlockNextLevel);
+
                 //set current ordered stages
-                LevelMenu.Instance.SetDisplayedCaseStage(OrderGenerator.Instance.OrderedCase);
-                LevelMenu.Instance.SetDisplayedCpuStage(OrderGenerator.Instance.OrderedCpu);
-                LevelMenu.Instance.SetDisplayedGpuStage(OrderGenerator.Instance.OrderedGpu);
-                LevelMenu.Instance.SetDisplayedMotherboardStage(OrderGenerator.Instance.OrderedMotherboard);
-                LevelMenu.Instance.SetDisplayedPowerStage(OrderGenerator.Instance.OrderedPowersupply);
-                LevelMenu.Instance.SetDisplayedRamStage(OrderGenerator.Instance.OrderedRam);
-                LevelMenu.Instance.SetDisplayedHddStage(OrderGenerator.Instance.OrderedHdd);
+                LevelMenu.Instance.SetDisplayedCaseStage(OrderGenerator.Instance.orderedCase);
+                LevelMenu.Instance.SetDisplayedCpuStage(OrderGenerator.Instance.orderedCpu);
+                LevelMenu.Instance.SetDisplayedGpuStage(OrderGenerator.Instance.orderedGpu);
+                LevelMenu.Instance.SetDisplayedMotherboardStage(OrderGenerator.Instance.orderedMotherboard);
+                LevelMenu.Instance.SetDisplayedPowerStage(OrderGenerator.Instance.orderedPowersupply);
+                LevelMenu.Instance.SetDisplayedRamStage(OrderGenerator.Instance.orderedRam);
+                LevelMenu.Instance.SetDisplayedHddStage(OrderGenerator.Instance.orderedHdd);
 
                 break;
 
             case "Upgrade":
-                Upgrade.enabled = true;
-                currentOpenedMenu = Upgrade;
+                _upgrade.enabled = true;
+                _currentOpenedMenu = _upgrade;
                 break;
 
             case "Elements":
-                Elements.enabled = true;
-                currentOpenedMenu = Elements;
+                _elements.enabled = true;
+                _currentOpenedMenu = _elements;
                 break;
 
             case "CloseMenu":
-                Mainmenu.enabled = false;
-                Playfield.enabled = true;
-                currentOpenedMenu = null;
+                _mainmenu.enabled = false;
+                _playfield.enabled = true;
+                _currentOpenedMenu = null;
                 isMenuVisible = false;
                 break;
 
