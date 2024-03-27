@@ -43,7 +43,7 @@ public class FoundElementsHandler : MonoBehaviour
     /// Adds element to list of FoundElements if the given element is new and not been found yet.
     /// </summary>
     /// <param name="element">Element that is to be checked</param>
-    public void ElementIsFound(Element element)
+    public void CheckIfElementIsNew(Element element)
     {
         FoundElement foundElement = element switch
         {
