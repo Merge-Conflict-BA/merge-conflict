@@ -19,18 +19,37 @@ public class LevelMenu : Menu
     private TextMeshProUGUI _hddStageValue;
     private TextMeshProUGUI _powerSupplyStageValue;
     private Image _levelProgressbar;
+
+
+    //images of the ordered components
+    [SerializeField] private Image _orderedCaseImage;
+    [SerializeField] private Image _orderedHddImage;
+    [SerializeField] private Image _orderedMotherboardImage;
+    [SerializeField] private Image _orderedPowersupplyImage;
+    [SerializeField] private Image _orderedCpuImage;
+    [SerializeField] private Image _orderedGpuImage;
+    [SerializeField] private Image _orderedRamImage;
+
+
     const string EmptyProgressbarObjectName = "Progressbar_empty";
     const string FilledProgressbarObjectName = "Progressbar_filled";
-    const string NextLevelValue = "NextLevelValue";
-    const string XpRatioCurrentToNextLevel = "XpRatio";
-    const string XpValueToNextLevel = "XpValueToNextLevel";
-    const string CaseStageValue = "CaseStageValue";
-    const string CpuStageValue = "CpuStageValue";
-    const string GpuStageValue = "GpuStageValue";
-    const string MotherboardStageValue = "MotherboardStageValue";
-    const string RamStageValue = "RamStageValue";
-    const string HddStageValue = "HddStageValue";
-    const string PowerSupplyStageValue = "PowerSupplyStageValue";
+    const string NextLevelValueObjectName = "NextLevelValue";
+    const string XpRatioCurrentToNextLevelObjectName = "XpRatio";
+    const string CaseStageValueObjectName = "CaseStageValue";
+    const string CpuStageValueObjectName = "CpuStageValue";
+    const string GpuStageValueObjectName = "GpuStageValue";
+    const string MotherboardStageValueObjectName = "MotherboardStageValue";
+    const string RamStageValueObjectName = "RamStageValue";
+    const string HddStageValueObjectName = "HddStageValue";
+    const string PowerSupplyStageValueObjectName = "PowerSupplyStageValue";
+
+    const string OrderedCaseImageObjectName = "Case";
+    const string OrderedCpuImageObjectName = "CPU";
+    const string OrderedGpuImageObjectName = "GPU";
+    const string OrderedMotherboardImageObjectName = "Motherboard";
+    const string OrderedPowersupplyImageObjectName = "PowerSupply";
+    const string OrderedRamImageObjectName = "RAM";
+    const string OrderedHddImageObjectName = "HDD";
 
 
 
@@ -44,16 +63,29 @@ public class LevelMenu : Menu
         {
             InitializeMenu(levelmenuCanvas);
             _currentLevelValueTextfield = GetComponentbyObjectName<TextMeshProUGUI>(CurrentLevelValueObjectName);
-            _nextLevelValueTextfield = GetComponentbyObjectName<TextMeshProUGUI>(NextLevelValue);
-            _xpRatioCurrentToNextLevel = GetComponentbyObjectName<TextMeshProUGUI>(XpRatioCurrentToNextLevel);
-            _caseStageValue = GetComponentbyObjectName<TextMeshProUGUI>(CaseStageValue);
-            _cpuStageValue = GetComponentbyObjectName<TextMeshProUGUI>(CpuStageValue);
-            _gpuStageValue = GetComponentbyObjectName<TextMeshProUGUI>(GpuStageValue);
-            _motherboardStageValue = GetComponentbyObjectName<TextMeshProUGUI>(MotherboardStageValue);
-            _ramStageValue = GetComponentbyObjectName<TextMeshProUGUI>(RamStageValue);
-            _hddStageValue = GetComponentbyObjectName<TextMeshProUGUI>(HddStageValue);
-            _powerSupplyStageValue = GetComponentbyObjectName<TextMeshProUGUI>(PowerSupplyStageValue);
+            _nextLevelValueTextfield = GetComponentbyObjectName<TextMeshProUGUI>(NextLevelValueObjectName);
+            _xpRatioCurrentToNextLevel = GetComponentbyObjectName<TextMeshProUGUI>(XpRatioCurrentToNextLevelObjectName);
+            _caseStageValue = GetComponentbyObjectName<TextMeshProUGUI>(CaseStageValueObjectName);
+            _cpuStageValue = GetComponentbyObjectName<TextMeshProUGUI>(CpuStageValueObjectName);
+            _gpuStageValue = GetComponentbyObjectName<TextMeshProUGUI>(GpuStageValueObjectName);
+            _motherboardStageValue = GetComponentbyObjectName<TextMeshProUGUI>(MotherboardStageValueObjectName);
+            _ramStageValue = GetComponentbyObjectName<TextMeshProUGUI>(RamStageValueObjectName);
+            _hddStageValue = GetComponentbyObjectName<TextMeshProUGUI>(HddStageValueObjectName);
+            _powerSupplyStageValue = GetComponentbyObjectName<TextMeshProUGUI>(PowerSupplyStageValueObjectName);
             _levelProgressbar = GetComponentbyObjectName<Image>(EmptyProgressbarObjectName);
+            //ordered component images
+
+
+
+            _orderedCaseImage = GetComponentbyObjectName<Image>(OrderedCaseImageObjectName);
+            _orderedHddImage = GetComponentbyObjectName<Image>(OrderedHddImageObjectName);
+            _orderedMotherboardImage = GetComponentbyObjectName<Image>(OrderedMotherboardImageObjectName);
+            _orderedPowersupplyImage = GetComponentbyObjectName<Image>(OrderedPowersupplyImageObjectName);
+            _orderedCpuImage = GetComponentbyObjectName<Image>(OrderedCpuImageObjectName);
+            _orderedGpuImage = GetComponentbyObjectName<Image>(OrderedGpuImageObjectName);
+            _orderedRamImage = GetComponentbyObjectName<Image>(OrderedRamImageObjectName);
+
+            
 
             _instance = this;
         }
@@ -173,5 +205,41 @@ public class LevelMenu : Menu
         //normalized progressbar: 0xp => 0 | xpToNextLevel => 1
         float normalizedXp = Mathf.Clamp01(currentXp / (float)xpToNextLevel);
         progressbar.fillAmount = normalizedXp;
+    }
+
+    public void SetOrderedCaseImage(Sprite orderdCaseImage)
+    {
+        Debugger.LogMessage("case image: " + orderdCaseImage.name);
+        _orderedCaseImage.sprite = orderdCaseImage;
+    }
+
+    public void SetOrderedHddImage(Sprite orderdHddImage)
+    {
+        _orderedHddImage.sprite = orderdHddImage;
+    }
+
+    public void SetOrderedMotherboardImage(Sprite orderdMotherboardImage)
+    {
+        _orderedMotherboardImage.sprite = orderdMotherboardImage;
+    }
+
+    public void SetOrderedPowersupplyImage(Sprite orderdPowersupplyImage)
+    {
+        _orderedPowersupplyImage.sprite = orderdPowersupplyImage;
+    }
+
+    public void SetOrderedCpuImage(Sprite orderdCpuImage)
+    {
+        _orderedCpuImage.sprite = orderdCpuImage;
+    }
+
+    public void SetOrderedGpuImage(Sprite orderdGpuImage)
+    {
+        _orderedGpuImage.sprite = orderdGpuImage;
+    }
+
+    public void SetOrderedRamImage(Sprite orderdRamImage)
+    {
+        _orderedRamImage.sprite = orderdRamImage;
     }
 }

@@ -37,6 +37,15 @@ public class UiManager : MonoBehaviour
     private static UiManager _instance;
     public static UiManager Instance { get { return _instance; } }
 
+    //component sprites
+    public Sprite[] caseImages = new Sprite[4];
+    public Sprite[] hddImages = new Sprite[4];
+    public Sprite[] motherboardImages = new Sprite[4];
+    public Sprite[] powersupplyImages = new Sprite[4];
+    public Sprite[] cpuImages = new Sprite[4];
+    public Sprite[] gpuImages = new Sprite[4];
+    public Sprite[] ramImages = new Sprite[4];
+    
     //default buttons to orchestrate the menu
     [SerializeField] private Button _buttonOpenMainmenu;
     [SerializeField] private Button _buttonCloseMainmenu;
@@ -55,6 +64,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Canvas _upgrade;
     [SerializeField] private Canvas _elements;
 
+
     //mapping buttons to the menu wich they should open
     List<KeyValuePair<string, string>> readableMenuName = new List<KeyValuePair<string, string>>
     {
@@ -67,6 +77,7 @@ public class UiManager : MonoBehaviour
     };
 
     const Canvas NoMenuOpened = null;
+    const int OffsetStageToArrayindex = 1;
     const string ExitTheGame = "ButtonExitGame";
 
     private Canvas _currentOpenedMenu;
@@ -110,7 +121,7 @@ public class UiManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Button with name {button} not found. Please check if the button exists and ist linkt to the script UiManager!");
+            Debug.LogError($"Button with name {button} not found. Please check if the button exists and is linked to the script UiManager!");
         }
     }
 
@@ -187,6 +198,14 @@ public class UiManager : MonoBehaviour
                 LevelMenu.Instance.SetDisplayedRamStage(OrderGenerator.Instance.orderedRam);
                 LevelMenu.Instance.SetDisplayedHddStage(OrderGenerator.Instance.orderedHdd);
 
+                //set the image of ordered component
+                LevelMenu.Instance.SetOrderedCaseImage(caseImages[OrderGenerator.Instance.orderedCase - OffsetStageToArrayindex]);                
+                LevelMenu.Instance.SetOrderedHddImage(hddImages[OrderGenerator.Instance.orderedHdd - OffsetStageToArrayindex]); 
+                LevelMenu.Instance.SetOrderedRamImage(ramImages[OrderGenerator.Instance.orderedRam - OffsetStageToArrayindex]); 
+                LevelMenu.Instance.SetOrderedCpuImage(cpuImages[OrderGenerator.Instance.orderedCpu - OffsetStageToArrayindex]); 
+                LevelMenu.Instance.SetOrderedGpuImage(gpuImages[OrderGenerator.Instance.orderedGpu - OffsetStageToArrayindex]); 
+                LevelMenu.Instance.SetOrderedMotherboardImage(motherboardImages[OrderGenerator.Instance.orderedMotherboard - OffsetStageToArrayindex]); 
+                LevelMenu.Instance.SetOrderedPowersupplyImage(powersupplyImages[OrderGenerator.Instance.orderedPowersupply - OffsetStageToArrayindex]); 
                 break;
 
             case "Upgrade":

@@ -3184,8 +3184,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -185.4599, y: -902.9999}
-  m_SizeDelta: {x: 130, y: 130}
+  m_AnchoredPosition: {x: -182.84, y: -903}
+  m_SizeDelta: {x: 163.808, y: 151.515}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &843342805
 MonoBehaviour:
@@ -3207,7 +3207,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 00860082a6c413248a54a4ffebc25880, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b7ac7aef5d98f045940dfb6a6b703d2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4323,8 +4323,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -184.46182, y: -703.9997}
-  m_SizeDelta: {x: 130, y: 130}
+  m_AnchoredPosition: {x: -185.60004, y: -696.243}
+  m_SizeDelta: {x: 105.413, y: 145.368}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1006807728
 MonoBehaviour:
@@ -4346,7 +4346,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5a7ccc8e8aa3f124a8270b09001f510b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fba4097d01faa90408f1b77f39f53671, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5091,8 +5091,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -183.90015, y: -312.00015}
-  m_SizeDelta: {x: 130, y: 130}
+  m_AnchoredPosition: {x: -186.6, y: -327.367}
+  m_SizeDelta: {x: 147.96, y: 160.735}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1156333210
 MonoBehaviour:
@@ -5496,7 +5496,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -182.86002, y: -515.9999}
+  m_AnchoredPosition: {x: -188.34, y: -510}
   m_SizeDelta: {x: 163.84, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1283768950
@@ -5519,7 +5519,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b53aa8d34cf07bc41ba6c2d561225a82, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3b392f61d5dd5e248a2a9cafe505c60d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5646,7 +5646,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 95adfd68b550fb043b7e8ab647237884, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 936cfc9cc9629a54b983c9663f0fac3e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5939,7 +5939,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7e26e779f19b9c441a26133a0ed193a9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b64dd34ec509ec54b856e95d2114415d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8622,6 +8622,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de28df44c1dff4ed69310e826535e912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  caseImages:
+  - {fileID: 21300000, guid: 936cfc9cc9629a54b983c9663f0fac3e, type: 3}
+  - {fileID: 21300000, guid: 37768334ee3c1fb409ec5865ab44934e, type: 3}
+  - {fileID: 21300000, guid: 2feae5a4f0bbb314791e4af8c8cf373f, type: 3}
+  - {fileID: 21300000, guid: fe7f6342a460ae043a76bb733114bcee, type: 3}
+  hddImages:
+  - {fileID: 21300000, guid: bab2b85dc6888414a965bc909f27271f, type: 3}
+  - {fileID: 21300000, guid: 827984b903f77c94195c2d1253cd0404, type: 3}
+  - {fileID: 21300000, guid: fba4097d01faa90408f1b77f39f53671, type: 3}
+  - {fileID: 21300000, guid: d5d1e088d1f31694989dd7d6428ac86d, type: 3}
+  motherboardImages:
+  - {fileID: 21300000, guid: ebb12a9d8c8ae9e4fb34b45f6dd2ce84, type: 3}
+  - {fileID: 21300000, guid: c10301ff78d4d1841b962aff90d11773, type: 3}
+  - {fileID: 21300000, guid: ef12d0e67bed44244a1a25b2cbe0b733, type: 3}
+  - {fileID: 21300000, guid: 5815561c9270f7544865ccd6371fcbad, type: 3}
+  powersupplyImages:
+  - {fileID: 21300000, guid: ab4d4bc591c52ef47b1c55c3eadc51e9, type: 3}
+  - {fileID: 21300000, guid: 1b7ac7aef5d98f045940dfb6a6b703d2, type: 3}
+  - {fileID: 21300000, guid: bf26ad03a4e579e4b9cea325196bc0a5, type: 3}
+  - {fileID: 21300000, guid: ffa999a3923b0994fbb965a095a47cb4, type: 3}
+  cpuImages:
+  - {fileID: 21300000, guid: c0a4febd6c4806f4a8284384fae2f44b, type: 3}
+  - {fileID: 21300000, guid: a5b7cb66d3a0df945b715d1597dbb677, type: 3}
+  - {fileID: 21300000, guid: 41fea491875dd424b813ed1d3f0f9cb0, type: 3}
+  - {fileID: 21300000, guid: 84e64e1eb4def91429d40755877b97df, type: 3}
+  gpuImages:
+  - {fileID: 21300000, guid: b64dd34ec509ec54b856e95d2114415d, type: 3}
+  - {fileID: 21300000, guid: 4c9d2143089978048a8273933657b31a, type: 3}
+  - {fileID: 21300000, guid: 9d1d30201efe3324bb42a3f13eda38f5, type: 3}
+  - {fileID: 21300000, guid: b9f71e0eccd9dd644b07eac36d0c3354, type: 3}
+  ramImages:
+  - {fileID: 21300000, guid: d62e18fb3523e1d429919f8b71a116b2, type: 3}
+  - {fileID: 21300000, guid: 219db482d0844eb4091a68551e6a173a, type: 3}
+  - {fileID: 21300000, guid: 2dfce07f1f5972f46b5efc8f2dac7a6a, type: 3}
+  - {fileID: 21300000, guid: 3b392f61d5dd5e248a2a9cafe505c60d, type: 3}
   _buttonOpenMainmenu: {fileID: 979635377}
   _buttonCloseMainmenu: {fileID: 2046992378}
   _buttonOpenSettings: {fileID: 215222514}
@@ -9102,7 +9137,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 1f5cb0f607335ef4c98cde74cd02b01a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c0a4febd6c4806f4a8284384fae2f44b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9299,7 +9334,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2107363467}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -9328,6 +9363,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelmenuCanvas: {fileID: 2107363471}
+  _orderedCaseImage: {fileID: 0}
+  _orderedHddImage: {fileID: 0}
+  _orderedMotherboardImage: {fileID: 0}
+  _orderedPowersupplyImage: {fileID: 0}
+  _orderedCpuImage: {fileID: 0}
+  _orderedGpuImage: {fileID: 0}
+  _orderedRamImage: {fileID: 0}
 --- !u!1 &2119573305
 GameObject:
   m_ObjectHideFlags: 0
