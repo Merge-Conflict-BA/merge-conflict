@@ -52,20 +52,16 @@ public class FoundElementsHandler : MonoBehaviour
         FoundElement foundElement = new FoundElement(element.name, element.level);
 
         // Check if the foundElement is already in the list of FoundElements
-        var isNotFoundYet = true;
         foreach (var savedFoundElement in _foundElements)
         {
             if (savedFoundElement.IsEqual(foundElement))
             {
-                isNotFoundYet = false;
+                return;
             }
         }
 
         // Add element to List of FoundElements if it is not been found yet
-        if (isNotFoundYet)
-        {
-            AddFoundElement(foundElement);
-        }
+        AddFoundElement(foundElement);
     }
     
     /// <summary>
