@@ -33,27 +33,35 @@ public class AudioManager : MonoBehaviour
     public AudioSource buttonClickAudioSource; // ?  Maybe separate AudioSources for different buttons
     public AudioClip buttonClickSound;
 
+    [Space(20)]
     public AudioSource openMenuAudioSource;
     public AudioClip openMenuSound;
 
+    [Space(20)]
     public AudioSource closeMenuAudioSource;
     public AudioClip closeMenuSound;
 
+    [Space(20)]
     public AudioSource mergeAudioSource;  // ?  Maybe separate sounds for lvl  2, 3, 4 
     public AudioClip[] mergeSound;
 
+    [Space(20)]
     public AudioSource combineComponentsAudioSource;
     public AudioClip combineComponentsSound;
 
+    [Space(20)]
     public AudioSource sellAudioSource;
     public AudioClip sellSound;
 
+    [Space(20)]
     public AudioSource throwAwayAudioSource; // trash
     public AudioClip throwAwaySound;
 
+    [Space(20)]
     public AudioSource dropComponentAudioSource;
     public AudioClip dropComponentSound;
 
+    [Space(20)]
     public AudioSource pickUpComponentAudioSource;
     public AudioClip pickUpComponentSound;
 
