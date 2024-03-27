@@ -19,12 +19,8 @@ public class OrderGenerator : MonoBehaviour
 {
     private static OrderGenerator _instance;
     public static OrderGenerator Instance { get { return _instance; } }
-
     public Order Order = Order.EmptyOrder();
-
     private readonly ComponentTierParameters[] _allComponentTierParameters = new ComponentTierParameters[ComponentsCount];
-
-    public int currentLevel = 1;    //TODO: only for debugging => delete after test
     private string[] _componentNames;
 
     void Awake()

@@ -25,18 +25,18 @@ public class LevelMenu : Menu
     private TextMeshProUGUI _motherboardTierValue;
     private TextMeshProUGUI _ramTierValue;
     private TextMeshProUGUI _hddTierValue;
-    private TextMeshProUGUI _powerSupplyTierValue;
+    private TextMeshProUGUI _powersupplyTierValue;
     private Image _levelProgressbar;
 
 
     //images of the ordered components
-    [SerializeField] private Image _orderedCaseImage;
-    [SerializeField] private Image _orderedHddImage;
-    [SerializeField] private Image _orderedMotherboardImage;
-    [SerializeField] private Image _orderedPowersupplyImage;
-    [SerializeField] private Image _orderedCpuImage;
-    [SerializeField] private Image _orderedGpuImage;
-    [SerializeField] private Image _orderedRamImage;
+    private Image _orderedCaseImage;
+    private Image _orderedHddImage;
+    private Image _orderedMotherboardImage;
+    private Image _orderedPowersupplyImage;
+    private Image _orderedCpuImage;
+    private Image _orderedGpuImage;
+    private Image _orderedRamImage;
 
 
     const string EmptyProgressbarObjectName = "Progressbar_empty";
@@ -49,13 +49,13 @@ public class LevelMenu : Menu
     const string MotherboardTierValueObjectName = "MotherboardTierValue";
     const string RamTierValueObjectName = "RamTierValue";
     const string HddTierValueObjectName = "HddTierValue";
-    const string PowerSupplyTierValueObjectName = "PowerSupplyTierValue";
+    const string PowerSupplyTierValueObjectName = "PowersupplyTierValue";
 
     const string OrderedCaseImageObjectName = "Case";
     const string OrderedCpuImageObjectName = "CPU";
     const string OrderedGpuImageObjectName = "GPU";
     const string OrderedMotherboardImageObjectName = "Motherboard";
-    const string OrderedPowersupplyImageObjectName = "PowerSupply";
+    const string OrderedPowersupplyImageObjectName = "Powersupply";
     const string OrderedRamImageObjectName = "RAM";
     const string OrderedHddImageObjectName = "HDD";
 
@@ -79,12 +79,10 @@ public class LevelMenu : Menu
             _motherboardTierValue = GetComponentbyObjectName<TextMeshProUGUI>(MotherboardTierValueObjectName);
             _ramTierValue = GetComponentbyObjectName<TextMeshProUGUI>(RamTierValueObjectName);
             _hddTierValue = GetComponentbyObjectName<TextMeshProUGUI>(HddTierValueObjectName);
-            _powerSupplyTierValue = GetComponentbyObjectName<TextMeshProUGUI>(PowerSupplyTierValueObjectName);
+            _powersupplyTierValue = GetComponentbyObjectName<TextMeshProUGUI>(PowerSupplyTierValueObjectName);
             _levelProgressbar = GetComponentbyObjectName<Image>(EmptyProgressbarObjectName);
+            
             //ordered component images
-
-
-
             _orderedCaseImage = GetComponentbyObjectName<Image>(OrderedCaseImageObjectName);
             _orderedHddImage = GetComponentbyObjectName<Image>(OrderedHddImageObjectName);
             _orderedMotherboardImage = GetComponentbyObjectName<Image>(OrderedMotherboardImageObjectName);
@@ -92,8 +90,6 @@ public class LevelMenu : Menu
             _orderedCpuImage = GetComponentbyObjectName<Image>(OrderedCpuImageObjectName);
             _orderedGpuImage = GetComponentbyObjectName<Image>(OrderedGpuImageObjectName);
             _orderedRamImage = GetComponentbyObjectName<Image>(OrderedRamImageObjectName);
-
-
 
             _instance = this;
         }
@@ -167,7 +163,7 @@ public class LevelMenu : Menu
 
     public void SetDisplayedPowersupplyTierAndImage(int powerTier, Sprite orderedPowersupplySprite)
     {
-        _powerSupplyTierValue.text = powerTier.ToString();
+        _powersupplyTierValue.text = powerTier.ToString();
         _orderedPowersupplyImage.sprite = orderedPowersupplySprite;
     }
 
