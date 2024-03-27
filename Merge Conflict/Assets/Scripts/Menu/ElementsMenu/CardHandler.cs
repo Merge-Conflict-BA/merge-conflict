@@ -59,44 +59,46 @@ public class CardHandler : MonoBehaviour
         Image image = GetComponent<Image>();
         int index = element.Level - 1;
 
-        switch (element.ElementName)
+        string elementName = element.ElementName;
+
+        switch (elementName)
         {
-            case ElementName.Case:
+            case var _ when elementName.Equals(CaseComponent.Name):
                 image.sprite = CaseSprites[index];
                 _startPrice = CaseStartPrice[index];
                 _increaseFactor = CaseIncreaseFactor[index];
                 break;
-            case ElementName.CPU:
+            case var _ when elementName.Equals(CPUComponent.Name):
                 image.sprite = CPUSprites[index];
                 _startPrice = CPUStartPrice[index];
                 _increaseFactor = CPUIncreaseFactor[index];
                 break;
-            case ElementName.GPU:
+            case var _ when elementName.Equals(GPUComponent.Name):
                 image.sprite = GPUSprites[index];
                 _startPrice = GPUStartPrice[index];
                 _increaseFactor = GPUIncreaseFactor[index];
                 break;
-            case ElementName.HDD:
+            case var _ when elementName.Equals(HDDComponent.Name):
                 image.sprite = HDDSprites[index];
                 _startPrice = HDDStartPrice[index];
                 _increaseFactor = HDDIncreaseFactor[index];
                 break;
-            case ElementName.Motherboard:
+            case var _ when elementName.Equals(MBComponent.Name):
                 image.sprite = MotherboardSprites[index];
                 _startPrice = MotherboardStartPrice[index];
                 _increaseFactor = MotherboardIncreaseFactor[index];
                 break;
-            case ElementName.PowerSupply:
+            case var _ when elementName.Equals(PowersupplyComponent.Name):
                 image.sprite = PowerSupplySprites[index];
                 _startPrice = PowerSupplyStartPrice[index];
                 _increaseFactor = PowerSupplyIncreaseFactor[index];
                 break;
-            case ElementName.RAM:
+            case var _ when elementName.Equals(RAMComponent.Name):
                 image.sprite = RAMSprites[index];
                 _startPrice = RAMStartPrice[index];
                 _increaseFactor = RAMIncreaseFactor[index];
                 break;
-            case ElementName.Default:
+            case var _ when elementName.Equals(Trash.Name):
             default:
                 image.sprite = DefaultSprite;
                 _startPrice = 0;
@@ -127,15 +129,16 @@ public class CardHandler : MonoBehaviour
 
     private void BuyElement()
     {
-        Element element = _cardElement.ElementName switch
+        string elementName = _cardElement.ElementName;
+        Element element = elementName switch
         {
-            ElementName.Case => Components.CreateCase(),
-            ElementName.CPU => Components.CPU,
-            ElementName.GPU => Components.GPU,
-            ElementName.HDD => Components.HDD,
-            ElementName.Motherboard => Components.CreateMB(),
-            ElementName.PowerSupply => Components.Powersupply,
-            ElementName.RAM => Components.RAM,
+            _ when elementName.Equals(CaseComponent.Name) => Components.CreateCase(),
+            _ when elementName.Equals(CPUComponent.Name) => Components.CPU,
+            _ when elementName.Equals(GPUComponent.Name) => Components.GPU,
+            _ when elementName.Equals(HDDComponent.Name) => Components.HDD,
+            _ when elementName.Equals(MBComponent.Name) => Components.CreateMB(),
+            _ when elementName.Equals(PowersupplyComponent.Name) => Components.Powersupply,
+            _ when elementName.Equals(RAMComponent.Name) => Components.RAM,
             _ => null
         };
 

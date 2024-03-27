@@ -18,10 +18,11 @@ public class MBComponent : Element, IComponent
     public CPUComponent? cpu;
     public RAMComponent? ram;
     public GPUComponent? gpu;
+    public static string Name = "Motherboard";
 
 
     public MBComponent(int level, int trashValue, int salesValue, CPUComponent? cpu = null, RAMComponent? ram = null, GPUComponent? gpu = null)
-        : base(level, trashValue, salesValue)
+        : base(level, trashValue, salesValue, Name)
     {
         this.cpu = cpu;
         this.ram = ram;

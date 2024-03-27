@@ -123,6 +123,11 @@ public static class Components
 
         return randomElement;
     }
+
+    public static List<string> GetComponentNames()
+    {
+        return new List<string> { CaseComponent.Name, PowersupplyComponent.Name, HDDComponent.Name, MBComponent.Name, CPUComponent.Name, RAMComponent.Name, GPUComponent.Name, Trash.Name };
+    }
 }
 
 public delegate MBComponent CreateMBDelegate(CPUComponent? cpu = null, RAMComponent? ram = null, GPUComponent? gpu = null);

@@ -45,23 +45,11 @@ public class FoundElementsHandler : MonoBehaviour
     /// <param name="element">Element that is to be checked</param>
     public void CheckIfElementIsNew(Element element)
     {
-        FoundElement foundElement = element switch
-        {
-            CaseComponent => new FoundElement(ElementName.Case, element.level),
-            PowersupplyComponent => new FoundElement(ElementName.PowerSupply, element.level),
-            HDDComponent => new FoundElement(ElementName.HDD, element.level),
-            MBComponent => new FoundElement(ElementName.Motherboard, element.level),
-            CPUComponent => new FoundElement(ElementName.CPU, element.level),
-            RAMComponent => new FoundElement(ElementName.RAM, element.level),
-            GPUComponent => new FoundElement(ElementName.GPU, element.level),
-            Trash => new FoundElement(ElementName.Default, 1),
-            _ => new FoundElement(ElementName.Default, 1)
-        };
-
-        if (foundElement.ElementName == ElementName.Default)
+        if (element.name == Trash.Name)
         {
             return;
         }
+        FoundElement foundElement = new FoundElement(element.name, element.level);
 
         // Check if the foundElement is already in the list of FoundElements
         var isNotFoundYet = true;
@@ -110,7 +98,7 @@ public class FoundElementsHandler : MonoBehaviour
     private List<FoundElement> GetListFromPlayerPrefs()
     {
         List<FoundElement> foundElementsTemp = new List<FoundElement>();
-        List<ElementName> elementNames = Enum.GetValues(typeof(ElementName)).Cast<ElementName>().ToList();
+        List<string> elementNames = Components.GetComponentNames();
 
         foreach (var elementName in elementNames)
         {

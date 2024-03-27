@@ -15,8 +15,9 @@ using UnityEngine;
 
 public class CPUComponent : Element, IComponent
 {
+    public static string Name = "CPU";
 
-    public CPUComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+    public CPUComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue, Name) { }
 
     public Element? Merge(Element element)
     {

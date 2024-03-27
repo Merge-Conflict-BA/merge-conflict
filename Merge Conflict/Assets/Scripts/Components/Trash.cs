@@ -26,8 +26,9 @@ public enum TrashVariant
 public class Trash : Element
 {
     public TrashVariant trashVariant;   
+    public static string Name = "Trash";
 
-    public Trash(int trashValue, int salesValue, TrashVariant? variant = null) : base(0, trashValue, salesValue)
+    public Trash(int trashValue, int salesValue, TrashVariant? variant = null) : base(0, trashValue, salesValue, Name)
     {
         if (variant != null)
         {

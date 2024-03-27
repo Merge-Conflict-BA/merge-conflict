@@ -15,8 +15,9 @@ using UnityEngine;
 
 public class PowersupplyComponent : Element, IComponent
 {
+    public static string Name = "PowerSupply";
 
-    public PowersupplyComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+    public PowersupplyComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue, Name) { }
 
     public Element? Merge(Element element)
     {

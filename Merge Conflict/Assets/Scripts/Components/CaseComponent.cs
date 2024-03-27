@@ -19,10 +19,11 @@ public class CaseComponent : Element, IComponent
     public MBComponent? motherboard;
     public PowersupplyComponent? powersupply;
     public HDDComponent? hdd;
+    public static string Name = "Case";
 
 
     public CaseComponent(int level, int trashValue, int salesValue, MBComponent? motherboard = null, PowersupplyComponent? powersupply = null, HDDComponent? hdd = null)
-        : base(level, trashValue, salesValue)
+        : base(level, trashValue, salesValue, Name)
     {
         this.motherboard = motherboard;
         this.powersupply = powersupply;

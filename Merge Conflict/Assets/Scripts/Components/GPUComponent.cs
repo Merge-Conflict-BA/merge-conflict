@@ -15,8 +15,9 @@ using UnityEngine;
 
 public class GPUComponent : Element, IComponent
 {
+    public static string Name = "GPU";
 
-    public GPUComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+    public GPUComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue, Name) { }
 
     public Element? Merge(Element element)
     {
