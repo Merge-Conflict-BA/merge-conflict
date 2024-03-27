@@ -1,3 +1,11 @@
+/**********************************************************************************************************************
+Name:          LevelMenu
+Description:   Link the given data to the GameObjects from the Canvas to display the level menu.
+Author(s):     Markus Haubold
+Date:          2024-03-27
+Version:       V1.0
+TODO:          - /
+**********************************************************************************************************************/
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -165,12 +173,16 @@ public class LevelMenu : Menu
 
     public void SetProgressbarValue(int currentXp, int xpToNextLevel)
     {
-        //the progressbar is an overlay of 2 images: at the groundlayer there is an image of an 
-        //empty progressbar; on top of it, there is an image with the filled progressbar from which 
-        //we can control the visbile parts
+        /*
+         * the progressbar is an overlay of 2 images: at the groundlayer there is an image of an 
+         * empty progressbar; on top of it, there is an image with the filled progressbar from which 
+         * we can control the visbile parts
+        */
 
-        //find the GameObject which contains the image from the filled progressbar
-        //if we have it, we can set the the value of the visible part of the image (=fillAmount)
+        /*
+         * find the GameObject which contains the image from the filled progressbar
+         * if we have it, we can set the the value of the visible part of the image (=fillAmount)
+        */
         Transform filledImage = _levelProgressbar.transform.Find(FilledProgressbarObjectName);
         Image progressbar = filledImage.GetComponent<Image>();
 
