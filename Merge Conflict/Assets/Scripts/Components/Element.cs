@@ -23,12 +23,14 @@ public class Element
     }
     public readonly int trashValue;
     public readonly int salesValue;
+    public readonly string name;
 
-    public Element(int tier, int trashValue, int salesValue)
+    public Element(int tier, int trashValue, int salesValue, string name)
     {
         this.tier = tier;
         this.trashValue = trashValue;
         this.salesValue = salesValue;
+        this.name = name;
     }
 
     public virtual int GetTrashValue()
@@ -39,6 +41,13 @@ public class Element
     public virtual int GetSalesValue()
     {
         return salesValue;
+    }
+
+    // Is used to decide if a merging lvls up a component or adds one component to another.
+    // meant for CaseComponent and MBComponent to override. 
+    public virtual bool HasComponents()
+    {
+        return false;
     }
 
     public GameObject InstantiateGameObjectAndAddTexture(Vector2 position)
@@ -78,5 +87,11 @@ public class Element
         }
 
         return componentObject;
+    }
+
+    public virtual bool IsEqual(Element element)
+    {
+        return GetType() == element.GetType()
+            && tier == element.tier;
     }
 }

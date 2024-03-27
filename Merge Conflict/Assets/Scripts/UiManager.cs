@@ -54,6 +54,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button _buttonOpenUpgrade;
     [SerializeField] private Button _buttonOpenElements;
     [SerializeField] private Button _buttonExitGame;
+    [SerializeField] private Button _buttonSellingStation;
 
     //all menus
     [SerializeField] private Canvas _playfield;
@@ -74,6 +75,7 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenLevel", "Level"),
         new KeyValuePair<string, string>("ButtonOpenUpgrade", "Upgrade"),
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
+        new KeyValuePair<string, string>("SellingStation", "Level"),
     };
 
     const Canvas NoMenuOpened = null;
@@ -111,6 +113,7 @@ public class UiManager : MonoBehaviour
         SetupButtonListener(_buttonOpenUpgrade);
         SetupButtonListener(_buttonOpenElements);
         SetupButtonListener(_buttonExitGame);
+        SetupButtonListener(_buttonSellingStation);
     }
 
     private void SetupButtonListener(Button button)
@@ -148,6 +151,10 @@ public class UiManager : MonoBehaviour
         }
 
         //close current opened menu
+        if (_elements.enabled) // needs to be close menu separately, otherwise the collider will detect clicks and purchases can be done
+        {
+            ElementsMenu.Instance.CloseMenu();
+        }
         _currentOpenedMenu.enabled = false;
 
         //open requested menu with usage of the mapping
@@ -211,11 +218,14 @@ public class UiManager : MonoBehaviour
             case "Elements":
                 _elements.enabled = true;
                 _currentOpenedMenu = _elements;
+
+                ElementsMenu.Instance.OpenMenu();
                 break;
 
             case "CloseMenu":
                 _mainmenu.enabled = false;
                 _playfield.enabled = true;
+                _elements.enabled = false;
                 _currentOpenedMenu = null;
                 isMenuVisible = false;
                 break;

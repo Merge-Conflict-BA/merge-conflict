@@ -4,7 +4,7 @@ Description:   Elements data structure for motherboard.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.4
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -18,10 +18,11 @@ public class MBComponent : Element, IComponent
     public CPUComponent? cpu;
     public RAMComponent? ram;
     public GPUComponent? gpu;
+    public static string Name = "Motherboard";
 
 
     public MBComponent(int tier, int trashValue, int salesValue, CPUComponent? cpu = null, RAMComponent? ram = null, GPUComponent? gpu = null)
-        : base(tier, trashValue, salesValue)
+        : base(tier, trashValue, salesValue, Name)
     {
         this.cpu = cpu;
         this.ram = ram;
@@ -73,18 +74,18 @@ public class MBComponent : Element, IComponent
         return null;
     }
 
-    private bool HasComponents()
+    override public bool HasComponents()
     {
         return cpu != null || ram != null || gpu != null;
     }
 
     override public int GetTrashValue()
     {
-        int cpuTrashValue = cpu != null ? cpu.GetTrashValue() : 0;
+        int cpuTrashValue = cpu != null ? cpu.GetTrashValue() : 0;        
         int ramTrashValue = ram != null ? ram.GetTrashValue() : 0;
         int gpuTrashValue = gpu != null ? gpu.GetTrashValue() : 0;
 
-        return this.GetTrashValue() + cpuTrashValue + ramTrashValue + gpuTrashValue;
+        return base.GetTrashValue() + cpuTrashValue + ramTrashValue + gpuTrashValue;
     }
 
     override public int GetSalesValue()
@@ -93,7 +94,23 @@ public class MBComponent : Element, IComponent
         int ramSalesValue = ram != null ? ram.GetSalesValue() : 0;
         int gpuSalesValue = gpu != null ? gpu.GetSalesValue() : 0;
 
-        return this.GetSalesValue() + cpuSalesValue + ramSalesValue + gpuSalesValue;
+        return base.GetSalesValue() + cpuSalesValue + ramSalesValue + gpuSalesValue;
+    }
+
+    public override bool IsEqual(Element element)
+    {
+        if (base.IsEqual(element) == false)
+        {
+            return false;
+        }
+
+        MBComponent mBComponent = (MBComponent)element;
+
+        bool isCpuEqual     = (cpu  == null  && mBComponent.cpu   == null)   ? true   : (cpu  != null     && mBComponent.cpu    != null)    ? cpu.IsEqual(mBComponent.cpu)    : false;
+        bool isGPUEqual     = (gpu  == null  && mBComponent.gpu   == null)   ? true   : (gpu  != null     && mBComponent.gpu    != null)    ? gpu.IsEqual(mBComponent.gpu)    : false;
+        bool isRAMEqual     = (ram  == null  && mBComponent.ram   == null)   ? true   : (ram  != null     && mBComponent.ram    != null)    ? ram.IsEqual(mBComponent.ram)    : false;
+
+        return isCpuEqual && isGPUEqual && isRAMEqual;
     }
 
     public MBComponent Clone()

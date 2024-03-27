@@ -15,8 +15,9 @@ using UnityEngine;
 
 public class RAMComponent : Element, IComponent
 {
+    public static string Name = "RAM";
 
-    public RAMComponent(int tier, int trashValue, int salesValue) : base(tier, trashValue, salesValue) { }
+    public RAMComponent(int tier, int trashValue, int salesValue) : base(tier, trashValue, salesValue, Name) { }
 
     public Element? Merge(Element element)
     {

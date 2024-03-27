@@ -15,8 +15,9 @@ using UnityEngine;
 
 public class HDDComponent : Element, IComponent
 {
+    public static string Name = "HDD";
 
-    public HDDComponent(int tier, int trashValue, int salesValue) : base(tier, trashValue, salesValue) { }
+    public HDDComponent(int tier, int trashValue, int salesValue) : base(tier, trashValue, salesValue, Name) { }
 
     public Element? Merge(Element element)
     {

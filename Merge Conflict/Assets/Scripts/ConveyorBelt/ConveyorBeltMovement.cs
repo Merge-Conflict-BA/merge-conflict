@@ -44,6 +44,16 @@ namespace ConveyorBelt
             ScrollTexture();
         }
 
+        void OnApplicationQuit()
+        {
+#if UNITY_EDITOR
+
+            Debugger.LogMessage("resetting ConveyorBelt Texture Offset for " + name + ", so that they dont persist and get picked up by git.");
+            canvasRenderer.GetMaterial().mainTextureOffset = Vector2.zero;
+
+            #endif
+        }
+
         private void ScrollTexture()
         {
             if(canvasRenderer == null) { return; }

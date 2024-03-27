@@ -4,7 +4,7 @@ Description:   Elements data structure for the case.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V2.1
+Version:       V2.3
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -19,10 +19,11 @@ public class CaseComponent : Element, IComponent
     public MBComponent? motherboard;
     public PowersupplyComponent? powersupply;
     public HDDComponent? hdd;
+    public static string Name = "Case";
 
 
     public CaseComponent(int tier, int trashValue, int salesValue, MBComponent? motherboard = null, PowersupplyComponent? powersupply = null, HDDComponent? hdd = null)
-        : base(tier, trashValue, salesValue)
+        : base(tier, trashValue, salesValue, Name)
     {
         this.motherboard = motherboard;
         this.powersupply = powersupply;
@@ -69,18 +70,18 @@ public class CaseComponent : Element, IComponent
         return null;
     }
 
-    private bool HasComponents()
+    override public bool HasComponents()
     {
         return motherboard != null || powersupply != null || hdd != null;
     }
 
     override public int GetTrashValue()
     {
-        int hddTrashValue           = hdd           != null ? hdd.GetTrashValue() : 0;
-        int powersupplyTrashValue   = powersupply   != null ? powersupply.GetTrashValue() : 0;
-        int motherboardTrashValue   = motherboard   != null ? motherboard.GetTrashValue() : 0;
+        int hddTrashValue = hdd != null ? hdd.GetTrashValue() : 0;
+        int powersupplyTrashValue = powersupply != null ? powersupply.GetTrashValue() : 0;
+        int motherboardTrashValue = motherboard != null ? motherboard.GetTrashValue() : 0;
 
-        return this.GetTrashValue() + hddTrashValue + powersupplyTrashValue + motherboardTrashValue;
+        return base.GetTrashValue() + hddTrashValue + powersupplyTrashValue + motherboardTrashValue;
     }
 
     override public int GetSalesValue()
@@ -89,7 +90,23 @@ public class CaseComponent : Element, IComponent
         int powersupplySalesValue = powersupply != null ? powersupply.GetSalesValue() : 0;
         int motherboardSalesValue = motherboard != null ? motherboard.GetSalesValue() : 0;
 
-        return this.GetSalesValue() + hddSalesValue + powersupplySalesValue + motherboardSalesValue;
+        return base.GetSalesValue() + hddSalesValue + powersupplySalesValue + motherboardSalesValue;
+    }
+
+    public override bool IsEqual(Element element)
+    {
+        if (base.IsEqual(element) == false)
+        {
+            return false;
+        }
+
+        CaseComponent caseComponent = (CaseComponent)element;
+
+        bool isMotherboardEqual     = (motherboard  == null  && caseComponent.motherboard   == null)   ? true   : (motherboard  != null     && caseComponent.motherboard    != null)    ? motherboard.IsEqual(caseComponent.motherboard)    : false;
+        bool isHDDEqual             = (hdd          == null  && caseComponent.hdd           == null)   ? true   : (hdd          != null     && caseComponent.hdd            != null)    ? hdd.IsEqual(caseComponent.hdd)                    : false;
+        bool isPowerSupplyEqual     = (powersupply  == null  && caseComponent.powersupply   == null)   ? true   : (powersupply  != null     && caseComponent.powersupply    != null)    ? powersupply.IsEqual(caseComponent.powersupply)    : false;
+
+        return isMotherboardEqual && isHDDEqual && isPowerSupplyEqual;
     }
 
     public CaseComponent Clone()

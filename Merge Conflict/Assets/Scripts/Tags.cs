@@ -18,7 +18,10 @@ public enum Tags
     SubComponent,
     Trashcan,
     ConveyorBelt,
-    ConveyorBeltDiagonal
+    ConveyorBeltDiagonal,
+    SellingStation,
+    desk,
+    UIManager
 }
 
 public static class TagComparator
