@@ -22,7 +22,7 @@ public class AnimationManager : MonoBehaviour
      * - in ParticleSystem Component under "Renderer" have "Sorting Layer ID" set to "Foreground"     
      * - in ParticleSystem Component have "Play on Awake" disabled (also applies to child components)
      */
-    [Header("Merge Animations")]    
+    [Header("Merge Animations")]
     public ParticleSystem addToComponentAnimation;
     public ParticleSystem[] lvlUpAnimations;
 
@@ -53,19 +53,22 @@ public class AnimationManager : MonoBehaviour
     }
 
     public void PlayMergeAnimation(Vector2 position, Element mergedElement, Element previousElement)
-    {        
+    {
         ParticleSystem mergeAnimation;
-        if(mergedElement.GetType() == previousElement.GetType()
+        if (mergedElement.GetType() == previousElement.GetType()
             && mergedElement.HasComponents() == false
-            && previousElement.HasComponents() == false) 
+            && previousElement.HasComponents() == false)
         {
             // element levels up
             mergeAnimation = lvlUpAnimations[mergedElement.level - 2];
+            AudioManager.Instance.PlayMergeSound();
 
-        } else 
+        }
+        else
         {
             // element is added to other component
             mergeAnimation = addToComponentAnimation;
+            AudioManager.Instance.PlayCombineComponentsSound();
         }
 
         PlayAnimation(mergeAnimation, position);

@@ -178,7 +178,6 @@ public class ComponentHandler : MonoBehaviour
                 mergedElement.InstantiateGameObjectAndAddTexture(staticObjectCanvasPosition);
 
                 AnimationManager.Instance.PlayMergeAnimation(staticObjectCanvasPosition, mergedElement, element);
-                AudioManager.Instance.PlayMergeSound();
 
                 Destroy(draggedComponent);
                 Destroy(staticComponent.gameObject);
