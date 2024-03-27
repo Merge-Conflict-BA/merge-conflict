@@ -172,12 +172,14 @@ public class UiManager : MonoBehaviour
                 int currentLevel = ExperienceHandler.GetCurrentLevel();
                 int currentXp = ExperienceHandler.GetExperiencePoints();
                 int xpToUnlockNextLevel = ExperienceHandler.NeededXpToUnlockNextLevel(currentLevel + 1);
+                string xpRatioString = $"{currentXp} / {xpToUnlockNextLevel}";
 
+                //set level and xp values
                 LevelMenu.Instance.SetDisplayedCurrentLevel(currentLevel);
                 LevelMenu.Instance.SetDisplayedNextLevel(currentLevel + 1);
-                LevelMenu.Instance.SetDisplayedCurrentXp(currentXp);
+                LevelMenu.Instance.SetXpRatioCurrentToNextLevel(xpRatioString);
                 LevelMenu.Instance.SetProgressbarValue(currentXp, xpToUnlockNextLevel);
-
+                //set current ordered stages
                 LevelMenu.Instance.SetDisplayedCaseStage(OrderGenerator.Instance.OrderedCase);
                 LevelMenu.Instance.SetDisplayedCpuStage(OrderGenerator.Instance.OrderedCpu);
                 LevelMenu.Instance.SetDisplayedGpuStage(OrderGenerator.Instance.OrderedGpu);

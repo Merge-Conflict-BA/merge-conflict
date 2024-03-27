@@ -9,8 +9,7 @@ public class LevelMenu : Menu
     public Canvas levelmenuCanvas; //connect to the level menu canvas
     private TextMeshProUGUI _currentLevelValueTextfield;
     const string CurrentLevelValueObjectName = "CurrentLevelValue";
-    private TextMeshProUGUI _currentXpValueTextfield;
-    private TextMeshProUGUI _xpValueToNextLevelTextfield;
+    private TextMeshProUGUI _xpRatioCurrentToNextLevel;
     private TextMeshProUGUI _nextLevelValueTextfield;
     private TextMeshProUGUI _caseStageValue;
     private TextMeshProUGUI _cpuStageValue;
@@ -23,7 +22,7 @@ public class LevelMenu : Menu
     const string EmptyProgressbarObjectName = "Progressbar_empty";
     const string FilledProgressbarObjectName = "Progressbar_filled";
     const string NextLevelValue = "NextLevelValue";
-    const string CurrentXpValueObjectName = "CurrentXpValue";
+    const string XpRatioCurrentToNextLevel = "XpRatio";
     const string XpValueToNextLevel = "XpValueToNextLevel";
     const string CaseStageValue = "CaseStageValue";
     const string CpuStageValue = "CpuStageValue";
@@ -32,7 +31,7 @@ public class LevelMenu : Menu
     const string RamStageValue = "RamStageValue";
     const string HddStageValue = "HddStageValue";
     const string PowerSupplyStageValue = "PowerSupplyStageValue";
-    
+
 
 
     private void Awake()
@@ -46,8 +45,7 @@ public class LevelMenu : Menu
             InitializeMenu(levelmenuCanvas);
             _currentLevelValueTextfield = GetComponentbyObjectName<TextMeshProUGUI>(CurrentLevelValueObjectName);
             _nextLevelValueTextfield = GetComponentbyObjectName<TextMeshProUGUI>(NextLevelValue);
-            _currentXpValueTextfield = GetComponentbyObjectName<TextMeshProUGUI>(CurrentXpValueObjectName);
-            _xpValueToNextLevelTextfield = GetComponentbyObjectName<TextMeshProUGUI>(XpValueToNextLevel);
+            _xpRatioCurrentToNextLevel = GetComponentbyObjectName<TextMeshProUGUI>(XpRatioCurrentToNextLevel);
             _caseStageValue = GetComponentbyObjectName<TextMeshProUGUI>(CaseStageValue);
             _cpuStageValue = GetComponentbyObjectName<TextMeshProUGUI>(CpuStageValue);
             _gpuStageValue = GetComponentbyObjectName<TextMeshProUGUI>(GpuStageValue);
@@ -81,24 +79,14 @@ public class LevelMenu : Menu
         _nextLevelValueTextfield.text = nextLevel.ToString();
     }
 
-    public string GetDisplayedCurrentXp()
+    public string GetXpRatioCurrentToNextLevel()
     {
-        return _currentXpValueTextfield.text;
+        return _xpRatioCurrentToNextLevel.text;
     }
 
-    public void SetDisplayedCurrentXp(int xp)
+    public void SetXpRatioCurrentToNextLevel(string currentXpSlashXpToNextLevel)
     {
-        _currentXpValueTextfield.text = xp.ToString();
-    }
-
-    public string GetDisplayedXpToNextLevel()
-    {
-        return _xpValueToNextLevelTextfield.text;
-    }
-
-    public void SetDisplayedXpToNextLevel(int maxXp)
-    {
-        _xpValueToNextLevelTextfield.text = maxXp.ToString();
+        _xpRatioCurrentToNextLevel.text = currentXpSlashXpToNextLevel;
     }
 
     public string GetDisplayedCaseStage()
