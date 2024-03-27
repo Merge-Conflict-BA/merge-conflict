@@ -100,7 +100,7 @@ public class FoundElementsHandler : MonoBehaviour
         {
             for (int level = 1; level < 4; level++)
             {
-                string key = GetPlayerPrefsKey(new FoundElement(elementName, level));
+                string key = new FoundElement(elementName, level).GetPlayerPrefsKey();
                 if (PlayerPrefs.HasKey(key))
                 {
                     int countPurchased = PlayerPrefs.GetInt(key);
@@ -114,12 +114,7 @@ public class FoundElementsHandler : MonoBehaviour
 
     private void SaveFoundElementToPlayerPrefs(FoundElement element)
     {
-        string key = GetPlayerPrefsKey(element);
+        string key = element.GetPlayerPrefsKey();
         PlayerPrefs.SetInt(key, element.CountPurchased);
-    }
-
-    private string GetPlayerPrefsKey(FoundElement element)
-    {
-        return $"{element.ElementName}_{element.Level}";
     }
 }

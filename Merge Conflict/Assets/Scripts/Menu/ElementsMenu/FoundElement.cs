@@ -21,4 +21,9 @@
     {
         return ElementName == foundElement.ElementName && Level == foundElement.Level;
     }
+
+    public string GetPlayerPrefsKey()
+    {
+        return $"{ElementName}_{Level}";
+    }
 }
