@@ -67,7 +67,8 @@ public class AudioManager : MonoBehaviour
 
     // ?  Maybe other sounds or environment sounds 
     /*    (conveyorbelt, component walking, component dragging, component dropping, individual sounds for upgrades, 
-           open menu, close menu, component returning to desk, trash walkin on desk, level up, close menu ... )  */
+           open menu, close menu, component returning to desk, trash walkin on desk, level up, close menu, quest completed,
+           get component when throwing one away (upgrade), buy component,  ... )  */
 
     private Coroutine playNextSongCoroutine;
 
