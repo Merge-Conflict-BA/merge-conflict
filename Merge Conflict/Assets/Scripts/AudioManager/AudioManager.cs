@@ -33,10 +33,10 @@ public class AudioManager : MonoBehaviour
     public AudioSource buttonClickAudioSource; // ?  Maybe separate AudioSources for different buttons
     public AudioClip buttonClickSound;
 
-    public AudioSource openMenuAudioSource; 
+    public AudioSource openMenuAudioSource;
     public AudioClip openMenuSound;
 
-    public AudioSource closeMenuAudioSource; 
+    public AudioSource closeMenuAudioSource;
     public AudioClip closeMenuSound;
 
     public AudioSource mergeAudioSource;  // ?  Maybe separate sounds for lvl  2, 3, 4 
@@ -50,6 +50,13 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource throwAwayAudioSource; // trash
     public AudioClip throwAwaySound;
+
+    public AudioSource dropComponentAudioSource;
+    public AudioClip dropComponentSound;
+
+    public AudioSource pickUpComponentAudioSource;
+    public AudioClip pickUpComponentSound;
+
     // ?  Maybe other sounds or environment sounds 
     /*    (conveyorbelt, component walking, component dragging, component dropping, individual sounds for upgrades, 
            open menu, close menu, component returning to desk, trash walkin on desk, level up, close menu ... )  */
@@ -151,5 +158,15 @@ public class AudioManager : MonoBehaviour
     public void PlayThrowAwaySound()
     {
         throwAwayAudioSource.PlayOneShot(throwAwaySound);
+    }
+
+    public void PlayDropComponentSound()
+    {
+        dropComponentAudioSource.PlayOneShot(dropComponentSound);
+    }
+
+    public void PlayPickUpComponentSound()
+    {
+        pickUpComponentAudioSource.PlayOneShot(pickUpComponentSound);
     }
 }
