@@ -48,13 +48,13 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button buttonSellingStation;
 
     //all menus
-    [SerializeField] private Canvas PLAYFIELD;
-    [SerializeField] private Canvas UI_MANAGER;
-    [SerializeField] private Canvas MAINMENU;
-    [SerializeField] private Canvas SETTINGS;
-    [SerializeField] private Canvas LEVEL;
-    [SerializeField] private Canvas UPGRADE;
-    [SerializeField] private Canvas ELEMENTS;
+    [SerializeField] private Canvas Playfield;
+    [SerializeField] private Canvas UiManagerCanvas;
+    [SerializeField] private Canvas Mainmenu;
+    [SerializeField] private Canvas Settings;
+    [SerializeField] private Canvas Level;
+    [SerializeField] private Canvas Upgrade;
+    [SerializeField] private Canvas Elements;
 
     //mapping buttons to the menu wich they should open
     List<KeyValuePair<string, string>> readableMenuName = new List<KeyValuePair<string, string>>
@@ -80,17 +80,19 @@ public class UiManager : MonoBehaviour
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
-        } else {
+        }
+        else
+        {
             _instance = this;
         }
 
         //set default menu states 
-        UI_MANAGER.enabled = true;
-        MAINMENU.enabled = false;
-        SETTINGS.enabled = false;
-        LEVEL.enabled = false;
-        UPGRADE.enabled = false;
-        ELEMENTS.enabled = false;
+        UiManagerCanvas.enabled = true;
+        Mainmenu.enabled = false;
+        Settings.enabled = false;
+        Level.enabled = false;
+        Upgrade.enabled = false;
+        Elements.enabled = false;
 
         //setup eventlisteners for all buttons
         setupButtonListener(buttonOpenMainmenu);
@@ -119,11 +121,11 @@ public class UiManager : MonoBehaviour
     {
         if (clickedButton == EXIT_GAME)
         {
-            #if UNITY_EDITOR
-                            UnityEditor.EditorApplication.isPlaying = false;
-            #else
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
                         Application.Quit();
-            #endif
+#endif
             return;
         }
 
@@ -134,10 +136,14 @@ public class UiManager : MonoBehaviour
     {
         if (currentOpenedMenu == NO_MENU_OPENED)
         {
-            currentOpenedMenu = MAINMENU;
+            currentOpenedMenu = Mainmenu;
         }
 
         //close current opened menu
+        if (Elements.enabled) // needs to be close menu separately, otherwise the collider will detect clicks and purchases can be done
+        {
+            ElementsMenu.Instance.CloseMenu();
+        }
         currentOpenedMenu.enabled = false;
 
         //open requested menu with usage of the mapping
@@ -146,35 +152,43 @@ public class UiManager : MonoBehaviour
         switch (menuName.Value)
         {
             case "Mainmenu":
-                MAINMENU.enabled = true;
-                PLAYFIELD.enabled = false;
-                currentOpenedMenu = MAINMENU;
+                Mainmenu.enabled = true;
+                Playfield.enabled = false;
+                currentOpenedMenu = Mainmenu;
                 isMenuVisible = true;
                 break;
 
             case "Settings":
-                SETTINGS.enabled = true;
-                currentOpenedMenu = SETTINGS;
+                Settings.enabled = true;
+                currentOpenedMenu = Settings;
                 break;
 
             case "Level":
-                LEVEL.enabled = true;
-                currentOpenedMenu = LEVEL;
+                Level.enabled = true;
+                currentOpenedMenu = Level;
+
+                LevelMenu.GetSingleInstance().SetDisplayedCurrentLevel(7);
+                LevelMenu.GetSingleInstance().SetDisplayedCurrentXp(500);
+                LevelMenu.GetSingleInstance().SetProgressbarValue(7);
+
                 break;
 
             case "Upgrade":
-                UPGRADE.enabled = true;
-                currentOpenedMenu = UPGRADE;
+                Upgrade.enabled = true;
+                currentOpenedMenu = Upgrade;
                 break;
 
             case "Elements":
-                ELEMENTS.enabled = true;
-                currentOpenedMenu = ELEMENTS;
+                Elements.enabled = true;
+                currentOpenedMenu = Elements;
+
+                ElementsMenu.Instance.OpenMenu();
                 break;
 
             case "CloseMenu":
-                MAINMENU.enabled = false;
-                PLAYFIELD.enabled = true;
+                Mainmenu.enabled = false;
+                Playfield.enabled = true;
+                Elements.enabled = false;
                 currentOpenedMenu = null;
                 isMenuVisible = false;
                 break;
@@ -185,3 +199,5 @@ public class UiManager : MonoBehaviour
         }
     }
 }
+
+

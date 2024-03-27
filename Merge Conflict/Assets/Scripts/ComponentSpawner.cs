@@ -101,6 +101,9 @@ public class ComponentSpawner : MonoBehaviour
 
         // move Component in Front of the Conveyor Belt
         componentObject.transform.position += new Vector3(0, 0, -1);
+        
+        // Update List with FoundElements to create a new card in the ElementsMenu if necessary
+        FoundElementsHandler.Instance.CheckIfElementIsNew(element);
 
         return componentObject;
     }
@@ -123,5 +126,18 @@ public class ComponentSpawner : MonoBehaviour
     private Vector2 GetSpawnPosition()
     {
         return spawnPointObject.GetComponent<RectTransform>().anchoredPosition;
+    }
+    
+    public Vector2 GetRandomPositionOnDesk()
+    {
+        GameObject deskObject = GameObject.FindWithTag("desk");
+        RectTransform rectTransform = deskObject.GetComponent<RectTransform>();
+        Vector2 anchoredPosition = rectTransform.anchoredPosition;
+        int padding = 100;
+
+        float x = Random.Range(anchoredPosition.x + padding, anchoredPosition.x + rectTransform.rect.width - padding);
+        float y = Random.Range(anchoredPosition.y + padding, anchoredPosition.y + rectTransform.rect.height - padding);
+
+        return new Vector2(x, y);
     }
 }

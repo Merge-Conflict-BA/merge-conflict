@@ -28,34 +28,50 @@ using Random = UnityEngine.Random;
  */
 public static class Components
 {
+    // _StartPrice: start price of a component when the player wants to buy its first component in the element menu
+    // _IncreaseFactor: factor of how much the price increases if the player buys a component
 
     public static int[] caseTrashValues = { 5, 14, 26, 44 };
     public static int[] caseSalesValues = { 21, 57, 107, 178 };
+    public static float[] caseStartPrice = { 21, 57, 107, 178 };
+    public static float[] caseIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
     public static CreateCaseDelegate CreateCase = (motherboard, powersupply, hdd)
         => new CaseComponent(1, caseTrashValues[0], caseSalesValues[0], motherboard, powersupply, hdd);
 
     public static int[] powersupplyTrashValues = { 5, 14, 26, 44 };
     public static int[] powersupplySalesValues = { 21, 57, 107, 178 };
+    public static float[] powersupplyStartPrice = { 21, 57, 107, 178 };
+    public static float[] powersupplyIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
     public static PowersupplyComponent Powersupply = new(1, powersupplyTrashValues[0], powersupplySalesValues[0]);
 
     public static int[] hddTrashValues = { 7, 19, 35, 59 };
     public static int[] hddSalesValues = { 28, 76, 142, 237 };
+    public static float[] hddStartPrice = { 28, 76, 142, 237 };
+    public static float[] hddIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
     public static HDDComponent HDD = new(1, hddTrashValues[0], hddSalesValues[0]);
 
     public static int[] cpuTrashValues = { 16, 42, 80, 133 };
     public static int[] cpuSalesValues = { 64, 171, 321, 535 };
+    public static float[] cpuStartPrice = { 64, 171, 321, 535 };
+    public static float[] cpuIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
     public static CPUComponent CPU = new(1, cpuTrashValues[0], cpuSalesValues[0]);
 
     public static int[] gpuTrashValues = { 23, 61, 116, 193 };
     public static int[] gpuSalesValues = { 92, 247, 464, 773 };
+    public static float[] gpuStartPrice = { 92, 247, 464, 773 };
+    public static float[] gpuIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
     public static GPUComponent GPU = new(1, gpuTrashValues[0], gpuSalesValues[0]);
 
     public static int[] ramTrashValues = { 8, 23, 44, 74 };
     public static int[] ramSalesValues = { 35, 95, 178, 297 };
+    public static float[] ramStartPrice = { 35, 95, 178, 297 };
+    public static float[] ramIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
     public static RAMComponent RAM = new(1, ramTrashValues[0], ramSalesValues[0]);
 
     public static int[] mbTrashValues = { 8, 23, 44, 74 };
     public static int[] mbSalesValues = { 35, 95, 178, 297 };
+    public static float[] mbStartPrice = { 35, 95, 178, 297 };
+    public static float[] mbIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
     public static CreateMBDelegate CreateMB = (cpu, ram, gpu)
         => new MBComponent(1, mbTrashValues[0], mbSalesValues[0], cpu, ram, gpu);
 
@@ -122,6 +138,11 @@ public static class Components
 
 
         return randomElement;
+    }
+
+    public static List<string> GetComponentNames()
+    {
+        return new List<string> { CaseComponent.Name, PowersupplyComponent.Name, HDDComponent.Name, MBComponent.Name, CPUComponent.Name, RAMComponent.Name, GPUComponent.Name, Trash.Name };
     }
 }
 

@@ -23,12 +23,14 @@ public class Element
     }
     public readonly int trashValue;
     public readonly int salesValue;
+    public readonly string name;
 
-    public Element(int level, int trashValue, int salesValue)
+    public Element(int level, int trashValue, int salesValue, string name)
     {
         this.level = level;
         this.trashValue = trashValue;
         this.salesValue = salesValue;
+        this.name = name;
     }
 
     public virtual int GetTrashValue()
