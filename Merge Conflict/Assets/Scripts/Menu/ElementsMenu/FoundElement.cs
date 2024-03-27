@@ -16,4 +16,9 @@
     {
         return "Card" + ElementName + "Lvl" + Level;
     }
+
+    public bool IsEqual(FoundElement foundElement)
+    {
+        return ElementName == foundElement.ElementName && Level == foundElement.Level;
+    }
 }

@@ -55,7 +55,7 @@ public class FoundElementsHandler : MonoBehaviour
         var isNotFoundYet = true;
         foreach (var savedFoundElement in _foundElements)
         {
-            if (savedFoundElement.ElementName == foundElement.ElementName && savedFoundElement.Level == foundElement.Level)
+            if (savedFoundElement.IsEqual(foundElement))
             {
                 isNotFoundYet = false;
             }
