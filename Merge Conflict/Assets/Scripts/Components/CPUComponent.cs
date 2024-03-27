@@ -4,7 +4,7 @@ Description:   Elements data structure for the CPU.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -17,7 +17,7 @@ public class CPUComponent : Element, IComponent
 {
     public static string Name = "CPU";
 
-    public CPUComponent(int tier, int trashValue, int salesValue) : base(tier, trashValue, salesValue, Name) { }
+    public CPUComponent(int tier, int trashPrice, int salesPrice, int salesXP) : base(tier, trashPrice, salesPrice, salesXP, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -37,6 +37,6 @@ public class CPUComponent : Element, IComponent
 
     public CPUComponent Clone()
     {
-        return new CPUComponent(tier, trashValue, salesValue);
+        return new CPUComponent(tier, trashPrice, salesPrice, salesXP);
     }
 }

@@ -4,7 +4,7 @@ Description:   Elements data structure for the HDD.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -17,7 +17,7 @@ public class HDDComponent : Element, IComponent
 {
     public static string Name = "HDD";
 
-    public HDDComponent(int tier, int trashValue, int salesValue) : base(tier, trashValue, salesValue, Name) { }
+    public HDDComponent(int tier, int trashPrice, int salesPrice, int salesXP) : base(tier, trashPrice, salesPrice, salesXP, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -37,6 +37,6 @@ public class HDDComponent : Element, IComponent
 
     public HDDComponent Clone()
     {
-        return new HDDComponent(tier, trashValue, salesValue);
+        return new HDDComponent(tier, trashPrice, salesPrice, salesXP);
     }
 }

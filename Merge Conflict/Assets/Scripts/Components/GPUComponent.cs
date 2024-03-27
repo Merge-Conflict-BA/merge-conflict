@@ -4,7 +4,7 @@ Description:   Elements data structure for the GPU.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -17,7 +17,7 @@ public class GPUComponent : Element, IComponent
 {
     public static string Name = "GPU";
 
-    public GPUComponent(int tier, int trashValue, int salesValue) : base(tier, trashValue, salesValue, Name) { }
+    public GPUComponent(int tier, int trashPrice, int salesPrice, int salesXP) : base(tier, trashPrice, salesPrice, salesXP, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -37,6 +37,6 @@ public class GPUComponent : Element, IComponent
 
     public GPUComponent Clone()
     {
-        return new GPUComponent(tier, trashValue, salesValue);
+        return new GPUComponent(tier, trashPrice, salesPrice, salesXP);
     }
 }
