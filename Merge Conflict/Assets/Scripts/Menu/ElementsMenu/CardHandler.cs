@@ -132,7 +132,7 @@ public class CardHandler : MonoBehaviour
 
         element.level = _cardElement.Level;
         
-        element.InstantiateGameObjectAndAddTexture(GetRandomPositionOnDesk());
+        element.InstantiateGameObjectAndAddTexture(ComponentSpawner.Instance.GetRandomPositionOnDesk());
         
         // Update count of purchased elements and the price of the next card
         _cardElement.CountPurchased++;
@@ -146,18 +146,5 @@ public class CardHandler : MonoBehaviour
         
         var priceText = GetComponentInChildren<TextMeshProUGUI>();
         priceText.text = $"$ {currentPrice}";
-    }
-    
-    private Vector2 GetRandomPositionOnDesk()
-    {
-        GameObject deskObject = GameObject.FindWithTag("desk");
-        RectTransform rectTransform = deskObject.GetComponent<RectTransform>();
-        Vector2 anchoredPosition = rectTransform.anchoredPosition;
-        int padding = 100;
-
-        float x = Random.Range(anchoredPosition.x + padding, anchoredPosition.x + rectTransform.rect.width - padding);
-        float y = Random.Range(anchoredPosition.y + padding, anchoredPosition.y + rectTransform.rect.height - padding);
-
-        return new Vector2(x, y);
     }
 }
