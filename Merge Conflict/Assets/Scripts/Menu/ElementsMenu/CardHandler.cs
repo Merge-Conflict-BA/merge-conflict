@@ -26,24 +26,6 @@ public class CardHandler : MonoBehaviour
     public Sprite[] RAMSprites;
     public Sprite DefaultSprite;
 
-    [Header("Start Price for each element")]
-    public float[] CaseStartPrice = { 21, 57, 107, 178 };
-    public float[] CPUStartPrice = { 64, 171, 321, 535 };
-    public float[] GPUStartPrice = { 92, 247, 464, 773 };
-    public float[] HDDStartPrice = { 28, 76, 142, 237 };
-    public float[] MotherboardStartPrice = { 35, 95, 178, 297 };
-    public float[] PowerSupplyStartPrice = { 21, 57, 107, 178 };
-    public float[] RAMStartPrice = { 35, 95, 178, 297 };
-
-    [Header("Factor to next price")] 
-    public float[] CaseIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public float[] CPUIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public float[] GPUIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public float[] HDDIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public float[] MotherboardIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public float[] PowerSupplyIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public float[] RAMIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-
     // Defines which Element this Object is
     private FoundElement _cardElement;
     private float _startPrice;
@@ -65,38 +47,38 @@ public class CardHandler : MonoBehaviour
         {
             case var _ when elementName.Equals(CaseComponent.Name):
                 image.sprite = CaseSprites[index];
-                _startPrice = CaseStartPrice[index];
-                _increaseFactor = CaseIncreaseFactor[index];
+                _startPrice = Components.caseStartPrice[index];
+                _increaseFactor = Components.caseIncreaseFactor[index];
                 break;
             case var _ when elementName.Equals(CPUComponent.Name):
                 image.sprite = CPUSprites[index];
-                _startPrice = CPUStartPrice[index];
-                _increaseFactor = CPUIncreaseFactor[index];
+                _startPrice = Components.cpuStartPrice[index];
+                _increaseFactor = Components.cpuIncreaseFactor[index];
                 break;
             case var _ when elementName.Equals(GPUComponent.Name):
                 image.sprite = GPUSprites[index];
-                _startPrice = GPUStartPrice[index];
-                _increaseFactor = GPUIncreaseFactor[index];
+                _startPrice = Components.gpuStartPrice[index];
+                _increaseFactor = Components.gpuIncreaseFactor[index];
                 break;
             case var _ when elementName.Equals(HDDComponent.Name):
                 image.sprite = HDDSprites[index];
-                _startPrice = HDDStartPrice[index];
-                _increaseFactor = HDDIncreaseFactor[index];
+                _startPrice = Components.hddStartPrice[index];
+                _increaseFactor = Components.hddIncreaseFactor[index];
                 break;
             case var _ when elementName.Equals(MBComponent.Name):
                 image.sprite = MotherboardSprites[index];
-                _startPrice = MotherboardStartPrice[index];
-                _increaseFactor = MotherboardIncreaseFactor[index];
+                _startPrice = Components.mbStartPrice[index];
+                _increaseFactor = Components.mbIncreaseFactor[index];
                 break;
             case var _ when elementName.Equals(PowersupplyComponent.Name):
                 image.sprite = PowerSupplySprites[index];
-                _startPrice = PowerSupplyStartPrice[index];
-                _increaseFactor = PowerSupplyIncreaseFactor[index];
+                _startPrice = Components.powersupplyStartPrice[index];
+                _increaseFactor = Components.powersupplyIncreaseFactor[index];
                 break;
             case var _ when elementName.Equals(RAMComponent.Name):
                 image.sprite = RAMSprites[index];
-                _startPrice = RAMStartPrice[index];
-                _increaseFactor = RAMIncreaseFactor[index];
+                _startPrice = Components.ramStartPrice[index];
+                _increaseFactor = Components.ramIncreaseFactor[index];
                 break;
             case var _ when elementName.Equals(Trash.Name):
             default:
