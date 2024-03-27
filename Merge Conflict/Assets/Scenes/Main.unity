@@ -761,9 +761,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2422fe4fcbab5f43be856b8581e069e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisSlider: {fileID: 259636429}
   audioMixer: {fileID: 24100000, guid: ef52626a21f4ab7488657b542ae398b5, type: 2}
   exposedParameter: volumeEffects
   threshold: -40
+  playerPrefsKey: effectsVolume
 --- !u!1 &303300704
 GameObject:
   m_ObjectHideFlags: 0
@@ -6801,9 +6803,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2422fe4fcbab5f43be856b8581e069e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thisSlider: {fileID: 1618096688}
   audioMixer: {fileID: 24100000, guid: ef52626a21f4ab7488657b542ae398b5, type: 2}
   exposedParameter: volumeMusic
   threshold: -40
+  playerPrefsKey: musicVolume
 --- !u!1 &1651539446
 GameObject:
   m_ObjectHideFlags: 0
