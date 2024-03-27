@@ -2,13 +2,16 @@ using Unity.VisualScripting;
 
 public class Order
 {
-    public int CaseTier;
-    public int HddTier;
-    public int PowersupplyTier;
-    public int MotherboardTier;
-    public int GpuTier;
-    public int CpuTier;
-    public int RamTier;
+
+    public readonly CaseComponent PC;
+
+    public readonly int CaseTier;
+    public readonly int HddTier;
+    public readonly int PowersupplyTier;
+    public readonly int MotherboardTier;
+    public readonly int GpuTier;
+    public readonly int CpuTier;
+    public readonly int RamTier;
 
     public Order(int caseTier, int hddTier, int powersupplyTier, int motherboardTier, int gpuTier, int cpuTier, int ramTier)
     {
@@ -19,12 +22,33 @@ public class Order
         GpuTier = gpuTier;
         CpuTier = cpuTier;
         RamTier = ramTier;
+
+        PC = CreatePC();
     }
 
-    public static Order EmptyOrder()
+    private CaseComponent CreatePC()
     {
-        return new Order(0,0,0,0,0,0,0);
+        CPUComponent cpu = Components.CPU.Clone();
+        cpu.tier = CpuTier;
+
+        RAMComponent ram = Components.RAM.Clone();
+        ram.tier = RamTier;
+
+        GPUComponent gpu = Components.GPU.Clone();
+        gpu.tier = GpuTier;
+
+        MBComponent motherboard = Components.CreateMB(cpu, ram, gpu);
+        motherboard.tier = MotherboardTier;
+
+        HDDComponent hdd = Components.HDD.Clone();
+        hdd.tier = HddTier;
+
+        PowersupplyComponent powersupply = Components.Powersupply.Clone();
+        powersupply.tier = PowersupplyTier;
+
+        CaseComponent pcCase = Components.CreateCase(motherboard, powersupply, hdd);
+        pcCase.tier = CaseTier;
+
+        return pcCase;
     }
-
-
 }
