@@ -112,6 +112,17 @@ public class FoundElementsHandler : MonoBehaviour
         return foundElementsTemp;
     }
 
+    /// <summary>
+    /// Saves the CountPurchased of an FoundElement as an int to the PlayerPrefs. The key of that value indicates which elements have been found yet.
+    /// If an element is not been found yet, it is not saved in the PlayerPrefs
+    /// 
+    /// Example:
+    ///     key = Case_1
+    ///     value = 3
+    ///
+    ///     -->  the component "Case" which is level "1" is purchased 3 times
+    /// </summary>
+    /// <param name="element"></param>
     private void SaveFoundElementToPlayerPrefs(FoundElement element)
     {
         string key = element.GetPlayerPrefsKey();
