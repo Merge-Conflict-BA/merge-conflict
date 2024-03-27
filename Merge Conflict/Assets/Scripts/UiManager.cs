@@ -21,13 +21,13 @@ Description:   Open and close the menu playfield, settings, level, elements, upg
                is opened; otherwise it returns false.
 
 Author(s):     Markus Haubold
-Date:          2024-02-19
-Version:       V1.1 
+Date:          2024-03-27
+Version:       V2.0
 TODO:          - /
 **********************************************************************************************************************/
 
-using System.Collections;
 using System.Collections.Generic;
+using ExperienceSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,24 +37,34 @@ public class UiManager : MonoBehaviour
     private static UiManager _instance;
     public static UiManager Instance { get { return _instance; } }
 
+    //component sprites
+    public Sprite[] caseImages = new Sprite[4];
+    public Sprite[] hddImages = new Sprite[4];
+    public Sprite[] motherboardImages = new Sprite[4];
+    public Sprite[] powersupplyImages = new Sprite[4];
+    public Sprite[] cpuImages = new Sprite[4];
+    public Sprite[] gpuImages = new Sprite[4];
+    public Sprite[] ramImages = new Sprite[4];
+
     //default buttons to orchestrate the menu
-    [SerializeField] private Button buttonOpenMainmenu;
-    [SerializeField] private Button buttonCloseMainmenu;
-    [SerializeField] private Button buttonOpenSettings;
-    [SerializeField] private Button buttonOpenLevel;
-    [SerializeField] private Button buttonOpenUpgrade;
-    [SerializeField] private Button buttonOpenElements;
-    [SerializeField] private Button buttonExitGame;
-    [SerializeField] private Button buttonSellingStation;
+    [SerializeField] private Button _buttonOpenMainmenu;
+    [SerializeField] private Button _buttonCloseMainmenu;
+    [SerializeField] private Button _buttonOpenSettings;
+    [SerializeField] private Button _buttonOpenLevel;
+    [SerializeField] private Button _buttonOpenUpgrade;
+    [SerializeField] private Button _buttonOpenElements;
+    [SerializeField] private Button _buttonExitGame;
+    [SerializeField] private Button _buttonSellingStation;
 
     //all menus
-    [SerializeField] private Canvas Playfield;
-    [SerializeField] private Canvas UiManagerCanvas;
-    [SerializeField] private Canvas Mainmenu;
-    [SerializeField] private Canvas Settings;
-    [SerializeField] private Canvas Level;
-    [SerializeField] private Canvas Upgrade;
-    [SerializeField] private Canvas Elements;
+    [SerializeField] private Canvas _playfield;
+    [SerializeField] private Canvas _uiManagerCanvas;
+    [SerializeField] private Canvas _mainmenu;
+    [SerializeField] private Canvas _settings;
+    [SerializeField] private Canvas _level;
+    [SerializeField] private Canvas _upgrade;
+    [SerializeField] private Canvas _elements;
+
 
     //mapping buttons to the menu wich they should open
     List<KeyValuePair<string, string>> readableMenuName = new List<KeyValuePair<string, string>>
@@ -68,10 +78,11 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("SellingStation", "Level"),
     };
 
-    const Canvas NO_MENU_OPENED = null;
-    const string EXIT_GAME = "ButtonExitGame";
+    const Canvas NoMenuOpened = null;
+    const int OffsetTierToArrayIndex = 1;
+    const string ExitTheGame = "ButtonExitGame";
 
-    private Canvas currentOpenedMenu;
+    private Canvas _currentOpenedMenu;
     public bool isMenuVisible { get; private set; }
 
     void Awake()
@@ -87,39 +98,39 @@ public class UiManager : MonoBehaviour
         }
 
         //set default menu states 
-        UiManagerCanvas.enabled = true;
-        Mainmenu.enabled = false;
-        Settings.enabled = false;
-        Level.enabled = false;
-        Upgrade.enabled = false;
-        Elements.enabled = false;
+        _uiManagerCanvas.enabled = true;
+        _mainmenu.enabled = false;
+        _settings.enabled = false;
+        _level.enabled = false;
+        _upgrade.enabled = false;
+        _elements.enabled = false;
 
         //setup eventlisteners for all buttons
-        setupButtonListener(buttonOpenMainmenu);
-        setupButtonListener(buttonCloseMainmenu);
-        setupButtonListener(buttonOpenSettings);
-        setupButtonListener(buttonOpenLevel);
-        setupButtonListener(buttonOpenUpgrade);
-        setupButtonListener(buttonOpenElements);
-        setupButtonListener(buttonExitGame);
-        setupButtonListener(buttonSellingStation);
+        SetupButtonListener(_buttonOpenMainmenu);
+        SetupButtonListener(_buttonCloseMainmenu);
+        SetupButtonListener(_buttonOpenSettings);
+        SetupButtonListener(_buttonOpenLevel);
+        SetupButtonListener(_buttonOpenUpgrade);
+        SetupButtonListener(_buttonOpenElements);
+        SetupButtonListener(_buttonExitGame);
+        SetupButtonListener(_buttonSellingStation);
     }
 
-    private void setupButtonListener(Button button)
+    private void SetupButtonListener(Button button)
     {
         if (button != null)
         {
-            button.onClick.AddListener(() => handleButtonClick(button.name));
+            button.onClick.AddListener(() => HandleButtonClick(button.name));
         }
         else
         {
-            Debug.LogError($"Button with name {button} not found. Please check if the button exists and ist linkt to the script UiManager!");
+            Debug.LogError($"Button with name {button} not found. Please check if the button exists and is linked to the script UiManager!");
         }
     }
 
-    private void handleButtonClick(string clickedButton)
+    private void HandleButtonClick(string clickedButton)
     {
-        if (clickedButton == EXIT_GAME)
+        if (clickedButton == ExitTheGame)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -129,22 +140,22 @@ public class UiManager : MonoBehaviour
             return;
         }
 
-        switchMenu(clickedButton);
+        SwitchMenu(clickedButton);
     }
 
-    private void switchMenu(string requestedMenu)
+    private void SwitchMenu(string requestedMenu)
     {
-        if (currentOpenedMenu == NO_MENU_OPENED)
+        if (_currentOpenedMenu == NoMenuOpened)
         {
-            currentOpenedMenu = Mainmenu;
+            _currentOpenedMenu = _mainmenu;
         }
 
         //close current opened menu
-        if (Elements.enabled) // needs to be close menu separately, otherwise the collider will detect clicks and purchases can be done
+        if (_elements.enabled) // needs to be close menu separately, otherwise the collider will detect clicks and purchases can be done
         {
             ElementsMenu.Instance.CloseMenu();
         }
-        currentOpenedMenu.enabled = false;
+        _currentOpenedMenu.enabled = false;
 
         //open requested menu with usage of the mapping
         KeyValuePair<string, string> menuName = readableMenuName.Find(pair => pair.Key == requestedMenu);
@@ -152,44 +163,70 @@ public class UiManager : MonoBehaviour
         switch (menuName.Value)
         {
             case "Mainmenu":
-                Mainmenu.enabled = true;
-                Playfield.enabled = false;
-                currentOpenedMenu = Mainmenu;
+                _mainmenu.enabled = true;
+                _playfield.enabled = false;
+                _currentOpenedMenu = _mainmenu;
                 isMenuVisible = true;
                 break;
 
             case "Settings":
-                Settings.enabled = true;
-                currentOpenedMenu = Settings;
+                _settings.enabled = true;
+                _currentOpenedMenu = _settings;
                 break;
 
             case "Level":
-                Level.enabled = true;
-                currentOpenedMenu = Level;
+                _level.enabled = true;
+                _currentOpenedMenu = _level;
 
-                LevelMenu.GetSingleInstance().SetDisplayedCurrentLevel(7);
-                LevelMenu.GetSingleInstance().SetDisplayedCurrentXp(500);
-                LevelMenu.GetSingleInstance().SetProgressbarValue(7);
+                //#### only for testing ######
+                ExperienceHandler.ResetCurrentPlayerExperience();
+                ExperienceHandler.AddExperiencePoints(30);
+                //############################
+
+                //read dat from level manager
+                int currentLevel = 9;// ExperienceHandler.GetCurrentLevel();
+                int currentXp = ExperienceHandler.GetExperiencePoints();
+                int xpToUnlockNextLevel = ExperienceHandler.NeededXpToUnlockNextLevel(currentLevel);
+                string xpRatioString = $"{currentXp} / {xpToUnlockNextLevel}";
+
+                //#### only for testing ######
+                Order order = OrderGenerator.Instance.GenerateNewOrder(currentLevel); //TODO: move the order generation to another point, here it's only for testing the menu
+                //############################
+
+                //set level and xp values
+                LevelMenu.Instance.SetDisplayedCurrentLevel(currentLevel);
+                LevelMenu.Instance.SetDisplayedNextLevel(currentLevel + 1);
+                LevelMenu.Instance.SetXpRatioCurrentToNextLevel(xpRatioString);
+                LevelMenu.Instance.SetProgressbarValue(currentXp, xpToUnlockNextLevel);
+
+                //set current Tier and image of the ordered component
+                LevelMenu.Instance.SetDisplayedCaseTierAndImage(order.CaseTier, caseImages[order.CaseTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedCpuTierAndImage(order.CpuTier, cpuImages[order.CpuTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedGpuTierAndImage(order.GpuTier, gpuImages[order.GpuTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedMotherboardTierAndImage(order.MotherboardTier, motherboardImages[order.MotherboardTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedPowersupplyTierAndImage(order.PowersupplyTier, powersupplyImages[order.MotherboardTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedRamTierAndImage(order.RamTier, ramImages[order.RamTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedHddTierAndImage(order.HddTier, hddImages[order.HddTier - OffsetTierToArrayIndex]);
 
                 break;
 
             case "Upgrade":
-                Upgrade.enabled = true;
-                currentOpenedMenu = Upgrade;
+                _upgrade.enabled = true;
+                _currentOpenedMenu = _upgrade;
                 break;
 
             case "Elements":
-                Elements.enabled = true;
-                currentOpenedMenu = Elements;
+                _elements.enabled = true;
+                _currentOpenedMenu = _elements;
 
                 ElementsMenu.Instance.OpenMenu();
                 break;
 
             case "CloseMenu":
-                Mainmenu.enabled = false;
-                Playfield.enabled = true;
-                Elements.enabled = false;
-                currentOpenedMenu = null;
+                _mainmenu.enabled = false;
+                _playfield.enabled = true;
+                _elements.enabled = false;
+                _currentOpenedMenu = null;
                 isMenuVisible = false;
                 break;
 

@@ -17,7 +17,7 @@ public class CPUComponent : Element, IComponent
 {
     public static string Name = "CPU";
 
-    public CPUComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue, Name) { }
+    public CPUComponent(int tier, int trashValue, int salesValue) : base(tier, trashValue, salesValue, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -25,9 +25,9 @@ public class CPUComponent : Element, IComponent
         if (element is CPUComponent otherCPU)
         {
 
-            if ((this.level == otherCPU.level) && this.level < 4)
+            if ((this.tier == otherCPU.tier) && this.tier < 4)
             {
-                this.level++;
+                this.tier++;
                 return this;
             }
         }
@@ -37,6 +37,6 @@ public class CPUComponent : Element, IComponent
 
     public CPUComponent Clone()
     {
-        return new CPUComponent(level, trashValue, salesValue);
+        return new CPUComponent(tier, trashValue, salesValue);
     }
 }

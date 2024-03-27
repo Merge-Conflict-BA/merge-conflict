@@ -80,7 +80,7 @@ public class TextureAtlas : MonoBehaviour
     public ElementTexture GetComponentTexture(Element element)
     {
 
-        int index = element.level - 1;
+        int index = element.tier - 1;
         ElementTexture texture = defaultTexture;
         float[] textureValues = defaultTextureValues;
 
@@ -149,24 +149,24 @@ public class TextureAtlas : MonoBehaviour
 
         if (element is MBComponent mb)
         {
-            if (mb.cpu != null) { listOfSlotComponentTextures.Add(mbCPUSlotTexture[mb.cpu.level - levelToIndex]); }
-            if (mb.gpu != null) { listOfSlotComponentTextures.Add(mbGPUSlotTexture[mb.gpu.level - levelToIndex]); }
-            if (mb.ram != null) { listOfSlotComponentTextures.Add(mbRAMSlotTexture[mb.ram.level - levelToIndex]); }
+            if (mb.cpu != null) { listOfSlotComponentTextures.Add(mbCPUSlotTexture[mb.cpu.tier - levelToIndex]); }
+            if (mb.gpu != null) { listOfSlotComponentTextures.Add(mbGPUSlotTexture[mb.gpu.tier - levelToIndex]); }
+            if (mb.ram != null) { listOfSlotComponentTextures.Add(mbRAMSlotTexture[mb.ram.tier - levelToIndex]); }
         }
 
         if (element is CaseComponent cs)
         {
-            if (cs.powersupply != null)     { listOfSlotComponentTextures.Add(casePowersupplySlotTexture[cs.powersupply.level - levelToIndex]); }
-            if (cs.hdd != null)             { listOfSlotComponentTextures.Add(caseHDDSlotTexture[cs.hdd.level - levelToIndex]); }
+            if (cs.powersupply != null) { listOfSlotComponentTextures.Add(casePowersupplySlotTexture[cs.powersupply.tier - levelToIndex]); }
+            if (cs.hdd != null) { listOfSlotComponentTextures.Add(caseHDDSlotTexture[cs.hdd.tier - levelToIndex]); }
 
             if (cs.motherboard != null)
             {
-                listOfSlotComponentTextures.Add(caseMBSlotTexture[cs.motherboard.level - levelToIndex]);
+                listOfSlotComponentTextures.Add(caseMBSlotTexture[cs.motherboard.tier - levelToIndex]);
 
-                if (cs.motherboard.cpu != null) { listOfSlotComponentTextures.Add(caseCPUSlotTexture[cs.motherboard.cpu.level - levelToIndex]); }
-                if (cs.motherboard.ram != null) { listOfSlotComponentTextures.Add(caseRAMSlotTexture[cs.motherboard.ram.level - levelToIndex]); }
-                if (cs.motherboard.gpu != null) { listOfSlotComponentTextures.Add(caseGPUSlotTexture[cs.motherboard.gpu.level - levelToIndex]); }
-            } 
+                if (cs.motherboard.cpu != null) { listOfSlotComponentTextures.Add(caseCPUSlotTexture[cs.motherboard.cpu.tier - levelToIndex]); }
+                if (cs.motherboard.ram != null) { listOfSlotComponentTextures.Add(caseRAMSlotTexture[cs.motherboard.ram.tier - levelToIndex]); }
+                if (cs.motherboard.gpu != null) { listOfSlotComponentTextures.Add(caseGPUSlotTexture[cs.motherboard.gpu.tier - levelToIndex]); }
+            }
         }
 
         // Apply texture values for sub components

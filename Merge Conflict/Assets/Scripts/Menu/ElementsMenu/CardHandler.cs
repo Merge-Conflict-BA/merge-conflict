@@ -130,7 +130,7 @@ public class CardHandler : MonoBehaviour
             return;
         }
 
-        element.level = _cardElement.Level;
+        element.tier = _cardElement.Level;
         
         element.InstantiateGameObjectAndAddTexture(ComponentSpawner.Instance.GetRandomPositionOnDesk());
         

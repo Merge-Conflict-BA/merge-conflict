@@ -49,7 +49,7 @@ public class FoundElementsHandler : MonoBehaviour
         {
             return;
         }
-        FoundElement foundElement = new FoundElement(element.name, element.level);
+        FoundElement foundElement = new FoundElement(element.name, element.tier);
 
         // Check if the foundElement is already in the list of FoundElements
         foreach (var savedFoundElement in _foundElements)

@@ -60,7 +60,7 @@ public class AnimationManager : MonoBehaviour
             && previousElement.HasComponents() == false) 
         {
             // element levels up
-            mergeAnimation = lvlUpAnimations[mergedElement.level - 2];
+            mergeAnimation = lvlUpAnimations[mergedElement.tier - 2];
 
         } else 
         {

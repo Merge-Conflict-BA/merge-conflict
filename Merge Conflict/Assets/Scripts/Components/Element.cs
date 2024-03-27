@@ -15,19 +15,19 @@ using UnityEngine;
 
 public class Element
 {
-    private int _level;
-    public int level
+    private int _tier;
+    public int tier
     {
-        get { return _level; }
-        set { _level = Mathf.Clamp(value, 1, 4); }
+        get { return _tier; }
+        set { _tier = Mathf.Clamp(value, 1, 4); }
     }
     public readonly int trashValue;
     public readonly int salesValue;
     public readonly string name;
 
-    public Element(int level, int trashValue, int salesValue, string name)
+    public Element(int tier, int trashValue, int salesValue, string name)
     {
-        this.level = level;
+        this.tier = tier;
         this.trashValue = trashValue;
         this.salesValue = salesValue;
         this.name = name;
@@ -92,6 +92,6 @@ public class Element
     public virtual bool IsEqual(Element element)
     {
         return GetType() == element.GetType()
-            && level == element.level;
+            && tier == element.tier;
     }
 }

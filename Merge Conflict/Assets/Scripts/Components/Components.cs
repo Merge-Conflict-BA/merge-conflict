@@ -93,7 +93,7 @@ public static class Components
             return (5, 10);
         }
 
-        int index = element.level - 1;
+        int index = element.tier - 1;
 
         switch (element)
         {

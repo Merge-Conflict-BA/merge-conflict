@@ -4,32 +4,33 @@ using UnityEngine;
 public class Menu : MonoBehaviour
 {
     private Canvas _canvas;
+    const string TitleObjectName = "Title";
 
 
-    public void InitializeMenu(Canvas menuCanvas)
+    public void InitializeMenu(Canvas canvas)
     {
-        _canvas = menuCanvas;
+        _canvas = canvas;
         SetTitle();
     }
 
-    public Canvas FindCanvasForMenu(string menuname)
+    public Canvas FindCanvasForMenu(string name)
     {
-        GameObject foundCanvas = GameObject.Find(menuname);
+        GameObject foundCanvas = GameObject.Find(name);
         return foundCanvas.GetComponent<Canvas>();
     }
 
-    public T GetComponentByName<T>(string name) where T : Component
+    public T GetComponentbyObjectName<T>(string name) where T : Component
     {
         Transform foundGameObject = _canvas.transform.Find(name);
         if (foundGameObject == null)
         {
-            Debugger.LogError($"The GameObject with the name {name} can't be found!");
+            Debugger.LogError($"GetComponentByName: The GameObject with the name {name} can't be found!");
             return null;
         }
 
         if (!foundGameObject.TryGetComponent<T>(out var component))
         {
-            Debugger.LogError($"The component of type {typeof(T)} with the name {name} can't be found in the canvas {_canvas} !");
+            Debugger.LogError($"GetComponentByName: The component of type {typeof(T)} with the name {name} can't be found in the canvas {_canvas} !");
             return null;
         }
 
@@ -39,7 +40,7 @@ public class Menu : MonoBehaviour
     public void SetTitle()
     {
         //get the TextMeshPro field from the title or return 
-        TextMeshProUGUI textfield = GetComponentByName<TextMeshProUGUI>("Title");
+        TextMeshProUGUI textfield = GetComponentbyObjectName<TextMeshProUGUI>(TitleObjectName);
         if (textfield == null) { return; };
 
         //set the title

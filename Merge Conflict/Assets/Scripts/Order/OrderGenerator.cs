@@ -5,29 +5,23 @@ Description:    Create a new order with 7 components and the corresponding level
                 a level that has only recently been unlocked will be more likely to be filled than a component that has 
                 been unlocked for several levels.  
 Author(s):      Markus Haubold
-Date:           2024-03-20
-Version:        V1.0
+Date:           2024-03-26
+Version:        V1.1
 TODO:           - 
 **********************************************************************************************************************/
 
 using System;
 using System.IO;
 using UnityEngine;
+using static OrderParametersAtlas;
 
 public class OrderGenerator : MonoBehaviour
 {
     private static OrderGenerator _instance;
     public static OrderGenerator Instance { get { return _instance; } }
-    private ParameterStorage _parameterStorage;
-    public byte orderedCase;
-    public byte orderedHdd;
-    public byte orderedPowersupply;
-    public byte orderedMotherboard;
-    public byte orderedGpu;
-    public byte orderedCpu;
-    public byte orderedRam;
-    public byte currentLevel = 1;
-    public bool genOrder = false;
+    public Order Order = Order.EmptyOrder();
+    private readonly ComponentTierParameters[] _allComponentTierParameters = new ComponentTierParameters[ComponentsCount];
+    private string[] _componentNames;
 
     void Awake()
     {
@@ -38,168 +32,175 @@ public class OrderGenerator : MonoBehaviour
         }
         else
         {
-            _parameterStorage = new ParameterStorage(Const.ComponentNames);
+            //store all component names from the OrderConstantsAtlas.ComponentNamesWithListIndex within an array of string
+            _componentNames = ComponentNamesWithListIndex.GetNames(typeof(ComponentNamesWithListIndex));
 
-            //case
-            _parameterStorage.SetDistanceScalingFactor("Case", (int)Const.Case.DistanceScalingFactor1, (int)Const.Case.DistanceScalingFactor2, (int)Const.Case.DistanceScalingFactor3, (int)Const.Case.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("Case", (int)Const.Case.UnlocklevelStage1, (int)Const.Case.UnlocklevelStage2, (int)Const.Case.UnlocklevelStage3, (int)Const.Case.UnlocklevelStage4);
-            //hdd
-            _parameterStorage.SetDistanceScalingFactor("HDD", (int)Const.HDD.DistanceScalingFactor1, (int)Const.HDD.DistanceScalingFactor2, (int)Const.HDD.DistanceScalingFactor3, (int)Const.HDD.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("HDD", (int)Const.HDD.UnlocklevelStage1, (int)Const.HDD.UnlocklevelStage2, (int)Const.HDD.UnlocklevelStage3, (int)Const.HDD.UnlocklevelStage4);
-            //powersupply
-            _parameterStorage.SetDistanceScalingFactor("Powersupply", (int)Const.Powersupply.DistanceScalingFactor1, (int)Const.Powersupply.DistanceScalingFactor2, (int)Const.Powersupply.DistanceScalingFactor3, (int)Const.Powersupply.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("Powersupply", (int)Const.Powersupply.UnlocklevelStage1, (int)Const.Powersupply.UnlocklevelStage2, (int)Const.Powersupply.UnlocklevelStage3, (int)Const.Powersupply.UnlocklevelStage4);
-            //motherboard
-            _parameterStorage.SetDistanceScalingFactor("Motherboard", (int)Const.Motherboard.DistanceScalingFactor1, (int)Const.Motherboard.DistanceScalingFactor2, (int)Const.Motherboard.DistanceScalingFactor3, (int)Const.Motherboard.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("Motherboard", (int)Const.Motherboard.UnlocklevelStage1, (int)Const.Motherboard.UnlocklevelStage2, (int)Const.Motherboard.UnlocklevelStage3, (int)Const.Motherboard.UnlocklevelStage4);
-            //gpu
-            _parameterStorage.SetDistanceScalingFactor("GPU", (int)Const.GPU.DistanceScalingFactor1, (int)Const.GPU.DistanceScalingFactor2, (int)Const.GPU.DistanceScalingFactor3, (int)Const.GPU.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("GPU", (int)Const.GPU.UnlocklevelStage1, (int)Const.GPU.UnlocklevelStage2, (int)Const.GPU.UnlocklevelStage3, (int)Const.GPU.UnlocklevelStage4);
-            //cpu
-            _parameterStorage.SetDistanceScalingFactor("CPU", (int)Const.CPU.DistanceScalingFactor1, (int)Const.CPU.DistanceScalingFactor2, (int)Const.CPU.DistanceScalingFactor3, (int)Const.CPU.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("CPU", (int)Const.CPU.UnlocklevelStage1, (int)Const.CPU.UnlocklevelStage2, (int)Const.CPU.UnlocklevelStage3, (int)Const.CPU.UnlocklevelStage4);
-            //ram
-            _parameterStorage.SetDistanceScalingFactor("RAM", (int)Const.RAM.DistanceScalingFactor1, (int)Const.RAM.DistanceScalingFactor2, (int)Const.RAM.DistanceScalingFactor3, (int)Const.RAM.DistanceScalingFactor4);
-            _parameterStorage.SetEvolutionUnlocklevel("RAM", (int)Const.RAM.UnlocklevelStage1, (int)Const.RAM.UnlocklevelStage2, (int)Const.RAM.UnlocklevelStage3, (int)Const.RAM.UnlocklevelStage4);
+            /*
+             * initialize objects to store the needed parameters for calculate the probabilitiy for every Tier to be within the new order
+             * Tier-parameters for every component: levelsToUnlockTier {Tier1, Tier2, Tier3, Tier4}, countedLevelsMultiplicationFactor {Tier1, Tier2, Tier3, Tier4}
+            */
+            _allComponentTierParameters[(int)ComponentNamesWithListIndex.Case] = new ComponentTierParameters(new int[] { 1, 2, 4, 6 }, new int[] { 1, 2, 3, 4 });
+            _allComponentTierParameters[(int)ComponentNamesWithListIndex.HDD] = new ComponentTierParameters(new int[] { 1, 3, 5, 7 }, new int[] { 1, 2, 3, 4 });
+            _allComponentTierParameters[(int)ComponentNamesWithListIndex.Powersupply] = new ComponentTierParameters(new int[] { 1, 4, 6, 8 }, new int[] { 1, 2, 3, 4 });
+            _allComponentTierParameters[(int)ComponentNamesWithListIndex.Motherboard] = new ComponentTierParameters(new int[] { 1, 5, 7, 9 }, new int[] { 1, 2, 3, 4 });
+            _allComponentTierParameters[(int)ComponentNamesWithListIndex.GPU] = new ComponentTierParameters(new int[] { 1, 6, 8, 10 }, new int[] { 1, 2, 3, 4 });
+            _allComponentTierParameters[(int)ComponentNamesWithListIndex.CPU] = new ComponentTierParameters(new int[] { 1, 6, 8, 10 }, new int[] { 1, 2, 3, 4 });
+            _allComponentTierParameters[(int)ComponentNamesWithListIndex.RAM] = new ComponentTierParameters(new int[] { 1, 7, 9, 10 }, new int[] { 1, 2, 3, 4 });
 
 #if UNITY_EDITOR
             WriteDataLogFile();
 #endif
 
+            _instance = this;
         }
     }
 
-    private void Update()
+    /*
+     * calculate for depending on the given level the probabilities for the Tier1...Tier4 that this Tier is in the new generated order
+     * 1) parse the index for the current component from the given string 
+     * 2) count the levels from the current level to the level with which the Tier was unlocked
+     * 3) multiply this counted levels with a parameter, which is stored in the ComponentTierParameters object from the component (with changing this 
+     *    it's possible to controle/tune the probabilities and the distribution among each other)
+     * 4) calculate the probabilities of the Tiers1...Tier4 with which they will be in the new generated order
+    */
+    private float[] CalculateComponentTierProbabilities(int currentLevel, string componentName)
     {
-        if (genOrder)
-        {
-            GenerateNewOrder(currentLevel, Const.ComponentNames);
-            genOrder = false;
-        }
+        ComponentNamesWithListIndex componentNameParsedEnumValue = (ComponentNamesWithListIndex)Enum.Parse(typeof(ComponentNamesWithListIndex), componentName);
+        int componentIndex = (int)componentNameParsedEnumValue;
+
+        int[] countedLevels = Calculate.GetLevelCountSinceTierUnlock(currentLevel, _allComponentTierParameters[componentIndex].LevelsToUnlockTiers); ;
+
+        int[] multipliedCountedLevels = Calculate.MultiplyLevelCountSinceTierUnlock(countedLevels, _allComponentTierParameters[componentIndex].CountedLevelsMultiplicationFactor);
+
+        int totalMultipliedCountedLevels = Calculate.SumOfMultipliedLevelCountSinceTierUnlock(multipliedCountedLevels);
+
+        return Calculate.ProbabilityTierIsInOrder(multipliedCountedLevels, totalMultipliedCountedLevels);
     }
 
-    private float[] CalculateComponentstageProbabilities(int currentLevel, string componentName)
+    /*
+     * calculate the probabilities for Tier1...Tier4
+     * generate an random number between 0 and 1
+     * choose the Tier into which the randomly selected number fits
+    */
+    public int SelectTierForComponent(string componentName, int currentLevel)
     {
-        int[] distances = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(currentLevel, _parameterStorage.GetAllEvolutionUnlockLevels(componentName)); ;
+        float[] probabilityTierIsInOrder = CalculateComponentTierProbabilities(currentLevel, componentName);
 
-        int[] scaledDistances = Calculate.ScaledDistance(distances, _parameterStorage.GetAllDistanceScalingFactors(componentName));
+        float p1 = probabilityTierIsInOrder[Tier1];
+        float p2 = probabilityTierIsInOrder[Tier2];
+        float p3 = probabilityTierIsInOrder[Tier3];
+        float p4 = probabilityTierIsInOrder[Tier4];
 
-        int totalScaledDistance = Calculate.TotalScaledDistances(scaledDistances);
-
-        return Calculate.Probabilities(scaledDistances, totalScaledDistance);
-    }
-
-    public byte SelectStageForSingleComponent(string componentName, int currentLevel)
-    {
-        byte returnedStage = 0;
-        float[] stageProbabilities = CalculateComponentstageProbabilities(currentLevel, componentName);
-
-        float p1 = stageProbabilities[Const.Stage1];
-        float p2 = stageProbabilities[Const.Stage2];
-        float p3 = stageProbabilities[Const.Stage3];
-        float p4 = stageProbabilities[Const.Stage4];
-
-        float scaledP1 = p1;
-        float scaledP2 = scaledP1 + p2;
-        float scaledP3 = scaledP2 + p3;
-        float scaledP4 = scaledP3 + p4;
+        float cumulativeP1 = p1;
+        float cumulativeP2 = cumulativeP1 + p2;
+        float cumulativeP3 = cumulativeP2 + p3;
+        float cumulativeP4 = cumulativeP3 + p4;
 
         float randomNumber = UnityEngine.Random.value;
-
-        if (randomNumber < scaledP1) { return returnedStage = 1; }
-        if (randomNumber < scaledP2) { return returnedStage = 2; }
-        if (randomNumber < scaledP3) { return returnedStage = 3; }
-        if (randomNumber < scaledP4) { return returnedStage = 4; }
-        return returnedStage;   //if the randomNumber fits with nothing, 0 will be return and the Component class should run into an error
+        return randomNumber switch
+        {
+            float n when n < cumulativeP1 => 1,
+            float n when n < cumulativeP2 => 2,
+            float n when n < cumulativeP3 => 3,
+            float n when n < cumulativeP4 => 4,
+            _ => 0 //if the randomNumber fits with nothing, 0 will be return and the Component class should run into an error
+        };
     }
 
-    public void GenerateNewOrder(int level, string[] allComponents)
+    public Order GenerateNewOrder(int currentLevel)
     {
-        int[] selectedStageForComponents = new int[7];
-        for (int component = 0; component < allComponents.Length; component++)
+        int[] selectedTierForComponents = new int[ComponentsCount];
+        for (int component = 0; component < ComponentsCount; component++)
         {
-            selectedStageForComponents[component] = SelectStageForSingleComponent(allComponents[component], level);
+            selectedTierForComponents[component] = SelectTierForComponent(_componentNames[component], currentLevel);
         }
 
-        orderedCase = (byte)selectedStageForComponents[Const.CaseIndex];
-        orderedHdd = (byte)selectedStageForComponents[Const.HddIndex];
-        orderedPowersupply = (byte)selectedStageForComponents[Const.PowersupplyIndex];
-        orderedMotherboard = (byte)selectedStageForComponents[Const.MotherboardIndex];
-        orderedGpu = (byte)selectedStageForComponents[Const.GpuIndex];
-        orderedCpu= (byte)selectedStageForComponents[Const.CpuIndex];
-        orderedRam = (byte)selectedStageForComponents[Const.RamIndex];
+        int caseTier = selectedTierForComponents[(int)ComponentNamesWithListIndex.Case];
+        int hddTier = selectedTierForComponents[(int)ComponentNamesWithListIndex.HDD];
+        int powersupplyTier = selectedTierForComponents[(int)ComponentNamesWithListIndex.Powersupply];
+        int motherboardTier = selectedTierForComponents[(int)ComponentNamesWithListIndex.Motherboard];
+        int gpuTier = selectedTierForComponents[(int)ComponentNamesWithListIndex.GPU];
+        int cpuTier = selectedTierForComponents[(int)ComponentNamesWithListIndex.CPU];
+        int ramTier = selectedTierForComponents[(int)ComponentNamesWithListIndex.RAM];
+
+        Order order = new Order(caseTier, hddTier, powersupplyTier, motherboardTier, gpuTier, cpuTier, ramTier);
+        Order = order;
+       
+        return order;
     }
 
-    public void DeleteCurrentOrder()
+    public void DeleteOrder()
     {
-        orderedCase = 0;
-        orderedHdd = 0;
-        orderedPowersupply = 0;
-        orderedMotherboard = 0;
-        orderedGpu = 0;
-        orderedCpu= 0;
-        orderedRam = 0;
+        Order = Order.EmptyOrder();
     }
 
+    /*
+     * every time this class will be initialized, all parameters and all calculated values will be logged for all components for all levels
+     * this can be usefull for the process of tune the probabilities because it gives an complete overview 
+    */
     private void WriteDataLogFile()
     {
         const string FilePath = "Assets/Scripts/Order/dataLog.txt";
         const byte AmountLevels = 10;
         DateTime currentDateAndTime = DateTime.Now;
 
-        using (StreamWriter writer = new StreamWriter(FilePath))
+        using StreamWriter writer = new StreamWriter(FilePath);
+        writer.WriteLine("All data which are needed to generate the Order.");
+        writer.WriteLine("To understand what they data are used for, please checkout the Order/README.md!");
+        writer.WriteLine($"Generated: {currentDateAndTime.Day}.{currentDateAndTime.Month}.{currentDateAndTime.Year} at {currentDateAndTime.Hour}:{currentDateAndTime.Minute}:{currentDateAndTime.Second}");
+        writer.WriteLine(" ");
+        foreach (var component in _componentNames)
         {
-            writer.WriteLine("All data which are needed to generate the Order.");
-            writer.WriteLine("To understand what they data are used for, please checkout the Order/README.md!");
-            writer.WriteLine($"Generated: {currentDateAndTime.Day}.{currentDateAndTime.Month}.{currentDateAndTime.Year} at {currentDateAndTime.Hour}:{currentDateAndTime.Minute}:{currentDateAndTime.Second}");
-            writer.WriteLine(" ");
-            foreach (var component in Const.ComponentNames)
-            {
-                writer.WriteLine($"---[Component {component}]---");
-                writer.WriteLine("distanceScalingFactors:");
-                int[] dsf = _parameterStorage.GetAllDistanceScalingFactors(component);
-                writer.WriteLine("DistanceScalingFactor1: " + dsf[Const.Stage1]);
-                writer.WriteLine("DistanceScalingFactor2: " + dsf[Const.Stage2]);
-                writer.WriteLine("DistanceScalingFactor3: " + dsf[Const.Stage3]);
-                writer.WriteLine("DistanceScalingFactor4: " + dsf[Const.Stage4]);
-                writer.WriteLine(" ");
-                writer.WriteLine("unlockEvolutionLevels:");
-                int[] eul = _parameterStorage.GetAllEvolutionUnlockLevels(component);
-                writer.WriteLine("evolutionUnlockLevel1: " + eul[Const.Stage1]);
-                writer.WriteLine("evolutionUnlockLevel2: " + eul[Const.Stage2]);
-                writer.WriteLine("evolutionUnlockLevel3: " + eul[Const.Stage3]);
-                writer.WriteLine("evolutionUnlockLevel4: " + eul[Const.Stage4]);
-                writer.WriteLine(" ");
-                writer.WriteLine("Data that depends on current level:");
-                for (int level = 1; level <= AmountLevels; level++)
-                {
-                    int[] dist = Calculate.DistanceCurrentLevelToEvolutionUnlockLevels(level, _parameterStorage.GetAllEvolutionUnlockLevels(component));
-                    int[] scaledDist = Calculate.ScaledDistance(dist, _parameterStorage.GetAllDistanceScalingFactors(component));
-                    int totalScaledDist = Calculate.TotalScaledDistances(scaledDist);
-                    float[] prob = Calculate.Probabilities(scaledDist, totalScaledDist);
+            ComponentNamesWithListIndex componentNameParsedEnumValue = (ComponentNamesWithListIndex)Enum.Parse(typeof(ComponentNamesWithListIndex), component);
+            int componentIndex = (int)componentNameParsedEnumValue;
 
-                    writer.WriteLine($"|-Level {level}");
-                    writer.WriteLine($" |-totalScaledDistance: " + totalScaledDist);
-                    writer.WriteLine($" |-distanceToUnlockLevel1: " + dist[Const.Stage1]);
-                    writer.WriteLine($" |-scaledDistance1: " + scaledDist[Const.Stage1]);
-                    writer.WriteLine($" |-probability1: " + prob[Const.Stage1]);
-                    writer.WriteLine(" |");
-                    writer.WriteLine($" |-distanceToUnlockLevel2: " + dist[Const.Stage2]);
-                    writer.WriteLine($" |-scaledDistance2: " + scaledDist[Const.Stage2]);
-                    writer.WriteLine($" |-probability2: " + prob[Const.Stage2]);
-                    writer.WriteLine(" |");
-                    writer.WriteLine($" |-distanceToUnlockLevel3: " + dist[Const.Stage3]);
-                    writer.WriteLine($" |-scaledDistance3: " + scaledDist[Const.Stage3]);
-                    writer.WriteLine($" |-probability3: " + prob[Const.Stage3]);
-                    writer.WriteLine(" |");
-                    writer.WriteLine($" |-distanceToUnlockLevel4: " + dist[Const.Stage4]);
-                    writer.WriteLine($" |-scaledDistance4: " + scaledDist[Const.Stage4]);
-                    writer.WriteLine($" |-probability4: " + prob[Const.Stage4]);
-                    writer.WriteLine(" ");
-                }
-                writer.WriteLine("");
-                writer.WriteLine("");
+            writer.WriteLine($"---[Component {component}]---");
+            writer.WriteLine("countedLevelsMultiplicationFactor:");
+            int[] dsf = _allComponentTierParameters[componentIndex].CountedLevelsMultiplicationFactor;
+            writer.WriteLine("countedLevelsMultiplicationFactor: " + dsf[Tier1]);
+            writer.WriteLine("countedLevelsMultiplicationFactor: " + dsf[Tier2]);
+            writer.WriteLine("countedLevelsMultiplicationFactor: " + dsf[Tier3]);
+            writer.WriteLine("countedLevelsMultiplicationFactor: " + dsf[Tier4]);
+            writer.WriteLine(" ");
+            writer.WriteLine("levelsToUnlockTiers:");
+            int[] eul = _allComponentTierParameters[componentIndex].LevelsToUnlockTiers;
+            writer.WriteLine("levelsToUnlockTiers: " + eul[Tier1]);
+            writer.WriteLine("levelsToUnlockTiers: " + eul[Tier2]);
+            writer.WriteLine("levelsToUnlockTiers: " + eul[Tier3]);
+            writer.WriteLine("levelsToUnlockTiers: " + eul[Tier4]);
+            writer.WriteLine(" ");
+            writer.WriteLine("Data that depends on current level:");
+            for (int level = 1; level <= AmountLevels; level++)
+            {
+                int[] dist = Calculate.GetLevelCountSinceTierUnlock(level, _allComponentTierParameters[componentIndex].LevelsToUnlockTiers); ;
+
+                int[] scaledDist = Calculate.MultiplyLevelCountSinceTierUnlock(dist, _allComponentTierParameters[componentIndex].CountedLevelsMultiplicationFactor);
+
+                int totalScaledDist = Calculate.SumOfMultipliedLevelCountSinceTierUnlock(scaledDist);
+
+                float[] prob = Calculate.ProbabilityTierIsInOrder(scaledDist, totalScaledDist);
+
+                writer.WriteLine($"|-Level {level}");
+                writer.WriteLine($" |-totalScaledDistance: " + totalScaledDist);
+                writer.WriteLine($" |-distanceToUnlockLevel1: " + dist[Tier1]);
+                writer.WriteLine($" |-scaledDistance1: " + scaledDist[Tier1]);
+                writer.WriteLine($" |-probability1: " + prob[Tier1]);
+                writer.WriteLine(" |");
+                writer.WriteLine($" |-distanceToUnlockLevel2: " + dist[Tier2]);
+                writer.WriteLine($" |-scaledDistance2: " + scaledDist[Tier2]);
+                writer.WriteLine($" |-probability2: " + prob[Tier2]);
+                writer.WriteLine(" |");
+                writer.WriteLine($" |-distanceToUnlockLevel3: " + dist[Tier3]);
+                writer.WriteLine($" |-scaledDistance3: " + scaledDist[Tier3]);
+                writer.WriteLine($" |-probability3: " + prob[Tier3]);
+                writer.WriteLine(" |");
+                writer.WriteLine($" |-distanceToUnlockLevel4: " + dist[Tier4]);
+                writer.WriteLine($" |-scaledDistance4: " + scaledDist[Tier4]);
+                writer.WriteLine($" |-probability4: " + prob[Tier4]);
+                writer.WriteLine(" ");
             }
+            writer.WriteLine("");
+            writer.WriteLine("");
         }
     }
 }
