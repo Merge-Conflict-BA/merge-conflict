@@ -11,11 +11,13 @@ TODO:          - /
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(menuName = "Own/ElementTexture")]
 public class ElementTexture : ScriptableObject
 {
-    public Sprite elementSprite;
+    [FormerlySerializedAs("elementSprite")]
+    public Sprite sprite;
     public float sizeWidth = 1;
     public float sizeHeight = 1;
     public float sizeScaleX = 1;
@@ -28,7 +30,7 @@ public class ElementTexture : ScriptableObject
             Debugger.LogError("ApplyTexture: gameObject does not have RectTransform or SpriteRenderer attached!!!");
         }
 
-        gameObject.GetComponent<SpriteRenderer>().sprite = elementSprite;
+        gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
         gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(sizeWidth, sizeHeight);
         gameObject.GetComponent<RectTransform>().localScale = new Vector2(sizeScaleX, sizeScaleY);

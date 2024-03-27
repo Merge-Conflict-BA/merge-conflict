@@ -81,9 +81,9 @@ public class TextureAtlas : MonoBehaviour
     {
 
         int index = element.tier - 1;
-        ElementTexture texture = defaultTexture;
         float[] textureValues = defaultTextureValues;
 
+        ElementTexture texture;
         switch (element)
         {
             case CaseComponent:
