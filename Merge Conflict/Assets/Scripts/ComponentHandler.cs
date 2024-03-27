@@ -193,6 +193,7 @@ public class ComponentHandler : MonoBehaviour
                 Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
 
                 AnimationManager.Instance.PlayTrashAnimation(GetComponent<RectTransform>().anchoredPosition);
+                AudioManager.Instance.PlayThrowAwaySound();
 
                 Destroy(draggedComponent);
                 //TODO: call xp/money controller
@@ -237,6 +238,7 @@ public class ComponentHandler : MonoBehaviour
                     Debugger.LogMessage($"salesValue : {actualSalesValue}".ToString());
 
                     AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
+                    AudioManager.Instance.PlaySellSound();
 
                     Destroy(draggedComponent);
                     Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
