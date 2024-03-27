@@ -4,7 +4,7 @@ Description:   Elements data structure.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -21,26 +21,33 @@ public class Element
         get { return _tier; }
         set { _tier = Mathf.Clamp(value, 1, 4); }
     }
-    public readonly int trashValue;
-    public readonly int salesValue;
+    public readonly int trashPrice;
+    public readonly int salesPrice;
+    public readonly int salesXP;
     public readonly string name;
 
-    public Element(int tier, int trashValue, int salesValue, string name)
+    public Element(int tier, int trashPrice, int salesPrice, int salesXP, string name)
     {
         this.tier = tier;
-        this.trashValue = trashValue;
-        this.salesValue = salesValue;
+        this.trashPrice = trashPrice;
+        this.salesPrice = salesPrice;
+        this.salesXP = salesXP;
         this.name = name;
     }
 
-    public virtual int GetTrashValue()
+    public virtual int GetTrashPrice()
     {
-        return trashValue;
+        return trashPrice;
     }
 
-    public virtual int GetSalesValue()
+    public virtual int GetSalesPrice()
     {
-        return salesValue;
+        return salesPrice;
+    }
+
+    public virtual int GetSalesXP()
+    {
+        return salesXP;
     }
 
     // Is used to decide if a merging lvls up a component or adds one component to another.

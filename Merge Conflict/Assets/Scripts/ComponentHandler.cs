@@ -3,10 +3,11 @@ Name:          ComponentHandler
 Description:   Contains the methode to drag the component-objects and the methode to merge them. Handles the movement of objects on the desk.
 Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann, Daniel Rittrich
 Date:          2024-03-21
-Version:       V1.5
+Version:       V1.6
 TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
 using System;
+using ExperienceSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -183,21 +184,32 @@ public class ComponentHandler : MonoBehaviour
 
                 return;
             }
-#nullable restore
 
             //put component in the trashcan -> delete it
             if (Tags.Trashcan.UsedByGameObject(staticComponent.gameObject))
             {
-                Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
+                Element? draggedElement
+                    = draggedComponent.TryGetComponent(out ComponentHandler draggedComponentHandler)
+                    ? draggedComponentHandler.element
+                    : null;
 
-                AnimationManager.Instance.PlayTrashAnimation(GetComponent<RectTransform>().anchoredPosition);
+                if (draggedElement == null)
+                {
+                    return;
+                }
+                else
+                {
+                    AnimationManager.Instance.PlayTrashAnimation(GetComponent<RectTransform>().anchoredPosition);
 
-                Destroy(draggedComponent);
-                //TODO: call xp/money controller
+                    //TODO: call money controller
+                    int actualTrashPrice = draggedElement.GetTrashPrice();
+                    Debugger.LogMessage($"Component was put in the trashcan! Thx for recycling!   TrashPrice : {actualTrashPrice}");
+
+                    Destroy(draggedComponent);
+                }
             }
 
             // drop component (PC) on the selling station -> if possible/matching with quest -> sells it
-#nullable enable
             if (Tags.SellingStation.UsedByGameObject(staticComponent.gameObject))
             {
 
@@ -230,9 +242,11 @@ public class ComponentHandler : MonoBehaviour
                 if (draggedElement.IsEqual(requiredQuestElement))
                 {
 
-                    //TODO: call xp/money controller instead  ->  give more xp/money than putting it in trashcan  =>  use salesValues of the components                    
-                    int actualSalesValue = draggedElement.GetSalesValue();
-                    Debugger.LogMessage($"salesValue : {actualSalesValue}".ToString());
+                    //TODO: call money controller instead  ->  give more xp/money than putting it in trashcan  =>  use sales Values of the components                    
+                    int actualSalesPrice = draggedElement.GetSalesPrice();
+                    int actualSalesXP = draggedElement.GetSalesXP();
+                    ExperienceHandler.AddExperiencePoints(actualSalesXP);
+                    Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
 
                     AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
 

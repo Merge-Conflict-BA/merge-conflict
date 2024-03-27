@@ -4,7 +4,7 @@ Description:   Elements data structure for motherboard.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.4
+Version:       V1.5
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -21,8 +21,8 @@ public class MBComponent : Element, IComponent
     public static string Name = "Motherboard";
 
 
-    public MBComponent(int tier, int trashValue, int salesValue, CPUComponent? cpu = null, RAMComponent? ram = null, GPUComponent? gpu = null)
-        : base(tier, trashValue, salesValue, Name)
+    public MBComponent(int tier, int trashPrice, int salesPrice, int salesXP, CPUComponent? cpu = null, RAMComponent? ram = null, GPUComponent? gpu = null)
+        : base(tier, trashPrice, salesPrice, salesXP, Name)
     {
         this.cpu = cpu;
         this.ram = ram;
@@ -79,22 +79,31 @@ public class MBComponent : Element, IComponent
         return cpu != null || ram != null || gpu != null;
     }
 
-    override public int GetTrashValue()
+    override public int GetTrashPrice()
     {
-        int cpuTrashValue = cpu != null ? cpu.GetTrashValue() : 0;        
-        int ramTrashValue = ram != null ? ram.GetTrashValue() : 0;
-        int gpuTrashValue = gpu != null ? gpu.GetTrashValue() : 0;
+        int cpuTrashPrice = cpu != null ? cpu.GetTrashPrice() : 0;
+        int ramTrashPrice = ram != null ? ram.GetTrashPrice() : 0;
+        int gpuTrashPrice = gpu != null ? gpu.GetTrashPrice() : 0;
 
-        return base.GetTrashValue() + cpuTrashValue + ramTrashValue + gpuTrashValue;
+        return base.GetTrashPrice() + cpuTrashPrice + ramTrashPrice + gpuTrashPrice;
     }
 
-    override public int GetSalesValue()
+    override public int GetSalesPrice()
     {
-        int cpuSalesValue = cpu != null ? cpu.GetSalesValue() : 0;
-        int ramSalesValue = ram != null ? ram.GetSalesValue() : 0;
-        int gpuSalesValue = gpu != null ? gpu.GetSalesValue() : 0;
+        int cpuSalesPrice = cpu != null ? cpu.GetSalesPrice() : 0;
+        int ramSalesPrice = ram != null ? ram.GetSalesPrice() : 0;
+        int gpuSalesPrice = gpu != null ? gpu.GetSalesPrice() : 0;
 
-        return base.GetSalesValue() + cpuSalesValue + ramSalesValue + gpuSalesValue;
+        return base.GetSalesPrice() + cpuSalesPrice + ramSalesPrice + gpuSalesPrice;
+    }
+
+    override public int GetSalesXP()
+    {
+        int cpuSalesXP = cpu != null ? cpu.GetSalesXP() : 0;
+        int ramSalesXP = ram != null ? ram.GetSalesXP() : 0;
+        int gpuSalesXP = gpu != null ? gpu.GetSalesXP() : 0;
+
+        return base.GetSalesXP() + cpuSalesXP + ramSalesXP + gpuSalesXP;
     }
 
     public override bool IsEqual(Element element)
@@ -106,15 +115,15 @@ public class MBComponent : Element, IComponent
 
         MBComponent mBComponent = (MBComponent)element;
 
-        bool isCpuEqual     = (cpu  == null  && mBComponent.cpu   == null)   ? true   : (cpu  != null     && mBComponent.cpu    != null)    ? cpu.IsEqual(mBComponent.cpu)    : false;
-        bool isGPUEqual     = (gpu  == null  && mBComponent.gpu   == null)   ? true   : (gpu  != null     && mBComponent.gpu    != null)    ? gpu.IsEqual(mBComponent.gpu)    : false;
-        bool isRAMEqual     = (ram  == null  && mBComponent.ram   == null)   ? true   : (ram  != null     && mBComponent.ram    != null)    ? ram.IsEqual(mBComponent.ram)    : false;
+        bool isCpuEqual = (cpu == null && mBComponent.cpu == null) ? true : (cpu != null && mBComponent.cpu != null) ? cpu.IsEqual(mBComponent.cpu) : false;
+        bool isGPUEqual = (gpu == null && mBComponent.gpu == null) ? true : (gpu != null && mBComponent.gpu != null) ? gpu.IsEqual(mBComponent.gpu) : false;
+        bool isRAMEqual = (ram == null && mBComponent.ram == null) ? true : (ram != null && mBComponent.ram != null) ? ram.IsEqual(mBComponent.ram) : false;
 
         return isCpuEqual && isGPUEqual && isRAMEqual;
     }
 
     public MBComponent Clone()
     {
-        return new MBComponent(tier, trashValue, salesValue, cpu, ram, gpu);
+        return new MBComponent(tier, trashPrice, salesPrice, salesXP, cpu, ram, gpu);
     }
 }
