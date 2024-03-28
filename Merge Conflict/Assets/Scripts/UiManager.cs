@@ -145,6 +145,7 @@ public class UiManager : MonoBehaviour
                 if (previousOpenedMenu != _mainmenu)
                 {
                     OpenMenu(_mainmenu);
+                    AudioManager.Instance.PlayOpenMenuSound();
                 }
                 else
                 {
