@@ -55,6 +55,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button _buttonOpenElements;
     [SerializeField] private Button _buttonExitGame;
     [SerializeField] private Button _buttonSellingStation;
+    [SerializeField] private Button _buttonOpenIntroduction;
 
     //all menus
     [SerializeField] private Canvas _playfield;
@@ -64,6 +65,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Canvas _level;
     [SerializeField] private Canvas _upgrade;
     [SerializeField] private Canvas _elements;
+    [SerializeField] private Canvas _introduction;
 
 
     //mapping buttons to the menu wich they should open
@@ -76,6 +78,7 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenUpgrade", "Upgrade"),
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
         new KeyValuePair<string, string>("SellingStation", "Level"),
+        new KeyValuePair<string, string>("ButtonOpenIntroduction", "Introduction"),
     };
 
     const Canvas NoMenuOpened = null;
@@ -104,6 +107,7 @@ public class UiManager : MonoBehaviour
         _level.enabled = false;
         _upgrade.enabled = false;
         _elements.enabled = false;
+        _introduction.enabled = false;
 
         //setup eventlisteners for all buttons
         SetupButtonListener(_buttonOpenMainmenu);
@@ -114,6 +118,7 @@ public class UiManager : MonoBehaviour
         SetupButtonListener(_buttonOpenElements);
         SetupButtonListener(_buttonExitGame);
         SetupButtonListener(_buttonSellingStation);
+        SetupButtonListener(_buttonOpenIntroduction);
     }
 
     private void SetupButtonListener(Button button)
@@ -220,6 +225,11 @@ public class UiManager : MonoBehaviour
                 _currentOpenedMenu = _elements;
 
                 ElementsMenu.Instance.OpenMenu();
+                break;
+
+            case "Introduction":
+                _introduction.enabled = true;
+                _currentOpenedMenu = _introduction;
                 break;
 
             case "CloseMenu":
