@@ -23,10 +23,65 @@ public class OrderComponent
         TierWeights = tierWeights;
     }
 
-   /* public override string ToString()
+    public override string ToString()
     {
-        return 
-    }*/
+        string name = $"---[Component {Name}]---\n";
+
+        string tierUnlockedAtLevel = "tierUnlockedAtLevel: [";
+        for (int i = 0; i < TierUnlockedAtLevel.Length; i++)
+        {
+            tierUnlockedAtLevel += $"{TierUnlockedAtLevel[i]}, ";
+        }
+        tierUnlockedAtLevel += "]\n";
+
+        string tierWeights = "tierWeights: [";
+        for (int i = 0; i < TierWeights.Length; i++)
+        {
+            tierWeights += $"{TierWeights[i]}, ";
+        }
+        tierWeights += "]\n";
+
+        return name + tierUnlockedAtLevel + tierWeights;
+    }
+
+    public string GetDebugProbabilities(int level, bool verbose = false)
+    {
+        int[] levelCountSinceTierUnlock = GetLevelCountSinceTierUnlock(level);
+        int[] multipliedLevelCountSinceTierUnlock = MultiplyLevelCountSinceTierUnlock(level);
+        int sumOfMultipliedLevels = multipliedLevelCountSinceTierUnlock.Sum();
+        float[] probabilities = CalculateProbabilities(level);
+
+        string caption = $"|-Level {level}\n"
+            + $" |-sumOfMultipliedLevels: {sumOfMultipliedLevels}\n";
+
+        string verboseInfo = "";
+        string sLevelCountSinceTierUnlock = " |-LevelCountSinceTierUnlock: [";
+        string sMultipliedLevelCountSinceTierUnlock = " |-MultipliedLevelCountSinceTierUnlock: [";
+        string sProbabilities = " |-Probabilities: [";
+
+        for (int i = 0; i < levelCountSinceTierUnlock.Length; i++)
+        {
+            verboseInfo += $" |-levelCountSinceTierUnlock: {levelCountSinceTierUnlock[i]}\n";
+            verboseInfo += $" |-multipliedLevelCountSinceTierUnlock: {multipliedLevelCountSinceTierUnlock[i]}\n";
+            verboseInfo += $" |-probability: {probabilities[i]}\n";
+            verboseInfo += $" |\n";
+
+            sLevelCountSinceTierUnlock += $"{levelCountSinceTierUnlock[i]}, ";
+            sMultipliedLevelCountSinceTierUnlock += $"{multipliedLevelCountSinceTierUnlock[i]}, ";
+            sProbabilities += $"{probabilities[i]}, ";
+        }
+
+        sLevelCountSinceTierUnlock += "]\n";
+        sMultipliedLevelCountSinceTierUnlock += "]\n";
+        sProbabilities += "]\n";
+
+        if(verbose)
+        {
+            return caption + verboseInfo;
+        }
+
+        return caption + sLevelCountSinceTierUnlock + sMultipliedLevelCountSinceTierUnlock + sProbabilities;        
+    }
 
     /*
      * calculate for depending on the given level the probabilities for the Tier1...Tier4 that this Tier is in the new generated order

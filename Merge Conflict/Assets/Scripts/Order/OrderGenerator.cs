@@ -12,6 +12,7 @@ TODO:           -
 
 using System;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 public class OrderGenerator : MonoBehaviour
@@ -102,6 +103,31 @@ public class OrderGenerator : MonoBehaviour
     
     private void WriteDataLogFile()
     {
+        const string filePath = "Assets/Scripts/Order/dataLog.txt";
+        const int levels = 10;
+        DateTime currentDateAndTime = DateTime.Now;
+
+        using StreamWriter writer = new StreamWriter(filePath);
+
+        writer.WriteLine("All data which are needed to generate the Order.");
+        writer.WriteLine("To understand what they data are used for, please checkout the Order/README.md!");
+        writer.WriteLine($"Generated: {currentDateAndTime.Day}.{currentDateAndTime.Month}.{currentDateAndTime.Year} at {currentDateAndTime.Hour}:{currentDateAndTime.Minute}:{currentDateAndTime.Second}");
+        writer.WriteLine(" ");
+
+        foreach (var orderComponent in OrderComponents.List)
+        {
+            writer.Write(orderComponent.ToString());
+            writer.WriteLine("");
+
+            for (int level = 1; level <= levels; level++)
+            {
+                writer.Write(orderComponent.GetDebugProbabilities(level));
+            }
+
+            writer.WriteLine("");
+        }
+        writer.Write(OrderComponents.List[0].ToString());
+
         return;
         /*
         const string FilePath = "Assets/Scripts/Order/dataLog.txt";

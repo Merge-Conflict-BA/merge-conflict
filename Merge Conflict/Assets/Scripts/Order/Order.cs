@@ -1,4 +1,11 @@
-using Unity.VisualScripting;
+/**********************************************************************************************************************
+Name:           Order
+Description:    Contains all Data for an order => is the result of OrderGeneration
+Author(s):      Hanno Witzleb, Markus Haubold
+Date:           2024-03-27
+Version:        V2.0
+TODO:           - 
+**********************************************************************************************************************/
 
 public class Order
 {
