@@ -8406,7 +8406,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 932.168, y: 1399.723}
+  m_SizeDelta: {x: 932.168, y: 2171.024}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1330259709
 MonoBehaviour:
@@ -13053,7 +13053,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 932.18, y: 1330.432}
+  m_SizeDelta: {x: 932.18, y: 2083.042}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2099755874
 MonoBehaviour:
@@ -13075,18 +13075,23 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Imagine you are a computer assembler where your main job is to assemble
-    computers with different parts. At the start of each round, you receive an order
-    in the form of a computer configuration, which always consists of the basic seven
-    components: Case, RAM, HDD, CPU, GPU, Motherboard and power supply unit. A special
-    feature of the game is the variety of components, which are available in four
-    quality levels and can be requested in the order depending on the customer''s
-    wishes. You can reach these quality levels by moving up a level or by merging
-    two identical components of lower quality. This allows you to achieve a component
-    of the next higher quality level. Once the computer is completed, it is handed
+  m_text: "Imagine you are a computer specialist whose main task is to assemble computers
+    from various parts. \nAt the start of each round, you receive an order in the
+    form of a computer configuration, which always consists of the seven components:
+    housing, RAM, HDD, CPU, GPU, motherboard and power supply unit. \nWhen the game
+    starts, the conveyor belt starts up and transports various computer components
+    from the \"warehouse\" to the playing field. The components can then be placed
+    on the \"workbench\" from this conveyor belt. However, always keep a close eye
+    on your components, as this is no ordinary hardware and they tend to run away.
+    \nA special feature of the game is the variety of components, which are available
+    in four quality levels and can be requested in the order depending on the customer's
+    wishes. You can reach these quality levels by moving up a level or by combining
+    two identical components of lower quality. To do this, you place two identical
+    components on top of each other and then merge them to form the component of
+    the next higher quality level. \nAs soon as the computer is finished, it is handed
     over to the customer and you receive money and experience points as a reward.
-    As you gain experience, you will level up and be able to fulfill more difficult
-    orders.'
+    As you gain experience, your level increases and you can complete more difficult
+    jobs."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
