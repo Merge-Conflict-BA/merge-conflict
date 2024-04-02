@@ -15,8 +15,6 @@ public class ElementsMenu : Menu
 {
     public GameObject CardPrefab;
     public GameObject CardsListContentObject;
-    
-    private Canvas _elementsmenuCanvas;
     private GameObject[] FoundElementCardObjects;
 
     private Vector2 _displayedCardSize;
@@ -41,9 +39,8 @@ public class ElementsMenu : Menu
     public void OpenMenu()
     {
         CardsListContentObject.SetActive(true);
-        _elementsmenuCanvas = FindCanvasForMenu("Elements");
 
-        InitializeMenu(_elementsmenuCanvas);
+        InitializeMenu(gameObject.GetComponent<Canvas>());
         UpdateContentViewport();
         InstantiateCardObjects();
     }
