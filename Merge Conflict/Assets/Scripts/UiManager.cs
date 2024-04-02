@@ -37,15 +37,6 @@ public class UiManager : MonoBehaviour
     private static UiManager _instance;
     public static UiManager Instance { get { return _instance; } }
 
-    //component sprites
-    public Sprite[] caseImages = new Sprite[4];
-    public Sprite[] hddImages = new Sprite[4];
-    public Sprite[] motherboardImages = new Sprite[4];
-    public Sprite[] powersupplyImages = new Sprite[4];
-    public Sprite[] cpuImages = new Sprite[4];
-    public Sprite[] gpuImages = new Sprite[4];
-    public Sprite[] ramImages = new Sprite[4];
-
     //default buttons to orchestrate the menu
     [SerializeField] private Button _buttonOpenMainmenu;
     [SerializeField] private Button _buttonCloseMainmenu;
@@ -84,6 +75,8 @@ public class UiManager : MonoBehaviour
     const Canvas NoMenuOpened = null;
     const int OffsetTierToArrayIndex = 1;
     const string ExitTheGame = "ButtonExitGame";
+    const string OpenMainMenu = "ButtonOpenMainmenu";
+    const string CloseMainMenu = "ButtonCloseMainmenu";
 
     private Canvas _currentOpenedMenu;
     public bool isMenuVisible { get; private set; }
@@ -135,6 +128,9 @@ public class UiManager : MonoBehaviour
 
     private void HandleButtonClick(string clickedButton)
     {
+        if (clickedButton == OpenMainMenu) { PauseGame(); }
+        if (clickedButton == CloseMainMenu) { ContinueGame(); }
+
         if (clickedButton == ExitTheGame)
         {
 #if UNITY_EDITOR
@@ -204,14 +200,16 @@ public class UiManager : MonoBehaviour
                 LevelMenu.Instance.SetXpRatioCurrentToNextLevel(xpRatioString);
                 LevelMenu.Instance.SetProgressbarValue(currentXp, xpToUnlockNextLevel);
 
+                TextureAtlas textures = TextureAtlas.Instance;
+
                 //set current Tier and image of the ordered component
-                LevelMenu.Instance.SetDisplayedCaseTierAndImage(order.CaseTier, caseImages[order.CaseTier - OffsetTierToArrayIndex]);
-                LevelMenu.Instance.SetDisplayedCpuTierAndImage(order.CpuTier, cpuImages[order.CpuTier - OffsetTierToArrayIndex]);
-                LevelMenu.Instance.SetDisplayedGpuTierAndImage(order.GpuTier, gpuImages[order.GpuTier - OffsetTierToArrayIndex]);
-                LevelMenu.Instance.SetDisplayedMotherboardTierAndImage(order.MotherboardTier, motherboardImages[order.MotherboardTier - OffsetTierToArrayIndex]);
-                LevelMenu.Instance.SetDisplayedPowersupplyTierAndImage(order.PowersupplyTier, powersupplyImages[order.MotherboardTier - OffsetTierToArrayIndex]);
-                LevelMenu.Instance.SetDisplayedRamTierAndImage(order.RamTier, ramImages[order.RamTier - OffsetTierToArrayIndex]);
-                LevelMenu.Instance.SetDisplayedHddTierAndImage(order.HddTier, hddImages[order.HddTier - OffsetTierToArrayIndex]);
+                LevelMenu.Instance.SetDisplayedCaseTierAndImage(order.CaseTier, textures.GetComponentTexture(order.PC).sprite);
+                LevelMenu.Instance.SetDisplayedHddTierAndImage(order.HddTier, textures.GetComponentTexture(order.PC.hdd).sprite);
+                LevelMenu.Instance.SetDisplayedPowersupplyTierAndImage(order.PowersupplyTier, textures.GetComponentTexture(order.PC.powersupply).sprite);
+                LevelMenu.Instance.SetDisplayedMotherboardTierAndImage(order.MotherboardTier, textures.GetComponentTexture(order.PC.motherboard).sprite);
+                LevelMenu.Instance.SetDisplayedCpuTierAndImage(order.CpuTier, textures.GetComponentTexture(order.PC.motherboard.cpu).sprite);
+                LevelMenu.Instance.SetDisplayedGpuTierAndImage(order.GpuTier, textures.GetComponentTexture(order.PC.motherboard.gpu).sprite);
+                LevelMenu.Instance.SetDisplayedRamTierAndImage(order.RamTier, textures.GetComponentTexture(order.PC.motherboard.ram).sprite);
 
                 break;
 
@@ -244,6 +242,15 @@ public class UiManager : MonoBehaviour
                 Debug.LogWarning("There is no menu with the name: " + menuName.Value);
                 break;
         }
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+    private void ContinueGame()
+    {
+        Time.timeScale = 1f; 
     }
 }
 

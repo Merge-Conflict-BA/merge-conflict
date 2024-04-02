@@ -1491,8 +1491,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: 148.43408}
-  m_SizeDelta: {x: 100, y: 96.868}
+  m_AnchoredPosition: {x: 50, y: 150}
+  m_SizeDelta: {x: 100, y: 99.99996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &329098966
 MonoBehaviour:
@@ -2469,8 +2469,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 0
+  m_HorizontalFit: 1
+  m_VerticalFit: 1
 --- !u!114 &481858006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2512,7 +2512,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -70.00006, y: 1668.3}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &494681552
 GameObject:
@@ -5587,7 +5587,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: 49.999756}
+  m_AnchoredPosition: {x: 50, y: 50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &926658732
@@ -6760,6 +6760,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowersupplyTierValue
       objectReference: {fileID: 0}
+    - target: {fileID: 3427219048105526489, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e186b573ee41a40b2b6ac45e6d18b0ae, type: 3}
     - target: {fileID: 3912749676363780630, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -9498,8 +9502,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2100}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0, y: 0}
 --- !u!1 &1618080308
 GameObject:
@@ -11599,41 +11603,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de28df44c1dff4ed69310e826535e912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  caseImages:
-  - {fileID: 21300000, guid: 95adfd68b550fb043b7e8ab647237884, type: 3}
-  - {fileID: 21300000, guid: e4fea45217e90d7469e8021e87196570, type: 3}
-  - {fileID: 21300000, guid: eb800ce525506c9469f6147b938c9ef0, type: 3}
-  - {fileID: 21300000, guid: 1c6f57a8023341748a3cc0c5aeeb97ea, type: 3}
-  hddImages:
-  - {fileID: 21300000, guid: f22852f499684b1459e661474571bb89, type: 3}
-  - {fileID: 21300000, guid: 5a7ccc8e8aa3f124a8270b09001f510b, type: 3}
-  - {fileID: 21300000, guid: 6dec94527bf8a084ab7c17e22ea2d5c2, type: 3}
-  - {fileID: 21300000, guid: 1f83237f3f88f9d42897ef1aacd6f1e5, type: 3}
-  motherboardImages:
-  - {fileID: 21300000, guid: 55251ff57eb2c6d4d812993989a9c89f, type: 3}
-  - {fileID: 21300000, guid: c99b004041052944eb9bd95b922aa1bc, type: 3}
-  - {fileID: 21300000, guid: d4741c7e39236d0449bbd8f27abc2bab, type: 3}
-  - {fileID: 21300000, guid: 11af8130612dea042952b37eb060fca8, type: 3}
-  powersupplyImages:
-  - {fileID: 21300000, guid: bdec108c46e924a49993cf0778536eb4, type: 3}
-  - {fileID: 21300000, guid: 09b2360a4548de342846bc756be32636, type: 3}
-  - {fileID: 21300000, guid: 00860082a6c413248a54a4ffebc25880, type: 3}
-  - {fileID: 21300000, guid: 9335c630f8196774886d9475daad7e1c, type: 3}
-  cpuImages:
-  - {fileID: 21300000, guid: 74c965c4966108e489a399f8cf428395, type: 3}
-  - {fileID: 21300000, guid: 1f5cb0f607335ef4c98cde74cd02b01a, type: 3}
-  - {fileID: 21300000, guid: 38f31297997bdc041ab7d7678af45287, type: 3}
-  - {fileID: 21300000, guid: 251775000be3a084f9f656caa53c5616, type: 3}
-  gpuImages:
-  - {fileID: 21300000, guid: bc3ac53d761ff0b4b916b0a97170c83b, type: 3}
-  - {fileID: 21300000, guid: c8203a5b934ed4048943db70a8bd8ae9, type: 3}
-  - {fileID: 21300000, guid: 7e26e779f19b9c441a26133a0ed193a9, type: 3}
-  - {fileID: 21300000, guid: 996c9d122add3bb4fb202d04e546e2ab, type: 3}
-  ramImages:
-  - {fileID: 21300000, guid: b53aa8d34cf07bc41ba6c2d561225a82, type: 3}
-  - {fileID: 21300000, guid: 06e98596491e0e24c946d6538148a436, type: 3}
-  - {fileID: 21300000, guid: ad0f123e6ea5a7f46a50878327f6bbb0, type: 3}
-  - {fileID: 21300000, guid: 4cda30e32afabdf4cb039322246b7932, type: 3}
   _buttonOpenMainmenu: {fileID: 979635377}
   _buttonCloseMainmenu: {fileID: 2046992378}
   _buttonOpenSettings: {fileID: 215222514}

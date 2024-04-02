@@ -23,7 +23,7 @@ public class ComponentSpawner : MonoBehaviour
     public GameObject subComponentPrefab;
     public GameObject spawnPointObject;
 
-    // Spawn Settings
+    // Spawn Settings    
     private const float initialSpawnDelaySeconds = 0f;
     private const float spawnIntervalSeconds = 4f;
 
@@ -61,6 +61,13 @@ public class ComponentSpawner : MonoBehaviour
         Debugger.LogErrorIf(
             spawnPointObject == null,
             "ComponentSpawner: No Reference SpawnPoint GameObject has been set!");
+
+        // set position of spawnPoint
+        spawnPointObject.GetComponent<RectTransform>().anchorMin = Vector2.zero;
+        spawnPointObject.GetComponent<RectTransform>().anchorMax = Vector2.zero;
+        spawnPointObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(
+            50,
+            transform.parent.GetComponent<RectTransform>().rect.height + 100);
 
         // Current System of spawning: each 4 seconds a random component is spawning
         InvokeRepeating(nameof(SpawnRandomComponentOnBelt), initialSpawnDelaySeconds, spawnIntervalSeconds);
@@ -125,7 +132,11 @@ public class ComponentSpawner : MonoBehaviour
 
     private Vector2 GetSpawnPosition()
     {
+        Vector2 positionWorld = spawnPointObject.transform.position;
+        Vector2 positionLocal = transform.InverseTransformVector(positionWorld);
+
         return spawnPointObject.GetComponent<RectTransform>().anchoredPosition;
+        return positionLocal;
     }
     
     public Vector2 GetRandomPositionOnDesk()
