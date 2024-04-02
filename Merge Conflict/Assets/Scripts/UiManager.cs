@@ -72,6 +72,8 @@ public class UiManager : MonoBehaviour
     const Canvas NoMenuOpened = null;
     const int OffsetTierToArrayIndex = 1;
     const string ExitTheGame = "ButtonExitGame";
+    const string OpenMainMenu = "ButtonOpenMainmenu";
+    const string CloseMainMenu = "ButtonCloseMainmenu";
 
     private Canvas _currentOpenedMenu;
     public bool isMenuVisible { get; private set; }
@@ -121,6 +123,9 @@ public class UiManager : MonoBehaviour
 
     private void HandleButtonClick(string clickedButton)
     {
+        if (clickedButton == OpenMainMenu) { PauseGame(); }
+        if (clickedButton == CloseMainMenu) { ContinueGame(); }
+
         if (clickedButton == ExitTheGame)
         {
 #if UNITY_EDITOR
@@ -227,6 +232,15 @@ public class UiManager : MonoBehaviour
                 Debug.LogWarning("There is no menu with the name: " + menuName.Value);
                 break;
         }
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+    private void ContinueGame()
+    {
+        Time.timeScale = 1f; 
     }
 }
 
