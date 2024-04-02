@@ -15,14 +15,16 @@ public class ElementsMenu : Menu
 {
     public GameObject CardPrefab;
     public GameObject CardsListContentObject;
+
+    private Canvas _elementsmenuCanvas;
     private GameObject[] FoundElementCardObjects;
 
     private Vector2 _displayedCardSize;
-    
+
     #region Singleton
     private static ElementsMenu _instance;
     public static ElementsMenu Instance { get { return _instance; } }
-        
+
     void Awake()
     {
         if (_instance != null && _instance != this)
@@ -39,8 +41,9 @@ public class ElementsMenu : Menu
     public void OpenMenu()
     {
         CardsListContentObject.SetActive(true);
+        _elementsmenuCanvas = gameObject.GetComponent<Canvas>();
 
-        InitializeMenu(gameObject.GetComponent<Canvas>());
+        InitializeMenu(_elementsmenuCanvas);
         UpdateContentViewport();
         InstantiateCardObjects();
     }
@@ -49,7 +52,7 @@ public class ElementsMenu : Menu
     {
         // Calculate CellSize for the GridLayoutGroup of the CardsListContentObject to handle different screen resolution
         // so the Cards are displayed all in the center
-        
+
         // Get sizes and GridLayoutGroup from CardsListContentObject
         RectTransform contentRectTransform = CardsListContentObject.GetComponent<RectTransform>();
         float width = contentRectTransform.rect.size.x - contentRectTransform.sizeDelta.x;
@@ -80,7 +83,7 @@ public class ElementsMenu : Menu
         {
             cardNames.Add(cardTransform.gameObject.name);
         }
-        
+
         // Instantiate all found elements if they aren't instantiated yet
         foreach (var foundElement in FoundElementsHandler.Instance.GetFoundElements())
         {
@@ -90,10 +93,10 @@ public class ElementsMenu : Menu
             {
                 continue;
             }
-            
+
             GameObject cardObject = Instantiate(CardPrefab, Vector3.zero, Quaternion.identity, CardsListContentObject.transform);
             cardObject.name = cardTitle;
-            
+
             // Update the Sprite so that the right element is displayed on the card
             CardHandler cardHandler = cardObject.GetComponent<CardHandler>();
             cardHandler.UpdateSprite(foundElement);
@@ -102,7 +105,7 @@ public class ElementsMenu : Menu
             BoxCollider2D boxCollider2D = cardObject.GetComponent<BoxCollider2D>();
             boxCollider2D.size = _displayedCardSize;
         }
-        
+
         // Reorder cards
         SortCards();
     }
