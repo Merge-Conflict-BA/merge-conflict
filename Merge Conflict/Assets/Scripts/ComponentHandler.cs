@@ -267,6 +267,7 @@ public class ComponentHandler : MonoBehaviour
         else
         {
             // if component cannot be sold -> automatically move it back onto the playfield
+            AudioManager.Instance.PlayTrySellWrongComponentSound();
             Debugger.LogMessage("Component cannot be sold. It does not correspond to the required order from the quest.");
         }
     }

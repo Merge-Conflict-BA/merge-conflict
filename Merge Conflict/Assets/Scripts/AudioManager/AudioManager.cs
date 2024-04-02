@@ -52,6 +52,7 @@ public class AudioManager : MonoBehaviour
     [Space(20)]
     public AudioSource sellAudioSource;
     public AudioClip sellSound;
+    public AudioClip trySellWrongComponentSound;
 
     [Space(20)]
     public AudioSource throwAwayAudioSource; // trash
@@ -65,12 +66,20 @@ public class AudioManager : MonoBehaviour
     public AudioSource pickUpComponentAudioSource;
     public AudioClip pickUpComponentSound;
 
+    [Space(20)]
+    public AudioSource footstepAudioSource;
+    public AudioClip footstepSound;
+    public float footstepInterval = 0.15f;
+
     // ?  Maybe other sounds or environment sounds 
     /*    (conveyorbelt, component walking, component dragging, component dropping, individual sounds for upgrades, 
            open menu, close menu, component returning to desk, trash walkin on desk, level up, close menu, quest completed,
-           get component when throwing one away (upgrade), buy component,  ... )  */
+           get component when throwing one away (upgrade), buy component, selling wrong component,  ... )  */
+
+    // TODO: don't play dropComponent Sound when selling a component or throwing it in the trash can
 
     private Coroutine playNextSongCoroutine;
+    private Coroutine footstepCoroutine;
 
     private void Awake()
     {
@@ -164,6 +173,11 @@ public class AudioManager : MonoBehaviour
         sellAudioSource.PlayOneShot(sellSound);
     }
 
+    public void PlayTrySellWrongComponentSound()
+    {
+        sellAudioSource.PlayOneShot(trySellWrongComponentSound);
+    }
+
     public void PlayThrowAwaySound()
     {
         throwAwayAudioSource.PlayOneShot(throwAwaySound);
@@ -177,5 +191,44 @@ public class AudioManager : MonoBehaviour
     public void PlayPickUpComponentSound()
     {
         pickUpComponentAudioSource.PlayOneShot(pickUpComponentSound);
+    }
+
+
+
+
+    // !    ---------  WIP  --------- 
+
+    // Methode zum Starten der Fußschritt-Schleife
+    public void StartFootstepLoop()
+    {
+        // Stelle sicher, dass nicht bereits eine Fußschritt-Schleife läuft
+        if (footstepCoroutine == null)
+        {
+            footstepCoroutine = StartCoroutine(PlayFootstepsLoop());
+        }
+    }
+
+    // Methode zum Stoppen der Fußschritt-Schleife
+    public void StopFootstepLoop()
+    {
+        if (footstepCoroutine != null)
+        {
+            StopCoroutine(footstepCoroutine);
+            footstepCoroutine = null;
+        }
+    }
+
+    // Coroutine, die den Fußschritt-Sound in einer Schleife abspielt
+    private IEnumerator PlayFootstepsLoop()
+    {
+        // Warte die initiale Verzögerung ab, bevor die Schleife startet
+        yield return new WaitForSeconds(2.5f);
+
+        // Wiederhole solange, bis die Coroutine explizit gestoppt wird
+        while (true)
+        {
+            footstepAudioSource.PlayOneShot(footstepSound); // Spiele den Fußschritt-Sound ab
+            yield return new WaitForSeconds(footstepInterval); // Warte das angegebene Intervall ab
+        }
     }
 }

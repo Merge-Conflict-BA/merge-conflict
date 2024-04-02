@@ -66,7 +66,7 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenLevel", "Level"),
         new KeyValuePair<string, string>("ButtonOpenUpgrade", "Upgrade"),
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
-        new KeyValuePair<string, string>("SellingStation", "Level"),
+        new KeyValuePair<string, string>("SellingStation", "SellingStation"),
     };
 
     const Canvas NoMenuOpened = null;
@@ -161,6 +161,12 @@ public class UiManager : MonoBehaviour
             case "Level":
                 OpenMenu(_level);
                 LevelMenu.Instance.OpenMenu();
+                break;
+
+            case "SellingStation":
+                AudioManager.Instance.PlayOpenMenuSound();
+                LEVEL.enabled = true;
+                currentOpenedMenu = LEVEL;
                 break;
 
             case "Upgrade":

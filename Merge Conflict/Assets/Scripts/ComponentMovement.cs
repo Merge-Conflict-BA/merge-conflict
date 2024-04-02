@@ -55,6 +55,7 @@ public class ComponentMovement : MonoBehaviour
     // Store the last positions of the component while dragging to calculate the direction of the further movement after dragging
     private List<Vector2> _lastPositionsWhileBeingDragged;
     private bool _isReturningToDesk;
+    private bool _startedWalking;
 
     /// <summary>
     /// Changes important properties of the movement of the component
@@ -251,6 +252,8 @@ public class ComponentMovement : MonoBehaviour
         _currentMoveDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized;
         _intermediateTargetForSmoothMovement = position;
         _isMoving = true;
+        AudioManager.Instance.StartFootstepLoop();
+        Debugger.LogMessage($"TEST    WALK START");
 
         int tries = 0, maxTries = 10;
         Vector3 vectorToPositionInDirection = _currentMoveDirection * (_currentRemainingMoveDistance / 2);
@@ -277,7 +280,7 @@ public class ComponentMovement : MonoBehaviour
         // follow _leaderPosition - is smooth because of the _smoothMovementFactor
         SetCanvasPosition(GetCanvasPosition() + (_intermediateTargetForSmoothMovement - GetCanvasPosition()) * _smoothMovementFactor);
 
-        if (Vector3.Distance(_intermediateTargetForSmoothMovement, GetCanvasPosition()) <= 0.01)
+        if (Vector3.Distance(_intermediateTargetForSmoothMovement, GetCanvasPosition()) <= 0.1)
         {
             ResetMovementProperties();
         }
@@ -357,6 +360,8 @@ public class ComponentMovement : MonoBehaviour
         _remainingSecondsUntilIdleMoveStarts = Random.Range(MinSecondsWithoutIdleMove, MaxSecondsWithoutIdleMove);
         _isReturningToDesk = false;
         _isMoving = false;
+        AudioManager.Instance.StopFootstepLoop();
+        Debugger.LogMessage($"TESSSSSSSSSSSSSSST    WALK STOP");
     }
 
     private Vector2 GetCanvasPosition()
