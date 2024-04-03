@@ -20,6 +20,7 @@ public class ElementsMenu : Menu
     private GameObject[] FoundElementCardObjects;
 
     private Vector2 _displayedCardSize;
+    private Vector2 _sizeOfCard;
 
     #region Singleton
     private static ElementsMenu _instance;
@@ -67,8 +68,8 @@ public class ElementsMenu : Menu
 
         // Calculate cellHeight by using the size of the CardPrefab
         RectTransform cardRectTransform = CardPrefab.GetComponent<RectTransform>();
-        Vector2 sizeOfCard = cardRectTransform.rect.size;
-        cellSize.y = (sizeOfCard.y * cellSize.x) / sizeOfCard.x;
+        _sizeOfCard = cardRectTransform.rect.size;
+        cellSize.y = (_sizeOfCard.y * cellSize.x) / _sizeOfCard.x;
 
         // Set new calculated cellSize to the GridLayoutGroup
         gridLayoutGroup.cellSize = cellSize;
@@ -103,7 +104,9 @@ public class ElementsMenu : Menu
 
             // Set right size for boxCollider2D
             BoxCollider2D boxCollider2D = cardObject.GetComponent<BoxCollider2D>();
-            boxCollider2D.size = _displayedCardSize;
+            float scaleFactor = _displayedCardSize.x / _sizeOfCard.x;
+            boxCollider2D.size *= scaleFactor;
+            boxCollider2D.offset *= scaleFactor;
         }
 
         // Reorder cards
