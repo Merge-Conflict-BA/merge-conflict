@@ -271,8 +271,6 @@ public class ComponentMovement : MonoBehaviour
         Vector2 vectorToNextPosition = _currentMoveDirection * (MoveSpeed * Time.deltaTime);
         float movedDistance = ((_startPositionOfCurrentMove ?? _intermediateTargetForSmoothMovement) - _intermediateTargetForSmoothMovement).magnitude;
 
-        Debugger.LogMessage($"    MOVED DISTANCE  :  {this.name}    {movedDistance}");
-        Debugger.LogMessage($"REMAINING DISTANCE  :  {this.name}    {_currentRemainingMoveDistance}");
         if (movedDistance > 3f && !_isWalking)
         {
             _isWalking = true;
