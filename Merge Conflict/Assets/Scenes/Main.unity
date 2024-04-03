@@ -7105,33 +7105,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1933479630}
     m_Modifications:
-    - target: {fileID: 804732929881756376, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: bab2b85dc6888414a965bc909f27271f, type: 3}
-    - target: {fileID: 2470332100436263309, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
-      propertyPath: m_Name
-      value: PowersupplyTierValue
-      objectReference: {fileID: 0}
-    - target: {fileID: 3427219048105526489, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: e186b573ee41a40b2b6ac45e6d18b0ae, type: 3}
-    - target: {fileID: 3912749676363780630, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: d62e18fb3523e1d429919f8b71a116b2, type: 3}
-    - target: {fileID: 5459247269671406160, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: ebb12a9d8c8ae9e4fb34b45f6dd2ce84, type: 3}
-    - target: {fileID: 6433944544721858280, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
-      propertyPath: m_Name
-      value: Powersupply
-      objectReference: {fileID: 0}
-    - target: {fileID: 6550879700854750191, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
-      propertyPath: m_Name
-      value: PowersupplyTierDescription
+    - target: {fileID: 4483804302838372053, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -800.00024
       objectReference: {fileID: 0}
     - target: {fileID: 6906180385017960943, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
       propertyPath: m_Pivot.x
@@ -7213,17 +7189,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7235112666492921112, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: ab4d4bc591c52ef47b1c55c3eadc51e9, type: 3}
     - target: {fileID: 8126229414689511615, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
       propertyPath: m_Name
       value: Level
-      objectReference: {fileID: 0}
-    - target: {fileID: 8797622358377341681, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
