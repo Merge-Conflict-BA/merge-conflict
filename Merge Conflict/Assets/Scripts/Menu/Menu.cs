@@ -21,7 +21,7 @@ public class Menu : MonoBehaviour
 
     public T GetComponentbyObjectName<T>(string name) where T : Component
     {
-        Transform foundGameObject = _canvas.transform.Find(name);
+        Transform foundGameObject = FindObjectByNameInChildren(name, _canvas.transform);
         if (foundGameObject == null)
         {
             Debugger.LogError($"GetComponentByName: The GameObject with the name {name} can't be found!");
@@ -35,6 +35,32 @@ public class Menu : MonoBehaviour
         }
 
         return component;
+    }
+
+    private Transform? FindObjectByNameInChildren(string name, Transform parent) 
+    {
+        Transform foundGameObject = parent.Find(name);
+        if (foundGameObject != null)
+        {
+            return foundGameObject;
+        }
+
+        foreach (Transform child in parent)
+        {
+            if (child == null)
+            {
+                continue;
+            }           
+
+            foundGameObject =  FindObjectByNameInChildren(name, child);
+
+            if (foundGameObject != null)
+            {
+                return foundGameObject;
+            }
+        }
+
+        return null;
     }
 
     public void SetTitle()

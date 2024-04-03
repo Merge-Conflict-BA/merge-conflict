@@ -11,6 +11,7 @@ TODO:          - check if the player has enough money
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Image = UnityEngine.UI.Image;
 using Random = UnityEngine.Random;
 
@@ -25,14 +26,22 @@ public class CardHandler : MonoBehaviour
     public Sprite[] PowerSupplySprites;
     public Sprite[] RAMSprites;
     public Sprite DefaultSprite;
+    
+    [Header("Button to purchase Element")]
+    public Button purchaseButton;
+
+    [Header("Text to show after a purchase is done")]
+    public GameObject purchasedTextObject;
 
     // Defines which Element this Object is
     private FoundElement _cardElement;
     private float _startPrice;
     private float _increaseFactor;
-    
-    private float _clickStartTime;
-    private const float MaxTimeOfClick = 0.3f;
+
+    private void Start()
+    {
+        purchaseButton.onClick.AddListener(BuyElement);
+    }
 
     public void UpdateSprite(FoundElement element)
     {
@@ -91,24 +100,6 @@ public class CardHandler : MonoBehaviour
         UpdatePrice();
     }
 
-    public void OnMouseUpAsButton()
-    {
-        // if the user clicks longer than _maxTimeOfClick on a card it is handled as a scroll - not as a click
-        if ((Time.time - _clickStartTime) > MaxTimeOfClick)
-        {
-            return;
-        }
-        
-        // todo: check if the player has enough money
-        // buy this particular Element
-        BuyElement();
-    }
-
-    private void OnMouseDown()
-    {
-        _clickStartTime = Time.time;
-    }
-
     private void BuyElement()
     {
         string elementName = _cardElement.ElementName;
@@ -138,6 +129,9 @@ public class CardHandler : MonoBehaviour
         _cardElement.CountPurchased++;
         FoundElementsHandler.Instance.UpdateStoredElement(_cardElement);
         UpdatePrice();
+        
+        // Give feedback if the purchase is done -> instantiate gameObject with text ("+1")
+        Instantiate(purchasedTextObject, transform.position, Quaternion.identity, transform);
     }
 
     private void UpdatePrice()
