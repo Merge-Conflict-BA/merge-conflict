@@ -102,11 +102,12 @@ public class ElementsMenu : Menu
             CardHandler cardHandler = cardObject.GetComponent<CardHandler>();
             cardHandler.UpdateSprite(foundElement);
 
-            // Set right size for boxCollider2D
-            BoxCollider2D boxCollider2D = cardObject.GetComponent<BoxCollider2D>();
+            // Set right size and position for the purchaseButton
             float scaleFactor = _displayedCardSize.x / _sizeOfCard.x;
-            boxCollider2D.size *= scaleFactor;
-            boxCollider2D.offset *= scaleFactor;
+
+            RectTransform buttonRectTransform = cardObject.transform.GetChild(0).GetComponent<RectTransform>();
+            buttonRectTransform.sizeDelta *= scaleFactor;
+            buttonRectTransform.anchoredPosition *= scaleFactor;
         }
 
         // Reorder cards
