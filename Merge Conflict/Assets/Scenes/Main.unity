@@ -736,7 +736,7 @@ AudioSource:
   m_GameObject: {fileID: 202632979}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5963859793182245997, guid: ef52626a21f4ab7488657b542ae398b5, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -5178,7 +5178,7 @@ MonoBehaviour:
   pickUpComponentSound: {fileID: 8300000, guid: 16e1306cb9e104c2e9b21417726db1c4, type: 3}
   footstepAudioSource: {fileID: 202632981}
   footstepSound: {fileID: 8300000, guid: 149d93d319307d14f80df11e5d8eb00d, type: 3}
-  footstepInterval: 0.15
+  footstepInterval: 0.18
 --- !u!1 &1154819335
 GameObject:
   m_ObjectHideFlags: 0

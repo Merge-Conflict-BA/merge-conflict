@@ -3,7 +3,7 @@ Name:          AudioManager
 Description:   Manages all sounds and background music that will be played.  
 Author(s):     Daniel Rittrich
 Date:          2024-03-24
-Version:       V1.2
+Version:       V1.3
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -24,10 +24,6 @@ public class AudioManager : MonoBehaviour
     public AudioSource backgroundAudioSource;
     public AudioSource gameAudioSource;
     public AudioSource menuAudioSource;
-    // TODO check if these bools are useful
-    private bool backgroundMusicIsPlaying = false;
-    private bool gameMusicIsPlaying = false;
-    private bool menuMusicIsPlaying = false;
 
     [Header("Effects")]
     public AudioSource buttonClickAudioSource; // ?  Maybe separate AudioSources for different buttons
@@ -69,7 +65,7 @@ public class AudioManager : MonoBehaviour
     [Space(20)]
     public AudioSource footstepAudioSource;
     public AudioClip footstepSound;
-    public float footstepInterval = 0.15f;
+    public float footstepInterval = 0.18f;
 
     // ?  Maybe other sounds or environment sounds 
     /*    (conveyorbelt, component walking, component dragging, component dropping, individual sounds for upgrades, 
@@ -193,22 +189,14 @@ public class AudioManager : MonoBehaviour
         pickUpComponentAudioSource.PlayOneShot(pickUpComponentSound);
     }
 
-
-
-
-    // !    ---------  WIP  --------- 
-
-    // Methode zum Starten der Fußschritt-Schleife
     public void StartFootstepLoop()
     {
-        // Stelle sicher, dass nicht bereits eine Fußschritt-Schleife läuft
         if (footstepCoroutine == null)
         {
             footstepCoroutine = StartCoroutine(PlayFootstepsLoop());
         }
     }
 
-    // Methode zum Stoppen der Fußschritt-Schleife
     public void StopFootstepLoop()
     {
         if (footstepCoroutine != null)
@@ -218,17 +206,13 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // Coroutine, die den Fußschritt-Sound in einer Schleife abspielt
     private IEnumerator PlayFootstepsLoop()
     {
-        // Warte die initiale Verzögerung ab, bevor die Schleife startet
-        yield return new WaitForSeconds(2.5f);
-
-        // Wiederhole solange, bis die Coroutine explizit gestoppt wird
         while (true)
         {
-            footstepAudioSource.PlayOneShot(footstepSound); // Spiele den Fußschritt-Sound ab
-            yield return new WaitForSeconds(footstepInterval); // Warte das angegebene Intervall ab
+            footstepAudioSource.volume = 0.5f;
+            footstepAudioSource.PlayOneShot(footstepSound);
+            yield return new WaitForSeconds(footstepInterval);
         }
     }
 }
