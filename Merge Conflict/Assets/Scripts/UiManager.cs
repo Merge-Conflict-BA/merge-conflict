@@ -158,39 +158,7 @@ public class UiManager : MonoBehaviour
 
             case "Level":
                 OpenMenu(_level);
-
-                //#### only for testing ######
-                ExperienceHandler.ResetCurrentPlayerExperience();
-                ExperienceHandler.AddExperiencePoints(30);
-                //############################
-
-                //read dat from level manager
-                int currentLevel = 9;// ExperienceHandler.GetCurrentLevel();
-                int currentXp = ExperienceHandler.GetExperiencePoints();
-                int xpToUnlockNextLevel = ExperienceHandler.NeededXpToUnlockNextLevel(currentLevel);
-                string xpRatioString = $"{currentXp} / {xpToUnlockNextLevel}";
-
-                //#### only for testing ######
-                Order order = OrderGenerator.Instance.GenerateNewOrder(currentLevel); //TODO: move the order generation to another point, here it's only for testing the menu
-                //############################
-
-                //set level and xp values
-                LevelMenu.Instance.SetDisplayedCurrentLevel(currentLevel);
-                LevelMenu.Instance.SetDisplayedNextLevel(currentLevel + 1);
-                LevelMenu.Instance.SetXpRatioCurrentToNextLevel(xpRatioString);
-                LevelMenu.Instance.SetProgressbarValue(currentXp, xpToUnlockNextLevel);
-
-                TextureAtlas textures = TextureAtlas.Instance;
-
-                //set current Tier and image of the ordered component
-                LevelMenu.Instance.SetDisplayedCaseTierAndImage(order.CaseTier, textures.GetComponentTexture(order.PC).sprite);
-                LevelMenu.Instance.SetDisplayedHddTierAndImage(order.HddTier, textures.GetComponentTexture(order.PC.hdd).sprite);
-                LevelMenu.Instance.SetDisplayedPowersupplyTierAndImage(order.PowersupplyTier, textures.GetComponentTexture(order.PC.powersupply).sprite);
-                LevelMenu.Instance.SetDisplayedMotherboardTierAndImage(order.MotherboardTier, textures.GetComponentTexture(order.PC.motherboard).sprite);
-                LevelMenu.Instance.SetDisplayedCpuTierAndImage(order.CpuTier, textures.GetComponentTexture(order.PC.motherboard.cpu).sprite);
-                LevelMenu.Instance.SetDisplayedGpuTierAndImage(order.GpuTier, textures.GetComponentTexture(order.PC.motherboard.gpu).sprite);
-                LevelMenu.Instance.SetDisplayedRamTierAndImage(order.RamTier, textures.GetComponentTexture(order.PC.motherboard.ram).sprite);
-
+                LevelMenu.Instance.OpenMenu();
                 break;
 
             case "Upgrade":

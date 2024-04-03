@@ -14,6 +14,7 @@ using System;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using ExperienceSystem;
 
 public class OrderGenerator : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class OrderGenerator : MonoBehaviour
 
     void Start()
     {
-        
+        Order = GenerateNewOrder(ExperienceHandler.GetCurrentLevel());
     }
 
     public Order GenerateNewOrder(int currentLevel)

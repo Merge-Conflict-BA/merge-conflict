@@ -9,6 +9,7 @@ TODO:          - /
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ExperienceSystem;
 
 public class LevelMenu : Menu
 {
@@ -95,12 +96,47 @@ public class LevelMenu : Menu
         }
     }
 
+    public void OpenMenu()
+    {
+        //#### only for testing ######
+        //ExperienceHandler.ResetCurrentPlayerExperience();
+        //ExperienceHandler.AddExperiencePoints(30);
+        //############################
+
+        //read dat from level manager
+        int currentLevel = ExperienceHandler.GetCurrentLevel();
+        int currentXp = ExperienceHandler.GetExperiencePoints();
+        int xpToUnlockNextLevel = ExperienceHandler.NeededXpToUnlockNextLevel(currentLevel);
+        string xpRatioString = $"{currentXp} / {xpToUnlockNextLevel}";
+
+        Order? order = OrderGenerator.Instance.Order;
+        Debugger.LogErrorIf(order == null, "Order is null, cant populate Level Screen!!");
+
+        //set level and xp values
+        SetDisplayedCurrentLevel(currentLevel);
+        SetDisplayedNextLevel(currentLevel + 1);
+        SetXpRatioCurrentToNextLevel(xpRatioString);
+        SetProgressbarValue(currentXp, xpToUnlockNextLevel);
+
+        TextureAtlas textures = TextureAtlas.Instance;
+
+        //set current Tier and image of the ordered component
+        SetDisplayedCaseTierAndImage(order.CaseTier, textures.GetComponentTexture(order.PC).sprite);
+        SetDisplayedHddTierAndImage(order.HddTier, textures.GetComponentTexture(order.PC.hdd).sprite);
+        SetDisplayedPowersupplyTierAndImage(order.PowersupplyTier, textures.GetComponentTexture(order.PC.powersupply).sprite);
+        SetDisplayedMotherboardTierAndImage(order.MotherboardTier, textures.GetComponentTexture(order.PC.motherboard).sprite);
+        SetDisplayedCpuTierAndImage(order.CpuTier, textures.GetComponentTexture(order.PC.motherboard.cpu).sprite);
+        SetDisplayedGpuTierAndImage(order.GpuTier, textures.GetComponentTexture(order.PC.motherboard.gpu).sprite);
+        SetDisplayedRamTierAndImage(order.RamTier, textures.GetComponentTexture(order.PC.motherboard.ram).sprite);
+
+    }
+
     public string GetDisplayedCurrentLevel()
     {
         return _currentLevelValueTextfield.text;
     }
 
-    public void SetDisplayedCurrentLevel(int level)
+    private void SetDisplayedCurrentLevel(int level)
     {
         _currentLevelValueTextfield.text = level.ToString();
     }
@@ -110,7 +146,7 @@ public class LevelMenu : Menu
         return _nextLevelValueTextfield.text;
     }
 
-    public void SetDisplayedNextLevel(int nextLevel)
+    private void SetDisplayedNextLevel(int nextLevel)
     {
         _nextLevelValueTextfield.text = nextLevel.ToString();
     }
@@ -120,54 +156,54 @@ public class LevelMenu : Menu
         return _xpRatioCurrentToNextLevel.text;
     }
 
-    public void SetXpRatioCurrentToNextLevel(string currentXpSlashXpToNextLevel)
+    private void SetXpRatioCurrentToNextLevel(string currentXpSlashXpToNextLevel)
     {
         _xpRatioCurrentToNextLevel.text = currentXpSlashXpToNextLevel;
     }
 
-    public void SetDisplayedCaseTierAndImage(int caseTier, Sprite orderedCaseSprite)
+    private void SetDisplayedCaseTierAndImage(int caseTier, Sprite orderedCaseSprite)
     {
         _caseTierValue.text = caseTier.ToString();
         _orderedCaseImage.sprite = orderedCaseSprite;
     }
 
-    public void SetDisplayedCpuTierAndImage(int cpuTier, Sprite orderedCpuSprite)
+    private void SetDisplayedCpuTierAndImage(int cpuTier, Sprite orderedCpuSprite)
     {
         _cpuTierValue.text = cpuTier.ToString();
         _orderedCpuImage.sprite = orderedCpuSprite;
     }
 
-    public void SetDisplayedGpuTierAndImage(int gpuTier, Sprite orderedGpuSprite)
+    private void SetDisplayedGpuTierAndImage(int gpuTier, Sprite orderedGpuSprite)
     {
         _gpuTierValue.text = gpuTier.ToString();
         _orderedGpuImage.sprite = orderedGpuSprite;
     }
 
-    public void SetDisplayedMotherboardTierAndImage(int motherTier, Sprite orderedMotherboardSprite)
+    private void SetDisplayedMotherboardTierAndImage(int motherTier, Sprite orderedMotherboardSprite)
     {
         _motherboardTierValue.text = motherTier.ToString();
         _orderedMotherboardImage.sprite = orderedMotherboardSprite;
     }
 
-    public void SetDisplayedRamTierAndImage(int ramTier, Sprite orderedRamSprite)
+    private void SetDisplayedRamTierAndImage(int ramTier, Sprite orderedRamSprite)
     {
         _ramTierValue.text = ramTier.ToString();
         _orderedRamImage.sprite = orderedRamSprite;
     }
 
-    public void SetDisplayedHddTierAndImage(int hddTier, Sprite orderedHddSprite)
+    private void SetDisplayedHddTierAndImage(int hddTier, Sprite orderedHddSprite)
     {
         _hddTierValue.text = hddTier.ToString();
         _orderedHddImage.sprite = orderedHddSprite;
     }
 
-    public void SetDisplayedPowersupplyTierAndImage(int powerTier, Sprite orderedPowersupplySprite)
+    private void SetDisplayedPowersupplyTierAndImage(int powerTier, Sprite orderedPowersupplySprite)
     {
         _powersupplyTierValue.text = powerTier.ToString();
         _orderedPowersupplyImage.sprite = orderedPowersupplySprite;
     }
 
-    public void SetProgressbarValue(int currentXp, int xpToNextLevel)
+    private void SetProgressbarValue(int currentXp, int xpToNextLevel)
     {
         /*
          * the progressbar is an overlay of 2 images: at the groundlayer there is an image of an 

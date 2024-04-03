@@ -200,7 +200,7 @@ public class ComponentHandler : MonoBehaviour
                 else
                 {
                     AnimationManager.Instance.PlayTrashAnimation(GetComponent<RectTransform>().anchoredPosition);
-                   
+
                     int actualTrashPrice = draggedElement.GetTrashPrice() * (Upgrades.MoneyWhenTrashedUpgrade.GetCurrentPercentageOfTrashMoney() / 100);
                     MoneyHandler.Instance.AddMoney(actualTrashPrice);
 
