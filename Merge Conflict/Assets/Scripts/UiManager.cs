@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using ExperienceSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UiManager : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class UiManager : MonoBehaviour
 
     //default buttons to orchestrate the menu
     [SerializeField] private Button _buttonOpenMainmenu;
-    [SerializeField] private Button _buttonCloseMainmenu;
+    [SerializeField] private TextMeshProUGUI _buttonOpenMainMenuText;
     [SerializeField] private Button _buttonOpenSettings;
     [SerializeField] private Button _buttonOpenLevel;
     [SerializeField] private Button _buttonOpenUpgrade;
@@ -61,7 +62,6 @@ public class UiManager : MonoBehaviour
     List<KeyValuePair<string, string>> readableMenuName = new List<KeyValuePair<string, string>>
     {
         new KeyValuePair<string, string>("ButtonOpenMainmenu", "Mainmenu"),
-        new KeyValuePair<string, string>("ButtonCloseMainmenu", "CloseMenu"),
         new KeyValuePair<string, string>("ButtonOpenSettings", "Settings"),
         new KeyValuePair<string, string>("ButtonOpenLevel", "Level"),
         new KeyValuePair<string, string>("ButtonOpenUpgrade", "Upgrade"),
@@ -70,12 +70,9 @@ public class UiManager : MonoBehaviour
     };
 
     const Canvas NoMenuOpened = null;
-    const int OffsetTierToArrayIndex = 1;
     const string ExitTheGame = "ButtonExitGame";
-    const string OpenMainMenu = "ButtonOpenMainmenu";
-    const string CloseMainMenu = "ButtonCloseMainmenu";
 
-    private Canvas _currentOpenedMenu;
+    private Canvas _currentOpenedMenu = NoMenuOpened;
     public bool isMenuVisible { get; private set; }
 
     void Awake()
@@ -92,15 +89,11 @@ public class UiManager : MonoBehaviour
 
         //set default menu states 
         _uiManagerCanvas.enabled = true;
-        _mainmenu.enabled = false;
-        _settings.enabled = false;
-        _level.enabled = false;
-        _upgrade.enabled = false;
-        _elements.enabled = false;
+        CloseAllMenus();
+        _playfield.enabled = true;
 
         //setup eventlisteners for all buttons
         SetupButtonListener(_buttonOpenMainmenu);
-        SetupButtonListener(_buttonCloseMainmenu);
         SetupButtonListener(_buttonOpenSettings);
         SetupButtonListener(_buttonOpenLevel);
         SetupButtonListener(_buttonOpenUpgrade);
@@ -122,10 +115,7 @@ public class UiManager : MonoBehaviour
     }
 
     private void HandleButtonClick(string clickedButton)
-    {
-        if (clickedButton == OpenMainMenu) { PauseGame(); }
-        if (clickedButton == CloseMainMenu) { ContinueGame(); }
-
+    {        
         if (clickedButton == ExitTheGame)
         {
 #if UNITY_EDITOR
@@ -141,17 +131,10 @@ public class UiManager : MonoBehaviour
 
     private void SwitchMenu(string requestedMenu)
     {
-        if (_currentOpenedMenu == NoMenuOpened)
-        {
-            _currentOpenedMenu = _mainmenu;
-        }
+        Canvas previousOpenedMenu = _currentOpenedMenu;
 
-        //close current opened menu
-        if (_elements.enabled) // needs to be close menu separately, otherwise the collider will detect clicks and purchases can be done
-        {
-            ElementsMenu.Instance.CloseMenu();
-        }
-        _currentOpenedMenu.enabled = false;
+        PauseGame();
+        CloseAllMenus();
 
         //open requested menu with usage of the mapping
         KeyValuePair<string, string> menuName = readableMenuName.Find(pair => pair.Key == requestedMenu);
@@ -159,20 +142,22 @@ public class UiManager : MonoBehaviour
         switch (menuName.Value)
         {
             case "Mainmenu":
-                _mainmenu.enabled = true;
-                _playfield.enabled = false;
-                _currentOpenedMenu = _mainmenu;
-                isMenuVisible = true;
+                if(previousOpenedMenu != _mainmenu)
+                {
+                    OpenMenu(_mainmenu);
+                } else
+                {
+                    _playfield.enabled = true;
+                    ContinueGame();
+                }
                 break;
 
             case "Settings":
-                _settings.enabled = true;
-                _currentOpenedMenu = _settings;
+                OpenMenu(_settings);
                 break;
 
             case "Level":
-                _level.enabled = true;
-                _currentOpenedMenu = _level;
+                OpenMenu(_level);
 
                 //#### only for testing ######
                 ExperienceHandler.ResetCurrentPlayerExperience();
@@ -209,29 +194,68 @@ public class UiManager : MonoBehaviour
                 break;
 
             case "Upgrade":
-                _upgrade.enabled = true;
-                _currentOpenedMenu = _upgrade;
+                OpenMenu(_upgrade);
                 break;
 
             case "Elements":
-                _elements.enabled = true;
-                _currentOpenedMenu = _elements;
-
+                OpenMenu(_elements);
                 ElementsMenu.Instance.OpenMenu();
-                break;
-
-            case "CloseMenu":
-                _mainmenu.enabled = false;
-                _playfield.enabled = true;
-                _elements.enabled = false;
-                _currentOpenedMenu = null;
-                isMenuVisible = false;
                 break;
 
             default:
                 Debug.LogWarning("There is no menu with the name: " + menuName.Value);
                 break;
         }
+
+        HandleMenuButtonText(_currentOpenedMenu);
+    }
+
+    private void OpenMenu(Canvas menuCanvas)
+    {
+        menuCanvas.enabled = true;
+        _currentOpenedMenu = menuCanvas;
+
+        isMenuVisible = true;
+    }
+
+    private void CloseAllMenus()
+    {
+        if (_elements.enabled) // needs to be close menu separately, otherwise the collider will detect clicks and purchases can be done
+        {
+            ElementsMenu.Instance.CloseMenu();
+        }
+
+        _mainmenu.enabled = false;
+        _playfield.enabled = false;
+        _elements.enabled = false;
+        _level.enabled = false;
+        _upgrade.enabled = false;
+        _settings.enabled = false;
+
+        if(_currentOpenedMenu != null)
+        {
+            _currentOpenedMenu.enabled = false;
+            _currentOpenedMenu = null;
+        }
+ 
+        isMenuVisible = false;
+    }
+
+    private void HandleMenuButtonText(Canvas currentOpenedMenu)
+    {
+        string menuText;
+        if (currentOpenedMenu == _mainmenu)
+        {
+            menuText = "Close";
+        } else if (currentOpenedMenu == null)
+        {
+            menuText = "Menu";
+        } else
+        {
+            menuText = "Back";
+        }
+
+        _buttonOpenMainMenuText.text = menuText;
     }
 
     private void PauseGame()
