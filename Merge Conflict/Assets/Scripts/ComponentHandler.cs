@@ -4,7 +4,6 @@ Description:   Contains the methode to drag the component-objects and the method
 Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann, Daniel Rittrich
 Date:          2024-03-21
 Version:       V1.6
-TODO:          - call xp/money controller (when its implemented) after put component into trashcan
 **********************************************************************************************************************/
 using System;
 using ExperienceSystem;
@@ -178,6 +177,7 @@ public class ComponentHandler : MonoBehaviour
                 mergedElement.InstantiateGameObjectAndAddTexture(staticObjectCanvasPosition);
 
                 AnimationManager.Instance.PlayMergeAnimation(staticObjectCanvasPosition, mergedElement, element);
+                ExperienceHandler.AddExperiencePoints(mergedElement.salesXP * (Upgrades.MergeXPUpgrade.GetCurrentPercentageOfSalesXP() / 100));
 
                 Destroy(draggedComponent);
                 Destroy(staticComponent.gameObject);
@@ -200,10 +200,9 @@ public class ComponentHandler : MonoBehaviour
                 else
                 {
                     AnimationManager.Instance.PlayTrashAnimation(GetComponent<RectTransform>().anchoredPosition);
-
-                    //TODO: call money controller
-                    int actualTrashPrice = draggedElement.GetTrashPrice();
-                    Debugger.LogMessage($"Component was put in the trashcan! Thx for recycling!   TrashPrice : {actualTrashPrice}");
+                   
+                    int actualTrashPrice = draggedElement.GetTrashPrice() * (Upgrades.MoneyWhenTrashedUpgrade.GetCurrentPercentageOfTrashMoney() / 100);
+                    MoneyHandler.Instance.AddMoney(actualTrashPrice);
 
                     Destroy(draggedComponent);
                 }
@@ -212,22 +211,14 @@ public class ComponentHandler : MonoBehaviour
             // drop component (PC) on the selling station -> if possible/matching with quest -> sells it
             if (Tags.SellingStation.UsedByGameObject(staticComponent.gameObject))
             {
+                Order? currentOrder = OrderGenerator.Instance.Order;
+                if (currentOrder == null)
+                {
+                    Debugger.LogWarning("Tried selling a pc, but no Order present!!!");
+                    return;
+                }
 
-                // TODO: change this ("requiredQuestComponent") later to the correct "requiredQuestComponent" from actual quest
-                GameObject requiredQuestComponent = Components.CreateCase(
-                   powersupply: null,
-                   hdd: Components.HDD.Clone(),
-                   motherboard: Components.CreateMB(
-                           cpu: null,
-                           ram: Components.RAM.Clone(),
-                           gpu: Components.GPU.Clone()
-                       )
-                   ).InstantiateGameObjectAndAddTexture(new Vector2(300, 400));
-
-                Element? requiredQuestElement
-                    = requiredQuestComponent.TryGetComponent(out ComponentHandler requiredQuestComponentHandler)
-                    ? requiredQuestComponentHandler.element
-                    : null;
+                Element requiredOrderElement = currentOrder.PC;
 
                 Element? draggedElement
                     = draggedComponent.TryGetComponent(out ComponentHandler draggedComponentHandler)
@@ -239,18 +230,20 @@ public class ComponentHandler : MonoBehaviour
                     return;
                 }
 
-                if (draggedElement.IsEqual(requiredQuestElement))
+                if (draggedElement.IsEqual(requiredOrderElement))
                 {
-
-                    //TODO: call money controller instead  ->  give more xp/money than putting it in trashcan  =>  use sales Values of the components                    
                     int actualSalesPrice = draggedElement.GetSalesPrice();
+                    MoneyHandler.Instance.AddMoney(actualSalesPrice);
+
                     int actualSalesXP = draggedElement.GetSalesXP();
                     ExperienceHandler.AddExperiencePoints(actualSalesXP);
-                    Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
 
                     AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
+                    OrderGenerator.Instance.GenerateNewOrder(ExperienceHandler.GetCurrentLevel());
 
                     Destroy(draggedComponent);
+
+                    Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
                     Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
                 }
                 else

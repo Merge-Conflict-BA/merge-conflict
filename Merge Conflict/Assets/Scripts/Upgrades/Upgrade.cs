@@ -25,9 +25,19 @@ public class Upgrade
         ApplyPlayerPrefs();
     }
 
+    public virtual string GetCurrentLevelDescription()
+    {
+        return "";
+    }
+
+    public virtual string GetNextLevelDescription()
+    {
+        return "";
+    }
+
     public int BuyNextLevel(int currentMoney)
     {
-        if(CostForNextLevel[Level] > currentMoney || Level >= CostForNextLevel.Length)
+        if(CostForNextLevel[Level] > currentMoney || isAtMaxLevel())
         {
             return currentMoney;
         }
@@ -36,6 +46,11 @@ public class Upgrade
         SaveToPlayerPrefs();
 
         return currentMoney - CostForNextLevel[Level];
+    }
+
+    public bool isAtMaxLevel()
+    {
+        return Level >= CostForNextLevel.Length;
     }
 
     public void ApplyPlayerPrefs()
