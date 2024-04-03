@@ -247,6 +247,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6929d044f29579b499ef620506f2eb9a, type: 3}
   DefaultSprite: {fileID: 21300000, guid: 9336d86a2d3c3ac4bb47d8f9a0c3eb03, type: 3}
   purchaseButton: {fileID: 8886303644996819914}
+  purchasedTextObject: {fileID: 6347214414622160910, guid: 3f9215547d4455d4d980fcad0068178c, type: 3}
 --- !u!1 &5751977519234785385
 GameObject:
   m_ObjectHideFlags: 0

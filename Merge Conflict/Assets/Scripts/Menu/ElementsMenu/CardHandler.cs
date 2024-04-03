@@ -30,6 +30,9 @@ public class CardHandler : MonoBehaviour
     [Header("Button to purchase Element")]
     public Button purchaseButton;
 
+    [Header("Text to show after a purchase is done")]
+    public GameObject purchasedTextObject;
+
     // Defines which Element this Object is
     private FoundElement _cardElement;
     private float _startPrice;
@@ -126,6 +129,9 @@ public class CardHandler : MonoBehaviour
         _cardElement.CountPurchased++;
         FoundElementsHandler.Instance.UpdateStoredElement(_cardElement);
         UpdatePrice();
+        
+        // Give feedback if the purchase is done -> instantiate gameObject with text ("+1")
+        Instantiate(purchasedTextObject, transform.position, Quaternion.identity, transform);
     }
 
     private void UpdatePrice()
