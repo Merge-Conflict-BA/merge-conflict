@@ -3,10 +3,11 @@ Name:          ComponentMovement
 Description:   Manages the Movement of the components if they are on the desk
 Author(s):     Simeon Baumann, Hanno Witzleb, Daniel Rittrich
 Date:          2024-03-15
-Version:       V2.1
+Version:       V2.2
 **********************************************************************************************************************/
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -55,7 +56,7 @@ public class ComponentMovement : MonoBehaviour
     // Store the last positions of the component while dragging to calculate the direction of the further movement after dragging
     private List<Vector2> _lastPositionsWhileBeingDragged;
     private bool _isReturningToDesk;
-    private bool _startedWalking;
+    private bool _isWalking;
 
     /// <summary>
     /// Changes important properties of the movement of the component
@@ -252,8 +253,6 @@ public class ComponentMovement : MonoBehaviour
         _currentMoveDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0).normalized;
         _intermediateTargetForSmoothMovement = position;
         _isMoving = true;
-        AudioManager.Instance.StartFootstepLoop();
-        Debugger.LogMessage($"TEST    WALK START");
 
         int tries = 0, maxTries = 10;
         Vector3 vectorToPositionInDirection = _currentMoveDirection * (_currentRemainingMoveDistance / 2);
@@ -271,6 +270,19 @@ public class ComponentMovement : MonoBehaviour
     {
         Vector2 vectorToNextPosition = _currentMoveDirection * (MoveSpeed * Time.deltaTime);
         float movedDistance = ((_startPositionOfCurrentMove ?? _intermediateTargetForSmoothMovement) - _intermediateTargetForSmoothMovement).magnitude;
+
+        Debugger.LogMessage($"    MOVED DISTANCE  :  {this.name}    {movedDistance}");
+        Debugger.LogMessage($"REMAINING DISTANCE  :  {this.name}    {_currentRemainingMoveDistance}");
+        if (movedDistance > 3f && !_isWalking)
+        {
+            _isWalking = true;
+            AudioManager.Instance.StartFootstepLoop();
+
+        }
+        else if (_currentRemainingMoveDistance - movedDistance < 1.5f)
+        {
+            AudioManager.Instance.StopFootstepLoop();
+        }
 
         if (IsPositionOnDesk(_intermediateTargetForSmoothMovement + vectorToNextPosition) && movedDistance <= _currentRemainingMoveDistance)
         {
@@ -360,8 +372,8 @@ public class ComponentMovement : MonoBehaviour
         _remainingSecondsUntilIdleMoveStarts = Random.Range(MinSecondsWithoutIdleMove, MaxSecondsWithoutIdleMove);
         _isReturningToDesk = false;
         _isMoving = false;
+        StartCoroutine(SetIsNotWalking());
         AudioManager.Instance.StopFootstepLoop();
-        Debugger.LogMessage($"TESSSSSSSSSSSSSSST    WALK STOP");
     }
 
     private Vector2 GetCanvasPosition()
@@ -377,5 +389,13 @@ public class ComponentMovement : MonoBehaviour
     public bool GetIsReturningToDesk()
     {
         return _isReturningToDesk;
+    }
+
+    private IEnumerator SetIsNotWalking()
+    {
+        float delay = Random.Range(2f, 4f);
+        yield return new WaitForSeconds(delay);
+
+        _isWalking = false;
     }
 }
