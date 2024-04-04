@@ -156,25 +156,29 @@ public class UiManager : MonoBehaviour
                 break;
 
             case "Settings":
+                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_settings);
                 break;
 
             case "Level":
+                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_level);
                 LevelMenu.Instance.OpenMenu();
                 break;
 
             case "SellingStation":
                 AudioManager.Instance.PlayOpenMenuSound();
-                //LEVEL.enabled = true;
-                //currentOpenedMenu = LEVEL;
+                OpenMenu(_level);
+                LevelMenu.Instance.OpenMenu();
                 break;
 
             case "Upgrade":
+                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_upgrade);
                 break;
 
             case "Elements":
+                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_elements);
                 ElementsMenu.Instance.OpenMenu();
                 break;
