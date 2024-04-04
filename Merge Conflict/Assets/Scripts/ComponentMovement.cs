@@ -274,12 +274,12 @@ public class ComponentMovement : MonoBehaviour
         if (movedDistance > 3f && !_isWalking)
         {
             _isWalking = true;
-            AudioManager.Instance.StartFootstepLoop();
+            AudioManager.Instance.StartComponentFootstepLoop();
 
         }
         else if (_currentRemainingMoveDistance - movedDistance < 1.5f)
         {
-            AudioManager.Instance.StopFootstepLoop();
+            AudioManager.Instance.StopComponentFootstepLoop();
         }
 
         if (IsPositionOnDesk(_intermediateTargetForSmoothMovement + vectorToNextPosition) && movedDistance <= _currentRemainingMoveDistance)
@@ -370,8 +370,8 @@ public class ComponentMovement : MonoBehaviour
         _remainingSecondsUntilIdleMoveStarts = Random.Range(MinSecondsWithoutIdleMove, MaxSecondsWithoutIdleMove);
         _isReturningToDesk = false;
         _isMoving = false;
-        StartCoroutine(SetIsNotWalking());
-        AudioManager.Instance.StopFootstepLoop();
+        StartCoroutine(SetIsNotWalkingAfterDelay());
+        AudioManager.Instance.StopComponentFootstepLoop();
     }
 
     private Vector2 GetCanvasPosition()
@@ -389,7 +389,7 @@ public class ComponentMovement : MonoBehaviour
         return _isReturningToDesk;
     }
 
-    private IEnumerator SetIsNotWalking()
+    private IEnumerator SetIsNotWalkingAfterDelay()
     {
         float delay = Random.Range(2f, 4f);
         yield return new WaitForSeconds(delay);

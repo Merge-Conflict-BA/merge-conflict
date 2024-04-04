@@ -1147,9 +1147,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisSlider: {fileID: 259636429}
   audioMixer: {fileID: 24100000, guid: ef52626a21f4ab7488657b542ae398b5, type: 2}
-  exposedParameter: volumeEffects
+  exposedParameter: 0
   threshold: -40
-  playerPrefsKey: effectsVolume
+  playerPrefsKey: 0
 --- !u!1 &303300704
 GameObject:
   m_ObjectHideFlags: 0
@@ -5151,8 +5151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3334778e2d666064082afb77fab300f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playlist: {fileID: 11400000, guid: e4c88098552e86a4eb3f426b8cad7bc0, type: 2}
-  playMode: 0
+  bgMusicPlaylist: {fileID: 11400000, guid: e4c88098552e86a4eb3f426b8cad7bc0, type: 2}
+  bgMusicPlayMode: 0
   backgroundAudioSource: {fileID: 500145965}
   gameAudioSource: {fileID: 571176037}
   menuAudioSource: {fileID: 382163156}
@@ -5176,9 +5176,9 @@ MonoBehaviour:
   dropComponentSound: {fileID: 8300000, guid: 517cfdf31cb20481bb13230d07608e4a, type: 3}
   pickUpComponentAudioSource: {fileID: 1019548797}
   pickUpComponentSound: {fileID: 8300000, guid: 16e1306cb9e104c2e9b21417726db1c4, type: 3}
-  footstepAudioSource: {fileID: 202632981}
-  footstepSound: {fileID: 8300000, guid: 149d93d319307d14f80df11e5d8eb00d, type: 3}
-  footstepInterval: 0.18
+  componentFootstepAudioSource: {fileID: 202632981}
+  componentFootstepSound: {fileID: 8300000, guid: 149d93d319307d14f80df11e5d8eb00d, type: 3}
+  componentFootstepInterval: 0.18
 --- !u!1 &1154819335
 GameObject:
   m_ObjectHideFlags: 0
@@ -7195,9 +7195,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisSlider: {fileID: 1618096688}
   audioMixer: {fileID: 24100000, guid: ef52626a21f4ab7488657b542ae398b5, type: 2}
-  exposedParameter: volumeMusic
+  exposedParameter: 1
   threshold: -40
-  playerPrefsKey: musicVolume
+  playerPrefsKey: 1
 --- !u!1 &1651539446
 GameObject:
   m_ObjectHideFlags: 0
