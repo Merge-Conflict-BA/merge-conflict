@@ -1,6 +1,8 @@
 /**********************************************************************************************************************
 Name:          AudioMixerLevels
-Description:   Handles the volume level of the slider in the audio settings and saves the values in the playerprefs.  
+Description:   Manages the volume of the slider in the audio settings and saves the values in the player settings. 
+               This script must be attached directly to a slider and the slider must be inserted into the respective 
+               serialisedField in Unity-Inspector.  
 Author(s):     Daniel Rittrich
 Date:          2024-03-24
 Version:       V1.1
@@ -16,19 +18,17 @@ public class AudioMixerLevels : MonoBehaviour
     public Slider thisSlider;
     public AudioMixer audioMixer;
 
-    [Tooltip("Must be 'volumeEffects' or 'volumeMusic' !")]
-    public string exposedParameter;
+    public AudioMixerExposedParameter exposedParameter;
 
-    // The threshold value below which the sound should be switched off
+    [Tooltip("The threshold value below which the sound should be switched off")]
     public float threshold = -40f;
 
-    [Tooltip("Should be 'effectsVolume' or 'musicVolume'")]
-    public string playerPrefsKey;
+    public AudioMixerPlayerPrefsKeys playerPrefsKey;
 
 
     private void Start()
     {
-        float savedVolume = PlayerPrefs.GetFloat(playerPrefsKey, 0);
+        float savedVolume = PlayerPrefs.GetFloat(playerPrefsKey.ToString(), 0);
         SetVolumeOnStart(savedVolume);
     }
 
@@ -36,25 +36,25 @@ public class AudioMixerLevels : MonoBehaviour
     {
         if (input < threshold)
         {
-            audioMixer.SetFloat(exposedParameter, -80f);
+            audioMixer.SetFloat(exposedParameter.ToString(), -80f);
         }
         else
         {
-            audioMixer.SetFloat(exposedParameter, input);
+            audioMixer.SetFloat(exposedParameter.ToString(), input);
         }
 
-        PlayerPrefs.SetFloat(playerPrefsKey, input);
+        PlayerPrefs.SetFloat(playerPrefsKey.ToString(), input);
     }
 
     private void SetVolumeOnStart(float volume)
     {
         if (volume < threshold)
         {
-            audioMixer.SetFloat(exposedParameter, -80f);
+            audioMixer.SetFloat(exposedParameter.ToString(), -80f);
         }
         else
         {
-            audioMixer.SetFloat(exposedParameter, volume);
+            audioMixer.SetFloat(exposedParameter.ToString(), volume);
         }
 
         thisSlider.value = volume;

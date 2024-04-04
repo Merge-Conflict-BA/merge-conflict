@@ -1,9 +1,11 @@
 /**********************************************************************************************************************
 Name:          AudioManager
-Description:   Manages all sounds and background music that will be played.  
+Description:   Manages all sounds and background music that are played. The AudioManager is a Singleton and its 
+               functions for playing sounds can be called by other scripts. However, the background music is 
+               controlled by this script itself.  
 Author(s):     Daniel Rittrich
 Date:          2024-03-24
-Version:       V1.3
+Version:       V1.4
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -17,8 +19,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get { return _instance; } }
 
     [Header("Playlist BG Music")]
-    public Playlist playlist;
-    public PlayMode playMode;
+    public Playlist bgMusicPlaylist;
+    public PlayMode bgMusicPlayMode;
 
     [Header("Music")]
     public AudioSource backgroundAudioSource;
@@ -63,9 +65,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip pickUpComponentSound;
 
     [Space(20)]
-    public AudioSource footstepAudioSource;
-    public AudioClip footstepSound;
-    public float footstepInterval = 0.18f;
+    public AudioSource componentFootstepAudioSource;
+    public AudioClip componentFootstepSound;
+    public float componentFootstepInterval = 0.18f;
 
     // ?  Maybe other sounds or environment sounds 
     /*    (conveyorbelt, component walking, component dragging, component dropping, individual sounds for upgrades, 
@@ -74,8 +76,8 @@ public class AudioManager : MonoBehaviour
 
     // TODO: don't play dropComponent Sound when selling a component or throwing it in the trash can
 
-    private Coroutine playNextSongCoroutine;
-    private Coroutine footstepCoroutine;
+    private Coroutine playNextBGMusicSongCoroutine;
+    private Coroutine componentFootstepCoroutine;
 
     private void Awake()
     {
@@ -91,26 +93,26 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        playNextSongCoroutine = StartCoroutine(PlayNextSong());
+        playNextBGMusicSongCoroutine = StartCoroutine(PlayNextBGMusicSong());
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            if (playNextSongCoroutine != null)
+            if (playNextBGMusicSongCoroutine != null)
             {
-                StopCoroutine(playNextSongCoroutine);
+                StopCoroutine(playNextBGMusicSongCoroutine);
             }
-            playNextSongCoroutine = StartCoroutine(PlayNextSong());
+            playNextBGMusicSongCoroutine = StartCoroutine(PlayNextBGMusicSong());
         }
     }
 
-    private IEnumerator PlayNextSong()
+    private IEnumerator PlayNextBGMusicSong()
     {
         while (true)
         {
-            var clip = GetNextSong();
+            var clip = GetNextBGMusicSong();
 
             if (clip)
             {
@@ -124,15 +126,15 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private AudioClip GetNextSong()
+    private AudioClip GetNextBGMusicSong()
     {
-        switch (playMode)
+        switch (bgMusicPlayMode)
         {
             case PlayMode.Random:
-                return playlist.NextRandomSong();
+                return bgMusicPlaylist.NextRandomSong();
 
             case PlayMode.Sequential:
-                return playlist.NextSong();
+                return bgMusicPlaylist.NextSong();
 
             default:
                 return null;
@@ -189,30 +191,30 @@ public class AudioManager : MonoBehaviour
         pickUpComponentAudioSource.PlayOneShot(pickUpComponentSound);
     }
 
-    public void StartFootstepLoop()
+    public void StartComponentFootstepLoop()
     {
-        if (footstepCoroutine == null)
+        if (componentFootstepCoroutine == null)
         {
-            footstepCoroutine = StartCoroutine(PlayFootstepsLoop());
+            componentFootstepCoroutine = StartCoroutine(PlayComponentFootstepsLoop());
         }
     }
 
-    public void StopFootstepLoop()
+    public void StopComponentFootstepLoop()
     {
-        if (footstepCoroutine != null)
+        if (componentFootstepCoroutine != null)
         {
-            StopCoroutine(footstepCoroutine);
-            footstepCoroutine = null;
+            StopCoroutine(componentFootstepCoroutine);
+            componentFootstepCoroutine = null;
         }
     }
 
-    private IEnumerator PlayFootstepsLoop()
+    private IEnumerator PlayComponentFootstepsLoop()
     {
         while (true)
         {
-            footstepAudioSource.volume = 0.5f;
-            footstepAudioSource.PlayOneShot(footstepSound);
-            yield return new WaitForSeconds(footstepInterval);
+            componentFootstepAudioSource.volume = 0.5f;
+            componentFootstepAudioSource.PlayOneShot(componentFootstepSound);
+            yield return new WaitForSeconds(componentFootstepInterval);
         }
     }
 }
