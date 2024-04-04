@@ -14,6 +14,7 @@ using System;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using ExperienceSystem;
 
 public class OrderGenerator : MonoBehaviour
 {
@@ -36,37 +37,11 @@ public class OrderGenerator : MonoBehaviour
 
             _instance = this;
         }
-    }      
+    }
 
-    /*
-     * calculate the probabilities for Tier1...Tier4
-     * generate an random number between 0 and 1
-     * choose the Tier into which the randomly selected number fits
-    */
-    public int SelectTierForComponent(OrderComponentIndex orderComponentIndex, int currentLevel)
+    void Start()
     {
-        OrderComponent orderComponent = OrderComponents.List[(int)orderComponentIndex];
-        float[] probabilityTierIsInOrder = orderComponent.CalculateProbabilities(currentLevel);
-
-        float p1 = probabilityTierIsInOrder[(int)Tiers.T1];
-        float p2 = probabilityTierIsInOrder[(int)Tiers.T2];
-        float p3 = probabilityTierIsInOrder[(int)Tiers.T3];
-        float p4 = probabilityTierIsInOrder[(int)Tiers.T4];
-
-        float cumulativeP1 = p1;
-        float cumulativeP2 = cumulativeP1 + p2;
-        float cumulativeP3 = cumulativeP2 + p3;
-        float cumulativeP4 = cumulativeP3 + p4;
-
-        float randomNumber = UnityEngine.Random.value;
-        return randomNumber switch
-        {
-            float n when n < cumulativeP1 => 1,
-            float n when n < cumulativeP2 => 2,
-            float n when n < cumulativeP3 => 3,
-            float n when n < cumulativeP4 => 4,
-            _ => 0 //if the randomNumber fits with nothing, 0 will be return and the Component class should run into an error
-        };
+        Order = GenerateNewOrder(ExperienceHandler.GetCurrentLevel());
     }
 
     public Order GenerateNewOrder(int currentLevel)
@@ -97,10 +72,41 @@ public class OrderGenerator : MonoBehaviour
     }
 
     /*
+     * calculate the probabilities for Tier1...Tier4
+     * generate an random number between 0 and 1
+     * choose the Tier into which the randomly selected number fits
+    */
+    private int SelectTierForComponent(OrderComponentIndex orderComponentIndex, int currentLevel)
+    {
+        OrderComponent orderComponent = OrderComponents.List[(int)orderComponentIndex];
+        float[] probabilityTierIsInOrder = orderComponent.CalculateProbabilities(currentLevel);
+
+        float p1 = probabilityTierIsInOrder[(int)Tiers.T1];
+        float p2 = probabilityTierIsInOrder[(int)Tiers.T2];
+        float p3 = probabilityTierIsInOrder[(int)Tiers.T3];
+        float p4 = probabilityTierIsInOrder[(int)Tiers.T4];
+
+        float cumulativeP1 = p1;
+        float cumulativeP2 = cumulativeP1 + p2;
+        float cumulativeP3 = cumulativeP2 + p3;
+        float cumulativeP4 = cumulativeP3 + p4;
+
+        float randomNumber = UnityEngine.Random.value;
+        return randomNumber switch
+        {
+            float n when n < cumulativeP1 => 1,
+            float n when n < cumulativeP2 => 2,
+            float n when n < cumulativeP3 => 3,
+            float n when n < cumulativeP4 => 4,
+            _ => 0 //if the randomNumber fits with nothing, 0 will be return and the Component class should run into an error
+        };
+    }
+
+    /*
      * every time this class will be initialized, all parameters and all calculated values will be logged for all components for all levels
      * this can be usefull for the process of tune the probabilities because it gives an complete overview 
     */
-    
+
     private void WriteDataLogFile()
     {
         const string filePath = "Assets/Scripts/Order/dataLog.txt";

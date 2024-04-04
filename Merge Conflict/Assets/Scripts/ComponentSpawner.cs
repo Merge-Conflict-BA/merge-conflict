@@ -132,11 +132,7 @@ public class ComponentSpawner : MonoBehaviour
 
     private Vector2 GetSpawnPosition()
     {
-        Vector2 positionWorld = spawnPointObject.transform.position;
-        Vector2 positionLocal = transform.InverseTransformVector(positionWorld);
-
         return spawnPointObject.GetComponent<RectTransform>().anchoredPosition;
-        return positionLocal;
     }
     
     public Vector2 GetRandomPositionOnDesk()
