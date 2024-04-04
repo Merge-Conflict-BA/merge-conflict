@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoneyWhenTrashedUpgrade :Upgrade
+public class MoneyWhenTrashedUpgrade : Upgrade
 {
     public int[] PercentageOfTrashMoney; // for current level
 

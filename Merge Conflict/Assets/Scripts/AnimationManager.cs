@@ -29,6 +29,7 @@ public class AnimationManager : MonoBehaviour
     [Header("Other Animations")]
     public ParticleSystem trashAnimation;
     public ParticleSystem sellAnimation;
+    public ParticleSystem componentSpawnedOnDeskAnimation;
 
     void Awake()
     {
@@ -48,7 +49,8 @@ public class AnimationManager : MonoBehaviour
             lvlUpAnimations.Length < 3
             || addToComponentAnimation == null
             || trashAnimation == null
-            || sellAnimation == null,
+            || sellAnimation == null
+            || componentSpawnedOnDeskAnimation == null,
             "animation prefabs needs to be set in editor!");
     }
 
@@ -79,6 +81,11 @@ public class AnimationManager : MonoBehaviour
     public void PlayTrashAnimation(Vector2 position)
     {
         PlayAnimation(trashAnimation, position);
+    }
+
+    public void PlayComponentSpawnedOnDeskAnimation(Vector2 position)
+    {
+        PlayAnimation(componentSpawnedOnDeskAnimation, position);
     }
 
     private void PlayAnimation(ParticleSystem particleSystem, Vector2 position)
