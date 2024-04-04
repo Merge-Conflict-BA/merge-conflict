@@ -7,8 +7,8 @@ Version:       V1.6
 **********************************************************************************************************************/
 using System;
 using ExperienceSystem;
-using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ComponentHandler : MonoBehaviour
 {
@@ -146,114 +146,128 @@ public class ComponentHandler : MonoBehaviour
     private void HandleOverlappingObjects()
     {
         const float radiusToDetectSpritesOverlapping = 1.0f;
-        GameObject draggedComponent = gameObject;
+        GameObject draggedComponentObject = gameObject;
 
         //check if there is an sprites-overlapping situation
-        Collider2D[] overlappedStaticObjects = Physics2D.OverlapCircleAll(draggedComponent.transform.position, radiusToDetectSpritesOverlapping);
+        Collider2D[] overlappedStaticObjects = Physics2D.OverlapCircleAll(draggedComponentObject.transform.position, radiusToDetectSpritesOverlapping);
 
         if (overlappedStaticObjects == null) { return; };
 
         //go trough all overlapped sprites and check if there is an mergabel one 
-        foreach (Collider2D staticComponent in overlappedStaticObjects)
+        foreach (Collider2D staticComponentCollider in overlappedStaticObjects)
         {
             //skip the dragged component from the list
-            if (staticComponent.gameObject == draggedComponent)
+            if (staticComponentCollider.gameObject == draggedComponentObject)
             {
                 continue;
             }
 
-#nullable enable
-            //merge components if possible 
-            if (Tags.Component.UsedByGameObject(staticComponent.gameObject))
+            if (Tags.Component.UsedByGameObject(staticComponentCollider.gameObject))
             {
-                Element? mergedElement = GetMergedElement(staticComponent.gameObject);
-
-                if (mergedElement == null)
-                {
-                    return;
-                }
-
-                Vector2 staticObjectCanvasPosition = staticComponent.GetComponent<RectTransform>().anchoredPosition;
-                mergedElement.InstantiateGameObjectAndAddTexture(staticObjectCanvasPosition);
-
-                AnimationManager.Instance.PlayMergeAnimation(staticObjectCanvasPosition, mergedElement, element);
-                ExperienceHandler.AddExperiencePoints(mergedElement.salesXP * (Upgrades.MergeXPUpgrade.GetCurrentPercentageOfSalesXP() / 100));
-
-                Destroy(draggedComponent);
-                Destroy(staticComponent.gameObject);
-
+                MergeComponents(staticComponentCollider.gameObject, draggedComponentObject);
                 return;
             }
 
-            //put component in the trashcan -> delete it
-            if (Tags.Trashcan.UsedByGameObject(staticComponent.gameObject))
+            if (Tags.Trashcan.UsedByGameObject(staticComponentCollider.gameObject))
             {
-                Element? draggedElement
-                    = draggedComponent.TryGetComponent(out ComponentHandler draggedComponentHandler)
+                DiscardComponent(draggedComponentObject);
+                return;
+            }
+
+            if (Tags.SellingStation.UsedByGameObject(staticComponentCollider.gameObject))
+            {
+                SellComponent(draggedComponentObject);
+                return;
+            }
+        }
+    }
+
+    private void MergeComponents(GameObject staticComponentObject, GameObject draggedComponentObject)
+    {
+        Element? mergedElement = GetMergedElement(staticComponentObject);
+
+        if (mergedElement == null)
+        {
+            return;
+        }
+
+        Vector2 staticObjectCanvasPosition = staticComponentObject.GetComponent<RectTransform>().anchoredPosition;
+        mergedElement.InstantiateGameObjectAndAddTexture(staticObjectCanvasPosition);
+
+        AnimationManager.Instance.PlayMergeAnimation(staticObjectCanvasPosition, mergedElement, element);
+        ExperienceHandler.AddExperiencePoints(mergedElement.salesXP * (Upgrades.MergeXPUpgrade.GetCurrentPercentageOfSalesXP() / 100));
+
+        Destroy(draggedComponentObject);
+        Destroy(staticComponentObject);
+    }
+
+    private void DiscardComponent(GameObject draggedComponentObject)
+    {
+        Element? draggedElement
+                    = draggedComponentObject.TryGetComponent(out ComponentHandler draggedComponentHandler)
                     ? draggedComponentHandler.element
                     : null;
 
-                if (draggedElement == null)
-                {
-                    return;
-                }
-                else
-                {
-                    AnimationManager.Instance.PlayTrashAnimation(GetComponent<RectTransform>().anchoredPosition);
+        if (draggedElement == null)
+        {
+            return;
+        }
+        
+        AnimationManager.Instance.PlayTrashAnimation(GetComponent<RectTransform>().anchoredPosition);
 
-                    int actualTrashPrice = draggedElement.GetTrashPrice() * (Upgrades.MoneyWhenTrashedUpgrade.GetCurrentPercentageOfTrashMoney() / 100);
-                    MoneyHandler.Instance.AddMoney(actualTrashPrice);
+        int actualTrashPrice = draggedElement.GetTrashPrice() * (Upgrades.MoneyWhenTrashedUpgrade.GetCurrentPercentageOfTrashMoney() / 100);
+        MoneyHandler.Instance.AddMoney(actualTrashPrice);
 
-                    Destroy(draggedComponent);
-                }
-            }
+        if (draggedElement.name == Trash.Name
+            && Random.Range(0, 100) < Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.GetCurrentSpawnChancePercentWhenTrashDiscarded())
+        {
+            ComponentSpawner.Instance.SpawnRandomComponentOnRandomPositionOnDesk(3f);
+        }
 
-            // drop component (PC) on the selling station -> if possible/matching with quest -> sells it
-            if (Tags.SellingStation.UsedByGameObject(staticComponent.gameObject))
-            {
-                Order? currentOrder = OrderGenerator.Instance.Order;
-                if (currentOrder == null)
-                {
-                    Debugger.LogWarning("Tried selling a pc, but no Order present!!!");
-                    return;
-                }
+        Destroy(draggedComponentObject);        
+    }
 
-                Element requiredOrderElement = currentOrder.PC;
+    private void SellComponent(GameObject draggedComponentObject)
+    {
+        Order? currentOrder = OrderGenerator.Instance.Order;
+        if (currentOrder == null)
+        {
+            Debugger.LogWarning("Tried selling a pc, but no Order present!!!");
+            return;
+        }
 
-                Element? draggedElement
-                    = draggedComponent.TryGetComponent(out ComponentHandler draggedComponentHandler)
-                    ? draggedComponentHandler.element
-                    : null;
+        Element requiredOrderElement = currentOrder.PC;
 
-                if (draggedElement == null)
-                {
-                    return;
-                }
+        Element? draggedElement
+            = draggedComponentObject.TryGetComponent(out ComponentHandler draggedComponentHandler)
+            ? draggedComponentHandler.element
+            : null;
 
-                if (draggedElement.IsEqual(requiredOrderElement))
-                {
-                    int actualSalesPrice = draggedElement.GetSalesPrice();
-                    MoneyHandler.Instance.AddMoney(actualSalesPrice);
+        if (draggedElement == null)
+        {
+            return;
+        }
 
-                    int actualSalesXP = draggedElement.GetSalesXP();
-                    ExperienceHandler.AddExperiencePoints(actualSalesXP);
+        if (draggedElement.IsEqual(requiredOrderElement))
+        {
+            int actualSalesPrice = draggedElement.GetSalesPrice();
+            MoneyHandler.Instance.AddMoney(actualSalesPrice);
 
-                    AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
-                    OrderGenerator.Instance.GenerateNewOrder(ExperienceHandler.GetCurrentLevel());
+            int actualSalesXP = draggedElement.GetSalesXP();
+            ExperienceHandler.AddExperiencePoints(actualSalesXP);
 
-                    Destroy(draggedComponent);
+            AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
+            OrderGenerator.Instance.GenerateNewOrder(ExperienceHandler.GetCurrentLevel());
 
-                    Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
-                    Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
-                }
-                else
-                {
-                    // if component cannot be sold -> automatically move it back onto the playfield
-                    Debugger.LogMessage("Component cannot be sold. It does not correspond to the required order from the quest.");
-                }
+            Destroy(draggedComponentObject);
 
-            }
-#nullable restore
+            Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
+            Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
+        }
+        else
+        {
+            // if component cannot be sold -> automatically move it back onto the playfield
+            Debugger.LogMessage("Component cannot be sold. It does not correspond to the required order from the quest.");
         }
     }
 

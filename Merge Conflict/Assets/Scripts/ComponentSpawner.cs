@@ -22,8 +22,7 @@ public class ComponentSpawner : MonoBehaviour
     public GameObject spawnPointObject;
 
     // Spawn Settings    
-    private const float initialSpawnDelaySeconds = 0f;
-    private const float spawnIntervalSeconds = 4f;
+    private const float initialSpawnDelaySeconds = 0f;  
 
     [Header("Idle Movement of components")]
     public bool SamePropertiesForEveryComponent = false;
@@ -80,7 +79,7 @@ public class ComponentSpawner : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetSpawnPosition());
+            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetBeltSpawnPosition());
         }
     }
 
@@ -139,10 +138,24 @@ public class ComponentSpawner : MonoBehaviour
 
     public void SpawnRandomComponentOnBelt()
     {
-        Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetSpawnPosition());
+        Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetBeltSpawnPosition());
     }
 
-    private Vector2 GetSpawnPosition()
+    public void SpawnRandomComponentOnRandomPositionOnDesk(float delaySeconds = 0.0f)
+    {
+        StartCoroutine(SpawnRandomComponentOnRandomPositionOnDeskWithDelay(delaySeconds));
+    }
+
+    private IEnumerator SpawnRandomComponentOnRandomPositionOnDeskWithDelay(float delaySeconds)
+    {
+        Vector2 randomPosition = GetRandomPositionOnDesk();
+        AnimationManager.Instance.PlayComponentSpawnedOnDeskAnimation(randomPosition);
+
+        yield return new WaitForSeconds(delaySeconds);
+        Components.GetRandomElement().InstantiateGameObjectAndAddTexture(randomPosition);
+    }
+
+    private Vector2 GetBeltSpawnPosition()
     {
         return spawnPointObject.GetComponent<RectTransform>().anchoredPosition;
     }

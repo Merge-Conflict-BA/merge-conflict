@@ -137,15 +137,14 @@ public static class Components
 
     public static Element GetRandomElement()
     {
-        // only for testing purpose
+        // used for SpawnChanceWHenTrashDiscarded
         // TODO implement when needed for spawner logic
 
-        Element[] array = { CreateCase(), Powersupply.Clone(), HDD.Clone(), CreateMB(), CPU.Clone(), RAM.Clone(), GPU.Clone(), CreateTrash() };
-        int randomIndex = Random.Range(0, array.Length);
-        Element randomElement = array[randomIndex];
+        Element[] elements = { CreateCase(), Powersupply.Clone(), HDD.Clone(), CreateMB(), CPU.Clone(), RAM.Clone(), GPU.Clone(), CreateTrash() };
 
-
-        return randomElement;
+        int randomIndex = Random.Range(0, elements.Length);
+        
+        return elements[randomIndex];
     }
 
     public static List<string> GetComponentNames()
