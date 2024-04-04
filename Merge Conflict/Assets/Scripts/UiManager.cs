@@ -66,7 +66,7 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenLevel", "Level"),
         new KeyValuePair<string, string>("ButtonOpenUpgrade", "Upgrade"),
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
-        new KeyValuePair<string, string>("SellingStation", "Level"),
+        new KeyValuePair<string, string>("SellingStation", "SellingStation"),
     };
 
     const Canvas NoMenuOpened = null;
@@ -115,13 +115,13 @@ public class UiManager : MonoBehaviour
     }
 
     private void HandleButtonClick(string clickedButton)
-    {        
+    {
         if (clickedButton == ExitTheGame)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-                        Application.Quit();
+            Application.Quit();
 #endif
             return;
         }
@@ -142,30 +142,43 @@ public class UiManager : MonoBehaviour
         switch (menuName.Value)
         {
             case "Mainmenu":
-                if(previousOpenedMenu != _mainmenu)
+                if (previousOpenedMenu != _mainmenu)
                 {
                     OpenMenu(_mainmenu);
-                } else
+                    AudioManager.Instance.PlayOpenMenuSound();
+                }
+                else
                 {
                     _playfield.enabled = true;
                     ContinueGame();
+                    AudioManager.Instance.PlayCloseMenuSound();
                 }
                 break;
 
             case "Settings":
+                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_settings);
                 break;
 
             case "Level":
+                AudioManager.Instance.PlayButtonClickSound();
+                OpenMenu(_level);
+                LevelMenu.Instance.OpenMenu();
+                break;
+
+            case "SellingStation":
+                AudioManager.Instance.PlayOpenMenuSound();
                 OpenMenu(_level);
                 LevelMenu.Instance.OpenMenu();
                 break;
 
             case "Upgrade":
+                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_upgrade);
                 break;
 
             case "Elements":
+                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_elements);
                 ElementsMenu.Instance.OpenMenu();
                 break;
@@ -200,12 +213,12 @@ public class UiManager : MonoBehaviour
         _upgrade.enabled = false;
         _settings.enabled = false;
 
-        if(_currentOpenedMenu != null)
+        if (_currentOpenedMenu != null)
         {
             _currentOpenedMenu.enabled = false;
             _currentOpenedMenu = null;
         }
- 
+
         isMenuVisible = false;
     }
 
@@ -215,10 +228,12 @@ public class UiManager : MonoBehaviour
         if (currentOpenedMenu == _mainmenu)
         {
             menuText = "Close";
-        } else if (currentOpenedMenu == null)
+        }
+        else if (currentOpenedMenu == null)
         {
             menuText = "Menu";
-        } else
+        }
+        else
         {
             menuText = "Back";
         }
@@ -232,7 +247,7 @@ public class UiManager : MonoBehaviour
     }
     private void ContinueGame()
     {
-        Time.timeScale = 1f; 
+        Time.timeScale = 1f;
     }
 }
 

@@ -3,10 +3,11 @@ Name:          ComponentMovement
 Description:   Manages the Movement of the components if they are on the desk
 Author(s):     Simeon Baumann, Hanno Witzleb, Daniel Rittrich
 Date:          2024-03-15
-Version:       V2.1
+Version:       V2.2
 **********************************************************************************************************************/
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -55,6 +56,7 @@ public class ComponentMovement : MonoBehaviour
     // Store the last positions of the component while dragging to calculate the direction of the further movement after dragging
     private List<Vector2> _lastPositionsWhileBeingDragged;
     private bool _isReturningToDesk;
+    private bool _isWalking;
 
     /// <summary>
     /// Changes important properties of the movement of the component
@@ -269,6 +271,17 @@ public class ComponentMovement : MonoBehaviour
         Vector2 vectorToNextPosition = _currentMoveDirection * (MoveSpeed * Time.deltaTime);
         float movedDistance = ((_startPositionOfCurrentMove ?? _intermediateTargetForSmoothMovement) - _intermediateTargetForSmoothMovement).magnitude;
 
+        if (movedDistance > 3f && !_isWalking)
+        {
+            _isWalking = true;
+            AudioManager.Instance.StartComponentFootstepLoop();
+
+        }
+        else if (_currentRemainingMoveDistance - movedDistance < 1.5f)
+        {
+            AudioManager.Instance.StopComponentFootstepLoop();
+        }
+
         if (IsPositionOnDesk(_intermediateTargetForSmoothMovement + vectorToNextPosition) && movedDistance <= _currentRemainingMoveDistance)
         {
             _intermediateTargetForSmoothMovement += vectorToNextPosition;
@@ -277,7 +290,7 @@ public class ComponentMovement : MonoBehaviour
         // follow _leaderPosition - is smooth because of the _smoothMovementFactor
         SetCanvasPosition(GetCanvasPosition() + (_intermediateTargetForSmoothMovement - GetCanvasPosition()) * _smoothMovementFactor);
 
-        if (Vector3.Distance(_intermediateTargetForSmoothMovement, GetCanvasPosition()) <= 0.01)
+        if (Vector3.Distance(_intermediateTargetForSmoothMovement, GetCanvasPosition()) <= 0.1)
         {
             ResetMovementProperties();
         }
@@ -357,6 +370,8 @@ public class ComponentMovement : MonoBehaviour
         _remainingSecondsUntilIdleMoveStarts = Random.Range(MinSecondsWithoutIdleMove, MaxSecondsWithoutIdleMove);
         _isReturningToDesk = false;
         _isMoving = false;
+        StartCoroutine(SetIsNotWalkingAfterDelay());
+        AudioManager.Instance.StopComponentFootstepLoop();
     }
 
     private Vector2 GetCanvasPosition()
@@ -372,5 +387,13 @@ public class ComponentMovement : MonoBehaviour
     public bool GetIsReturningToDesk()
     {
         return _isReturningToDesk;
+    }
+
+    private IEnumerator SetIsNotWalkingAfterDelay()
+    {
+        float delay = Random.Range(2f, 4f);
+        yield return new WaitForSeconds(delay);
+
+        _isWalking = false;
     }
 }

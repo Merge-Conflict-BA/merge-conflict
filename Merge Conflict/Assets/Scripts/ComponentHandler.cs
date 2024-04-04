@@ -75,6 +75,7 @@ public class ComponentHandler : MonoBehaviour
         HandleOverlappingObjects();
         isBeingDragged = false;
         ComponentMovement.HandleDraggingStop();
+        AudioManager.Instance.PlayDropComponentSound();
     }
 
     private void HandleSpriteSorting()
@@ -196,6 +197,7 @@ public class ComponentHandler : MonoBehaviour
 
         AnimationManager.Instance.PlayMergeAnimation(staticObjectCanvasPosition, mergedElement, element);
         ExperienceHandler.AddExperiencePoints(mergedElement.salesXP * (Upgrades.MergeXPUpgrade.GetCurrentPercentageOfSalesXP() / 100));
+        AudioManager.Instance.PlayMergeSound();
 
         Destroy(draggedComponentObject);
         Destroy(staticComponentObject);
@@ -212,8 +214,9 @@ public class ComponentHandler : MonoBehaviour
         {
             return;
         }
-        
+
         AnimationManager.Instance.PlayTrashAnimation(GetComponent<RectTransform>().anchoredPosition);
+        AudioManager.Instance.PlayThrowAwaySound();
 
         int actualTrashPrice = draggedElement.GetTrashPrice() * (Upgrades.MoneyWhenTrashedUpgrade.GetCurrentPercentageOfTrashMoney() / 100);
         MoneyHandler.Instance.AddMoney(actualTrashPrice);
@@ -224,7 +227,7 @@ public class ComponentHandler : MonoBehaviour
             ComponentSpawner.Instance.SpawnRandomComponentOnRandomPositionOnDesk(3f);
         }
 
-        Destroy(draggedComponentObject);        
+        Destroy(draggedComponentObject);
     }
 
     private void SellComponent(GameObject draggedComponentObject)
@@ -257,9 +260,6 @@ public class ComponentHandler : MonoBehaviour
             ExperienceHandler.AddExperiencePoints(actualSalesXP);
 
             AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
-            OrderGenerator.Instance.GenerateNewOrder(ExperienceHandler.GetCurrentLevel());
-
-            Destroy(draggedComponentObject);
 
             Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
             Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
@@ -267,6 +267,7 @@ public class ComponentHandler : MonoBehaviour
         else
         {
             // if component cannot be sold -> automatically move it back onto the playfield
+            AudioManager.Instance.PlayTrySellWrongComponentSound();
             Debugger.LogMessage("Component cannot be sold. It does not correspond to the required order from the quest.");
         }
     }
