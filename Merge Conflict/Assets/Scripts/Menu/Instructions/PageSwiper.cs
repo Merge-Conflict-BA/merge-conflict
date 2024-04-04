@@ -59,18 +59,8 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
             transform.position = panelLocation;
         }
 
-        foreach (Page page in _pages)
-        {
-            // Überprüfe, ob das GameObject im sichtbaren Bereich der Kamera ist.
-            if (IsInCameraView(page))
-            {
-                Debug.Log($"Das GameObject {page.gameObject.name} ist im sichtbaren Bereich der Kamera.");
-            }
-            else
-            {
-                Debug.Log($"Das GameObject {page.gameObject.name} ist NICHT im sichtbaren Bereich der Kamera.");
-            }
-        }
+        int? visiblePage = GetIdFromVisiblePage(_pages);
+        Debugger.LogMessage($"visiblePage: {visiblePage}");
 
     }
 
@@ -85,15 +75,22 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
         }
     }
 
-
-
-    bool IsInCameraView(Page page)
+    private int? GetIdFromVisiblePage(Page[] pages)
     {
-        // Bestimme die sichtbaren Grenzen der Kamera.
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+        //get the cameraview planes
+        Plane[] cameraPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
 
-        // Überprüfe, ob die Bounds des GameObjects in den sichtbaren Bereich der Kamera fallen.
-        Bounds bounds = page.gameObject.GetComponent<Renderer>().bounds;
-        return GeometryUtility.TestPlanesAABB(planes, bounds);
+        foreach (Page page in pages)
+        {
+            Bounds pageBounds = page.gameObject.GetComponent<Renderer>().bounds;
+            bool pageIsVisible = GeometryUtility.TestPlanesAABB(cameraPlanes, pageBounds);
+
+            if (pageIsVisible) 
+            {
+                return page.Id;
+            }
+        }
+
+        return null; 
     }
 }
