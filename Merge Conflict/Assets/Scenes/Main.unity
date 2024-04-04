@@ -10047,6 +10047,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 28768845}
     m_Modifications:
+    - target: {fileID: 6403252182692130911, guid: 2f84a244ad5364517ae4d6f4277c5ad7, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.49056602
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403252182692130911, guid: 2f84a244ad5364517ae4d6f4277c5ad7, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.24631819
+      objectReference: {fileID: 0}
+    - target: {fileID: 6403252182692130911, guid: 2f84a244ad5364517ae4d6f4277c5ad7, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.0485938
+      objectReference: {fileID: 0}
     - target: {fileID: 6403252182692130976, guid: 2f84a244ad5364517ae4d6f4277c5ad7, type: 3}
       propertyPath: m_Name
       value: ComponentSpawnedOnDeskAnimation
