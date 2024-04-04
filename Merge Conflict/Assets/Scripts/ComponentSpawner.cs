@@ -7,11 +7,9 @@ Version:       V1.3
 TODO:          - 
 **********************************************************************************************************************/
 
-using ConveyorBelt;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using System.Collections;
 
 public class ComponentSpawner : MonoBehaviour
 {
@@ -24,8 +22,7 @@ public class ComponentSpawner : MonoBehaviour
     public GameObject spawnPointObject;
 
     // Spawn Settings    
-    private const float initialSpawnDelaySeconds = 0f;
-    private const float spawnIntervalSeconds = 4f;
+    private const float initialSpawnDelaySeconds = 0f;  
 
     [Header("Idle Movement of components")]
     public bool SamePropertiesForEveryComponent = false;
@@ -68,9 +65,8 @@ public class ComponentSpawner : MonoBehaviour
         spawnPointObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(
             50,
             transform.parent.GetComponent<RectTransform>().rect.height + 100);
-
-        // Current System of spawning: each 4 seconds a random component is spawning
-        InvokeRepeating(nameof(SpawnRandomComponentOnBelt), initialSpawnDelaySeconds, spawnIntervalSeconds);
+        
+        StartCoroutine(SpawnOnBeltInInterval(initialSpawnDelaySeconds));
     }
 
     void Update()
@@ -83,7 +79,22 @@ public class ComponentSpawner : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetSpawnPosition());
+            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetBeltSpawnPosition());
+        }
+    }
+
+    // copied from: https://gamedev.stackexchange.com/questions/139736/how-can-i-change-invokerepeating-time-in-unity
+    // after every spawn, this Coroutine reevaluates the current Interval
+    private IEnumerator SpawnOnBeltInInterval(float initialDelaySeconds)
+    {
+        yield return new WaitForSeconds(initialDelaySeconds);
+        while (true)
+        {
+            SpawnRandomComponentOnBelt();
+            Debugger.LogMessage("Spawned new Component on Belt");
+
+            int currentInterval = Upgrades.SpawnIntervalUpgrade.GetCurrentSecondsInterval();
+            yield return new WaitForSeconds(currentInterval);
         }
     }
 
@@ -127,10 +138,24 @@ public class ComponentSpawner : MonoBehaviour
 
     public void SpawnRandomComponentOnBelt()
     {
-        Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetSpawnPosition());
+        Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetBeltSpawnPosition());
     }
 
-    private Vector2 GetSpawnPosition()
+    public void SpawnRandomComponentOnRandomPositionOnDesk(float delaySeconds = 0.0f)
+    {
+        StartCoroutine(SpawnRandomComponentOnRandomPositionOnDeskWithDelay(delaySeconds));
+    }
+
+    private IEnumerator SpawnRandomComponentOnRandomPositionOnDeskWithDelay(float delaySeconds)
+    {
+        Vector2 randomPosition = GetRandomPositionOnDesk();
+        AnimationManager.Instance.PlayComponentSpawnedOnDeskAnimation(randomPosition);
+
+        yield return new WaitForSeconds(delaySeconds);
+        Components.GetRandomElement().InstantiateGameObjectAndAddTexture(randomPosition);
+    }
+
+    private Vector2 GetBeltSpawnPosition()
     {
         return spawnPointObject.GetComponent<RectTransform>().anchoredPosition;
     }
