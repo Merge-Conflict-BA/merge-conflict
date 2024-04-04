@@ -151,6 +151,7 @@ public class UiManager : MonoBehaviour
                 {
                     _playfield.enabled = true;
                     ContinueGame();
+                    AudioManager.Instance.PlayCloseMenuSound();
                 }
                 break;
 
@@ -165,8 +166,8 @@ public class UiManager : MonoBehaviour
 
             case "SellingStation":
                 AudioManager.Instance.PlayOpenMenuSound();
-                LEVEL.enabled = true;
-                currentOpenedMenu = LEVEL;
+                //LEVEL.enabled = true;
+                //currentOpenedMenu = LEVEL;
                 break;
 
             case "Upgrade":
