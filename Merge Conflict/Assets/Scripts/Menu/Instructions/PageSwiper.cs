@@ -9,19 +9,20 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     private Vector3 panelLocation;
     public float normalizedTreshold = 0.2f;
-    public float easing = 0.5f;
+    public float automatedSwipingVelocity = 0.5f;
     private Page[] _pages;    //store all swipable pages
     private int _lastPage;
     public Camera mainCamera;
+    private int _pageCount;
 
 
     private void Awake()
     {
         Debugger.LogMessage($"Startposition/PanelLocation: {transform.position}");
 
-        int pageCount = transform.childCount;
-        _pages = new Page[pageCount];
-        _lastPage = pageCount - 1;   //-1 because of the difference between page count and array index
+        _pageCount = transform.childCount;
+        _pages = new Page[_pageCount];
+        _lastPage = _pageCount - 1;   //-1 because of the difference between page count and array index
 
         //link the page GameObjects to the array of pages
         for (int i = 0; i < transform.childCount; i++)
@@ -58,21 +59,22 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData swipeData)
     {
+        Debugger.LogMessage($"panelLocation: {panelLocation}");
         Debugger.LogMessage($"swipeData.pressPosition.x: {swipeData.pressPosition.x}");
         Debugger.LogMessage($"swipeData.position.x: {swipeData.position.x}");
         Debugger.LogMessage($"Screen.width: {Screen.width}");
 
-        float swipedDistanceNormalized = (swipeData.pressPosition.x - swipeData.position.x) / Screen.width;
+        float swipedDistanceNormalized = (swipeData.pressPosition.x - swipeData.position.x) / (Screen.width / _pageCount);
         Debugger.LogMessage($"swipedDistanceNormalized: {swipedDistanceNormalized}");
         if (Mathf.Abs(swipedDistanceNormalized) >= normalizedTreshold)
         {
             Debugger.LogMessage($"position end: {transform.position}");
             Debugger.LogMessage($"end panelLocation: {panelLocation}");
             Vector3 newLocation = panelLocation;
-            if (swipedDistanceNormalized > 0) { newLocation += new Vector3(-Screen.width, 0, 0); }  //swiped left
-            if (swipedDistanceNormalized < 0) { newLocation += new Vector3(Screen.width, 0, 0); }   //swiped right
+            if (swipedDistanceNormalized > 0) { newLocation += new Vector3(-(Screen.width / _pageCount), 0, 0); }  //swiped left
+            if (swipedDistanceNormalized < 0) { newLocation += new Vector3((Screen.width / _pageCount), 0, 0); }   //swiped right
 
-            StartCoroutine(SmoothMove(transform.position, newLocation, easing));
+            StartCoroutine(SmoothMove(transform.position, newLocation, automatedSwipingVelocity));
             panelLocation = newLocation;
         }
         else { transform.position = panelLocation; }
