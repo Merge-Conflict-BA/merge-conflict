@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using ExperienceSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
 using TMPro;
 
 public class UiManager : MonoBehaviour
@@ -39,6 +40,7 @@ public class UiManager : MonoBehaviour
     public static UiManager Instance { get { return _instance; } }
 
     //default buttons to orchestrate the menu
+    [Header("Menu Buttons")]
     [SerializeField] private Button _buttonOpenMainmenu;
     [SerializeField] private TextMeshProUGUI _buttonOpenMainMenuText;
     [SerializeField] private Button _buttonOpenSettings;
@@ -49,6 +51,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button _buttonSellingStation;
 
     //all menus
+    [Header("Menu Canvases")]
     [SerializeField] private Canvas _playfield;
     [SerializeField] private Canvas _uiManagerCanvas;
     [SerializeField] private Canvas _mainmenu;
@@ -56,6 +59,9 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Canvas _level;
     [SerializeField] private Canvas _upgrade;
     [SerializeField] private Canvas _elements;
+
+    [Header("Other References")]
+    public GameObject componentsHolderObject;
 
 
     //mapping buttons to the menu wich they should open
@@ -66,7 +72,7 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenLevel", "Level"),
         new KeyValuePair<string, string>("ButtonOpenUpgrade", "Upgrade"),
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
-        new KeyValuePair<string, string>("SellingStation", "Level"),
+        new KeyValuePair<string, string>("SellingStation", "SellingStation"),
     };
 
     const Canvas NoMenuOpened = null;
@@ -115,13 +121,13 @@ public class UiManager : MonoBehaviour
     }
 
     private void HandleButtonClick(string clickedButton)
-    {        
+    {
         if (clickedButton == ExitTheGame)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-                        Application.Quit();
+            Application.Quit();
 #endif
             return;
         }
@@ -142,30 +148,43 @@ public class UiManager : MonoBehaviour
         switch (menuName.Value)
         {
             case "Mainmenu":
-                if(previousOpenedMenu != _mainmenu)
+                if (previousOpenedMenu != _mainmenu)
                 {
                     OpenMenu(_mainmenu);
-                } else
+                    AudioManager.Instance.PlayOpenMenuSound();
+                }
+                else
                 {
                     _playfield.enabled = true;
                     ContinueGame();
+                    AudioManager.Instance.PlayCloseMenuSound();
                 }
                 break;
 
             case "Settings":
+                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_settings);
                 break;
 
             case "Level":
+                AudioManager.Instance.PlayButtonClickSound();
+                OpenMenu(_level);
+                LevelMenu.Instance.OpenMenu();
+                break;
+
+            case "SellingStation":
+                AudioManager.Instance.PlayOpenMenuSound();
                 OpenMenu(_level);
                 LevelMenu.Instance.OpenMenu();
                 break;
 
             case "Upgrade":
+                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_upgrade);
                 break;
 
             case "Elements":
+                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_elements);
                 ElementsMenu.Instance.OpenMenu();
                 break;
@@ -184,6 +203,8 @@ public class UiManager : MonoBehaviour
         _currentOpenedMenu = menuCanvas;
 
         isMenuVisible = true;
+
+        SetComponentsVisible(false);
     }
 
     private void CloseAllMenus()
@@ -200,13 +221,15 @@ public class UiManager : MonoBehaviour
         _upgrade.enabled = false;
         _settings.enabled = false;
 
-        if(_currentOpenedMenu != null)
+        if (_currentOpenedMenu != null)
         {
             _currentOpenedMenu.enabled = false;
             _currentOpenedMenu = null;
         }
- 
+
         isMenuVisible = false;
+
+        SetComponentsVisible(true);
     }
 
     private void HandleMenuButtonText(Canvas currentOpenedMenu)
@@ -215,15 +238,27 @@ public class UiManager : MonoBehaviour
         if (currentOpenedMenu == _mainmenu)
         {
             menuText = "Close";
-        } else if (currentOpenedMenu == null)
+        }
+        else if (currentOpenedMenu == null)
         {
             menuText = "Menu";
-        } else
+        }
+        else
         {
             menuText = "Back";
         }
 
         _buttonOpenMainMenuText.text = menuText;
+    }
+    
+    private void SetComponentsVisible(bool isVisible)
+    {
+        // Turns off components, else they would render above the menu.
+        // cant just simply set some layer, because components layers change constantly
+        // and UI (Canvas, ...) ist a different render system than SpriteRenderer for Components
+        // This is the easiest method ive found.
+
+        componentsHolderObject.GetComponent<SortingGroup>().sortingOrder = isVisible ? 1 : 0;
     }
 
     private void PauseGame()
@@ -232,7 +267,7 @@ public class UiManager : MonoBehaviour
     }
     private void ContinueGame()
     {
-        Time.timeScale = 1f; 
+        Time.timeScale = 1f;
     }
 }
 

@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Merge Conflict/Assets/UpgradeMenu.meta
 guid: 3cf97b0270f8846c69607c033a1b38e6
 folderAsset: yes
 DefaultImporter:
+=======
+guid: c9ecc6a9373ea437694ea896fe839fb5
+TextScriptImporter:
+>>>>>>> 9ee5f869dcffc6df65842b5a22ed5fb3a45cc0af:Merge Conflict/Assets/Scripts/Order/dataLog.txt.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
