@@ -19,7 +19,10 @@ public class ComponentSpawner : MonoBehaviour
     [Header("Prefabs")]
     public GameObject componentPrefab;
     public GameObject subComponentPrefab;
+
+    [Header("GameObject Reference")]
     public GameObject spawnPointObject;
+    public GameObject componentsHolderObject;
 
     // Spawn Settings    
     private const float initialSpawnDelaySeconds = 0f;  
@@ -59,6 +62,10 @@ public class ComponentSpawner : MonoBehaviour
             spawnPointObject == null,
             "ComponentSpawner: No Reference SpawnPoint GameObject has been set!");
 
+        Debugger.LogErrorIf(
+            componentsHolderObject == null,
+            "ComponentSpawner: No componentsHolderObject GameObject has been set!");
+
         // set position of spawnPoint
         spawnPointObject.GetComponent<RectTransform>().anchorMin = Vector2.zero;
         spawnPointObject.GetComponent<RectTransform>().anchorMax = Vector2.zero;
@@ -71,6 +78,7 @@ public class ComponentSpawner : MonoBehaviour
 
     void Update()
     {
+#if UNITY_EDITOR
         //test the function -> spawn object on current mouse position
         //TODO: delete this, if the gamelogic for the spawning is implemented!!!
         if (Input.GetKeyDown(KeyCode.S))
@@ -81,6 +89,7 @@ public class ComponentSpawner : MonoBehaviour
         {
             Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetBeltSpawnPosition());
         }
+#endif
     }
 
     // copied from: https://gamedev.stackexchange.com/questions/139736/how-can-i-change-invokerepeating-time-in-unity
@@ -100,7 +109,7 @@ public class ComponentSpawner : MonoBehaviour
 
     public GameObject SpawnComponent(Vector2 spawnPosition, Element element)
     {
-        GameObject componentObject = Instantiate(componentPrefab, transform.parent.position, Quaternion.identity, transform.parent);
+        GameObject componentObject = Instantiate(componentPrefab, transform.parent.position, Quaternion.identity, componentsHolderObject.transform);
         componentObject.GetComponent<RectTransform>().anchoredPosition = spawnPosition;
         componentObject.name = $"{element.GetType()}_lvl_{element.tier}_merged";
         componentObject.tag = Tags.Component.ToString();
