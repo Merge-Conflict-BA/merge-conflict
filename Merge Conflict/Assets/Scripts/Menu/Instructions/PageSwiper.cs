@@ -46,10 +46,10 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
         float difference = swipingData.pressPosition.x - swipingData.position.x;
         transform.position = panelLocation - new Vector3(difference, 0, 0);
 
-        if (SwipedToLastPage())
-        {
-            Debugger.LogMessage("Swiped to last page");
-        }
+        // if (SwipedToLastPage())
+        // {
+        //     Debugger.LogMessage("Swiped to last page");
+        // }
     }
 
     public void OnEndDrag(PointerEventData swipingData)
@@ -66,9 +66,9 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
             StartCoroutine(SmoothMove(transform.position, newLocation, automatedSwipingVelocity));
             panelLocation = newLocation;
         }
-        else { transform.position = panelLocation; }
+        else { StartCoroutine(SmoothMove(transform.position, panelLocation, automatedSwipingVelocity)); }
 
-        int? visiblePage = IdFromVisiblePage(_pages);
+        //int? visiblePage = IdFromVisiblePage(_pages);
     }
 
     IEnumerator SmoothMove(Vector3 startPos, Vector3 endPos, float seconds)
@@ -80,37 +80,37 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
         while (t <= 1.0)
         {
             t += Time.deltaTime / seconds;
-            transform.position = Vector3.Lerp(startPos, endPos, Mathf.SmoothStep(0f, 0f, t));
+            transform.position = Vector3.Lerp(startPos, endPos, Mathf.SmoothStep(0f, 1f, t));
             yield return null;
         }
     }
 
-    private int? IdFromVisiblePage(Page[] pages)
-    {
-        //get the cameraview planes
-        Plane[] cameraPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+    // private int? IdFromVisiblePage(Page[] pages)
+    // {
+    //     //get the cameraview planes
+    //     Plane[] cameraPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
 
-        foreach (Page page in pages)
-        {
-            Bounds pageBounds = page.gameObject.GetComponent<Renderer>().bounds;
-            bool pageIsVisible = GeometryUtility.TestPlanesAABB(cameraPlanes, pageBounds);
+    //     foreach (Page page in pages)
+    //     {
+    //         Bounds pageBounds = page.gameObject.GetComponent<Renderer>().bounds;
+    //         bool pageIsVisible = GeometryUtility.TestPlanesAABB(cameraPlanes, pageBounds);
 
-            if (pageIsVisible)
-            {
-                return page.Id;
-            }
-        }
+    //         if (pageIsVisible)
+    //         {
+    //             return page.Id;
+    //         }
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 
-    private bool SwipedToLastPage()
-    {
-        if (IdFromVisiblePage(_pages) == _lastPage)
-        {
-            return true;
-        }
-        return false;
-    }
+    // private bool SwipedToLastPage()
+    // {
+    //     if (IdFromVisiblePage(_pages) == _lastPage)
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
 }
