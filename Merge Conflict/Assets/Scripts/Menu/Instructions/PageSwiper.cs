@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 {
     private Vector3 panelLocation;
-    public float percentTreshold = 0.2f;
+    public float normalizedTreshold = 0.2f;
     public float easing = 0.5f;
     private Page[] _pages;    //store all swipable pages
     private int _lastPage;
@@ -21,6 +21,7 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
         _pages = new Page[pageCount];
         _lastPage = pageCount - 1;   //-1 because of the difference between page count and array index
 
+        //link the page GameObjects to the array of pages
         for (int i = 0; i < transform.childCount; i++)
         {
             _pages[i] = new Page(i, transform.GetChild(i).gameObject);
@@ -36,30 +37,32 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
     }
 
-    public void OnDrag(PointerEventData data)
+    public void OnDrag(PointerEventData swipeData)
     {
-        float difference = data.pressPosition.x - data.position.x;
+        float difference = swipeData.pressPosition.x - swipeData.position.x;
         transform.position = panelLocation - new Vector3(difference, 0, 0);
+        if (SwipedToLastPage()) 
+        { 
+            Debugger.LogMessage("Swiped to last page");
+            return; 
+        }
     }
 
-    public void OnEndDrag(PointerEventData data)
+    public void OnEndDrag(PointerEventData swipeData)
     {
-        float percentage = (data.pressPosition.x - data.position.x) / Screen.width;
-        if (Mathf.Abs(percentage) >= percentTreshold)
+        float swipedDistanceNormalized = (swipeData.pressPosition.x - swipeData.position.x) / Screen.width;
+        if (Mathf.Abs(swipedDistanceNormalized) >= normalizedTreshold)
         {
             Vector3 newLocation = panelLocation;
-            if (percentage > 0) { newLocation += new Vector3(-Screen.width, 0, 0); }
-            if (percentage < 0) { newLocation += new Vector3(Screen.width, 0, 0); }
+            if (swipedDistanceNormalized > 0) { newLocation += new Vector3(-Screen.width, 0, 0); }  //swiped left
+            if (swipedDistanceNormalized < 0) { newLocation += new Vector3(Screen.width, 0, 0); }   //swiped right
 
             StartCoroutine(SmoothMove(transform.position, newLocation, easing));
             panelLocation = newLocation;
         }
-        else
-        {
-            transform.position = panelLocation;
-        }
+        else { transform.position = panelLocation; }
 
-        int? visiblePage = GetIdFromVisiblePage(_pages);
+        int? visiblePage = IdFromVisiblePage(_pages);
         Debugger.LogMessage($"visiblePage: {visiblePage}");
 
     }
@@ -75,7 +78,7 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
         }
     }
 
-    private int? GetIdFromVisiblePage(Page[] pages)
+    private int? IdFromVisiblePage(Page[] pages)
     {
         //get the cameraview planes
         Plane[] cameraPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
@@ -93,4 +96,14 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
         return null; 
     }
+
+    private bool SwipedToLastPage()
+    {
+        if (IdFromVisiblePage(_pages) == _lastPage)
+        {
+            return true;
+        }
+        return false;
+    }
+
 }
