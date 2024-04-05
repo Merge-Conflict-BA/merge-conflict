@@ -23,7 +23,7 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
         int pageCount = transform.childCount;
         _pages = new Page[pageCount];
         _lastPage = pageCount - 1;   //-1 because of the difference between page count and array index
-        _pageWidth = Screen.width / pageCount;
+        _pageWidth = Screen.width;
 
         //link the page GameObjects to the array of pages
         for (int i = 0; i < transform.childCount; i++)
@@ -43,9 +43,10 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData swipingData)
     {
-        float difference = swipingData.pressPosition.x - swipingData.position.x;
-        transform.position = panelLocation - new Vector3(difference, 0, 0);
-
+        float difference = swipingData.pressPosition.x - swipingData.position.x; //diff = position grapping the page --> current mouse position
+        transform.position = panelLocation - new Vector3(difference, 0, 0); //move the panel according to the mouse movement
+        Debugger.LogMessage($"Difference: {difference}");
+        Debugger.LogMessage($"Position: {transform.position.x}");
         // if (SwipedToLastPage())
         // {
         //     Debugger.LogMessage("Swiped to last page");
@@ -54,6 +55,11 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData swipingData)
     {
+        Debugger.LogMessage("########### End of dragging ###########");
+        Debugger.LogMessage($"pageWidth = {_pageWidth}");
+        Debugger.LogMessage($"pressPosition.x = {swipingData.pressPosition.x}");
+        Debugger.LogMessage($"position.x = {swipingData.position.x}");
+        Debugger.LogMessage($"panelLocation bevor calc = {panelLocation.x}");
 
         float swipedDistanceNormalized = (swipingData.pressPosition.x - swipingData.position.x) / _pageWidth;
         Debugger.LogMessage($"last x pos: {swipingData.position.x}");
@@ -67,6 +73,9 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
             panelLocation = newLocation;
         }
         else { StartCoroutine(SmoothMove(transform.position, panelLocation, automatedSwipingVelocity)); }
+
+        Debugger.LogMessage($"panelLocation after calc = {panelLocation.x}");
+
 
         //int? visiblePage = IdFromVisiblePage(_pages);
     }
