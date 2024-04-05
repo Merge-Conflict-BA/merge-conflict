@@ -17,6 +17,8 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
     private void Awake()
     {
+        Debugger.LogMessage($"Startposition/PanelLocation: {transform.position}");
+
         int pageCount = transform.childCount;
         _pages = new Page[pageCount];
         _lastPage = pageCount - 1;   //-1 because of the difference between page count and array index
@@ -39,8 +41,14 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnDrag(PointerEventData swipeData)
     {
+        Debugger.LogMessage($"Current position: {transform.position}");
+        Debugger.LogMessage($"Current panelLocation: {panelLocation}");
+
+
         float difference = swipeData.pressPosition.x - swipeData.position.x;
         transform.position = panelLocation - new Vector3(difference, 0, 0);
+        
+        
         if (SwipedToLastPage()) 
         { 
             Debugger.LogMessage("Swiped to last page");
@@ -50,9 +58,16 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
     public void OnEndDrag(PointerEventData swipeData)
     {
+        Debugger.LogMessage($"swipeData.pressPosition.x: {swipeData.pressPosition.x}");
+        Debugger.LogMessage($"swipeData.position.x: {swipeData.position.x}");
+        Debugger.LogMessage($"Screen.width: {Screen.width}");
+
         float swipedDistanceNormalized = (swipeData.pressPosition.x - swipeData.position.x) / Screen.width;
+        Debugger.LogMessage($"swipedDistanceNormalized: {swipedDistanceNormalized}");
         if (Mathf.Abs(swipedDistanceNormalized) >= normalizedTreshold)
         {
+            Debugger.LogMessage($"position end: {transform.position}");
+            Debugger.LogMessage($"end panelLocation: {panelLocation}");
             Vector3 newLocation = panelLocation;
             if (swipedDistanceNormalized > 0) { newLocation += new Vector3(-Screen.width, 0, 0); }  //swiped left
             if (swipedDistanceNormalized < 0) { newLocation += new Vector3(Screen.width, 0, 0); }   //swiped right
@@ -64,6 +79,8 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
 
         int? visiblePage = IdFromVisiblePage(_pages);
         Debugger.LogMessage($"visiblePage: {visiblePage}");
+
+        
 
     }
 
