@@ -21,7 +21,7 @@ public class MoneyWhenTrashedUpgrade : Upgrade
 
     public override string GetCurrentLevelDescription()
     {
-        return $"{GetCurrentLevelDescription()} %";
+        return $"Granding {GetCurrentPercentageOfTrashMoney()}% more money for discarding trash";
     }
 
     public override string GetNextLevelDescription()
@@ -31,6 +31,6 @@ public class MoneyWhenTrashedUpgrade : Upgrade
             return "-";
         }
 
-        return $"{PercentageOfTrashMoney[Level]} %";
+        return $"{PercentageOfTrashMoney[Level + 1]}%";
     }
 }

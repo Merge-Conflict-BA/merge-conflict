@@ -21,7 +21,7 @@ public class MergeXPUpgrade : Upgrade
 
     public override string GetCurrentLevelDescription()
     {
-        return $"{GetCurrentLevelDescription()} %";
+        return $"Granting {GetCurrentPercentageOfSalesXP()}% more XP for component merging";
     }
 
     public override string GetNextLevelDescription()
@@ -31,6 +31,6 @@ public class MergeXPUpgrade : Upgrade
             return "-";
         }
 
-        return $"{PercentageOfSalesXP[Level]} %";
+        return $"{PercentageOfSalesXP[Level + 1]}%";
     }
 }

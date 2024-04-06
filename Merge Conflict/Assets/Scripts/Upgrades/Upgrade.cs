@@ -35,17 +35,20 @@ public class Upgrade
         return "";
     }
 
-    public int BuyNextLevel(int currentMoney)
+    public void BuyNextLevel()
     {
-        if(CostForNextLevel[Level] > currentMoney || isAtMaxLevel())
+        int currentMoney = MoneyHandler.Instance.Money;
+
+        if (CostForNextLevel[Level] > currentMoney || isAtMaxLevel())
         {
-            return currentMoney;
+            Debugger.LogMessage($"Upgrade can't be executed: Not enough money or upgrade is at max level");
+
+            return;
         }
 
+        MoneyHandler.Instance.SpendMoney(CostForNextLevel[Level]);
         Level++;
         SaveToPlayerPrefs();
-
-        return currentMoney - CostForNextLevel[Level];
     }
 
     public bool isAtMaxLevel()
