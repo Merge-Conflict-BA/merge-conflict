@@ -52,10 +52,10 @@ public class UpgradeMenu : Menu
 void UpdateButtonCosts()
     {
         // Check if next level is available
-        mergeXPButtonText.text = Upgrades.MergeXPUpgrade.isAtMaxLevel() ? "Max" : $"{Upgrades.MergeXPUpgrade.CostForNextLevel[Upgrades.MergeXPUpgrade.Level]}";
-        moneyWhenTrashedButtonText.text = Upgrades.MoneyWhenTrashedUpgrade.isAtMaxLevel() ? "Max" : $"{Upgrades.MoneyWhenTrashedUpgrade.CostForNextLevel[Upgrades.MoneyWhenTrashedUpgrade.Level]}";
-        spawnIntervalButtonText.text = Upgrades.SpawnIntervalUpgrade.isAtMaxLevel() ? "Max" : $"{Upgrades.SpawnIntervalUpgrade.CostForNextLevel[Upgrades.SpawnIntervalUpgrade.Level]}";
-        spawnChanceWhenTrashDiscardedButtonText.text = Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.isAtMaxLevel() ? "Max" : $" {Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.CostForNextLevel[Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.Level]}";
+        mergeXPButtonText.text = Upgrades.MergeXPUpgrade.isAtMaxLevel() ? "Max" : $"{Upgrades.MergeXPUpgrade.CostForNextLevel[Upgrades.MergeXPUpgrade.Level]} $";
+        moneyWhenTrashedButtonText.text = Upgrades.MoneyWhenTrashedUpgrade.isAtMaxLevel() ? "Max" : $"{Upgrades.MoneyWhenTrashedUpgrade.CostForNextLevel[Upgrades.MoneyWhenTrashedUpgrade.Level]} $";
+        spawnIntervalButtonText.text = Upgrades.SpawnIntervalUpgrade.isAtMaxLevel() ? "Max" : $"{Upgrades.SpawnIntervalUpgrade.CostForNextLevel[Upgrades.SpawnIntervalUpgrade.Level]} $";
+        spawnChanceWhenTrashDiscardedButtonText.text = Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.isAtMaxLevel() ? "Max" : $" {Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.CostForNextLevel[Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.Level]} $";
     }
 
     void UpgradeMergeXP(MergeXPUpgrade upgrade)
