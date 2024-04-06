@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using ExperienceSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
 using TMPro;
 
 public class UiManager : MonoBehaviour
@@ -39,6 +40,7 @@ public class UiManager : MonoBehaviour
     public static UiManager Instance { get { return _instance; } }
 
     //default buttons to orchestrate the menu
+    [Header("Menu Buttons")]
     [SerializeField] private Button _buttonOpenMainmenu;
     [SerializeField] private TextMeshProUGUI _buttonOpenMainMenuText;
     [SerializeField] private Button _buttonOpenSettings;
@@ -49,6 +51,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button _buttonSellingStation;
 
     //all menus
+    [Header("Menu Canvases")]
     [SerializeField] private Canvas _playfield;
     [SerializeField] private Canvas _uiManagerCanvas;
     [SerializeField] private Canvas _mainmenu;
@@ -56,6 +59,9 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Canvas _level;
     [SerializeField] private Canvas _upgrade;
     [SerializeField] private Canvas _elements;
+
+    [Header("Other References")]
+    public GameObject componentsHolderObject;
 
 
     //mapping buttons to the menu wich they should open
@@ -197,6 +203,8 @@ public class UiManager : MonoBehaviour
         _currentOpenedMenu = menuCanvas;
 
         isMenuVisible = true;
+
+        SetComponentsVisible(false);
     }
 
     private void CloseAllMenus()
@@ -220,6 +228,8 @@ public class UiManager : MonoBehaviour
         }
 
         isMenuVisible = false;
+
+        SetComponentsVisible(true);
     }
 
     private void HandleMenuButtonText(Canvas currentOpenedMenu)
@@ -239,6 +249,16 @@ public class UiManager : MonoBehaviour
         }
 
         _buttonOpenMainMenuText.text = menuText;
+    }
+    
+    private void SetComponentsVisible(bool isVisible)
+    {
+        // Turns off components, else they would render above the menu.
+        // cant just simply set some layer, because components layers change constantly
+        // and UI (Canvas, ...) ist a different render system than SpriteRenderer for Components
+        // This is the easiest method ive found.
+
+        componentsHolderObject.GetComponent<SortingGroup>().sortingOrder = isVisible ? 1 : 0;
     }
 
     private void PauseGame()
