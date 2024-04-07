@@ -3,7 +3,7 @@ Name:          UpgradeMenu
 Description:   Display upgrades on menu.
 Author(s):     Le Xuan Tran, Daniel Rittrich
 Date:          2024-04-05
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 using System.Collections;
@@ -41,10 +41,10 @@ public class UpgradeMenu : Menu
 
     void Start()
     {
-        mergeXPButton.onClick.AddListener(() => UpgradeMergeXP(Upgrades.MergeXPUpgrade));
-        moneyWhenTrashedButton.onClick.AddListener(() => UpgradeMoneyWhenTrashed(Upgrades.MoneyWhenTrashedUpgrade));
-        spawnChanceWhenTrashDiscardedButton.onClick.AddListener(() => UpgradeSpawnChanceWhenTrashDiscarded(Upgrades.SpawnChanceWhenTrashDiscardedUpgrade));
-        spawnIntervalButton.onClick.AddListener(() => UpgradeSpawnInterval(Upgrades.SpawnIntervalUpgrade));
+        mergeXPButton.onClick.AddListener(() => BuyNextUpgradeLevel(UpgradeType.MergeXP));
+        moneyWhenTrashedButton.onClick.AddListener(() => BuyNextUpgradeLevel(UpgradeType.MoneyWhenTrashed));
+        spawnChanceWhenTrashDiscardedButton.onClick.AddListener(() => BuyNextUpgradeLevel(UpgradeType.SpawnChanceWhenTrashDiscarded));
+        spawnIntervalButton.onClick.AddListener(() => BuyNextUpgradeLevel(UpgradeType.SpawnInterval));
 
         // TODO: delete this test money function later
 #if UNITY_EDITOR
@@ -52,10 +52,6 @@ public class UpgradeMenu : Menu
 #endif
 
         UpdateUI();
-    }
-
-    void Update()
-    {
     }
 
     public void UpdateUI()
@@ -67,49 +63,91 @@ public class UpgradeMenu : Menu
         UpdateButtons();
     }
 
-
     void UpdateButtons()
     {
         // Check if next level is available
-        mergeXPButtonText.text = Upgrades.MergeXPUpgrade.isAtMaxLevel() ? "Max" : $"{Upgrades.MergeXPUpgrade.CostForNextLevel[Upgrades.MergeXPUpgrade.Level]} $";
-        moneyWhenTrashedButtonText.text = Upgrades.MoneyWhenTrashedUpgrade.isAtMaxLevel() ? "Max" : $"{Upgrades.MoneyWhenTrashedUpgrade.CostForNextLevel[Upgrades.MoneyWhenTrashedUpgrade.Level]} $";
-        spawnChanceWhenTrashDiscardedButtonText.text = Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.isAtMaxLevel() ? "Max" : $" {Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.CostForNextLevel[Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.Level]} $";
-        spawnIntervalButtonText.text = Upgrades.SpawnIntervalUpgrade.isAtMaxLevel() ? "Max" : $"{Upgrades.SpawnIntervalUpgrade.CostForNextLevel[Upgrades.SpawnIntervalUpgrade.Level]} $";
+        mergeXPButtonText.text = Upgrades.MergeXPUpgrade.GetNextLevelBuyText();
+        moneyWhenTrashedButtonText.text = Upgrades.MoneyWhenTrashedUpgrade.GetNextLevelBuyText();
+        spawnChanceWhenTrashDiscardedButtonText.text = Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.GetNextLevelBuyText();
+        spawnIntervalButtonText.text = Upgrades.SpawnIntervalUpgrade.GetNextLevelBuyText();
     }
 
     void UpdateDescriptionsTexts()
     {
-        mergeXPDescriptionText.text = $"{Upgrades.MergeXPUpgrade.GetCurrentLevelDescription()}" + (!Upgrades.MergeXPUpgrade.isAtMaxLevel() ? $"\n -> Next Level ({Upgrades.MergeXPUpgrade.GetNextLevelDescription()})" : "");
-        moneyWhenTrashedDescriptionText.text = $"{Upgrades.MoneyWhenTrashedUpgrade.GetCurrentLevelDescription()}" + (!Upgrades.MoneyWhenTrashedUpgrade.isAtMaxLevel() ? $"\n -> Next Level ({Upgrades.MoneyWhenTrashedUpgrade.GetNextLevelDescription()})" : "");
-        spawnChanceWhenTrashDiscardedDescriptionText.text = $"{Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.GetCurrentLevelDescription()}" + (!Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.isAtMaxLevel() ? $"\n -> Next Level ({Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.GetNextLevelDescription()})" : "");
-        spawnIntervalDescriptionText.text = $"{Upgrades.SpawnIntervalUpgrade.GetCurrentLevelDescription()}" + (!Upgrades.SpawnIntervalUpgrade.isAtMaxLevel() ? $"\n -> Next Level ({Upgrades.SpawnIntervalUpgrade.GetNextLevelDescription()})" : "");
+        mergeXPDescriptionText.text = GetDescriptionText(UpgradeType.MergeXP);
+        moneyWhenTrashedDescriptionText.text = GetDescriptionText(UpgradeType.MoneyWhenTrashed);
+        spawnChanceWhenTrashDiscardedDescriptionText.text = GetDescriptionText(UpgradeType.SpawnChanceWhenTrashDiscarded);
+        spawnIntervalDescriptionText.text = GetDescriptionText(UpgradeType.SpawnInterval);
     }
 
-    void UpgradeMergeXP(MergeXPUpgrade upgrade)
+    private string GetDescriptionText(UpgradeType upgradeType)
     {
-        upgrade.BuyNextLevel();
-        UpdateUI();
-        Debugger.LogMessage($"MergeXP Upgrade: Current XP: +{upgrade.GetCurrentPercentageOfSalesXP()}%");
+        string description = "-";
+        string descCurrLevel = "";
+        string descNextLevel = "";
+        bool isMaxLevel = false;
+
+        switch (upgradeType)
+        {
+            case UpgradeType.MergeXP:
+                descCurrLevel = Upgrades.MergeXPUpgrade.GetCurrentLevelDescription();
+                isMaxLevel = Upgrades.MergeXPUpgrade.isAtMaxLevel();
+                if (!isMaxLevel) { descNextLevel = Upgrades.MergeXPUpgrade.GetNextLevelDescription(); };
+                break;
+
+            case UpgradeType.MoneyWhenTrashed:
+                descCurrLevel = Upgrades.MoneyWhenTrashedUpgrade.GetCurrentLevelDescription();
+                isMaxLevel = Upgrades.MoneyWhenTrashedUpgrade.isAtMaxLevel();
+                if (!isMaxLevel) { descNextLevel = Upgrades.MoneyWhenTrashedUpgrade.GetNextLevelDescription(); };
+                break;
+
+            case UpgradeType.SpawnChanceWhenTrashDiscarded:
+                descCurrLevel = Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.GetCurrentLevelDescription();
+                isMaxLevel = Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.isAtMaxLevel();
+                if (!isMaxLevel) { descNextLevel = Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.GetNextLevelDescription(); };
+                break;
+
+            case UpgradeType.SpawnInterval:
+                descCurrLevel = Upgrades.SpawnIntervalUpgrade.GetCurrentLevelDescription();
+                isMaxLevel = Upgrades.SpawnIntervalUpgrade.isAtMaxLevel();
+                if (!isMaxLevel) { descNextLevel = Upgrades.SpawnIntervalUpgrade.GetNextLevelDescription(); };
+                break;
+
+            default:
+                Debugger.LogWarning($"No matching upgrade. Can't get description text.");
+                break;
+        }
+
+        description = $"{descCurrLevel}" + (!isMaxLevel ? $"\n -> Next Level ({descNextLevel})" : "");
+
+        return description;
     }
 
-    void UpgradeMoneyWhenTrashed(MoneyWhenTrashedUpgrade upgrade)
+    public void BuyNextUpgradeLevel(UpgradeType upgradeType)
     {
-        upgrade.BuyNextLevel();
-        UpdateUI();
-        Debugger.LogMessage($"MoneyWhenTrashed Upgrade: Current money: +{upgrade.GetCurrentPercentageOfTrashMoney()}%");
-    }
+        switch (upgradeType)
+        {
+            case UpgradeType.MergeXP:
+                Upgrades.MergeXPUpgrade.BuyNextLevel();
+                break;
 
-    void UpgradeSpawnChanceWhenTrashDiscarded(SpawnChanceWhenTrashDiscardedUpgrade upgrade)
-    {
-        upgrade.BuyNextLevel();
-        UpdateUI();
-        Debugger.LogMessage($"UpgradeSpawnChanceWhenTrashDiscarded Upgrade: Current chance: +{upgrade.GetCurrentSpawnChancePercentWhenTrashDiscarded()}%");
-    }
+            case UpgradeType.MoneyWhenTrashed:
+                Upgrades.MoneyWhenTrashedUpgrade.BuyNextLevel();
+                break;
 
-    void UpgradeSpawnInterval(SpawnIntervalUpgrade upgrade)
-    {
-        upgrade.BuyNextLevel();
+            case UpgradeType.SpawnChanceWhenTrashDiscarded:
+                Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.BuyNextLevel();
+                break;
+
+            case UpgradeType.SpawnInterval:
+                Upgrades.SpawnIntervalUpgrade.BuyNextLevel();
+                break;
+
+            default:
+                Debugger.LogWarning($"No matching upgrade. The upgrade to be purchased cannot be activated.");
+                break;
+        }
+
         UpdateUI();
-        Debugger.LogMessage($"SpawnInterval Upgrade: Current interval: {upgrade.GetCurrentSecondsInterval()}sec");
     }
 }
