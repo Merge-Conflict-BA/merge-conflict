@@ -28,7 +28,7 @@ public class AudioMixerLevels : MonoBehaviour
 
     private void Start()
     {
-        float savedVolume = PlayerPrefs.GetFloat(playerPrefsKey.ToString(), 0);
+        float savedVolume = PlayerPrefs.GetFloat(playerPrefsKey.ToString(), -20);
         SetVolumeOnStart(savedVolume);
     }
 

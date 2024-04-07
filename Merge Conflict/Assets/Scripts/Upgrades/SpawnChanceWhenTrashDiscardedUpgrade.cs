@@ -21,7 +21,7 @@ public class SpawnChanceWhenTrashDiscardedUpgrade : Upgrade
 
     public override string GetCurrentLevelDescription()
     {
-        return $"{GetCurrentLevelDescription()} %";
+        return $"{GetCurrentSpawnChancePercentWhenTrashDiscarded()}% chance for component spawn when trash is discarded";
     }
 
     public override string GetNextLevelDescription()
@@ -31,6 +31,6 @@ public class SpawnChanceWhenTrashDiscardedUpgrade : Upgrade
             return "-";
         }
 
-        return $"{SpawnChancePercentWhenTrashDiscarded[Level]} %";
+        return $"{SpawnChancePercentWhenTrashDiscarded[Level + 1]}%";
     }
 }

@@ -21,7 +21,7 @@ public class SpawnIntervalUpgrade : Upgrade
 
     public override string GetCurrentLevelDescription()
     {
-        return $"{GetCurrentLevelDescription()}s";
+        return $"Components spawn every {GetCurrentSecondsInterval()}s";
     }
 
     public override string GetNextLevelDescription()
@@ -31,6 +31,6 @@ public class SpawnIntervalUpgrade : Upgrade
             return "-";
         }
 
-        return $"{SecondsInterval[Level]}s";
+        return $"{SecondsInterval[Level + 1]}s";
     }
 }
