@@ -17,7 +17,7 @@ public class HDDComponent : Element, IComponent
 {
     public static string Name = "HDD";
 
-    public HDDComponent(int tier, int trashPrice, int salesPrice, int salesXP) : base(tier, trashPrice, salesPrice, salesXP, Name) { }
+    public HDDComponent(int tier) : base(tier, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -37,6 +37,11 @@ public class HDDComponent : Element, IComponent
 
     public HDDComponent Clone()
     {
-        return new HDDComponent(tier, trashPrice, salesPrice, salesXP);
+        return new HDDComponent(tier);
+    }
+
+    public override ComponentData GetComponentData()
+    {
+        return Components.HddComponentData;
     }
 }

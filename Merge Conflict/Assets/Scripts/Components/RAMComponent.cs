@@ -17,7 +17,7 @@ public class RAMComponent : Element, IComponent
 {
     public static string Name = "RAM";
 
-    public RAMComponent(int tier, int trashPrice, int salesPrice, int salesXP) : base(tier, trashPrice, salesPrice, salesXP, Name) { }
+    public RAMComponent(int tier) : base(tier, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -37,6 +37,11 @@ public class RAMComponent : Element, IComponent
 
     public RAMComponent Clone()
     {
-        return new RAMComponent(tier, trashPrice, salesPrice, salesXP);
+        return new RAMComponent(tier);
+    }
+
+    public override ComponentData GetComponentData()
+    {
+        return Components.RamComponentData;
     }
 }

@@ -35,26 +35,16 @@ public class Order
 
     private CaseComponent CreatePC()
     {
-        CPUComponent cpu = Components.CPU.Clone();
-        cpu.tier = CpuTier;
+        CPUComponent cpu = new CPUComponent(CpuTier);
+        RAMComponent ram = new RAMComponent(RamTier);
+        GPUComponent gpu = new GPUComponent(GpuTier);
 
-        RAMComponent ram = Components.RAM.Clone();
-        ram.tier = RamTier;
+        MBComponent motherboard = new MBComponent(MotherboardTier, cpu, ram, gpu);
 
-        GPUComponent gpu = Components.GPU.Clone();
-        gpu.tier = GpuTier;
+        HDDComponent hdd = new HDDComponent(HddTier);
+        PowersupplyComponent powersupply = new PowersupplyComponent(PowersupplyTier);
 
-        MBComponent motherboard = Components.CreateMB(cpu, ram, gpu);
-        motherboard.tier = MotherboardTier;
-
-        HDDComponent hdd = Components.HDD.Clone();
-        hdd.tier = HddTier;
-
-        PowersupplyComponent powersupply = Components.Powersupply.Clone();
-        powersupply.tier = PowersupplyTier;
-
-        CaseComponent pcCase = Components.CreateCase(motherboard, powersupply, hdd);
-        pcCase.tier = CaseTier;
+        CaseComponent pcCase = new CaseComponent(CaseTier, motherboard, powersupply, hdd);
 
         return pcCase;
     }

@@ -21,8 +21,8 @@ public class MBComponent : Element, IComponent
     public static string Name = "Motherboard";
 
 
-    public MBComponent(int tier, int trashPrice, int salesPrice, int salesXP, CPUComponent? cpu = null, RAMComponent? ram = null, GPUComponent? gpu = null)
-        : base(tier, trashPrice, salesPrice, salesXP, Name)
+    public MBComponent(int tier, CPUComponent? cpu = null, RAMComponent? ram = null, GPUComponent? gpu = null)
+        : base(tier, Name)
     {
         this.cpu = cpu;
         this.ram = ram;
@@ -124,6 +124,11 @@ public class MBComponent : Element, IComponent
 
     public MBComponent Clone()
     {
-        return new MBComponent(tier, trashPrice, salesPrice, salesXP, cpu, ram, gpu);
+        return new MBComponent(tier, cpu, ram, gpu);
+    }
+
+    public override ComponentData GetComponentData()
+    {
+        return Components.MBComponentData;
     }
 }
