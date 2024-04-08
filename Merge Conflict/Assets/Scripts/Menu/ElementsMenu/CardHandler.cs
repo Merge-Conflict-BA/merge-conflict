@@ -43,52 +43,50 @@ public class CardHandler : MonoBehaviour
         purchaseButton.onClick.AddListener(BuyElement);
     }
 
-    public void UpdateSprite(FoundElement element)
+    public void UpdateSprite(FoundElement foundElement)
     {
-        _cardElement = element;
+        _cardElement = foundElement;
         
         Image image = GetComponent<Image>();
-        int index = element.Level - 1;
 
-        string elementName = element.ElementName;
+        int elementTier = foundElement.Level - 1;
+        string elementName = foundElement.ElementName;
+
+        Element element = Components.GetElementByName(elementName);
+
+        _startPrice = element.GetComponentData().BaseBuyPrices[elementTier];
+        _increaseFactor = element.GetComponentData().RepeatBuyPriceIncreaseFactor[elementTier];
 
         switch (elementName)
         {
             case var _ when elementName.Equals(CaseComponent.Name):
-                image.sprite = CaseSprites[index];
-                _startPrice = Components.CaseComponentData.BaseBuyPrices[index];
-                _increaseFactor = Components.CaseComponentData.RepeatBuyPriceIncreaseFactor[index];
+                image.sprite = CaseSprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(CPUComponent.Name):
-                image.sprite = CPUSprites[index];
-                _startPrice = Components.CpuComponentData.BaseBuyPrices[index];
-                _increaseFactor = Components.CpuComponentData.RepeatBuyPriceIncreaseFactor[index];
+                image.sprite = CPUSprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(GPUComponent.Name):
-                image.sprite = GPUSprites[index];
-                _startPrice = Components.GpuComponentData.BaseBuyPrices[index];
-                _increaseFactor = Components.GpuComponentData.RepeatBuyPriceIncreaseFactor[index];
+                image.sprite = GPUSprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(HDDComponent.Name):
-                image.sprite = HDDSprites[index];
-                _startPrice = Components.HddComponentData.BaseBuyPrices[index];
-                _increaseFactor = Components.HddComponentData.RepeatBuyPriceIncreaseFactor[index];
+                image.sprite = HDDSprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(MBComponent.Name):
-                image.sprite = MotherboardSprites[index];
-                _startPrice = Components.MBComponentData.BaseBuyPrices[index];
-                _increaseFactor = Components.MBComponentData.RepeatBuyPriceIncreaseFactor[index];
+                image.sprite = MotherboardSprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(PowersupplyComponent.Name):
-                image.sprite = PowerSupplySprites[index];
-                _startPrice = Components.PowerSupplyComponentData.BaseBuyPrices[index];
-                _increaseFactor = Components.PowerSupplyComponentData.RepeatBuyPriceIncreaseFactor[index];
+                image.sprite = PowerSupplySprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(RAMComponent.Name):
-                image.sprite = RAMSprites[index];
-                _startPrice = Components.RamComponentData.BaseBuyPrices[index];
-                _increaseFactor = Components.RamComponentData.RepeatBuyPriceIncreaseFactor[index];
+                image.sprite = RAMSprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(Trash.Name):
             default:
                 image.sprite = DefaultSprite;
