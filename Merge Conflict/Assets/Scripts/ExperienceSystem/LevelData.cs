@@ -8,11 +8,15 @@ Date:          2024-03-11
 
 namespace ExperienceSystem
 {
-    [Serializable]
     public class LevelData
     {
         public int Level;
-        public int RequirementExperience;
-        public ComponentHandler PartGameObject;
+        public int RequiredExperience;
+
+        public LevelData(int level, int requiredExperience)
+        {
+            Level = level;
+            RequiredExperience = requiredExperience;
+        }
     }
 }

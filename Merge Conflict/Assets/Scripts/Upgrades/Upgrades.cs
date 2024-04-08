@@ -14,8 +14,8 @@ using UnityEngine;
 public static class Upgrades
 {
     public static MergeXPUpgrade MergeXPUpgrade = new(
-        new int[] { 0, 5, 10, 15, 20, 25 },
-        new int[] { 300, 400, 500, 600, 700 });
+        new int[] { 5, 8, 12, 15, 18, 21 },
+        new int[] { 200, 300, 400, 500, 600 });
 
     public static MoneyWhenTrashedUpgrade MoneyWhenTrashedUpgrade = new(
         new int[] { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 },

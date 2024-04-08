@@ -196,7 +196,10 @@ public class ComponentHandler : MonoBehaviour
         mergedElement.InstantiateGameObjectAndAddTexture(staticObjectCanvasPosition);
 
         AnimationManager.Instance.PlayMergeAnimation(staticObjectCanvasPosition, mergedElement, element);
-        ExperienceHandler.AddExperiencePoints(mergedElement.GetSalesXP() * (Upgrades.MergeXPUpgrade.GetCurrentPercentageOfSalesXP() / 100));
+
+        int mergeXP = Mathf.CeilToInt(mergedElement.GetSalesXP() * (Upgrades.MergeXPUpgrade.GetCurrentPercentageOfSalesXP() / 100f));
+        ExperienceHandler.AddExperiencePoints(mergeXP);
+
         AudioManager.Instance.PlayMergeSound();
 
         Destroy(draggedComponentObject);

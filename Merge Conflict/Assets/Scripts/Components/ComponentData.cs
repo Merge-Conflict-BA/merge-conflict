@@ -18,7 +18,7 @@ public class ComponentData
     public int[] TrashPrices;
 
     public int[] BaseBuyPrices;
-    public float[] RepeatBuyPriceIncreaseFactor = new float[] { 1.2f, 1.3f, 1.5f, 1.7f };
+    public float[] RepeatBuyPriceIncreaseFactor = new float[] { 1.2f, 1.25f, 1.3f, 1.35f };
 
     public ComponentData(int[] salePrices, int[] saleXP, int[] trashPrices, int[] baseBuyPrices)
     {

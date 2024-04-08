@@ -15,54 +15,56 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public static class Components
-{    
-    public static ComponentData EmptyComponentData = new(
+{
+    // the following ComponentData get referenced in the corresponding Element.GetComponentData()
+
+    public static readonly ComponentData EmptyComponentData = new(
         salePrices: new int[] { 0, 0, 0, 0 },
         saleXP: new int[] { 0, 0, 0, 0 },
         trashPrices: new int[] { 0, 0, 0, 0 },
         baseBuyPrices: new int[] { 0, 0, 0, 0 });
 
-    public static ComponentData CaseComponentData = new(
+    public static readonly ComponentData CaseComponentData = new(
         salePrices: new int[] { 10, 15, 25, 40 },
-        saleXP: new int[] { 0, 0, 0, 0 },
+        saleXP: new int[] { 15, 20, 25, 30 },
         salePriceToBaseBuyPriceFactor: 1.4f);
 
-    public static ComponentData PowerSupplyComponentData = new(
+    public static readonly ComponentData PowerSupplyComponentData = new(
         salePrices: new int[] { 12, 18, 30, 48 },
-        saleXP: new int[] { 0, 0, 0, 0 },
+        saleXP: new int[] { 20, 27, 34, 40 },
         salePriceToBaseBuyPriceFactor: 1.4f);
 
-    public static ComponentData HddComponentData = new(
+    public static readonly ComponentData HddComponentData = new(
         salePrices: new int[] { 15, 23, 37, 60 },
-        saleXP: new int[] { 0, 0, 0, 0 },
+        saleXP: new int[] { 30, 40, 50, 60 },
         salePriceToBaseBuyPriceFactor: 1.6f);
 
-    public static ComponentData CpuComponentData = new(
+    public static readonly ComponentData CpuComponentData = new(
         salePrices: new int[] { 30, 45, 75, 120 },
-        saleXP: new int[] { 0, 0, 0, 0 },
+        saleXP: new int[] { 70, 93, 117, 140 },
         salePriceToBaseBuyPriceFactor: 2f);
 
-    public static ComponentData GpuComponentData = new(
+    public static readonly ComponentData GpuComponentData = new(
         salePrices: new int[] { 30, 45, 75, 120 },
-        saleXP: new int[] { 0, 0, 0, 0 },
+        saleXP: new int[] { 70, 93, 117, 140 },
         salePriceToBaseBuyPriceFactor: 2.3f);
 
-    public static ComponentData RamComponentData = new(
+    public static readonly ComponentData RamComponentData = new(
         salePrices: new int[] { 20, 30, 50, 80 },
-        saleXP: new int[] { 0, 0, 0, 0 },
+        saleXP: new int[] { 50, 67, 84, 100 },
         salePriceToBaseBuyPriceFactor: 1.8f);
 
-    public static ComponentData MBComponentData = new(
+    public static readonly ComponentData MBComponentData = new(
         salePrices: new int[] { 25, 38, 63, 101 },
-        saleXP: new int[] { 0, 0, 0, 0 },
+        saleXP: new int[] { 60, 80, 100, 120 },
         salePriceToBaseBuyPriceFactor: 1.6f);
 
-    public static ComponentData TrashComponentData = new(
+    public static readonly ComponentData TrashComponentData = new(
         trashPrices: new int[] { 30, 20, 50 });
 
     public static Element GetRandomElement()
     {
-        // used for SpawnChanceWHenTrashDiscarded       
+        // used for SpawnChanceWhenTrashDiscarded       
         Element[] elements = GetComponents();
 
         int randomIndex = Random.Range(0, elements.Length);
