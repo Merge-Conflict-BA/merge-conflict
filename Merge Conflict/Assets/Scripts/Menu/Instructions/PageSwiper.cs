@@ -28,6 +28,13 @@ public class PageSwiper : MonoBehaviour, IDragHandler, IEndDragHandler
         _pageCount = transform.childCount;
         transform.localScale = new Vector3(_pageCount, transform.localScale.y, transform.localScale.z);
 
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Vector3 currentLocalScale = transform.GetChild(i).localScale;
+            transform.GetChild(i).localScale = new Vector3(currentLocalScale.x * (1f / _pageCount),currentLocalScale.y,currentLocalScale.z);
+        }
+
+        //transform.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 2 * _pageReferenceWidth);
         // to start at first page
         float pageCountToFirst = (_pageCount - 1f) / 2f;
         SetCanvasPosition(GetCanvasPosition() + new Vector2(pageCountToFirst * _pageReferenceWidth, 0));
