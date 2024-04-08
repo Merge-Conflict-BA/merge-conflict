@@ -35,11 +35,6 @@ public class GPUComponent : Element, IComponent
         return null;
     }
 
-    public GPUComponent Clone()
-    {
-        return new GPUComponent(tier);
-    }
-
     public override ComponentData GetComponentData()
     {
         return Components.GpuComponentData;

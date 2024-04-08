@@ -37,7 +37,22 @@ public class UpgradeMenu : Menu
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI moneyText;
 
+    #region Singleton
+    private static UpgradeMenu _instance;
+    public static UpgradeMenu Instance { get { return _instance; } }
 
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
+    #endregion
 
     void Start()
     {
@@ -51,6 +66,11 @@ public class UpgradeMenu : Menu
         MoneyHandler.Instance.AddMoney(100000);
 #endif
 
+        UpdateUI();
+    }
+
+    public void OpenMenu()
+    {
         UpdateUI();
     }
 

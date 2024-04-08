@@ -117,11 +117,6 @@ public class CaseComponent : Element, IComponent
         return isMotherboardEqual && isHDDEqual && isPowerSupplyEqual;
     }
 
-    public CaseComponent Clone()
-    {
-        return new CaseComponent(tier, motherboard, powersupply, hdd);
-    }
-
     public override ComponentData GetComponentData()
     {
         return Components.CaseComponentData;

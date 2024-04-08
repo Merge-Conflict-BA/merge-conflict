@@ -87,7 +87,7 @@ public static class Components
             new PowersupplyComponent(1),
             new HDDComponent(1),
             new MBComponent(1),
-            new GPUComponent(1),
+            new CPUComponent(1),
             new RAMComponent(1),
             new GPUComponent(1),
             new Trash()

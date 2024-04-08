@@ -122,11 +122,6 @@ public class MBComponent : Element, IComponent
         return isCpuEqual && isGPUEqual && isRAMEqual;
     }
 
-    public MBComponent Clone()
-    {
-        return new MBComponent(tier, cpu, ram, gpu);
-    }
-
     public override ComponentData GetComponentData()
     {
         return Components.MBComponentData;

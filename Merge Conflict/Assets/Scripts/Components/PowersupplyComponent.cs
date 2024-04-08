@@ -35,11 +35,6 @@ public class PowersupplyComponent : Element, IComponent
         return null;
     }
 
-    public PowersupplyComponent Clone()
-    {
-        return new PowersupplyComponent(tier);
-    }
-
     public override ComponentData GetComponentData()
     {
         return Components.PowerSupplyComponentData;

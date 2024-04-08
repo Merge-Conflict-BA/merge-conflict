@@ -28,47 +28,54 @@ namespace ExperienceSystem
             new LevelData(10, 3600),
         };
 
-        // returns an integer value of the current level (as it is written in the table)
-        public static int GetLevelByExperience(int exp)
-        {
-            int index = 0;
-            int currentLevel;
-            do
-            {
-                currentLevel = Levels[index].Level;
-                index++;
-                if (index == Levels.Length)
-                {
-                    return Levels[^1].Level;
-                }
-            }
-            while (Levels[index].RequiredExperience <= exp);
+        private static readonly string PlayerPrefsKey = "Experience";
 
-            return currentLevel;
-        }        
+        public static int GetLevelByTotalXP(int totalXP)
+        {
+            int xp = totalXP;
+            int levelIndex = 0;
+            
+            while (levelIndex < Levels.Length - 1
+                && xp >= Levels[levelIndex + 1].RequiredExperience)
+            {
+                xp -= Levels[levelIndex + 1].RequiredExperience;
+                levelIndex++;
+            }
+
+            return Levels[levelIndex].Level;
+        }
 
         public static void AddExperiencePoints(int experiencePoints)
         {
-            var currentExp = PlayerPrefs.GetInt("Experience");
+            var currentExp = PlayerPrefs.GetInt(PlayerPrefsKey);
             currentExp += experiencePoints;
-            PlayerPrefs.SetInt("Experience", currentExp);
+
+            PlayerPrefs.SetInt(PlayerPrefsKey, currentExp);
         }
 
-        public static int GetExperiencePoints()
+        public static int GetExperiencePointsInCurrentLevel()
         {
-            return PlayerPrefs.GetInt("Experience");
+            int currentTotalXP = PlayerPrefs.GetInt(PlayerPrefsKey);
+            int currentLevel = GetLevelByTotalXP(currentTotalXP);
+
+            int currentXPInLevel = currentTotalXP;
+            for (int i = 1; i < currentLevel; i++)
+            {
+                currentXPInLevel -= Levels[i].RequiredExperience;
+            }
+
+            return currentXPInLevel;
         }
 
         public static int GetCurrentLevel()
         {
-            var currentExp = PlayerPrefs.GetInt("Experience");
-            var currentLvl = GetLevelByExperience(currentExp);
-            return currentLvl;
+            int currentTotalXP = PlayerPrefs.GetInt(PlayerPrefsKey);
+            return GetLevelByTotalXP(currentTotalXP);            
         }
 
         public static void ResetCurrentPlayerExperience()
         {
-            PlayerPrefs.SetInt("Experience", 0);
+            PlayerPrefs.SetInt(PlayerPrefsKey, 0);
         }
 
         public static int NeededXpToUnlockNextLevel(int currentLevel)

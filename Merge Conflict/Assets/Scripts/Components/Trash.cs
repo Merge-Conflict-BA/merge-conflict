@@ -54,11 +54,6 @@ public class Trash : Element
         return GetComponentData().TrashPrices[(int)trashVariant];
     }
 
-    public Trash Clone()
-    {
-        return new Trash(trashVariant);
-    }
-
     public override ComponentData GetComponentData()
     {
         return Components.TrashComponentData;

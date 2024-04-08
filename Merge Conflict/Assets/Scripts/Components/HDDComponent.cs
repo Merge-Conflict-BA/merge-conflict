@@ -35,11 +35,6 @@ public class HDDComponent : Element, IComponent
         return null;
     }
 
-    public HDDComponent Clone()
-    {
-        return new HDDComponent(tier);
-    }
-
     public override ComponentData GetComponentData()
     {
         return Components.HddComponentData;

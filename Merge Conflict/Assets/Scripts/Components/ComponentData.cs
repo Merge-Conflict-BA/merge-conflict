@@ -30,18 +30,16 @@ public class ComponentData
 
     public ComponentData(int[] salePrices, int[] saleXP, float salePriceToBaseBuyPriceFactor, float salePriceToTrashPriceFactor = .5f)
     {
-        int[] trashPrices = salePrices;
-
-        for (int i = 0; i < trashPrices.Length; i++)
-        {
-            trashPrices[i] = Mathf.CeilToInt(trashPrices[i] * salePriceToTrashPriceFactor);
-        }
-
         int[] baseBuyPrices = salePrices;
-
         for (int i = 0; i < baseBuyPrices.Length; i++)
         {
             baseBuyPrices[i] = Mathf.CeilToInt(baseBuyPrices[i] * salePriceToBaseBuyPriceFactor);
+        }
+
+        int[] trashPrices = salePrices;
+        for (int i = 0; i < trashPrices.Length; i++)
+        {
+            trashPrices[i] = Mathf.CeilToInt(trashPrices[i] * salePriceToTrashPriceFactor);
         }
 
         SalePrices = salePrices;

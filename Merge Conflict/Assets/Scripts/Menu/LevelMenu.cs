@@ -29,7 +29,6 @@ public class LevelMenu : Menu
     private TextMeshProUGUI _powersupplyTierValue;
     private Image _levelProgressbar;
 
-
     //images of the ordered components
     private Image _orderedCaseImage;
     private Image _orderedHddImage;
@@ -38,7 +37,6 @@ public class LevelMenu : Menu
     private Image _orderedCpuImage;
     private Image _orderedGpuImage;
     private Image _orderedRamImage;
-
 
     const string EmptyProgressbarObjectName = "Progressbar_empty";
     const string FilledProgressbarObjectName = "Progressbar_filled";
@@ -59,8 +57,6 @@ public class LevelMenu : Menu
     const string OrderedPowersupplyImageObjectName = "Powersupply";
     const string OrderedRamImageObjectName = "RAM";
     const string OrderedHddImageObjectName = "HDD";
-
-
 
     private void Awake()
     {
@@ -105,7 +101,7 @@ public class LevelMenu : Menu
 
         //read dat from level manager
         int currentLevel = ExperienceHandler.GetCurrentLevel();
-        int currentXp = ExperienceHandler.GetExperiencePoints();
+        int currentXp = ExperienceHandler.GetExperiencePointsInCurrentLevel();
         int xpToUnlockNextLevel = ExperienceHandler.NeededXpToUnlockNextLevel(currentLevel);
         string xpRatioString = $"{currentXp} / {xpToUnlockNextLevel}";
 

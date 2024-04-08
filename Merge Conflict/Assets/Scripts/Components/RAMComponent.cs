@@ -35,11 +35,6 @@ public class RAMComponent : Element, IComponent
         return null;
     }
 
-    public RAMComponent Clone()
-    {
-        return new RAMComponent(tier);
-    }
-
     public override ComponentData GetComponentData()
     {
         return Components.RamComponentData;

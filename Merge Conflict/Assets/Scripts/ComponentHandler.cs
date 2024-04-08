@@ -266,6 +266,7 @@ public class ComponentHandler : MonoBehaviour
 
             Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
             Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
+            Destroy(draggedComponentObject);
         }
         else
         {

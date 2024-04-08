@@ -35,11 +35,6 @@ public class CPUComponent : Element, IComponent
         return null;
     }
 
-    public CPUComponent Clone()
-    {
-        return new CPUComponent(tier);
-    }
-
     public override ComponentData GetComponentData()
     {
         return Components.CpuComponentData;
