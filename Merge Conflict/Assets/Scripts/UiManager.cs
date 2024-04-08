@@ -249,6 +249,8 @@ public class UiManager : MonoBehaviour
         _level.enabled = false;
         _upgrade.enabled = false;
         _settings.enabled = false;
+        _introduction.enabled = false;
+        
 
         if (_currentOpenedMenu != null)
         {
