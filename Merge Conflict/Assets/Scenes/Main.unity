@@ -7987,7 +7987,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4483804302838372053, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -800.0009
+      value: -844.9997
       objectReference: {fileID: 0}
     - target: {fileID: 6906180385017960943, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
       propertyPath: m_Pivot.x
@@ -11365,7 +11365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2975137633094681057, guid: 6e283b326d6d04d60b348bef0424bd6b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -1085.512
+      value: -1085.5117
       objectReference: {fileID: 0}
     - target: {fileID: 4817238766682661037, guid: 6e283b326d6d04d60b348bef0424bd6b, type: 3}
       propertyPath: m_AnchorMax.y
@@ -13771,7 +13771,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 2160}
-  m_ScreenMatchMode: 2
+  m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
