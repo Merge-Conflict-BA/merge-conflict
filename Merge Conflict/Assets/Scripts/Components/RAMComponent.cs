@@ -39,4 +39,11 @@ public class RAMComponent : Element, IComponent
     {
         return Components.RamComponentData;
     }
+
+    public override JSONComponent CreateJSONComponentFromElement()
+    {
+        JSONComponent component = new JSONComponent(tier, Name);
+
+        return component;
+    }
 }

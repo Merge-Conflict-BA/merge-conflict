@@ -39,4 +39,11 @@ public class PowersupplyComponent : Element, IComponent
     {
         return Components.PowerSupplyComponentData;
     }
+
+    public override JSONComponent CreateJSONComponentFromElement()
+    {
+        JSONComponent component = new JSONComponent(tier, Name);
+
+        return component;
+    }
 }

@@ -121,4 +121,16 @@ public class CaseComponent : Element, IComponent
     {
         return Components.CaseComponentData;
     }
+
+    public override JSONComponent CreateJSONComponentFromElement()
+    {
+        JSONComponent component = new JSONComponent(tier, Name)
+        {
+            powersupply = powersupply?.CreateJSONComponentFromElement(),
+            hdd = hdd?.CreateJSONComponentFromElement(),
+            motherboard = motherboard?.CreateJSONComponentFromElement()
+        };
+
+        return component;
+    }
 }

@@ -39,4 +39,11 @@ public class GPUComponent : Element, IComponent
     {
         return Components.GpuComponentData;
     }
+
+    public override JSONComponent CreateJSONComponentFromElement()
+    {
+        JSONComponent component = new JSONComponent(tier, Name);
+
+        return component;
+    }
 }

@@ -29,12 +29,7 @@ public class MBComponent : Element, IComponent
         this.gpu = gpu;
     }
 
-
     // Element in der funktion merge ist das Element, dass auf den MBComponent drauf gemerged wird
-
-    // !   Mögliches Problem : Was passiert beim Drag&Drop (mergen) wenn ein CaseComponent einen unbestückten MBComponent in sich trägt 
-    // !   und dann ein weiterer unbestückter MBComponent darauf abgelegt wird ? Muss man sich in diesem Fall rückversichern, dass der 
-    // !   MBComponent in einem CaseComponent sitzt und somit nicht gemerged werden darf .
 
     public Element? Merge(Element element)
     {
@@ -125,5 +120,17 @@ public class MBComponent : Element, IComponent
     public override ComponentData GetComponentData()
     {
         return Components.MBComponentData;
+    }
+
+    public override JSONComponent CreateJSONComponentFromElement()
+    {
+        JSONComponent component = new JSONComponent(tier, Name)
+        {
+            cpu = cpu?.CreateJSONComponentFromElement(),
+            ram = ram?.CreateJSONComponentFromElement(),
+            gpu = gpu?.CreateJSONComponentFromElement()
+        };
+
+        return component;
     }
 }

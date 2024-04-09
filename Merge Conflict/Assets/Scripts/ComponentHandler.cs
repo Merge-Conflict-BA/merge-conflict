@@ -26,7 +26,7 @@ public class ComponentHandler : MonoBehaviour
     private bool _isDraggedOnce = false;
 
     // component movement
-    private ComponentMovement ComponentMovement;
+    public ComponentMovement ComponentMovement;
 
     private void Start()
     {

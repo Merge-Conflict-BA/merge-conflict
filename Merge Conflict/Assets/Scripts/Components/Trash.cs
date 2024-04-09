@@ -58,4 +58,11 @@ public class Trash : Element
     {
         return Components.TrashComponentData;
     }
+
+    public override JSONComponent CreateJSONComponentFromElement()
+    {
+        JSONComponent component = new JSONComponent(Name, (int)trashVariant);
+
+        return component;
+    }
 }

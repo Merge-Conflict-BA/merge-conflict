@@ -39,4 +39,11 @@ public class HDDComponent : Element, IComponent
     {
         return Components.HddComponentData;
     }
+
+    public override JSONComponent CreateJSONComponentFromElement()
+    {
+        JSONComponent component = new JSONComponent(tier, Name);
+
+        return component;
+    }
 }
