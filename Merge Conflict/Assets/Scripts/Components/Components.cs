@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
 Name:          Components
-Description:   Starting Point when wanting to create a Component 
+Description:   Starting Point when wanting to create a Component. Contains all balancing details.
 
 Author(s):     Hanno Witzleb
 Date:          2024-03-07
@@ -14,145 +14,96 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-/*
- * Usage:
- * 
- * CPUComponent cpu = Components.CPU;
- * cpu.level = 3;
- * 
- * MBComponent motherboard = Components.CreateMB();
- * MBComponent motherboardWithCPU = Components.CreateMB(cpu: cpu);
- * 
- * Trash trash = Components.CreateTrash(TrashVariant.Can);
- * Trash trashRandom = Components.CreateTrash();
- */
 public static class Components
 {
-    // _StartPrice: start price of a component when the player wants to buy its first component in the element menu
-    // _IncreaseFactor: factor of how much the price increases if the player buys a component
+    // the following ComponentData get referenced in the corresponding Element.GetComponentData()
 
-    public static int[] caseTrashPrice = { 5, 14, 26, 44 };
-    public static int[] caseSalesPrice = { 21, 57, 107, 178 };
-    public static int[] caseSalesXP = { 50, 120, 280, 600 };
-    public static float[] caseStartPrice = { 21, 57, 107, 178 };
-    public static float[] caseIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public static CreateCaseDelegate CreateCase = (motherboard, powersupply, hdd)
-            => new CaseComponent(1, caseTrashPrice[0], caseSalesPrice[0], caseSalesXP[0], motherboard, powersupply, hdd);
+    public static readonly ComponentData EmptyComponentData = new(
+        salePrices: new int[] { 0, 0, 0, 0 },
+        saleXP: new int[] { 0, 0, 0, 0 },
+        trashPrices: new int[] { 0, 0, 0, 0 },
+        baseBuyPrices: new int[] { 0, 0, 0, 0 });
 
-    public static int[] powersupplyTrashPrice = { 5, 14, 26, 44 };
-    public static int[] powersupplySalesPrice = { 21, 57, 107, 178 };
-    public static int[] powersupplySalesXP = { 50, 120, 280, 600 };
-    public static float[] powersupplyStartPrice = { 21, 57, 107, 178 };
-    public static float[] powersupplyIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public static PowersupplyComponent Powersupply = new(1, powersupplyTrashPrice[0], powersupplySalesPrice[0], powersupplySalesXP[0]);
+    public static readonly ComponentData CaseComponentData = new(
+        salePrices: new int[] { 10, 15, 25, 40 },
+        saleXP: new int[] { 15, 20, 25, 30 },
+        salePriceToBaseBuyPriceFactor: 1.4f);
 
-    public static int[] hddTrashPrice = { 7, 19, 35, 59 };
-    public static int[] hddSalesPrice = { 28, 76, 142, 237 };
-    public static int[] hddSalesXP = { 50, 120, 280, 600 };
-    public static float[] hddStartPrice = { 28, 76, 142, 237 };
-    public static float[] hddIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public static HDDComponent HDD = new(1, hddTrashPrice[0], hddSalesPrice[0], hddSalesXP[0]);
+    public static readonly ComponentData PowerSupplyComponentData = new(
+        salePrices: new int[] { 12, 18, 30, 48 },
+        saleXP: new int[] { 20, 27, 34, 40 },
+        salePriceToBaseBuyPriceFactor: 1.4f);
 
-    public static int[] cpuTrashPrice = { 16, 42, 80, 133 };
-    public static int[] cpuSalesPrice = { 64, 171, 321, 535 };
-    public static int[] cpuSalesXP = { 50, 120, 280, 600 };
-    public static float[] cpuStartPrice = { 64, 171, 321, 535 };
-    public static float[] cpuIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public static CPUComponent CPU = new(1, cpuTrashPrice[0], cpuSalesPrice[0], cpuSalesXP[0]);
+    public static readonly ComponentData HddComponentData = new(
+        salePrices: new int[] { 15, 23, 37, 60 },
+        saleXP: new int[] { 30, 40, 50, 60 },
+        salePriceToBaseBuyPriceFactor: 1.6f);
 
-    public static int[] gpuTrashPrice = { 23, 61, 116, 193 };
-    public static int[] gpuSalesPrice = { 92, 247, 464, 773 };
-    public static int[] gpuSalesXP = { 50, 120, 280, 600 };
-    public static float[] gpuStartPrice = { 92, 247, 464, 773 };
-    public static float[] gpuIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public static GPUComponent GPU = new(1, gpuTrashPrice[0], gpuSalesPrice[0], gpuSalesXP[0]);
+    public static readonly ComponentData CpuComponentData = new(
+        salePrices: new int[] { 30, 45, 75, 120 },
+        saleXP: new int[] { 70, 93, 117, 140 },
+        salePriceToBaseBuyPriceFactor: 2f);
 
-    public static int[] ramTrashPrice = { 8, 23, 44, 74 };
-    public static int[] ramSalesPrice = { 35, 95, 178, 297 };
-    public static int[] ramSalesXP = { 50, 120, 280, 600 };
-    public static float[] ramStartPrice = { 35, 95, 178, 297 };
-    public static float[] ramIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public static RAMComponent RAM = new(1, ramTrashPrice[0], ramSalesPrice[0], ramSalesXP[0]);
+    public static readonly ComponentData GpuComponentData = new(
+        salePrices: new int[] { 30, 45, 75, 120 },
+        saleXP: new int[] { 70, 93, 117, 140 },
+        salePriceToBaseBuyPriceFactor: 2.3f);
 
-    public static int[] mbTrashPrice = { 8, 23, 44, 74 };
-    public static int[] mbSalesPrice = { 35, 95, 178, 297 };
-    public static int[] mbSalesXP = { 50, 120, 280, 600 };
-    public static float[] mbStartPrice = { 35, 95, 178, 297 };
-    public static float[] mbIncreaseFactor = { 1.2f, 1.3f, 1.4f, 1.5f };
-    public static CreateMBDelegate CreateMB = (cpu, ram, gpu)
-            => new MBComponent(1, mbTrashPrice[0], mbSalesPrice[0], mbSalesXP[0], cpu, ram, gpu);
+    public static readonly ComponentData RamComponentData = new(
+        salePrices: new int[] { 20, 30, 50, 80 },
+        saleXP: new int[] { 50, 67, 84, 100 },
+        salePriceToBaseBuyPriceFactor: 1.8f);
 
-    // TODO make sure that trash variants assign themself the correct values
-    // currently not in createTrash implemented!
-    public static int[] trashTrashPrice = { 2, 1, 3 };
-    public static int[] trashSalesPrice = { 3, 2, 5 };
-    public static int[] trashSalesXP = { 10, 10, 10 };
-    public static CreateTrashDelegate CreateTrash = (variant)
-            => new Trash(trashTrashPrice[0], trashSalesPrice[0], trashSalesXP[0], variant);
+    public static readonly ComponentData MBComponentData = new(
+        salePrices: new int[] { 25, 38, 63, 101 },
+        saleXP: new int[] { 60, 80, 100, 120 },
+        salePriceToBaseBuyPriceFactor: 1.6f);
 
-
-    // ! catch the returning tuple like this :
-    //      var (trashPrice, salesPrice, salesXP) = Components.GetComponentValues(MyComponentClass);
-    public static (int trashPrice, int salesPrice, int salesXP) GetComponentValues(Element? element)
-    {
-        if (element == null)
-        {
-            Debugger.LogError("No component existing for the return of trash and sales values.");
-            return (5, 10, 10);
-        }
-
-        int index = element.tier - 1;
-
-        switch (element)
-        {
-            case CaseComponent:
-                return (caseTrashPrice[index], caseSalesPrice[index], caseSalesXP[index]);
-
-            case PowersupplyComponent:
-                return (powersupplyTrashPrice[index], powersupplySalesPrice[index], powersupplySalesXP[index]);
-
-            case HDDComponent:
-                return (hddTrashPrice[index], hddSalesPrice[index], hddSalesXP[index]);
-
-            case MBComponent:
-                return (mbTrashPrice[index], mbSalesPrice[index], mbSalesXP[index]);
-
-            case CPUComponent:
-                return (cpuTrashPrice[index], cpuSalesPrice[index], cpuSalesXP[index]);
-
-            case RAMComponent:
-                return (ramTrashPrice[index], ramSalesPrice[index], ramSalesXP[index]);
-
-            case GPUComponent:
-                return (gpuTrashPrice[index], gpuSalesPrice[index], gpuSalesXP[index]);
-
-            case Trash trash:
-                return (trashTrashPrice[(int)trash.trashVariant], trashSalesPrice[(int)trash.trashVariant], trashSalesXP[(int)trash.trashVariant]);
-
-            default:
-                Debugger.LogError("No matching component for the return of trash and sales values.");
-                return (5, 10, 10);
-        }
-    }
+    public static readonly ComponentData TrashComponentData = new(
+        trashPrices: new int[] { 30, 20, 50 });
 
     public static Element GetRandomElement()
     {
-        // used for SpawnChanceWHenTrashDiscarded
-        // TODO implement when needed for spawner logic
-
-        Element[] elements = { CreateCase(), Powersupply.Clone(), HDD.Clone(), CreateMB(), CPU.Clone(), RAM.Clone(), GPU.Clone(), CreateTrash() };
+        // used for SpawnChanceWhenTrashDiscarded       
+        Element[] elements = GetComponents();
 
         int randomIndex = Random.Range(0, elements.Length);
         
         return elements[randomIndex];
     }
 
+    public static Element GetElementByName(string name)
+    {
+        int elementIndex = GetComponentNames().FindIndex(componentName => componentName == name);
+
+        return GetComponents()[elementIndex];
+    }
+
+    public static Element[] GetComponents()
+    {
+        return new Element[]
+        {
+            new CaseComponent(1),
+            new PowersupplyComponent(1),
+            new HDDComponent(1),
+            new MBComponent(1),
+            new CPUComponent(1),
+            new RAMComponent(1),
+            new GPUComponent(1),
+            new Trash()
+        };
+    }
+
     public static List<string> GetComponentNames()
     {
-        return new List<string> { CaseComponent.Name, PowersupplyComponent.Name, HDDComponent.Name, MBComponent.Name, CPUComponent.Name, RAMComponent.Name, GPUComponent.Name, Trash.Name };
+        return new List<string> {
+            CaseComponent.Name,
+            PowersupplyComponent.Name,
+            HDDComponent.Name,
+            MBComponent.Name,
+            CPUComponent.Name,
+            RAMComponent.Name,
+            GPUComponent.Name,
+            Trash.Name };
     }
 }
-
-public delegate MBComponent CreateMBDelegate(CPUComponent? cpu = null, RAMComponent? ram = null, GPUComponent? gpu = null);
-public delegate CaseComponent CreateCaseDelegate(MBComponent? motherboard = null, PowersupplyComponent? powersupply = null, HDDComponent? hdd = null);
-public delegate Trash CreateTrashDelegate(TrashVariant? variant = null);

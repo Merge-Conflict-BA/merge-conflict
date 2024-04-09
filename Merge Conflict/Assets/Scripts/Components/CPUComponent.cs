@@ -17,7 +17,7 @@ public class CPUComponent : Element, IComponent
 {
     public static string Name = "CPU";
 
-    public CPUComponent(int tier, int trashPrice, int salesPrice, int salesXP) : base(tier, trashPrice, salesPrice, salesXP, Name) { }
+    public CPUComponent(int tier) : base(tier, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -35,8 +35,8 @@ public class CPUComponent : Element, IComponent
         return null;
     }
 
-    public CPUComponent Clone()
+    public override ComponentData GetComponentData()
     {
-        return new CPUComponent(tier, trashPrice, salesPrice, salesXP);
+        return Components.CpuComponentData;
     }
 }

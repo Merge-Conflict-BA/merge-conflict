@@ -20,34 +20,29 @@ public class Element
     {
         get { return _tier; }
         set { _tier = Mathf.Clamp(value, 1, 4); }
-    }
-    public readonly int trashPrice;
-    public readonly int salesPrice;
-    public readonly int salesXP;
+    }    
+
     public readonly string name;
 
-    public Element(int tier, int trashPrice, int salesPrice, int salesXP, string name)
+    public Element(int tier, string name)
     {
         this.tier = tier;
-        this.trashPrice = trashPrice;
-        this.salesPrice = salesPrice;
-        this.salesXP = salesXP;
         this.name = name;
     }
 
     public virtual int GetTrashPrice()
     {
-        return trashPrice;
+        return GetComponentData().TrashPrices[tier];
     }
 
     public virtual int GetSalesPrice()
     {
-        return salesPrice;
+        return GetComponentData().SalePrices[tier];
     }
 
     public virtual int GetSalesXP()
     {
-        return salesXP;
+        return GetComponentData().SaleXP[tier];
     }
 
     // Is used to decide if a merging lvls up a component or adds one component to another.
@@ -100,5 +95,10 @@ public class Element
     {
         return GetType() == element.GetType()
             && tier == element.tier;
+    }
+
+    public virtual ComponentData GetComponentData()
+    {
+        return Components.EmptyComponentData;
     }
 }

@@ -43,52 +43,50 @@ public class CardHandler : MonoBehaviour
         purchaseButton.onClick.AddListener(BuyElement);
     }
 
-    public void UpdateSprite(FoundElement element)
+    public void UpdateSprite(FoundElement foundElement)
     {
-        _cardElement = element;
-
+        _cardElement = foundElement;
+        
         Image image = GetComponent<Image>();
-        int index = element.Level - 1;
 
-        string elementName = element.ElementName;
+        int elementTier = foundElement.Level - 1;
+        string elementName = foundElement.ElementName;
+
+        Element element = Components.GetElementByName(elementName);
+
+        _startPrice = element.GetComponentData().BaseBuyPrices[elementTier];
+        _increaseFactor = element.GetComponentData().RepeatBuyPriceIncreaseFactor[elementTier];
 
         switch (elementName)
         {
             case var _ when elementName.Equals(CaseComponent.Name):
-                image.sprite = CaseSprites[index];
-                _startPrice = Components.caseStartPrice[index];
-                _increaseFactor = Components.caseIncreaseFactor[index];
+                image.sprite = CaseSprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(CPUComponent.Name):
-                image.sprite = CPUSprites[index];
-                _startPrice = Components.cpuStartPrice[index];
-                _increaseFactor = Components.cpuIncreaseFactor[index];
+                image.sprite = CPUSprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(GPUComponent.Name):
-                image.sprite = GPUSprites[index];
-                _startPrice = Components.gpuStartPrice[index];
-                _increaseFactor = Components.gpuIncreaseFactor[index];
+                image.sprite = GPUSprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(HDDComponent.Name):
-                image.sprite = HDDSprites[index];
-                _startPrice = Components.hddStartPrice[index];
-                _increaseFactor = Components.hddIncreaseFactor[index];
+                image.sprite = HDDSprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(MBComponent.Name):
-                image.sprite = MotherboardSprites[index];
-                _startPrice = Components.mbStartPrice[index];
-                _increaseFactor = Components.mbIncreaseFactor[index];
+                image.sprite = MotherboardSprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(PowersupplyComponent.Name):
-                image.sprite = PowerSupplySprites[index];
-                _startPrice = Components.powersupplyStartPrice[index];
-                _increaseFactor = Components.powersupplyIncreaseFactor[index];
+                image.sprite = PowerSupplySprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(RAMComponent.Name):
-                image.sprite = RAMSprites[index];
-                _startPrice = Components.ramStartPrice[index];
-                _increaseFactor = Components.ramIncreaseFactor[index];
+                image.sprite = RAMSprites[elementTier];
                 break;
+
             case var _ when elementName.Equals(Trash.Name):
             default:
                 image.sprite = DefaultSprite;
@@ -103,18 +101,7 @@ public class CardHandler : MonoBehaviour
 
     private void BuyElement()
     {
-        string elementName = _cardElement.ElementName;
-        Element element = elementName switch
-        {
-            _ when elementName.Equals(CaseComponent.Name) => Components.CreateCase(),
-            _ when elementName.Equals(CPUComponent.Name) => Components.CPU,
-            _ when elementName.Equals(GPUComponent.Name) => Components.GPU,
-            _ when elementName.Equals(HDDComponent.Name) => Components.HDD,
-            _ when elementName.Equals(MBComponent.Name) => Components.CreateMB(),
-            _ when elementName.Equals(PowersupplyComponent.Name) => Components.Powersupply,
-            _ when elementName.Equals(RAMComponent.Name) => Components.RAM,
-            _ => null
-        };
+        Element element = Components.GetElementByName(_cardElement.ElementName);
 
         if (element == null)
         {

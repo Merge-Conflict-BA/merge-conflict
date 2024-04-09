@@ -17,7 +17,7 @@ public class PowersupplyComponent : Element, IComponent
 {
     public static string Name = "PowerSupply";
 
-    public PowersupplyComponent(int tier, int trashPrice, int salesPrice, int salesXP) : base(tier, trashPrice, salesPrice, salesXP, Name) { }
+    public PowersupplyComponent(int tier) : base(tier, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -35,8 +35,8 @@ public class PowersupplyComponent : Element, IComponent
         return null;
     }
 
-    public PowersupplyComponent Clone()
+    public override ComponentData GetComponentData()
     {
-        return new PowersupplyComponent(tier, trashPrice, salesPrice, salesXP);
+        return Components.PowerSupplyComponentData;
     }
 }

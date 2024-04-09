@@ -181,6 +181,7 @@ public class UiManager : MonoBehaviour
             case "Upgrade":
                 AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_upgrade);
+                UpgradeMenu.Instance.OpenMenu();
                 break;
 
             case "Elements":

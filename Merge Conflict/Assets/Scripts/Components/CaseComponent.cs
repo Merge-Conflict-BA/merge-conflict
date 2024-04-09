@@ -22,8 +22,8 @@ public class CaseComponent : Element, IComponent
     public static string Name = "Case";
 
 
-    public CaseComponent(int tier, int trashPrice, int salesPrice, int salesXP, MBComponent? motherboard = null, PowersupplyComponent? powersupply = null, HDDComponent? hdd = null)
-        : base(tier, trashPrice, salesPrice, salesXP, Name)
+    public CaseComponent(int tier, MBComponent? motherboard = null, PowersupplyComponent? powersupply = null, HDDComponent? hdd = null)
+        : base(tier, Name)
     {
         this.motherboard = motherboard;
         this.powersupply = powersupply;
@@ -34,7 +34,6 @@ public class CaseComponent : Element, IComponent
     // Element in der funktion merge ist das Element, dass auf den CaseComponent drauf gemerged wird
     public Element? Merge(Element element)
     {
-
         if (element is CaseComponent otherCase)
         {
             if (HasComponents() || otherCase.HasComponents()) { return null; }
@@ -118,8 +117,8 @@ public class CaseComponent : Element, IComponent
         return isMotherboardEqual && isHDDEqual && isPowerSupplyEqual;
     }
 
-    public CaseComponent Clone()
+    public override ComponentData GetComponentData()
     {
-        return new CaseComponent(tier, trashPrice, salesPrice, salesXP, motherboard, powersupply, hdd);
+        return Components.CaseComponentData;
     }
 }

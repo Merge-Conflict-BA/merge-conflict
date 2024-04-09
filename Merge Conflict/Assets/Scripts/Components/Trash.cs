@@ -28,7 +28,7 @@ public class Trash : Element
     public TrashVariant trashVariant;
     public static string Name = "Trash";
 
-    public Trash(int trashPrice, int salesPrice, int salesXP, TrashVariant? variant = null) : base(0, trashPrice, salesPrice, salesXP, Name)
+    public Trash(TrashVariant? variant = null) : base(0, Name)
     {
         if (variant != null)
         {
@@ -39,8 +39,23 @@ public class Trash : Element
         trashVariant = (TrashVariant)Random.Range(0, 3);
     }
 
-    public Trash Clone()
+    public override int GetSalesPrice()
     {
-        return new Trash(trashPrice, salesPrice, salesXP, trashVariant);
+        return 0;
+    }
+
+    public override int GetSalesXP()
+    {
+        return 0;
+    }
+
+    public override int GetTrashPrice()
+    {
+        return GetComponentData().TrashPrices[(int)trashVariant];
+    }
+
+    public override ComponentData GetComponentData()
+    {
+        return Components.TrashComponentData;
     }
 }

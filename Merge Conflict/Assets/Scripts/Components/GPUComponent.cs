@@ -17,7 +17,7 @@ public class GPUComponent : Element, IComponent
 {
     public static string Name = "GPU";
 
-    public GPUComponent(int tier, int trashPrice, int salesPrice, int salesXP) : base(tier, trashPrice, salesPrice, salesXP, Name) { }
+    public GPUComponent(int tier) : base(tier, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -35,8 +35,8 @@ public class GPUComponent : Element, IComponent
         return null;
     }
 
-    public GPUComponent Clone()
+    public override ComponentData GetComponentData()
     {
-        return new GPUComponent(tier, trashPrice, salesPrice, salesXP);
+        return Components.GpuComponentData;
     }
 }
