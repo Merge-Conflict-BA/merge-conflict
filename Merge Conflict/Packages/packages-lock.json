@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.brogan89.screenswipe": {
+      "version": "https://github.com/brogan89/ScreenSwipe.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "63d7c43b8bad641d29b48f1df154584545983a2f"
+    },
     "com.unity.2d.animation": {
       "version": "9.1.0",
       "depth": 1,
