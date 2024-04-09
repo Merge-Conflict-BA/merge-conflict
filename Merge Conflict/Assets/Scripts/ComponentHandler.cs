@@ -221,7 +221,7 @@ public class ComponentHandler : MonoBehaviour
         AnimationManager.Instance.PlayTrashAnimation(GetComponent<RectTransform>().anchoredPosition);
         AudioManager.Instance.PlayThrowAwaySound();
 
-        int actualTrashPrice = draggedElement.GetTrashPrice() * (Upgrades.MoneyWhenTrashedUpgrade.GetCurrentPercentageOfTrashMoney() / 100);
+        int actualTrashPrice = Mathf.CeilToInt(draggedElement.GetTrashPrice() * (Upgrades.MoneyWhenTrashedUpgrade.GetCurrentPercentageOfTrashMoney() / 100f));
         MoneyHandler.Instance.AddMoney(actualTrashPrice);
 
         if (draggedElement.name == Trash.Name
