@@ -5,7 +5,7 @@ Description:   Updates the cards with sprite and price for each found element
 Author(s):     Simeon Baumann
 Date:          2024-03-23
 Version:       V1.0
-TODO:          - check if the player has enough money
+TODO:          - 
 **********************************************************************************************************************/
 
 using System;
@@ -26,7 +26,7 @@ public class CardHandler : MonoBehaviour
     public Sprite[] PowerSupplySprites;
     public Sprite[] RAMSprites;
     public Sprite DefaultSprite;
-    
+
     [Header("Button to purchase Element")]
     public Button purchaseButton;
 
@@ -46,7 +46,7 @@ public class CardHandler : MonoBehaviour
     public void UpdateSprite(FoundElement element)
     {
         _cardElement = element;
-        
+
         Image image = GetComponent<Image>();
         int index = element.Level - 1;
 
@@ -97,7 +97,8 @@ public class CardHandler : MonoBehaviour
                 break;
         }
 
-        UpdatePrice();
+        // This is to update all prices and not only this single one
+        ElementsMenu.Instance.UpdatePurchaseButtons(); // This was previously => UpdatePrice();
     }
 
     private void BuyElement()
@@ -122,23 +123,38 @@ public class CardHandler : MonoBehaviour
         }
 
         element.tier = _cardElement.Level;
-        
+
         element.InstantiateGameObjectAndAddTexture(ComponentSpawner.Instance.GetRandomPositionOnDesk());
-        
+        MoneyHandler.Instance.SpendMoney((int)Math.Floor(_startPrice * Math.Pow(_increaseFactor, _cardElement.CountPurchased)));
+        ElementsMenu.Instance.UpdateActualMoneyText();
+
         // Update count of purchased elements and the price of the next card
         _cardElement.CountPurchased++;
         FoundElementsHandler.Instance.UpdateStoredElement(_cardElement);
-        UpdatePrice();
-        
+        // This is to update all prices and not only this single one
+        ElementsMenu.Instance.UpdatePurchaseButtons(); // This was previously => UpdatePrice();
+
         // Give feedback if the purchase is done -> instantiate gameObject with text ("+1")
         Instantiate(purchasedTextObject, transform.position, Quaternion.identity, transform);
     }
 
-    private void UpdatePrice()
+    public void UpdatePrice()
     {
         float currentPrice = (float)Math.Floor(_startPrice * Math.Pow(_increaseFactor, _cardElement.CountPurchased));
-        
+
         var priceText = GetComponentInChildren<TextMeshProUGUI>();
         priceText.text = $"$ {currentPrice}";
+
+        // this checks if the player has enough money
+        if (currentPrice > MoneyHandler.Instance.Money)
+        {
+            purchaseButton.interactable = false;
+            priceText.color = new Color(0.7f, 0.7f, 0.7f, 1f);
+        }
+        else
+        {
+            purchaseButton.interactable = true;
+            priceText.color = Color.white;
+        }
     }
 }

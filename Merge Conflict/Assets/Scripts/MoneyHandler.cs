@@ -32,6 +32,12 @@ public class MoneyHandler : MonoBehaviour
     private void Start()
     {
         ApplyPlayerPrefs();
+
+        // TODO: delete this function later --> only for generating testing money
+#if UNITY_EDITOR
+        AddMoney(100000);
+#endif
+
     }
 
     public void AddMoney(int moneyToAdd)
@@ -65,5 +71,5 @@ public class MoneyHandler : MonoBehaviour
     private string GetPlayerPrefsKey()
     {
         return "Money";
-    }    
+    }
 }
