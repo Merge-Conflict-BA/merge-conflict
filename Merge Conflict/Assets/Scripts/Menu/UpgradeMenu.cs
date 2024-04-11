@@ -165,9 +165,12 @@ public class UpgradeMenu : Menu
 
             default:
                 Debugger.LogWarning($"No matching upgrade. The upgrade to be purchased cannot be activated.");
-                break;
+                AudioManager.Instance.PlayErrorSound();
+                UpdateUI();
+                return;
         }
 
+        AudioManager.Instance.PlayBuyUpgradeButtonSound();
         UpdateUI();
     }
 }
