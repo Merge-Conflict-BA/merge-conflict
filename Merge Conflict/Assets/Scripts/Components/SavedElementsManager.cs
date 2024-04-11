@@ -122,8 +122,6 @@ public class SavedElementsManager : MonoBehaviour
             savedElement = PlayerPrefs.GetString(GetPlayerPrefsKeyWithIndex(index), noElementFound);
             index++;
 
-            Debug.Log(savedElement);
-
             if (savedElement == noElementFound)
             {
                 continue;
