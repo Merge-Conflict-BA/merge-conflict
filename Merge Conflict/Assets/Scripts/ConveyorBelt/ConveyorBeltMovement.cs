@@ -1,9 +1,9 @@
 ﻿/**********************************************************************************************************************
 Name:          ConveyorBeltMovement
 Description:   Handle the movement of objects on the Conveyor Belt. If these objects arrive at the end, they will be destroyed.
-Author(s):     Simeon Baumann
+Author(s):     Simeon Baumann, Hanno Witzleb
 Date:          2024-02-29
-Version:       V1.2
+Version:       V2.0
 **********************************************************************************************************************/
 
 using UnityEngine;
@@ -21,10 +21,6 @@ namespace ConveyorBelt
         // Indicates if this BeltPart is the end, so every item can be destroyed if they collide
         [SerializeField] public bool IsEndPart = false;
 
-        [Header("Animation Settings")]
-        public const float scrollSpeed = 1f;
-        private CanvasRenderer? canvasRenderer;
-
         private const float SpeedToCenterOfBelt = 1;
 
         private void Start()
@@ -34,51 +30,6 @@ namespace ConveyorBelt
             RectTransform rectTransform = GetComponent<RectTransform>();
             var rect = rectTransform.rect;
             boxCollider2D.size = new Vector2(rect.width, rect.height);
-
-            transform.TryGetComponent(out canvasRenderer);
-            Debugger.LogErrorIf(canvasRenderer == null, "Couldn't get CanvasReader Component. Can't scroll textures!");
-        }
-
-        private void Update()
-        {
-            ScrollTexture();
-        }
-
-        void OnApplicationQuit()
-        {
-#if UNITY_EDITOR
-
-            Debugger.LogMessage("resetting ConveyorBelt Texture Offset for " + name + ", so that they dont persist and get picked up by git.");
-            canvasRenderer.GetMaterial().mainTextureOffset = Vector2.zero;
-
-            #endif
-        }
-
-        private void ScrollTexture()
-        {
-            if(canvasRenderer == null) { return; }
-
-            Vector2 textureOffset = new(Time.time * scrollSpeed, Time.time * scrollSpeed);
-
-            // different MovingDirections need to have individual materials!
-            // else this function will be called from 2 different ConveyorBelts and fight over their shared Material
-            switch (MovingDirection)
-            {
-                case MovingDirection.DOWN:
-                    textureOffset *= new Vector2(0, 1);
-                    break;
-
-                case MovingDirection.RIGHT:
-                    textureOffset *= new Vector2(-1, 0);
-                    break;
-
-                case MovingDirection.DIAGONAL:
-                default:
-                    textureOffset *= new Vector2(-1, 1).normalized;
-                    break;
-            }
-
-            canvasRenderer.GetMaterial().mainTextureOffset = textureOffset;
         }
 
         private void OnCollisionStay2D(Collision2D collision)
