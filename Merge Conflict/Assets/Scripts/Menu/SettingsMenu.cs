@@ -12,8 +12,8 @@ public class SettingsMenu : Menu
 {
     private Canvas _settingsMenuCanvas;
     private Settings _settings;
-    private Toggle _musicToggle;
-    private Toggle _soundToggle;
+    private Slider _musicSlider;
+    private Slider _soundSlider;
 
     // Singleton
     private static SettingsMenu _instance = null;
@@ -38,30 +38,30 @@ public class SettingsMenu : Menu
         InitializeMenu(_settingsMenuCanvas);
 
         _settings = Settings.Instance;
-        _musicToggle = GetComponentByName<Toggle>("MusicValue");
-        _soundToggle = GetComponentByName<Toggle>("SoundValue");
+        _musicSlider = GetComponentbyObjectName<Slider>("SliderMusicVolume");
+        _soundSlider = GetComponentbyObjectName<Slider>("SliderEffectsVolume");
     }
     
     public void SetDisplayedSettings()
     {
-        _musicToggle.isOn = _settings.MusicOn;
-        _soundToggle.isOn = _settings.SoundOn;
+        _musicSlider.value = _settings.MusicValue;
+        _soundSlider.value = _settings.SoundValue;
         
-        _musicToggle.onValueChanged.AddListener(MusicToggleChanged);
-        _soundToggle.onValueChanged.AddListener(SoundToggleChanged);
+        _musicSlider.onValueChanged.AddListener(MusicVolumeValueChanged);
+        _soundSlider.onValueChanged.AddListener(EffectsVolumeValueChanged);
     }
 
-    // Event if MusicToggle is clicked (--> save new value to PlayerPrefs)
-    private void MusicToggleChanged(bool value)
+    // Event if SliderMusicVolume is changed (--> save new value to PlayerPrefs)
+    private void MusicVolumeValueChanged(float value)
     {
-        _settings.MusicOn = _musicToggle.isOn;
-        _settings.SaveProperty(nameof(_settings.MusicOn));
+        _settings.MusicValue = _musicSlider.value;
+        _settings.SaveProperty(nameof(_settings.MusicValue));
     }
     
-    // Event if SoundToggle is clicked (--> save new value to PlayerPrefs)
-    private void SoundToggleChanged(bool value)
+    // Event if SliderEffectsVolume is changed (--> save new value to PlayerPrefs)
+    private void EffectsVolumeValueChanged(float value)
     {
-        _settings.SoundOn = _soundToggle.isOn;
-        _settings.SaveProperty(nameof(_settings.SoundOn));
+        _settings.SoundValue = _soundSlider.value;
+        _settings.SaveProperty(nameof(_settings.SoundValue));
     }
 }

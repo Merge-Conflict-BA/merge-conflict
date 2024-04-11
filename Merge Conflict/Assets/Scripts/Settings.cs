@@ -11,8 +11,9 @@ using UnityEngine;
 public class Settings
 {
     // Properties which can be stored in PlayerPrefs
-    public bool MusicOn;
-    public bool SoundOn;
+    public float MusicValue;
+    public float SoundValue;
+    private float _defaultValue = -17f;
     
     // Singleton
     private static Settings _instance = null;
@@ -32,8 +33,8 @@ public class Settings
 
     private void GetDataFromPlayerPrefs()
     {
-        MusicOn = IntToBool(PlayerPrefs.GetInt(nameof(MusicOn), BoolToInt(true)));
-        SoundOn = IntToBool(PlayerPrefs.GetInt(nameof(SoundOn), BoolToInt(true)));
+        MusicValue = PlayerPrefs.GetFloat(nameof(MusicValue), _defaultValue);
+        SoundValue = PlayerPrefs.GetFloat(nameof(SoundValue), _defaultValue);
     }
 
     /// <summary>
@@ -44,28 +45,15 @@ public class Settings
     {
         switch (property)
         {
-            case nameof(MusicOn):
-                PlayerPrefs.SetInt(nameof(MusicOn), BoolToInt(MusicOn));
+            case nameof(MusicValue):
+                PlayerPrefs.SetFloat(nameof(MusicValue), MusicValue);
                 break;
-            case nameof(SoundOn):
-                PlayerPrefs.SetInt(nameof(SoundOn), BoolToInt(SoundOn));
+            case nameof(SoundValue):
+                PlayerPrefs.SetFloat(nameof(SoundValue), SoundValue);
                 break;
             default:
                 Debugger.LogMessage($"Could not find property in Settings: {property}");
                 break;
         }
-    }
-
-
-    // Helper methods
-    // PlayerPrefs doesn't support bool. So it has to be parsed into int.
-    private bool IntToBool(int value)
-    {
-        return value == 1;
-    }
-
-    private int BoolToInt(bool value)
-    {
-        return value ? 1 : 0;
     }
 }
