@@ -270,6 +270,7 @@ public class ComponentHandler : MonoBehaviour
         ExperienceHandler.AddExperiencePoints(actualSalesXP);
 
         AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
+        AudioManager.Instance.PlayQuestCompletedSound();
 
         Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
         Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");

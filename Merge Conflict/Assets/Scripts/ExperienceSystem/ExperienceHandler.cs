@@ -34,7 +34,7 @@ namespace ExperienceSystem
         {
             int xp = totalXP;
             int levelIndex = 0;
-            
+
             while (levelIndex < Levels.Length - 1
                 && xp >= Levels[levelIndex + 1].RequiredExperience)
             {
@@ -47,10 +47,19 @@ namespace ExperienceSystem
 
         public static void AddExperiencePoints(int experiencePoints)
         {
+            int oldLevel = GetCurrentLevel();
+
             var currentExp = PlayerPrefs.GetInt(PlayerPrefsKey);
             currentExp += experiencePoints;
 
             PlayerPrefs.SetInt(PlayerPrefsKey, currentExp);
+
+            int newLevel = GetCurrentLevel();
+
+            if (newLevel > oldLevel)
+            {
+                AudioManager.Instance.PlayLevelUpSound();
+            }
         }
 
         public static int GetExperiencePointsInCurrentLevel()
@@ -70,7 +79,7 @@ namespace ExperienceSystem
         public static int GetCurrentLevel()
         {
             int currentTotalXP = PlayerPrefs.GetInt(PlayerPrefsKey);
-            return GetLevelByTotalXP(currentTotalXP);            
+            return GetLevelByTotalXP(currentTotalXP);
         }
 
         public static void ResetCurrentPlayerExperience()
