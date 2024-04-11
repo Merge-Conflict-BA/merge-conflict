@@ -12,10 +12,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 
-public class PlayerPrefsManager : MonoBehaviour
+public class SavedElementsManager : MonoBehaviour
 {
-    private static PlayerPrefsManager _instance;
-    public static PlayerPrefsManager Instance { get { return _instance; } }
+    private static SavedElementsManager _instance;
+    public static SavedElementsManager Instance { get { return _instance; } }
 
     void Awake()
     {
@@ -40,15 +40,9 @@ public class PlayerPrefsManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SpawnSavedComponents();
+            SpawnSavedElements();
         }
 #endif
-    }
-
-
-    private string GetPlayerPrefsKeyWithIndex(int index)
-    {
-        return $"SavedComponent[{index}]";
     }
 
     public void SaveElementsOnDeskToPlayerPrefs(float delay = 0.2f)
@@ -86,27 +80,26 @@ public class PlayerPrefsManager : MonoBehaviour
 
     private void ClearSavedElementPlayerPrefs()
     {
-
-        string noComponentFound = "no component";
+        string noElementFound = "no element";
         int index = 0;        
 
-        string savedComponent;
+        string savedElement;
         do
         {
             string key = GetPlayerPrefsKeyWithIndex(index);
 
-            savedComponent = PlayerPrefs.GetString(key, noComponentFound);
+            savedElement = PlayerPrefs.GetString(key, noElementFound);
             PlayerPrefs.DeleteKey(key);
 
             index++;
-        } while (savedComponent != noComponentFound);
+        } while (savedElement != noElementFound);
     }
 
-    public void SpawnSavedComponents()
+    public void SpawnSavedElements()
     {
-        List<SavedElement> savedComponents = GetSavedComponentsFromPlayerPrefs();
+        List<SavedElement> savedElements = GetSavedElementsFromPlayerPrefs();
 
-        foreach (SavedElement savedElement in savedComponents)
+        foreach (SavedElement savedElement in savedElements)
         {
             Element element = Components.GetElementByName(savedElement.Name);
             element = element.FromSavedElement(savedElement);
@@ -115,26 +108,32 @@ public class PlayerPrefsManager : MonoBehaviour
         }
     }
 
-    private List<SavedElement> GetSavedComponentsFromPlayerPrefs()
+    private List<SavedElement> GetSavedElementsFromPlayerPrefs()
     {
-        const string noComponentFound = "no component";
-        string savedComponent;
+        const string noElementFound = "no element";
+        string savedElement;
         int index = 0;
 
-        List<SavedElement> savedComponents = new();
+        List<SavedElement> savedElements = new();
 
         do
         {
-            savedComponent = PlayerPrefs.GetString(GetPlayerPrefsKeyWithIndex(index), noComponentFound);
+            savedElement = PlayerPrefs.GetString(GetPlayerPrefsKeyWithIndex(index), noElementFound);
             index++;
 
-            if (savedComponent != noComponentFound)
+            if (savedElement != noElementFound)
             {
-                savedComponents.Add(SavedElement.Deserialize(savedComponent));
+                savedElements.Add(SavedElement.Deserialize(savedElement));
             }
 
-        } while (savedComponent != noComponentFound);
+        } while (savedElement != noElementFound);
 
-        return savedComponents;
+        return savedElements;
     }
+
+    private string GetPlayerPrefsKeyWithIndex(int index)
+    {
+        return $"SavedElement [{index}]";
+    }
+
 }

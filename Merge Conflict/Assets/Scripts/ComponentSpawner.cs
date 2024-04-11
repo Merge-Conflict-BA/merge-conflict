@@ -75,7 +75,7 @@ public class ComponentSpawner : MonoBehaviour
 
         StartCoroutine(SpawnOnBeltInInterval(initialSpawnDelaySeconds));
 
-        PlayerPrefsManager.Instance.SpawnSavedComponents();
+        SavedElementsManager.Instance.SpawnSavedElements();
     }
 
     void Update()
