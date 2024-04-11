@@ -1,10 +1,10 @@
 /**********************************************************************************************************************
-Name:           OrderGenerator
+Name:           OrderManager
 Description:    Create a new order with 7 components and the corresponding level. The level is selected with a 
                 probability which is calculated based on how long ago the respective level was unlocked. This means that
                 a level that has only recently been unlocked will be more likely to be filled than a component that has 
                 been unlocked for several levels.  
-Author(s):      Markus Haubold
+Author(s):      Markus Haubold, Hanno Witzleb
 Date:           2024-03-26
 Version:        V1.1
 TODO:           - 
@@ -16,11 +16,13 @@ using System.Linq;
 using UnityEngine;
 using ExperienceSystem;
 
-public class OrderGenerator : MonoBehaviour
+public class OrderManager : MonoBehaviour
 {
-    private static OrderGenerator _instance;
-    public static OrderGenerator Instance { get { return _instance; } }
+    private static OrderManager _instance;
+    public static OrderManager Instance { get { return _instance; } }
     public Order? Order = null;
+
+    public readonly string PlayerPrefsKey = "CurrentOrder";
 
     void Awake()
     {
@@ -41,15 +43,23 @@ public class OrderGenerator : MonoBehaviour
 
     void Start()
     {
-        Order = GenerateNewOrder(ExperienceHandler.GetCurrentLevel());
+        if(ApplyPlayerPrefs() == false)
+        {
+            Order = GenerateNewOrder(ExperienceHandler.GetCurrentLevel());
+        }
     }
 
-    public Order GenerateNewOrder(int currentLevel)
+    public Order GenerateNewOrder()
+    {
+        return GenerateNewOrder(ExperienceHandler.GetCurrentLevel());
+    }
+
+    public Order GenerateNewOrder(int level)
     {
         int[] orderComponentTier = new int[OrderComponents.List.Length];
         for (int componentIndex = 0; componentIndex < OrderComponents.List.Length; componentIndex++)
         {
-            orderComponentTier[componentIndex] = SelectTierForComponent((OrderComponentIndex)componentIndex, currentLevel);
+            orderComponentTier[componentIndex] = SelectTierForComponent((OrderComponentIndex)componentIndex, level);
         }
 
         int caseTier = orderComponentTier[(int)OrderComponentIndex.Case];
@@ -60,15 +70,12 @@ public class OrderGenerator : MonoBehaviour
         int cpuTier = orderComponentTier[(int)OrderComponentIndex.CPU];
         int ramTier = orderComponentTier[(int)OrderComponentIndex.RAM];
 
-        Order order = new Order(caseTier, hddTier, powersupplyTier, motherboardTier, gpuTier, cpuTier, ramTier);
-        Order = order;
-       
-        return order;
-    }
+        Order newOrder = new(caseTier, hddTier, powersupplyTier, motherboardTier, gpuTier, cpuTier, ramTier);
 
-    public void DeleteOrder()
-    {
-        Order = null;
+        Order = newOrder;
+        SaveToPlayerPrefs();
+
+        return newOrder;
     }
 
     /*
@@ -102,11 +109,37 @@ public class OrderGenerator : MonoBehaviour
         };
     }
 
+    private bool ApplyPlayerPrefs()
+    {
+        string jsonOrder = PlayerPrefs.GetString(PlayerPrefsKey);
+
+        Order parsedOrder = UnityEngine.JsonUtility.FromJson<Order>(jsonOrder);
+
+        Debugger.LogMessage($"parsedOrder: {parsedOrder}");
+
+        if(parsedOrder == null)
+        {
+            return false;
+        }
+
+        Order = parsedOrder;
+        return true;
+    }
+
+    private void SaveToPlayerPrefs()
+    {
+        string jsonOrder = UnityEngine.JsonUtility.ToJson(Order);
+
+        Debugger.LogMessage($"jsonOrder: {jsonOrder}");
+
+        PlayerPrefs.SetString(PlayerPrefsKey, jsonOrder);
+    }
+
+    #region debugging
     /*
      * every time this class will be initialized, all parameters and all calculated values will be logged for all components for all levels
      * this can be usefull for the process of tune the probabilities because it gives an complete overview 
     */
-
     private void WriteDataLogFile()
     {
         const string filePath = "Assets/Scripts/Order/dataLog.txt";
@@ -133,4 +166,5 @@ public class OrderGenerator : MonoBehaviour
             writer.WriteLine("");
         }
     }
+    #endregion
 }

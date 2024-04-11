@@ -105,7 +105,7 @@ public class LevelMenu : Menu
         int xpToUnlockNextLevel = ExperienceHandler.NeededXpToUnlockNextLevel(currentLevel);
         string xpRatioString = $"{currentXp} / {xpToUnlockNextLevel}";
 
-        Order? order = OrderGenerator.Instance.Order;
+        Order? order = OrderManager.Instance.Order;
         Debugger.LogErrorIf(order == null, "Order is null, cant populate Level Screen!!");
 
         //set level and xp values

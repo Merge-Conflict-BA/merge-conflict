@@ -7,9 +7,13 @@ Version:        V2.0
 TODO:           - 
 **********************************************************************************************************************/
 
+using System;
+using UnityEngine;
+using UnityEngine.Serialization;
+
+[Serializable]
 public class Order
 {
-
     public readonly CaseComponent PC;
 
     public readonly int CaseTier;
