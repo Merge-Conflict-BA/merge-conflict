@@ -40,10 +40,8 @@ public class CPUComponent : Element, IComponent
         return Components.CpuComponentData;
     }
 
-    public override JSONComponent CreateJSONComponentFromElement()
+    public override Element FromJSONElement(JSONElement jsonElement)
     {
-        JSONComponent component = new JSONComponent(tier, Name);
-
-        return component;
+        return new CPUComponent(jsonElement.Tier);
     }
 }

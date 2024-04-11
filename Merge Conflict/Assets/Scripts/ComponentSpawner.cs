@@ -25,7 +25,7 @@ public class ComponentSpawner : MonoBehaviour
     public GameObject componentsHolderObject;
 
     // Spawn Settings    
-    private const float initialSpawnDelaySeconds = 0f;  
+    private const float initialSpawnDelaySeconds = 0f;
 
     [Header("Idle Movement of components")]
     public bool SamePropertiesForEveryComponent = false;
@@ -72,8 +72,10 @@ public class ComponentSpawner : MonoBehaviour
         spawnPointObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(
             50,
             transform.parent.GetComponent<RectTransform>().rect.height + 100);
-        
+
         StartCoroutine(SpawnOnBeltInInterval(initialSpawnDelaySeconds));
+
+        PlayerPrefsManager.Instance.SpawnSavedComponents();
     }
 
     void Update()
@@ -107,6 +109,11 @@ public class ComponentSpawner : MonoBehaviour
         }
     }
 
+    public GameObject SpawnComponentInRandomPositionOnDesk(Element element)
+    {
+        return SpawnComponent(GetRandomPositionOnDesk(), element);
+    }
+
     public GameObject SpawnComponent(Vector2 spawnPosition, Element element)
     {
         GameObject componentObject = Instantiate(componentPrefab, transform.parent.position, Quaternion.identity, componentsHolderObject.transform);
@@ -128,7 +135,7 @@ public class ComponentSpawner : MonoBehaviour
 
         // move Component in Front of the Conveyor Belt
         componentObject.transform.position += new Vector3(0, 0, -1);
-        
+
         // Update List with FoundElements to create a new card in the ElementsMenu if necessary
         FoundElementsHandler.Instance.CheckIfElementIsNew(element);
 
@@ -168,7 +175,7 @@ public class ComponentSpawner : MonoBehaviour
     {
         return spawnPointObject.GetComponent<RectTransform>().anchoredPosition;
     }
-    
+
     public Vector2 GetRandomPositionOnDesk()
     {
         GameObject deskObject = GameObject.FindWithTag("desk");

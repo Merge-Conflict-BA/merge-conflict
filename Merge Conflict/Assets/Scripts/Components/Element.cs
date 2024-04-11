@@ -102,8 +102,13 @@ public class Element
         return Components.EmptyComponentData;
     }
 
-    public virtual JSONComponent CreateJSONComponentFromElement()
+    public virtual JSONElement ToJSONElement()
     {
-        return JSONComponent.EmptyJSONComponent;
+        return new JSONElement(name, tier);
+    }
+
+    public virtual Element FromJSONElement(JSONElement jsonElement)
+    {
+        return new(jsonElement.Tier, jsonElement.Name);
     }
 }

@@ -40,10 +40,8 @@ public class HDDComponent : Element, IComponent
         return Components.HddComponentData;
     }
 
-    public override JSONComponent CreateJSONComponentFromElement()
+    public override Element FromJSONElement(JSONElement jsonElement)
     {
-        JSONComponent component = new JSONComponent(tier, Name);
-
-        return component;
+        return new HDDComponent(jsonElement.Tier);
     }
 }

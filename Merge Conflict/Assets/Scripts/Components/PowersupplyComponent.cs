@@ -40,10 +40,8 @@ public class PowersupplyComponent : Element, IComponent
         return Components.PowerSupplyComponentData;
     }
 
-    public override JSONComponent CreateJSONComponentFromElement()
+    public override Element FromJSONElement(JSONElement jsonElement)
     {
-        JSONComponent component = new JSONComponent(tier, Name);
-
-        return component;
+        return new PowersupplyComponent(jsonElement.Tier);
     }
 }

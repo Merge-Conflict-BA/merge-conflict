@@ -124,6 +124,7 @@ public class UiManager : MonoBehaviour
     {
         if (clickedButton == ExitTheGame)
         {
+            PlayerPrefsManager.Instance.SaveComponentsOnDeskToPlayerPrefs();
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -251,7 +252,7 @@ public class UiManager : MonoBehaviour
 
         _buttonOpenMainMenuText.text = menuText;
     }
-    
+
     private void SetComponentsVisible(bool isVisible)
     {
         // Turns off components, else they would render above the menu.

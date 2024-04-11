@@ -40,10 +40,8 @@ public class GPUComponent : Element, IComponent
         return Components.GpuComponentData;
     }
 
-    public override JSONComponent CreateJSONComponentFromElement()
+    public override Element FromJSONElement(JSONElement jsonElement)
     {
-        JSONComponent component = new JSONComponent(tier, Name);
-
-        return component;
+        return new GPUComponent(jsonElement.Tier);
     }
 }

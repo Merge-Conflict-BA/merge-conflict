@@ -59,10 +59,13 @@ public class Trash : Element
         return Components.TrashComponentData;
     }
 
-    public override JSONComponent CreateJSONComponentFromElement()
+    public override JSONElement ToJSONElement()
     {
-        JSONComponent component = new JSONComponent(Name, (int)trashVariant);
+        return new(name, (int)trashVariant);
+    }
 
-        return component;
+    public override Element FromJSONElement(JSONElement jsonElement)
+    {
+        return new Trash((TrashVariant)jsonElement.Tier);
     }
 }

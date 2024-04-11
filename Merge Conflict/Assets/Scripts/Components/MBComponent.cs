@@ -122,15 +122,56 @@ public class MBComponent : Element, IComponent
         return Components.MBComponentData;
     }
 
-    public override JSONComponent CreateJSONComponentFromElement()
+    public override JSONElement ToJSONElement()
     {
-        JSONComponent component = new JSONComponent(tier, Name)
-        {
-            cpu = cpu?.CreateJSONComponentFromElement(),
-            ram = ram?.CreateJSONComponentFromElement(),
-            gpu = gpu?.CreateJSONComponentFromElement()
-        };
+        List<JSONElement> children = new();
 
-        return component;
+        if (cpu != null)
+        {
+            children.Add(cpu.ToJSONElement());
+        }
+        if (gpu != null)
+        {
+            children.Add(gpu.ToJSONElement());
+        }
+        if (ram != null)
+        {
+            children.Add(ram.ToJSONElement());
+        }
+
+        return new(name, tier, children);
+    }
+
+    public override Element FromJSONElement(JSONElement jsonElement)
+    {
+        MBComponent motherboard = new(jsonElement.Tier);
+
+        if (jsonElement.Children.Count == 0)
+        {
+            return motherboard;
+        }
+
+        foreach (JSONElement childElement in jsonElement.Children)
+        {
+            switch (childElement.Name)
+            {
+                case var _ when childElement.Name.Equals(CPUComponent.Name):
+                    motherboard.cpu = new CPUComponent(childElement.Tier);
+                    break;
+
+                case var _ when childElement.Name.Equals(GPUComponent.Name):
+                    motherboard.gpu = new GPUComponent(childElement.Tier);
+                    break;
+
+                case var _ when childElement.Name.Equals(RAMComponent.Name):
+                    motherboard.ram = new RAMComponent(childElement.Tier);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        return motherboard;
     }
 }

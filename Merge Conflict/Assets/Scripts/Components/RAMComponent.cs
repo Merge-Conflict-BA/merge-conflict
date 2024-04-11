@@ -40,10 +40,8 @@ public class RAMComponent : Element, IComponent
         return Components.RamComponentData;
     }
 
-    public override JSONComponent CreateJSONComponentFromElement()
+    public override Element FromJSONElement(JSONElement jsonElement)
     {
-        JSONComponent component = new JSONComponent(tier, Name);
-
-        return component;
+        return new RAMComponent(jsonElement.Tier);
     }
 }

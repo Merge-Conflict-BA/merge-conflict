@@ -122,15 +122,56 @@ public class CaseComponent : Element, IComponent
         return Components.CaseComponentData;
     }
 
-    public override JSONComponent CreateJSONComponentFromElement()
+    public override JSONElement ToJSONElement()
     {
-        JSONComponent component = new JSONComponent(tier, Name)
-        {
-            powersupply = powersupply?.CreateJSONComponentFromElement(),
-            hdd = hdd?.CreateJSONComponentFromElement(),
-            motherboard = motherboard?.CreateJSONComponentFromElement()
-        };
+        List<JSONElement> children = new();
 
-        return component;
+        if (hdd != null)
+        {
+            children.Add(hdd.ToJSONElement());
+        }
+        if (powersupply != null)
+        {
+            children.Add(powersupply.ToJSONElement());
+        }
+        if (motherboard != null)
+        {
+            children.Add(motherboard.ToJSONElement());
+        }
+
+        return new(name, tier, children);
+    }
+
+    public override Element FromJSONElement(JSONElement jsonElement)
+    {
+        CaseComponent caseComponent = new(jsonElement.Tier);
+
+        if (jsonElement.Children.Count == 0)
+        {
+            return caseComponent;
+        }
+
+        foreach (JSONElement childElement in jsonElement.Children)
+        {
+            switch (childElement.Name)
+            {
+                case var _ when childElement.Name.Equals(HDDComponent.Name):
+                    caseComponent.hdd = new HDDComponent(childElement.Tier);
+                    break;
+
+                case var _ when childElement.Name.Equals(PowersupplyComponent.Name):
+                    caseComponent.powersupply = new PowersupplyComponent(childElement.Tier);
+                    break;
+
+                case var _ when childElement.Name.Equals(MBComponent.Name):
+                    caseComponent.motherboard = new MBComponent(childElement.Tier);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        return caseComponent;
     }
 }
