@@ -115,15 +115,16 @@ public class LevelMenu : Menu
         SetProgressbarValue(currentXp, xpToUnlockNextLevel);
 
         TextureAtlas textures = TextureAtlas.Instance;
+        CaseComponent pc = order.PC;
 
         //set current Tier and image of the ordered component
-        SetDisplayedCaseTierAndImage(order.CaseTier, textures.GetComponentTexture(order.PC).sprite);
-        SetDisplayedHddTierAndImage(order.HddTier, textures.GetComponentTexture(order.PC.hdd).sprite);
-        SetDisplayedPowersupplyTierAndImage(order.PowersupplyTier, textures.GetComponentTexture(order.PC.powersupply).sprite);
-        SetDisplayedMotherboardTierAndImage(order.MotherboardTier, textures.GetComponentTexture(order.PC.motherboard).sprite);
-        SetDisplayedCpuTierAndImage(order.CpuTier, textures.GetComponentTexture(order.PC.motherboard.cpu).sprite);
-        SetDisplayedGpuTierAndImage(order.GpuTier, textures.GetComponentTexture(order.PC.motherboard.gpu).sprite);
-        SetDisplayedRamTierAndImage(order.RamTier, textures.GetComponentTexture(order.PC.motherboard.ram).sprite);
+        SetDisplayedCaseTierAndImage(pc.tier, textures.GetComponentTexture(pc).sprite);
+        SetDisplayedHddTierAndImage(pc.hdd.tier, textures.GetComponentTexture(pc.hdd).sprite);
+        SetDisplayedPowersupplyTierAndImage(pc.powersupply.tier, textures.GetComponentTexture(pc.powersupply).sprite);
+        SetDisplayedMotherboardTierAndImage(pc.motherboard.tier, textures.GetComponentTexture(pc.motherboard).sprite);
+        SetDisplayedCpuTierAndImage(pc.motherboard.cpu.tier, textures.GetComponentTexture(pc.motherboard.cpu).sprite);
+        SetDisplayedGpuTierAndImage(pc.motherboard.gpu.tier, textures.GetComponentTexture(pc.motherboard.gpu).sprite);
+        SetDisplayedRamTierAndImage(pc.motherboard.ram.tier, textures.GetComponentTexture(pc.motherboard.ram).sprite);
 
     }
 

@@ -22,7 +22,7 @@ public class OrderManager : MonoBehaviour
     public static OrderManager Instance { get { return _instance; } }
     public Order? Order = null;
 
-    public readonly string PlayerPrefsKey = "CurrentOrder";
+    public const string PlayerPrefsKey = "SavedOrderElement";
 
     void Awake()
     {
@@ -45,7 +45,7 @@ public class OrderManager : MonoBehaviour
     {
         if(ApplyPlayerPrefs() == false)
         {
-            Order = GenerateNewOrder(ExperienceHandler.GetCurrentLevel());
+            Order = GenerateNewOrder();
         }
     }
 
@@ -111,28 +111,30 @@ public class OrderManager : MonoBehaviour
 
     private bool ApplyPlayerPrefs()
     {
-        string jsonOrder = PlayerPrefs.GetString(PlayerPrefsKey);
+        const string noOrderFound = "no order found";
+        string serializedOrderElement = PlayerPrefs.GetString(PlayerPrefsKey, noOrderFound);
 
-        Order parsedOrder = UnityEngine.JsonUtility.FromJson<Order>(jsonOrder);
-
-        Debugger.LogMessage($"parsedOrder: {parsedOrder}");
-
-        if(parsedOrder == null)
+        if(serializedOrderElement == noOrderFound || serializedOrderElement == "")
         {
             return false;
         }
 
-        Order = parsedOrder;
+        SavedElement savedOrderElement = SavedElement.Deserialize(serializedOrderElement);
+        Debugger.LogErrorIf(savedOrderElement.Name != CaseComponent.Name, "Saved Order is not a full PC!");
+
+        CaseComponent pc = (CaseComponent)Components.GetElementByName(savedOrderElement.Name);
+        pc = (CaseComponent)pc.FromSavedElement(savedOrderElement);
+
+        Order = new Order(pc);
         return true;
     }
 
     private void SaveToPlayerPrefs()
     {
-        string jsonOrder = UnityEngine.JsonUtility.ToJson(Order);
+        SavedElement savedOrderElement = Order.PC.ToSavedElement();
+        string serializedOrderElement = savedOrderElement.Serialize();
 
-        Debugger.LogMessage($"jsonOrder: {jsonOrder}");
-
-        PlayerPrefs.SetString(PlayerPrefsKey, jsonOrder);
+        PlayerPrefs.SetString(PlayerPrefsKey, serializedOrderElement);
     }
 
     #region debugging
