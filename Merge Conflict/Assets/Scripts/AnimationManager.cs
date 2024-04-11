@@ -22,13 +22,14 @@ public class AnimationManager : MonoBehaviour
      * - in ParticleSystem Component under "Renderer" have "Sorting Layer ID" set to "Foreground"     
      * - in ParticleSystem Component have "Play on Awake" disabled (also applies to child components)
      */
-    [Header("Merge Animations")]    
+    [Header("Merge Animations")]
     public ParticleSystem addToComponentAnimation;
     public ParticleSystem[] lvlUpAnimations;
 
     [Header("Other Animations")]
     public ParticleSystem trashAnimation;
     public ParticleSystem sellAnimation;
+    public ParticleSystem componentSpawnedOnDeskAnimation;
 
     void Awake()
     {
@@ -48,24 +49,27 @@ public class AnimationManager : MonoBehaviour
             lvlUpAnimations.Length < 3
             || addToComponentAnimation == null
             || trashAnimation == null
-            || sellAnimation == null,
+            || sellAnimation == null
+            || componentSpawnedOnDeskAnimation == null,
             "animation prefabs needs to be set in editor!");
     }
 
     public void PlayMergeAnimation(Vector2 position, Element mergedElement, Element previousElement)
-    {        
+    {
         ParticleSystem mergeAnimation;
-        if(mergedElement.GetType() == previousElement.GetType()
+        if (mergedElement.GetType() == previousElement.GetType()
             && mergedElement.HasComponents() == false
-            && previousElement.HasComponents() == false) 
+            && previousElement.HasComponents() == false)
         {
             // element levels up
             mergeAnimation = lvlUpAnimations[mergedElement.tier - 2];
-
-        } else 
+            AudioManager.Instance.PlayMergeSound();
+        }
+        else
         {
             // element is added to other component
             mergeAnimation = addToComponentAnimation;
+            AudioManager.Instance.PlayCombineComponentsSound();
         }
 
         PlayAnimation(mergeAnimation, position);
@@ -79,6 +83,11 @@ public class AnimationManager : MonoBehaviour
     public void PlayTrashAnimation(Vector2 position)
     {
         PlayAnimation(trashAnimation, position);
+    }
+
+    public void PlayComponentSpawnedOnDeskAnimation(Vector2 position)
+    {
+        PlayAnimation(componentSpawnedOnDeskAnimation, position);
     }
 
     private void PlayAnimation(ParticleSystem particleSystem, Vector2 position)

@@ -10,11 +10,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ElementsMenu : Menu
 {
     public GameObject CardPrefab;
     public GameObject CardsListContentObject;
+    public TextMeshProUGUI actualMoneyText;
 
     private Canvas _elementsmenuCanvas;
     private GameObject[] FoundElementCardObjects;
@@ -39,6 +41,11 @@ public class ElementsMenu : Menu
     }
     #endregion
 
+    void Start()
+    {
+        UpdateActualMoneyText();
+    }
+
     public void OpenMenu()
     {
         CardsListContentObject.SetActive(true);
@@ -47,6 +54,13 @@ public class ElementsMenu : Menu
         InitializeMenu(_elementsmenuCanvas);
         UpdateContentViewport();
         InstantiateCardObjects();
+        UpdateActualMoneyText();
+        UpdatePurchaseButtons();
+    }
+
+    public void UpdateActualMoneyText()
+    {
+        actualMoneyText.text = $"{MoneyHandler.Instance.Money} $";
     }
 
     private void UpdateContentViewport()
@@ -123,6 +137,16 @@ public class ElementsMenu : Menu
         for (int i = 0; i < orderedCardObjects.Count; i++)
         {
             orderedCardObjects[i].SetSiblingIndex(i);
+        }
+    }
+
+    public void UpdatePurchaseButtons()
+    {
+        List<Transform> cardObjects = CardsListContentObject.transform.Cast<Transform>().ToList();
+
+        for (int i = 0; i < cardObjects.Count; i++)
+        {
+            cardObjects[i].GetComponent<CardHandler>().UpdatePrice();
         }
     }
 

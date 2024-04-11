@@ -20,7 +20,7 @@ Description:   Open and close the menu playfield, settings, level, elements, upg
                To get the current state of the menu, call the methode: getMenuVisibility(). It returns true if the menu 
                is opened; otherwise it returns false.
 
-Author(s):     Markus Haubold
+Author(s):     Markus Haubold, Hanno Witzleb
 Date:          2024-03-27
 Version:       V2.0
 TODO:          - /
@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using ExperienceSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
 using TMPro;
 using Unity.VisualScripting;
 
@@ -40,6 +41,7 @@ public class UiManager : MonoBehaviour
     public static UiManager Instance { get { return _instance; } }
 
     //default buttons to orchestrate the menu
+    [Header("Menu Buttons")]
     [SerializeField] private Button _buttonOpenMainmenu;
     [SerializeField] private TextMeshProUGUI _buttonOpenMainMenuText;
     [SerializeField] private Button _buttonOpenSettings;
@@ -52,6 +54,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button _playFirstGame;
 
     //all menus
+    [Header("Menu Canvases")]
     [SerializeField] private Canvas _playfield;
     [SerializeField] private Canvas _uiManagerCanvas;
     [SerializeField] private Canvas _mainmenu;
@@ -64,6 +67,9 @@ public class UiManager : MonoBehaviour
     [SerializeField] private GameObject _creditsContent;
 
 
+    [Header("Other References")]
+    public GameObject[] playFieldSpriteObjects;
+
 
     //mapping buttons to the menu wich they should open
     List<KeyValuePair<string, string>> readableMenuName = new List<KeyValuePair<string, string>>
@@ -73,7 +79,7 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenLevel", "Level"),
         new KeyValuePair<string, string>("ButtonOpenUpgrade", "Upgrade"),
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
-        new KeyValuePair<string, string>("SellingStation", "Level"),
+        new KeyValuePair<string, string>("SellingStation", "SellingStation"),
         new KeyValuePair<string, string>("ButtonOpenIntroduction", "Introduction"),
         new KeyValuePair<string, string>("PlayFirstGame", "Playfield"),
     };
@@ -123,7 +129,7 @@ public class UiManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Button with name {button} not found. Please check if the button exists and is linked to the script UiManager!");
+            Debugger.LogError($"Button with name {button} not found. Please check if the button exists and is linked to the script UiManager!");
         }
     }
 
@@ -131,10 +137,11 @@ public class UiManager : MonoBehaviour
     {
         if (clickedButton == ExitTheGame)
         {
+            SavedElementsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-                        Application.Quit();
+            Application.Quit();
 #endif
             return;
         }
@@ -158,62 +165,44 @@ public class UiManager : MonoBehaviour
                 if (previousOpenedMenu != _mainmenu)
                 {
                     OpenMenu(_mainmenu);
+                    AudioManager.Instance.PlayOpenMenuSound();
                 }
+               
                 else
                 {
                     _playfield.enabled = true;
                     ContinueGame();
+                    AudioManager.Instance.PlayCloseMenuSound();
                 }
                 break;
 
             case "Settings":
                 OpenMenu(_settings);
+                AudioManager.Instance.PlayButtonClickSound();
                 break;
 
             case "Level":
                 OpenMenu(_level);
+                LevelMenu.Instance.OpenMenu();
+                AudioManager.Instance.PlayButtonClickSound();
+                break;
 
-                //#### only for testing ######
-                ExperienceHandler.ResetCurrentPlayerExperience();
-                ExperienceHandler.AddExperiencePoints(30);
-                //############################
-
-                //read dat from level manager
-                int currentLevel = 9;// ExperienceHandler.GetCurrentLevel();
-                int currentXp = ExperienceHandler.GetExperiencePoints();
-                int xpToUnlockNextLevel = ExperienceHandler.NeededXpToUnlockNextLevel(currentLevel);
-                string xpRatioString = $"{currentXp} / {xpToUnlockNextLevel}";
-
-                //#### only for testing ######
-                Order order = OrderGenerator.Instance.GenerateNewOrder(currentLevel); //TODO: move the order generation to another point, here it's only for testing the menu
-                //############################
-
-                //set level and xp values
-                LevelMenu.Instance.SetDisplayedCurrentLevel(currentLevel);
-                LevelMenu.Instance.SetDisplayedNextLevel(currentLevel + 1);
-                LevelMenu.Instance.SetXpRatioCurrentToNextLevel(xpRatioString);
-                LevelMenu.Instance.SetProgressbarValue(currentXp, xpToUnlockNextLevel);
-
-                TextureAtlas textures = TextureAtlas.Instance;
-
-                //set current Tier and image of the ordered component
-                LevelMenu.Instance.SetDisplayedCaseTierAndImage(order.CaseTier, textures.GetComponentTexture(order.PC).sprite);
-                LevelMenu.Instance.SetDisplayedHddTierAndImage(order.HddTier, textures.GetComponentTexture(order.PC.hdd).sprite);
-                LevelMenu.Instance.SetDisplayedPowersupplyTierAndImage(order.PowersupplyTier, textures.GetComponentTexture(order.PC.powersupply).sprite);
-                LevelMenu.Instance.SetDisplayedMotherboardTierAndImage(order.MotherboardTier, textures.GetComponentTexture(order.PC.motherboard).sprite);
-                LevelMenu.Instance.SetDisplayedCpuTierAndImage(order.CpuTier, textures.GetComponentTexture(order.PC.motherboard.cpu).sprite);
-                LevelMenu.Instance.SetDisplayedGpuTierAndImage(order.GpuTier, textures.GetComponentTexture(order.PC.motherboard.gpu).sprite);
-                LevelMenu.Instance.SetDisplayedRamTierAndImage(order.RamTier, textures.GetComponentTexture(order.PC.motherboard.ram).sprite);
-
+            case "SellingStation":
+                OpenMenu(_level);
+                LevelMenu.Instance.OpenMenu();
+                AudioManager.Instance.PlayOpenMenuSound();
                 break;
 
             case "Upgrade":
                 OpenMenu(_upgrade);
+                UpgradeMenu.Instance.OpenMenu();
+                AudioManager.Instance.PlayButtonClickSound();
                 break;
 
             case "Elements":
                 OpenMenu(_elements);
                 ElementsMenu.Instance.OpenMenu();
+                AudioManager.Instance.PlayButtonClickSound();
                 break;
 
             case "Introduction":
@@ -226,7 +215,7 @@ public class UiManager : MonoBehaviour
                 break;
 
             default:
-                Debug.LogWarning("There is no menu with the name: " + menuName.Value);
+                Debugger.LogWarning("There is no menu with the name: " + menuName.Value);
                 break;
         }
 
@@ -239,6 +228,8 @@ public class UiManager : MonoBehaviour
         _currentOpenedMenu = menuCanvas;
 
         isMenuVisible = true;
+
+        SetPlayFieldSpritesVisible(false);
     }
 
     private void CloseAllMenus()
@@ -264,6 +255,8 @@ public class UiManager : MonoBehaviour
         }
 
         isMenuVisible = false;
+
+        SetPlayFieldSpritesVisible(true);
     }
 
     private void HandleMenuButtonText(Canvas currentOpenedMenu)
@@ -283,6 +276,19 @@ public class UiManager : MonoBehaviour
         }
 
         _buttonOpenMainMenuText.text = menuText;
+    }
+
+    private void SetPlayFieldSpritesVisible(bool isVisible)
+    {
+        // Turns off components, else they would render above the menu.
+        // cant just simply set some layer, because components layers change constantly
+        // and UI (Canvas, ...) ist a different render system than SpriteRenderer for Components
+        // This is the easiest method ive found.
+        for (int i = 0; i < playFieldSpriteObjects.Length; i++)
+        {
+            playFieldSpriteObjects[i].GetComponent<SortingGroup>().sortingOrder
+                = isVisible ? playFieldSpriteObjects.Length - i : 0;
+        }
     }
 
     //TODO: refactore this -> we can't stop the game-time because the swiper and the video in the instruction needs the time
