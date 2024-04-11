@@ -127,7 +127,7 @@ public class TextureAtlas : MonoBehaviour
                 break;
 
             default:
-                Debug.LogWarning("There is no matching texture for: " + element);
+                Debugger.LogWarning("There is no matching texture for: " + element);
                 texture = defaultTexture;
                 break;
         }

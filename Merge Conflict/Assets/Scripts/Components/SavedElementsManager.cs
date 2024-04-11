@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
-Name:          PlayerPrefsManager
-Description:   Handles some PlayerPref functions to get and set values to/from PlayerPrefs.
+Name:          SavedElementsManager
+Description:   Handles some SavedElements functions to get and set values to/from PlayerPrefs.
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-04-09
 Version:       V2.0
@@ -59,20 +59,21 @@ public class SavedElementsManager : MonoBehaviour
         GameObject[] componentObjects = GameObject.FindGameObjectsWithTag(Tags.Component.ToString());
 
         int index = 0;
-
         foreach (GameObject componentObject in componentObjects)
         {
             componentObject.TryGetComponent(out ComponentHandler ComponentHandler);
             Element element = ComponentHandler.element;
 
-            if (element != null)
+            if(element == null
+                || ComponentHandler == null
+                || ComponentHandler.ComponentMovement== null
+                || ComponentHandler.ComponentMovement.IsComponentOnDesk() == false)
             {
-                if (ComponentHandler != null && ComponentHandler.ComponentMovement != null && ComponentHandler.ComponentMovement.IsPositionOnDesk(componentObject.GetComponent<RectTransform>().anchoredPosition))
-                {
-                    PlayerPrefs.SetString(GetPlayerPrefsKeyWithIndex(index), element.ToSavedElement().Serialize());
-                    index++;
-                }
+                continue;
             }
+
+            PlayerPrefs.SetString(GetPlayerPrefsKeyWithIndex(index), element.ToSavedElement().Serialize());
+            index++;
         }
 
         PlayerPrefs.Save();
@@ -80,7 +81,7 @@ public class SavedElementsManager : MonoBehaviour
 
     private void ClearSavedElementPlayerPrefs()
     {
-        string noElementFound = "no element";
+        const string noElementFound = "no element";
         int index = 0;        
 
         string savedElement;
@@ -121,10 +122,12 @@ public class SavedElementsManager : MonoBehaviour
             savedElement = PlayerPrefs.GetString(GetPlayerPrefsKeyWithIndex(index), noElementFound);
             index++;
 
-            if (savedElement != noElementFound)
+            if (savedElement == noElementFound)
             {
-                savedElements.Add(SavedElement.Deserialize(savedElement));
+                continue;
             }
+            
+            savedElements.Add(SavedElement.Deserialize(savedElement));            
 
         } while (savedElement != noElementFound);
 

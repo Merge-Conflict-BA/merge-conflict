@@ -15,18 +15,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class JSONElement {
+public class SavedElement {
     public string Name;
     public int Tier; // also used for trashVariant
 
-    public List<JSONElement> Children;
+    public List<SavedElement> Children;
 
-    public JSONElement(string name, int tier, List<JSONElement> children = null) {
+    public SavedElement(string name, int tier, List<SavedElement> children = null) {
         Name = name;
         Tier = tier;
 
         if(children == null){            
-            Children = new List<JSONElement>();
+            Children = new List<SavedElement>();
         } else {
             Children = children;
         }
@@ -61,21 +61,20 @@ public class JSONElement {
             return element;
         }
 
-        foreach(JSONElement child in Children){
+        foreach(SavedElement child in Children){
             element += child.Serialize(childLevel + 1);
         }
 
         return element;
     }
 
-    // Example JSON: "Case,1|HDD,1|PowerSupply,1|Motherboard,1?CPU,1?GPU,1?RAM,1"    
-
-    public static JSONElement Deserialize(string element, int childLevel = 0){
+    // Example SavedElement: "Case,1|HDD,1|PowerSupply,1|Motherboard,1?CPU,1?GPU,1?RAM,1"    
+    public static SavedElement Deserialize(string element, int childLevel = 0){
         string[] elements = element.Split(GetChildSeperator(childLevel + 1));
 
         string[] parentElementField = elements[0].Split(GetFieldSeperator());
 
-        JSONElement savedElement = new(parentElementField[0], int.Parse(parentElementField[1]));
+        SavedElement savedElement = new(parentElementField[0], int.Parse(parentElementField[1]));
 
         if(elements.Length == 1){
             return savedElement;
@@ -92,7 +91,7 @@ public class JSONElement {
     {
         string s = $"{Name}, {Tier}";
 
-        foreach (JSONElement child in Children)
+        foreach (SavedElement child in Children)
         {
             s += $"-child: {child}\n";
         }

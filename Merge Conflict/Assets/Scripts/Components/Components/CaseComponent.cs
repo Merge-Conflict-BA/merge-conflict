@@ -15,7 +15,6 @@ using UnityEngine;
 
 public class CaseComponent : Element, IComponent
 {
-
     public MBComponent? motherboard;
     public PowersupplyComponent? powersupply;
     public HDDComponent? hdd;

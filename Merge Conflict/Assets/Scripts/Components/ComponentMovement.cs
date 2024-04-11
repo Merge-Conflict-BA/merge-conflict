@@ -346,6 +346,11 @@ public class ComponentMovement : MonoBehaviour
         }
     }
 
+    public bool IsComponentOnDesk()
+    {
+        return IsPositionOnDesk(GetCanvasPosition());
+    }
+
     public bool IsPositionOnDesk(Vector3 position)
     {
         float marginX = _marginToDeskBorder + _size.x;
