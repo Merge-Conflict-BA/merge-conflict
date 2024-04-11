@@ -172,6 +172,7 @@ public class UiManager : MonoBehaviour
                 {
                     OpenMenu(_mainmenu);
                     AudioManager.Instance.PlayOpenMenuSound();
+                    Introduction.Instance.ResetToFirstScreen(); //set swiper back to first screen
                 }
 
                 else
@@ -322,7 +323,7 @@ public class UiManager : MonoBehaviour
         if (firstAppStartDone == 1)
         {
             _finishedTutorialPopup.SetActive(false);
-            _creditsContent.SetActive(true); 
+            _creditsContent.SetActive(true);
         }
     }
 
