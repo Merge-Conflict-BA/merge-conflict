@@ -4,7 +4,7 @@ Description:   Elements data structure for the CPU.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -15,8 +15,9 @@ using UnityEngine;
 
 public class CPUComponent : Element, IComponent
 {
+    public static string Name = "CPU";
 
-    public CPUComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+    public CPUComponent(int tier) : base(tier, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -24,9 +25,9 @@ public class CPUComponent : Element, IComponent
         if (element is CPUComponent otherCPU)
         {
 
-            if ((this.level == otherCPU.level) && this.level < 4)
+            if ((this.tier == otherCPU.tier) && this.tier < 4)
             {
-                this.level++;
+                this.tier++;
                 return this;
             }
         }
@@ -34,8 +35,8 @@ public class CPUComponent : Element, IComponent
         return null;
     }
 
-    public CPUComponent Clone()
+    public override ComponentData GetComponentData()
     {
-        return new CPUComponent(level, trashValue, salesValue);
+        return Components.CpuComponentData;
     }
 }

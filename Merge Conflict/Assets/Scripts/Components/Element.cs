@@ -4,7 +4,7 @@ Description:   Elements data structure.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -15,30 +15,41 @@ using UnityEngine;
 
 public class Element
 {
-    private int _level;
-    public int level
+    private int _tier;
+    public int tier
     {
-        get { return _level; }
-        set { _level = Mathf.Clamp(value, 1, 4); }
-    }
-    public readonly int trashValue;
-    public readonly int salesValue;
+        get { return _tier; }
+        set { _tier = Mathf.Clamp(value, 1, 4); }
+    }    
 
-    public Element(int level, int trashValue, int salesValue)
-    {
-        this.level = level;
-        this.trashValue = trashValue;
-        this.salesValue = salesValue;
-    }
+    public readonly string name;
 
-    public virtual int GetTrashValue()
+    public Element(int tier, string name)
     {
-        return trashValue;
+        this.tier = tier;
+        this.name = name;
     }
 
-    public virtual int GetSalesValue()
+    public virtual int GetTrashPrice()
     {
-        return salesValue;
+        return GetComponentData().TrashPrices[tier];
+    }
+
+    public virtual int GetSalesPrice()
+    {
+        return GetComponentData().SalePrices[tier];
+    }
+
+    public virtual int GetSalesXP()
+    {
+        return GetComponentData().SaleXP[tier];
+    }
+
+    // Is used to decide if a merging lvls up a component or adds one component to another.
+    // meant for CaseComponent and MBComponent to override. 
+    public virtual bool HasComponents()
+    {
+        return false;
     }
 
     public GameObject InstantiateGameObjectAndAddTexture(Vector2 position)
@@ -62,12 +73,32 @@ public class Element
         // instantiate a child GameObject for each subcomponent in the element to layer its sprite over the texture of the main element
         foreach (ElementTexture slotTexture in listOfSlotComponentTextures)
         {
-            GameObject slotComponentObject = ComponentSpawner.Instance.SpawnSlotComponent(position, componentObject, this);
+            GameObject slotComponentObject = ComponentSpawner.Instance.SpawnSlotComponent(componentObject, this);
 
             slotComponentObject = slotTexture.ApplyTexture(slotComponentObject);
             slotComponentObject.GetComponent<SpriteRenderer>().sortingOrder = componentObject.GetComponent<SpriteRenderer>().sortingOrder + 1;
+            // this is to counteract the repositioning of the (anchoredPosition = Vector2.zero), as the SubComponents now need an offset
+            if (this is CaseComponent)
+            {
+                slotComponentObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(2.5f, 2.5f);
+            }
+            if (this is MBComponent)
+            {
+                slotComponentObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(2.25f, 3f);
+            }
         }
 
         return componentObject;
+    }
+
+    public virtual bool IsEqual(Element element)
+    {
+        return GetType() == element.GetType()
+            && tier == element.tier;
+    }
+
+    public virtual ComponentData GetComponentData()
+    {
+        return Components.EmptyComponentData;
     }
 }

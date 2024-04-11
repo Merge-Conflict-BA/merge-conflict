@@ -3,33 +3,36 @@ Name:          ComponentSpawner
 Description:   Spawn the given object at the conveor-belt-object or at an custom postion
 Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
 Date:          2024-02-28
-Version:       V1.2
+Version:       V1.3
 TODO:          - 
 **********************************************************************************************************************/
 
-using ConveyorBelt;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using System.Collections;
 
 public class ComponentSpawner : MonoBehaviour
 {
     private static ComponentSpawner _instance;
     public static ComponentSpawner Instance { get { return _instance; } }
 
-    //define all spawnable components here!
+    [Header("Prefabs")]
     public GameObject componentPrefab;
     public GameObject subComponentPrefab;
-    private Vector3 spawnPositionOnBelt;
 
-    public GameObject ConveyorBeltGameObject;
+    [Header("GameObject Reference")]
+    public GameObject spawnPointObject;
+    public GameObject componentsHolderObject;
+
+    // Spawn Settings    
+    private const float initialSpawnDelaySeconds = 0f;  
 
     [Header("Idle Movement of components")]
     public bool SamePropertiesForEveryComponent = false;
     public float MinDistance = 30;
     public float MaxDistance = 70;
     public float MovingSpeed = 50;
+    public float ReturningMovingSpeed = 2000;
     public float MinSecondsWithoutMoving = 2;
     public float MaxSecondsWithoutMoving = 4;
     public float TimeToStartMovement = 2;
@@ -51,23 +54,31 @@ public class ComponentSpawner : MonoBehaviour
     void Start()
     {
         // check if componentPrefab has ComponentHandler
-        if (componentPrefab.TryGetComponent(out ComponentHandler _) == false)
-        {
-            Debugger.LogError("ComponentSpawner: componentPrefab does not have ComponentHandler attached!!!");
-        }
+        Debugger.LogErrorIf(
+            componentPrefab.TryGetComponent(out ComponentHandler _) == false,
+            "ComponentSpawner: componentPrefab does not have ComponentHandler attached!!!");
 
-        // set position of spawning (in the center of the conveyor belt)
-        ConveyorBelt.ConveyorBelt conveyorBelt = ConveyorBeltGameObject.GetComponent<ConveyorBelt.ConveyorBelt>();
-        var prefabSize = conveyorBelt.PrefabConveyorBeltVertical.GetComponent<RectTransform>().rect.size;
+        Debugger.LogErrorIf(
+            spawnPointObject == null,
+            "ComponentSpawner: No Reference SpawnPoint GameObject has been set!");
 
-        spawnPositionOnBelt = new Vector3(prefabSize.x / 2, Screen.height + prefabSize.y, 0);
+        Debugger.LogErrorIf(
+            componentsHolderObject == null,
+            "ComponentSpawner: No componentsHolderObject GameObject has been set!");
 
-        // Current System of spawning: each 4 seconds a random component is spawning
-        InvokeRepeating("SpawnRandomComponentOnBelt", 0f, 4f);
+        // set position of spawnPoint
+        spawnPointObject.GetComponent<RectTransform>().anchorMin = Vector2.zero;
+        spawnPointObject.GetComponent<RectTransform>().anchorMax = Vector2.zero;
+        spawnPointObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(
+            50,
+            transform.parent.GetComponent<RectTransform>().rect.height + 100);
+        
+        StartCoroutine(SpawnOnBeltInInterval(initialSpawnDelaySeconds));
     }
 
     void Update()
     {
+#if UNITY_EDITOR
         //test the function -> spawn object on current mouse position
         //TODO: delete this, if the gamelogic for the spawning is implemented!!!
         if (Input.GetKeyDown(KeyCode.S))
@@ -76,15 +87,33 @@ public class ComponentSpawner : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(spawnPositionOnBelt);
+            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetBeltSpawnPosition());
+        }
+#endif
+    }
+
+    // copied from: https://gamedev.stackexchange.com/questions/139736/how-can-i-change-invokerepeating-time-in-unity
+    // after every spawn, this Coroutine reevaluates the current Interval
+    private IEnumerator SpawnOnBeltInInterval(float initialDelaySeconds)
+    {
+        yield return new WaitForSeconds(initialDelaySeconds);
+        while (true)
+        {
+            SpawnRandomComponentOnBelt();
+            Debugger.LogMessage("Spawned new Component on Belt");
+
+            int currentInterval = Upgrades.SpawnIntervalUpgrade.GetCurrentSecondsInterval();
+            yield return new WaitForSeconds(currentInterval);
         }
     }
 
     public GameObject SpawnComponent(Vector2 spawnPosition, Element element)
     {
-        GameObject componentObject = Instantiate(componentPrefab, spawnPosition, Quaternion.Euler(0, 0, 0), transform.parent);
-        componentObject.name = $"{element.GetType()}_lvl_{element.level}_merged";
+        GameObject componentObject = Instantiate(componentPrefab, transform.parent.position, Quaternion.identity, componentsHolderObject.transform);
+        componentObject.GetComponent<RectTransform>().anchoredPosition = spawnPosition;
+        componentObject.name = $"{element.GetType()}_lvl_{element.tier}_merged";
         componentObject.tag = Tags.Component.ToString();
+
         ComponentHandler componentHandler = componentObject.GetComponent<ComponentHandler>();
         componentHandler.element = element;
 
@@ -93,31 +122,63 @@ public class ComponentSpawner : MonoBehaviour
             bool success = componentObject.TryGetComponent(out ComponentMovement componentMovement);
             if (success)
             {
-                componentMovement.InitializeProperties(MinDistance, MaxDistance, MovingSpeed, MinSecondsWithoutMoving, MaxSecondsWithoutMoving, TimeToStartMovement, MaxScaleFactor);
+                componentMovement.InitializeProperties(MinDistance, MaxDistance, MovingSpeed, ReturningMovingSpeed, MinSecondsWithoutMoving, MaxSecondsWithoutMoving, TimeToStartMovement, MaxScaleFactor);
             }
         }
-        
+
         // move Component in Front of the Conveyor Belt
         componentObject.transform.position += new Vector3(0, 0, -1);
+        
+        // Update List with FoundElements to create a new card in the ElementsMenu if necessary
+        FoundElementsHandler.Instance.CheckIfElementIsNew(element);
 
         return componentObject;
     }
 
-    public GameObject SpawnSlotComponent(Vector2 spawnPosition, GameObject parentComponentObject, Element element)
+    public GameObject SpawnSlotComponent(GameObject parentComponentObject, Element element)
     {
         GameObject slotComponentObject = Instantiate(subComponentPrefab);
         slotComponentObject.name = $"{element.GetType()}_child";
         slotComponentObject.tag = Tags.SubComponent.ToString();
-        slotComponentObject.transform.position = spawnPosition;
         slotComponentObject.transform.SetParent(parentComponentObject.transform, true);
-        slotComponentObject.AddComponent<SpriteRenderer>();
-        slotComponentObject.AddComponent<RectTransform>();
 
         return slotComponentObject;
     }
 
     public void SpawnRandomComponentOnBelt()
     {
-        Components.GetRandomElement().InstantiateGameObjectAndAddTexture(spawnPositionOnBelt);
+        Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetBeltSpawnPosition());
+    }
+
+    public void SpawnRandomComponentOnRandomPositionOnDesk(float delaySeconds = 0.0f)
+    {
+        StartCoroutine(SpawnRandomComponentOnRandomPositionOnDeskWithDelay(delaySeconds));
+    }
+
+    private IEnumerator SpawnRandomComponentOnRandomPositionOnDeskWithDelay(float delaySeconds)
+    {
+        Vector2 randomPosition = GetRandomPositionOnDesk();
+        AnimationManager.Instance.PlayComponentSpawnedOnDeskAnimation(randomPosition);
+
+        yield return new WaitForSeconds(delaySeconds);
+        Components.GetRandomElement().InstantiateGameObjectAndAddTexture(randomPosition);
+    }
+
+    private Vector2 GetBeltSpawnPosition()
+    {
+        return spawnPointObject.GetComponent<RectTransform>().anchoredPosition;
+    }
+    
+    public Vector2 GetRandomPositionOnDesk()
+    {
+        GameObject deskObject = GameObject.FindWithTag("desk");
+        RectTransform rectTransform = deskObject.GetComponent<RectTransform>();
+        Vector2 anchoredPosition = rectTransform.anchoredPosition;
+        int padding = 100;
+
+        float x = Random.Range(anchoredPosition.x + padding, anchoredPosition.x + rectTransform.rect.width - padding);
+        float y = Random.Range(anchoredPosition.y + padding, anchoredPosition.y + rectTransform.rect.height - padding);
+
+        return new Vector2(x, y);
     }
 }

@@ -4,7 +4,7 @@ Description:   Elements data structure for the powersupply.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -15,8 +15,9 @@ using UnityEngine;
 
 public class PowersupplyComponent : Element, IComponent
 {
+    public static string Name = "PowerSupply";
 
-    public PowersupplyComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+    public PowersupplyComponent(int tier) : base(tier, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -24,9 +25,9 @@ public class PowersupplyComponent : Element, IComponent
         if (element is PowersupplyComponent otherPowersupply)
         {
 
-            if ((this.level == otherPowersupply.level) && this.level < 4)
+            if ((this.tier == otherPowersupply.tier) && this.tier < 4)
             {
-                this.level++;
+                this.tier++;
                 return this;
             }
         }
@@ -34,8 +35,8 @@ public class PowersupplyComponent : Element, IComponent
         return null;
     }
 
-    public PowersupplyComponent Clone()
+    public override ComponentData GetComponentData()
     {
-        return new PowersupplyComponent(level, trashValue, salesValue);
+        return Components.PowerSupplyComponentData;
     }
 }

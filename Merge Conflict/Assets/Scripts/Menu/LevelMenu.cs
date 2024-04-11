@@ -1,63 +1,221 @@
+/**********************************************************************************************************************
+Name:          LevelMenu
+Description:   Link the given data to the GameObjects from the Canvas to display the level menu.
+Author(s):     Markus Haubold
+Date:          2024-03-27
+Version:       V1.0
+TODO:          - /
+**********************************************************************************************************************/
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ExperienceSystem;
 
 public class LevelMenu : Menu
 {
     private static LevelMenu _instance;
-    private TextMeshProUGUI _levelTextfield;
-    private TextMeshProUGUI _xpTextfield;
+    public static LevelMenu Instance { get { return _instance; } }
+    public Canvas levelmenuCanvas; //connect to the level menu canvas
+    private TextMeshProUGUI _currentLevelValueTextfield;
+    const string CurrentLevelValueObjectName = "CurrentLevelValue";
+    private TextMeshProUGUI _xpRatioCurrentToNextLevel;
+    private TextMeshProUGUI _nextLevelValueTextfield;
+    private TextMeshProUGUI _caseTierValue;
+    private TextMeshProUGUI _cpuTierValue;
+    private TextMeshProUGUI _gpuTierValue;
+    private TextMeshProUGUI _motherboardTierValue;
+    private TextMeshProUGUI _ramTierValue;
+    private TextMeshProUGUI _hddTierValue;
+    private TextMeshProUGUI _powersupplyTierValue;
     private Image _levelProgressbar;
-    private Canvas _levelmenuCanvas;
 
+    //images of the ordered components
+    private Image _orderedCaseImage;
+    private Image _orderedHddImage;
+    private Image _orderedMotherboardImage;
+    private Image _orderedPowersupplyImage;
+    private Image _orderedCpuImage;
+    private Image _orderedGpuImage;
+    private Image _orderedRamImage;
 
-    public LevelMenu()
+    const string EmptyProgressbarObjectName = "Progressbar_empty";
+    const string FilledProgressbarObjectName = "Progressbar_filled";
+    const string NextLevelValueObjectName = "NextLevelValue";
+    const string XpRatioCurrentToNextLevelObjectName = "XpRatio";
+    const string CaseTierValueObjectName = "CaseTierValue";
+    const string CpuTierValueObjectName = "CpuTierValue";
+    const string GpuTierValueObjectName = "GpuTierValue";
+    const string MotherboardTierValueObjectName = "MotherboardTierValue";
+    const string RamTierValueObjectName = "RamTierValue";
+    const string HddTierValueObjectName = "HddTierValue";
+    const string PowerSupplyTierValueObjectName = "PowersupplyTierValue";
+
+    const string OrderedCaseImageObjectName = "Case";
+    const string OrderedCpuImageObjectName = "CPU";
+    const string OrderedGpuImageObjectName = "GPU";
+    const string OrderedMotherboardImageObjectName = "Motherboard";
+    const string OrderedPowersupplyImageObjectName = "Powersupply";
+    const string OrderedRamImageObjectName = "RAM";
+    const string OrderedHddImageObjectName = "HDD";
+
+    private void Awake()
     {
-        _levelmenuCanvas = FindCanvasForMenu("Level");
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            InitializeMenu(levelmenuCanvas);
+            _currentLevelValueTextfield = GetComponentbyObjectName<TextMeshProUGUI>(CurrentLevelValueObjectName);
+            _nextLevelValueTextfield = GetComponentbyObjectName<TextMeshProUGUI>(NextLevelValueObjectName);
+            _xpRatioCurrentToNextLevel = GetComponentbyObjectName<TextMeshProUGUI>(XpRatioCurrentToNextLevelObjectName);
+            _caseTierValue = GetComponentbyObjectName<TextMeshProUGUI>(CaseTierValueObjectName);
+            _cpuTierValue = GetComponentbyObjectName<TextMeshProUGUI>(CpuTierValueObjectName);
+            _gpuTierValue = GetComponentbyObjectName<TextMeshProUGUI>(GpuTierValueObjectName);
+            _motherboardTierValue = GetComponentbyObjectName<TextMeshProUGUI>(MotherboardTierValueObjectName);
+            _ramTierValue = GetComponentbyObjectName<TextMeshProUGUI>(RamTierValueObjectName);
+            _hddTierValue = GetComponentbyObjectName<TextMeshProUGUI>(HddTierValueObjectName);
+            _powersupplyTierValue = GetComponentbyObjectName<TextMeshProUGUI>(PowerSupplyTierValueObjectName);
+            _levelProgressbar = GetComponentbyObjectName<Image>(EmptyProgressbarObjectName);
+            
+            //ordered component images
+            _orderedCaseImage = GetComponentbyObjectName<Image>(OrderedCaseImageObjectName);
+            _orderedHddImage = GetComponentbyObjectName<Image>(OrderedHddImageObjectName);
+            _orderedMotherboardImage = GetComponentbyObjectName<Image>(OrderedMotherboardImageObjectName);
+            _orderedPowersupplyImage = GetComponentbyObjectName<Image>(OrderedPowersupplyImageObjectName);
+            _orderedCpuImage = GetComponentbyObjectName<Image>(OrderedCpuImageObjectName);
+            _orderedGpuImage = GetComponentbyObjectName<Image>(OrderedGpuImageObjectName);
+            _orderedRamImage = GetComponentbyObjectName<Image>(OrderedRamImageObjectName);
 
-        InitializeMenu(_levelmenuCanvas);
-        _levelTextfield = GetComponentByName<TextMeshProUGUI>("CurrentLevelValue");
-        _xpTextfield = GetComponentByName<TextMeshProUGUI>("CurrentXpValue");
-        _levelProgressbar = GetComponentByName<Image>("Progressbar_empty");
+            _instance = this;
+        }
     }
 
-    public static LevelMenu GetSingleInstance()
+    public void OpenMenu()
     {
-        if (_instance == null)
-        {
-            _instance = new LevelMenu();
-        }
+        //#### only for testing ######
+        //ExperienceHandler.ResetCurrentPlayerExperience();
+        //ExperienceHandler.AddExperiencePoints(30);
+        //############################
 
-        return _instance;
+        //read dat from level manager
+        int currentLevel = ExperienceHandler.GetCurrentLevel();
+        int currentXp = ExperienceHandler.GetExperiencePointsInCurrentLevel();
+        int xpToUnlockNextLevel = ExperienceHandler.NeededXpToUnlockNextLevel(currentLevel);
+        string xpRatioString = $"{currentXp} / {xpToUnlockNextLevel}";
+
+        Order? order = OrderGenerator.Instance.Order;
+        Debugger.LogErrorIf(order == null, "Order is null, cant populate Level Screen!!");
+
+        //set level and xp values
+        SetDisplayedCurrentLevel(currentLevel);
+        SetDisplayedNextLevel(currentLevel + 1);
+        SetXpRatioCurrentToNextLevel(xpRatioString);
+        SetProgressbarValue(currentXp, xpToUnlockNextLevel);
+
+        TextureAtlas textures = TextureAtlas.Instance;
+
+        //set current Tier and image of the ordered component
+        SetDisplayedCaseTierAndImage(order.CaseTier, textures.GetComponentTexture(order.PC).sprite);
+        SetDisplayedHddTierAndImage(order.HddTier, textures.GetComponentTexture(order.PC.hdd).sprite);
+        SetDisplayedPowersupplyTierAndImage(order.PowersupplyTier, textures.GetComponentTexture(order.PC.powersupply).sprite);
+        SetDisplayedMotherboardTierAndImage(order.MotherboardTier, textures.GetComponentTexture(order.PC.motherboard).sprite);
+        SetDisplayedCpuTierAndImage(order.CpuTier, textures.GetComponentTexture(order.PC.motherboard.cpu).sprite);
+        SetDisplayedGpuTierAndImage(order.GpuTier, textures.GetComponentTexture(order.PC.motherboard.gpu).sprite);
+        SetDisplayedRamTierAndImage(order.RamTier, textures.GetComponentTexture(order.PC.motherboard.ram).sprite);
+
     }
 
     public string GetDisplayedCurrentLevel()
     {
-        return _levelTextfield.text;
+        return _currentLevelValueTextfield.text;
     }
 
-    public void SetDisplayedCurrentLevel(int level)
+    private void SetDisplayedCurrentLevel(int level)
     {
-        _levelTextfield.text = level.ToString();
+        _currentLevelValueTextfield.text = level.ToString();
     }
 
-    public string GetDisplayedCurrentXp()
+    public string GetDisplayeNextLevel()
     {
-        return _xpTextfield.text;
+        return _nextLevelValueTextfield.text;
     }
 
-    public void SetDisplayedCurrentXp(int xp)
+    private void SetDisplayedNextLevel(int nextLevel)
     {
-        _xpTextfield.text = xp.ToString();
+        _nextLevelValueTextfield.text = nextLevel.ToString();
     }
 
-    public void SetProgressbarValue(float level)
+    public string GetXpRatioCurrentToNextLevel()
     {
-        Transform childimageTransform = _levelProgressbar.transform.Find("Progressbar_filled");
-        Image progressbar = childimageTransform.GetComponent<Image>();
-        
-        Debugger.LogMessage("pb: " + progressbar.name);
-        double scaledLevel = level * 0.1;
-        progressbar.fillAmount = (float)scaledLevel;
+        return _xpRatioCurrentToNextLevel.text;
+    }
+
+    private void SetXpRatioCurrentToNextLevel(string currentXpSlashXpToNextLevel)
+    {
+        _xpRatioCurrentToNextLevel.text = currentXpSlashXpToNextLevel;
+    }
+
+    private void SetDisplayedCaseTierAndImage(int caseTier, Sprite orderedCaseSprite)
+    {
+        _caseTierValue.text = caseTier.ToString();
+        _orderedCaseImage.sprite = orderedCaseSprite;
+    }
+
+    private void SetDisplayedCpuTierAndImage(int cpuTier, Sprite orderedCpuSprite)
+    {
+        _cpuTierValue.text = cpuTier.ToString();
+        _orderedCpuImage.sprite = orderedCpuSprite;
+    }
+
+    private void SetDisplayedGpuTierAndImage(int gpuTier, Sprite orderedGpuSprite)
+    {
+        _gpuTierValue.text = gpuTier.ToString();
+        _orderedGpuImage.sprite = orderedGpuSprite;
+    }
+
+    private void SetDisplayedMotherboardTierAndImage(int motherTier, Sprite orderedMotherboardSprite)
+    {
+        _motherboardTierValue.text = motherTier.ToString();
+        _orderedMotherboardImage.sprite = orderedMotherboardSprite;
+    }
+
+    private void SetDisplayedRamTierAndImage(int ramTier, Sprite orderedRamSprite)
+    {
+        _ramTierValue.text = ramTier.ToString();
+        _orderedRamImage.sprite = orderedRamSprite;
+    }
+
+    private void SetDisplayedHddTierAndImage(int hddTier, Sprite orderedHddSprite)
+    {
+        _hddTierValue.text = hddTier.ToString();
+        _orderedHddImage.sprite = orderedHddSprite;
+    }
+
+    private void SetDisplayedPowersupplyTierAndImage(int powerTier, Sprite orderedPowersupplySprite)
+    {
+        _powersupplyTierValue.text = powerTier.ToString();
+        _orderedPowersupplyImage.sprite = orderedPowersupplySprite;
+    }
+
+    private void SetProgressbarValue(int currentXp, int xpToNextLevel)
+    {
+        /*
+         * the progressbar is an overlay of 2 images: at the groundlayer there is an image of an 
+         * empty progressbar; on top of it, there is an image with the filled progressbar from which 
+         * we can control the visbile parts
+        */
+
+        /*
+         * find the GameObject which contains the image from the filled progressbar
+         * if we have it, we can set the the value of the visible part of the image (=fillAmount)
+        */
+        Transform filledImage = _levelProgressbar.transform.Find(FilledProgressbarObjectName);
+        Image progressbar = filledImage.GetComponent<Image>();
+
+        //normalized progressbar: 0xp => 0 | xpToNextLevel => 1
+        float normalizedXp = Mathf.Clamp01(currentXp / (float)xpToNextLevel);
+        progressbar.fillAmount = normalizedXp;
     }
 }

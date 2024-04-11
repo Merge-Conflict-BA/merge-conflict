@@ -21,15 +21,17 @@ Description:   Open and close the menu playfield, settings, level, elements, upg
                is opened; otherwise it returns false.
 
 Author(s):     Markus Haubold
-Date:          2024-02-19
-Version:       V1.1 
+Date:          2024-03-27
+Version:       V2.0
 TODO:          - /
 **********************************************************************************************************************/
 
-using System.Collections;
 using System.Collections.Generic;
+using ExperienceSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
+using TMPro;
 
 public class UiManager : MonoBehaviour
 {
@@ -38,38 +40,45 @@ public class UiManager : MonoBehaviour
     public static UiManager Instance { get { return _instance; } }
 
     //default buttons to orchestrate the menu
-    [SerializeField] private Button buttonOpenMainmenu;
-    [SerializeField] private Button buttonCloseMainmenu;
-    [SerializeField] private Button buttonOpenSettings;
-    [SerializeField] private Button buttonOpenLevel;
-    [SerializeField] private Button buttonOpenUpgrade;
-    [SerializeField] private Button buttonOpenElements;
-    [SerializeField] private Button buttonExitGame;
+    [Header("Menu Buttons")]
+    [SerializeField] private Button _buttonOpenMainmenu;
+    [SerializeField] private TextMeshProUGUI _buttonOpenMainMenuText;
+    [SerializeField] private Button _buttonOpenSettings;
+    [SerializeField] private Button _buttonOpenLevel;
+    [SerializeField] private Button _buttonOpenUpgrade;
+    [SerializeField] private Button _buttonOpenElements;
+    [SerializeField] private Button _buttonExitGame;
+    [SerializeField] private Button _buttonSellingStation;
 
     //all menus
-    [SerializeField] private Canvas Playfield;
-    [SerializeField] private Canvas UiManagerCanvas;
-    [SerializeField] private Canvas Mainmenu;
-    [SerializeField] private Canvas Settings;
-    [SerializeField] private Canvas Level;
-    [SerializeField] private Canvas Upgrade;
-    [SerializeField] private Canvas Elements;
+    [Header("Menu Canvases")]
+    [SerializeField] private Canvas _playfield;
+    [SerializeField] private Canvas _uiManagerCanvas;
+    [SerializeField] private Canvas _mainmenu;
+    [SerializeField] private Canvas _settings;
+    [SerializeField] private Canvas _level;
+    [SerializeField] private Canvas _upgrade;
+    [SerializeField] private Canvas _elements;
+
+    [Header("Other References")]
+    public GameObject componentsHolderObject;
+
 
     //mapping buttons to the menu wich they should open
     List<KeyValuePair<string, string>> readableMenuName = new List<KeyValuePair<string, string>>
     {
         new KeyValuePair<string, string>("ButtonOpenMainmenu", "Mainmenu"),
-        new KeyValuePair<string, string>("ButtonCloseMainmenu", "CloseMenu"),
         new KeyValuePair<string, string>("ButtonOpenSettings", "Settings"),
         new KeyValuePair<string, string>("ButtonOpenLevel", "Level"),
         new KeyValuePair<string, string>("ButtonOpenUpgrade", "Upgrade"),
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
+        new KeyValuePair<string, string>("SellingStation", "SellingStation"),
     };
 
-    const Canvas NO_MENU_OPENED = null;
-    const string EXIT_GAME = "ButtonExitGame";
+    const Canvas NoMenuOpened = null;
+    const string ExitTheGame = "ButtonExitGame";
 
-    private Canvas currentOpenedMenu;
+    private Canvas _currentOpenedMenu = NoMenuOpened;
     public bool isMenuVisible { get; private set; }
 
     void Awake()
@@ -85,59 +94,53 @@ public class UiManager : MonoBehaviour
         }
 
         //set default menu states 
-        UiManagerCanvas.enabled = true;
-        Mainmenu.enabled = false;
-        Settings.enabled = false;
-        Level.enabled = false;
-        Upgrade.enabled = false;
-        Elements.enabled = false;
+        _uiManagerCanvas.enabled = true;
+        CloseAllMenus();
+        _playfield.enabled = true;
 
         //setup eventlisteners for all buttons
-        setupButtonListener(buttonOpenMainmenu);
-        setupButtonListener(buttonCloseMainmenu);
-        setupButtonListener(buttonOpenSettings);
-        setupButtonListener(buttonOpenLevel);
-        setupButtonListener(buttonOpenUpgrade);
-        setupButtonListener(buttonOpenElements);
-        setupButtonListener(buttonExitGame);
+        SetupButtonListener(_buttonOpenMainmenu);
+        SetupButtonListener(_buttonOpenSettings);
+        SetupButtonListener(_buttonOpenLevel);
+        SetupButtonListener(_buttonOpenUpgrade);
+        SetupButtonListener(_buttonOpenElements);
+        SetupButtonListener(_buttonExitGame);
+        SetupButtonListener(_buttonSellingStation);
     }
 
-    private void setupButtonListener(Button button)
+    private void SetupButtonListener(Button button)
     {
         if (button != null)
         {
-            button.onClick.AddListener(() => handleButtonClick(button.name));
+            button.onClick.AddListener(() => HandleButtonClick(button.name));
         }
         else
         {
-            Debug.LogError($"Button with name {button} not found. Please check if the button exists and ist linkt to the script UiManager!");
+            Debug.LogError($"Button with name {button} not found. Please check if the button exists and is linked to the script UiManager!");
         }
     }
 
-    private void handleButtonClick(string clickedButton)
+    private void HandleButtonClick(string clickedButton)
     {
-        if (clickedButton == EXIT_GAME)
+        if (clickedButton == ExitTheGame)
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
-                        Application.Quit();
+            Application.Quit();
 #endif
             return;
         }
 
-        switchMenu(clickedButton);
+        SwitchMenu(clickedButton);
     }
 
-    private void switchMenu(string requestedMenu)
+    private void SwitchMenu(string requestedMenu)
     {
-        if (currentOpenedMenu == NO_MENU_OPENED)
-        {
-            currentOpenedMenu = Mainmenu;
-        }
+        Canvas previousOpenedMenu = _currentOpenedMenu;
 
-        //close current opened menu
-        currentOpenedMenu.enabled = false;
+        PauseGame();
+        CloseAllMenus();
 
         //open requested menu with usage of the mapping
         KeyValuePair<string, string> menuName = readableMenuName.Find(pair => pair.Key == requestedMenu);
@@ -145,50 +148,128 @@ public class UiManager : MonoBehaviour
         switch (menuName.Value)
         {
             case "Mainmenu":
-                Mainmenu.enabled = true;
-                Playfield.enabled = false;
-                currentOpenedMenu = Mainmenu;
-                isMenuVisible = true;
+                if (previousOpenedMenu != _mainmenu)
+                {
+                    OpenMenu(_mainmenu);
+                    AudioManager.Instance.PlayOpenMenuSound();
+                }
+                else
+                {
+                    _playfield.enabled = true;
+                    ContinueGame();
+                    AudioManager.Instance.PlayCloseMenuSound();
+                }
                 break;
 
             case "Settings":
-                Settings.enabled = true;
-                currentOpenedMenu = Settings;
-
+                AudioManager.Instance.PlayButtonClickSound();
+                OpenMenu(_settings);
                 SettingsMenu.Instance.SetDisplayedSettings();
                 break;
 
             case "Level":
-                Level.enabled = true;
-                currentOpenedMenu = Level;
+                AudioManager.Instance.PlayButtonClickSound();
+                OpenMenu(_level);
+                LevelMenu.Instance.OpenMenu();
+                break;
 
-                LevelMenu.GetSingleInstance().SetDisplayedCurrentLevel(7);
-                LevelMenu.GetSingleInstance().SetDisplayedCurrentXp(500);
-                LevelMenu.GetSingleInstance().SetProgressbarValue(7);
-
+            case "SellingStation":
+                AudioManager.Instance.PlayOpenMenuSound();
+                OpenMenu(_level);
+                LevelMenu.Instance.OpenMenu();
                 break;
 
             case "Upgrade":
-                Upgrade.enabled = true;
-                currentOpenedMenu = Upgrade;
+                AudioManager.Instance.PlayButtonClickSound();
+                OpenMenu(_upgrade);
+                UpgradeMenu.Instance.OpenMenu();
                 break;
 
             case "Elements":
-                Elements.enabled = true;
-                currentOpenedMenu = Elements;
-                break;
-
-            case "CloseMenu":
-                Mainmenu.enabled = false;
-                Playfield.enabled = true;
-                currentOpenedMenu = null;
-                isMenuVisible = false;
+                AudioManager.Instance.PlayButtonClickSound();
+                OpenMenu(_elements);
+                ElementsMenu.Instance.OpenMenu();
                 break;
 
             default:
                 Debug.LogWarning("There is no menu with the name: " + menuName.Value);
                 break;
         }
+
+        HandleMenuButtonText(_currentOpenedMenu);
+    }
+
+    private void OpenMenu(Canvas menuCanvas)
+    {
+        menuCanvas.enabled = true;
+        _currentOpenedMenu = menuCanvas;
+
+        isMenuVisible = true;
+
+        SetComponentsVisible(false);
+    }
+
+    private void CloseAllMenus()
+    {
+        if (_elements.enabled) // needs to be close menu separately, otherwise the collider will detect clicks and purchases can be done
+        {
+            ElementsMenu.Instance.CloseMenu();
+        }
+
+        _mainmenu.enabled = false;
+        _playfield.enabled = false;
+        _elements.enabled = false;
+        _level.enabled = false;
+        _upgrade.enabled = false;
+        _settings.enabled = false;
+
+        if (_currentOpenedMenu != null)
+        {
+            _currentOpenedMenu.enabled = false;
+            _currentOpenedMenu = null;
+        }
+
+        isMenuVisible = false;
+
+        SetComponentsVisible(true);
+    }
+
+    private void HandleMenuButtonText(Canvas currentOpenedMenu)
+    {
+        string menuText;
+        if (currentOpenedMenu == _mainmenu)
+        {
+            menuText = "Close";
+        }
+        else if (currentOpenedMenu == null)
+        {
+            menuText = "Menu";
+        }
+        else
+        {
+            menuText = "Back";
+        }
+
+        _buttonOpenMainMenuText.text = menuText;
+    }
+    
+    private void SetComponentsVisible(bool isVisible)
+    {
+        // Turns off components, else they would render above the menu.
+        // cant just simply set some layer, because components layers change constantly
+        // and UI (Canvas, ...) ist a different render system than SpriteRenderer for Components
+        // This is the easiest method ive found.
+
+        componentsHolderObject.GetComponent<SortingGroup>().sortingOrder = isVisible ? 1 : 0;
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+    private void ContinueGame()
+    {
+        Time.timeScale = 1f;
     }
 }
 

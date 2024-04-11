@@ -1,21 +1,20 @@
 /**********************************************************************************************************************
 Name:          ComponentHandler
 Description:   Contains the methode to drag the component-objects and the methode to merge them. Handles the movement of objects on the desk.
-Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann
-Date:          2024-03-15
-Version:       V1.3
-TODO:          - call xp/money controller (when its implemented) after put component into trashcan
+Author(s):     Markus Haubold, Hanno Witzleb, Simeon Baumann, Daniel Rittrich
+Date:          2024-03-21
+Version:       V1.6
 **********************************************************************************************************************/
 using System;
-using Unity.VisualScripting;
+using ExperienceSystem;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ComponentHandler : MonoBehaviour
 {
     public bool isBeingDragged = false;
     public Element element;
 
-    private bool isDraggingActive = false;
     // camera is located on the bottom left corner, so we have an offset to the mouse
     // gets set every time dragging starts
     private Vector3 offsetMouseToCamera;
@@ -28,14 +27,12 @@ public class ComponentHandler : MonoBehaviour
 
     // component movement
     private ComponentMovement ComponentMovement;
-    
+
     private void Start()
     {
         bool success = gameObject.TryGetComponent(out ComponentMovement);
-        if (!success)
-        {
-            Debugger.LogError("ComponentMovement is missing on Component.");
-        }
+
+        Debugger.LogErrorIf(success == false, "ComponentMovement is missing on Component.");
     }
 
     private void Update()
@@ -46,13 +43,24 @@ public class ComponentHandler : MonoBehaviour
             _isDraggedOnce = true;
             ComponentMovement.HandleDraggingAnimation();
         }
-        else if (IsOnConveyorBelt() == false && _isDraggedOnce)
+        else if (
+            ComponentMovement.IsPositionOnDesk(GetComponent<RectTransform>().anchoredPosition) == true &&
+            _isDraggedOnce &&
+            ComponentMovement.GetIsReturningToDesk() == false
+            )
         {
-            ComponentMovement.HandleDraggingAnimationEnd();
             ComponentMovement.HandleIdleMovement();
             ComponentMovement.HandleIdleScaling();
         }
-        
+        else if (
+            _isDraggedOnce == true &&
+            IsOnConveyorBelt() == false
+            )
+        {
+            ComponentMovement.MoveBackToDesk();
+        }
+
+        ComponentMovement.HandleDraggingAnimationEnd();
     }
 
     private void OnMouseDown()
@@ -67,6 +75,7 @@ public class ComponentHandler : MonoBehaviour
         HandleOverlappingObjects();
         isBeingDragged = false;
         ComponentMovement.HandleDraggingStop();
+        AudioManager.Instance.PlayDropComponentSound();
     }
 
     private void HandleSpriteSorting()
@@ -108,13 +117,12 @@ public class ComponentHandler : MonoBehaviour
             {
                 highestSortingOrder = spriteRenderer.sortingOrder;
             }
-
-            spriteRenderer.sortingOrder--;
         }
 
         return highestSortingOrder;
     }
 
+#nullable enable
     private Element? GetMergedElement(GameObject draggedComponentObject)
     {
         Element? mergedElement = null;
@@ -134,53 +142,137 @@ public class ComponentHandler : MonoBehaviour
 
         return mergedElement;
     }
+#nullable restore
 
     private void HandleOverlappingObjects()
     {
-        const float timeToDestroyObject = 0.5f;
         const float radiusToDetectSpritesOverlapping = 1.0f;
-        GameObject draggedComponent = gameObject;
+        GameObject draggedComponentObject = gameObject;
 
         //check if there is an sprites-overlapping situation
-        Collider2D[] overlappedStaticObjects = Physics2D.OverlapCircleAll(draggedComponent.transform.position, radiusToDetectSpritesOverlapping);
+        Collider2D[] overlappedStaticObjects = Physics2D.OverlapCircleAll(draggedComponentObject.transform.position, radiusToDetectSpritesOverlapping);
 
         if (overlappedStaticObjects == null) { return; };
 
         //go trough all overlapped sprites and check if there is an mergabel one 
-        foreach (Collider2D staticComponent in overlappedStaticObjects)
+        foreach (Collider2D staticComponentCollider in overlappedStaticObjects)
         {
             //skip the dragged component from the list
-            if (staticComponent.gameObject == draggedComponent)
+            if (staticComponentCollider.gameObject == draggedComponentObject)
             {
                 continue;
             }
 
-            //merge components if possible 
-            if (Tags.Component.UsedByGameObject(staticComponent.gameObject))
+            if (Tags.Component.UsedByGameObject(staticComponentCollider.gameObject))
             {
-                Element? mergedElement = GetMergedElement(staticComponent.gameObject);
-
-                if (mergedElement == null)
-                {
-                    return;
-                }
-
-                GameObject mergedComponentObject = mergedElement.InstantiateGameObjectAndAddTexture(staticComponent.transform.position);
-
-                Debugger.LogMessage("two components overlapp => merge?!");
-                Destroy(draggedComponent, timeToDestroyObject);
-                Destroy(staticComponent.gameObject, timeToDestroyObject);
-
+                MergeComponents(staticComponentCollider.gameObject, draggedComponentObject);
                 return;
             }
 
-            //put component in the trashcan -> delete it
-            if (Tags.Trashcan.UsedByGameObject(staticComponent.gameObject))
+            if (Tags.Trashcan.UsedByGameObject(staticComponentCollider.gameObject))
             {
-                Debugger.LogMessage("Component was put in the trashcan! Thx for recycling!");
-                Destroy(draggedComponent, timeToDestroyObject);
-                //TODO: call xp/money controller
+                DiscardComponent(draggedComponentObject);
+                return;
             }
+
+            if (Tags.SellingStation.UsedByGameObject(staticComponentCollider.gameObject))
+            {
+                SellComponent(draggedComponentObject);
+                return;
+            }
+        }
+    }
+
+    private void MergeComponents(GameObject staticComponentObject, GameObject draggedComponentObject)
+    {
+        Element? mergedElement = GetMergedElement(staticComponentObject);
+
+        if (mergedElement == null)
+        {
+            return;
+        }
+
+        Vector2 staticObjectCanvasPosition = staticComponentObject.GetComponent<RectTransform>().anchoredPosition;
+        mergedElement.InstantiateGameObjectAndAddTexture(staticObjectCanvasPosition);
+
+        AnimationManager.Instance.PlayMergeAnimation(staticObjectCanvasPosition, mergedElement, element);
+
+        int mergeXP = Mathf.CeilToInt(mergedElement.GetSalesXP() * (Upgrades.MergeXPUpgrade.GetCurrentPercentageOfSalesXP() / 100f));
+        ExperienceHandler.AddExperiencePoints(mergeXP);
+
+        AudioManager.Instance.PlayMergeSound();
+
+        Destroy(draggedComponentObject);
+        Destroy(staticComponentObject);
+    }
+
+    private void DiscardComponent(GameObject draggedComponentObject)
+    {
+        Element? draggedElement
+                    = draggedComponentObject.TryGetComponent(out ComponentHandler draggedComponentHandler)
+                    ? draggedComponentHandler.element
+                    : null;
+
+        if (draggedElement == null)
+        {
+            return;
+        }
+
+        AnimationManager.Instance.PlayTrashAnimation(GetComponent<RectTransform>().anchoredPosition);
+        AudioManager.Instance.PlayThrowAwaySound();
+
+        int actualTrashPrice = Mathf.CeilToInt(draggedElement.GetTrashPrice() * (Upgrades.MoneyWhenTrashedUpgrade.GetCurrentPercentageOfTrashMoney() / 100f));
+        MoneyHandler.Instance.AddMoney(actualTrashPrice);
+
+        if (draggedElement.name == Trash.Name
+            && Random.Range(0, 100) < Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.GetCurrentSpawnChancePercentWhenTrashDiscarded())
+        {
+            ComponentSpawner.Instance.SpawnRandomComponentOnRandomPositionOnDesk(3f);
+        }
+
+        Destroy(draggedComponentObject);
+    }
+
+    private void SellComponent(GameObject draggedComponentObject)
+    {
+        Order? currentOrder = OrderGenerator.Instance.Order;
+        if (currentOrder == null)
+        {
+            Debugger.LogWarning("Tried selling a pc, but no Order present!!!");
+            return;
+        }
+
+        Element requiredOrderElement = currentOrder.PC;
+
+        Element? draggedElement
+            = draggedComponentObject.TryGetComponent(out ComponentHandler draggedComponentHandler)
+            ? draggedComponentHandler.element
+            : null;
+
+        if (draggedElement == null)
+        {
+            return;
+        }
+
+        if (draggedElement.IsEqual(requiredOrderElement))
+        {
+            int actualSalesPrice = draggedElement.GetSalesPrice();
+            MoneyHandler.Instance.AddMoney(actualSalesPrice);
+
+            int actualSalesXP = draggedElement.GetSalesXP();
+            ExperienceHandler.AddExperiencePoints(actualSalesXP);
+
+            AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
+
+            Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
+            Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
+            Destroy(draggedComponentObject);
+        }
+        else
+        {
+            // if component cannot be sold -> automatically move it back onto the playfield
+            AudioManager.Instance.PlayTrySellWrongComponentSound();
+            Debugger.LogMessage("Component cannot be sold. It does not correspond to the required order from the quest.");
         }
     }
 

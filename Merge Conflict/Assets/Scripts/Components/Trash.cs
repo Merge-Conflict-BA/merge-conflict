@@ -4,7 +4,7 @@ Description:   Elements data structure for trash.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -25,9 +25,10 @@ public enum TrashVariant
 
 public class Trash : Element
 {
-    public TrashVariant trashVariant;   
+    public TrashVariant trashVariant;
+    public static string Name = "Trash";
 
-    public Trash(int trashValue, int salesValue, TrashVariant? variant = null) : base(0, trashValue, salesValue)
+    public Trash(TrashVariant? variant = null) : base(0, Name)
     {
         if (variant != null)
         {
@@ -35,11 +36,26 @@ public class Trash : Element
             return;
         }
 
-        trashVariant = (TrashVariant)Random.Range(0, 3);  // gives back a random value from 0 till 2
+        trashVariant = (TrashVariant)Random.Range(0, 3);
     }
 
-    public Trash Clone()
+    public override int GetSalesPrice()
     {
-        return new Trash(trashValue, salesValue, trashVariant);
+        return 0;
+    }
+
+    public override int GetSalesXP()
+    {
+        return 0;
+    }
+
+    public override int GetTrashPrice()
+    {
+        return GetComponentData().TrashPrices[(int)trashVariant];
+    }
+
+    public override ComponentData GetComponentData()
+    {
+        return Components.TrashComponentData;
     }
 }

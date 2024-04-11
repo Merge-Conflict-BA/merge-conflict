@@ -30,4 +30,41 @@ public static class Debugger
             Debug.LogError(message);   
         #endif
     }
+
+
+    public static void LogMessageIf(bool condition, string message)
+    {
+        #if UNITY_EDITOR
+
+        if (condition)
+        {
+            Debug.Log(message);
+        }
+                
+        #endif
+    }
+
+    public static void LogWarningIf(bool condition, string message)
+    {
+        #if UNITY_EDITOR
+
+        if (condition)
+        {
+            Debug.LogWarning(message);
+        }
+
+        #endif
+    }
+
+    public static void LogErrorIf(bool condition, string message)
+    {
+        #if UNITY_EDITOR
+
+        if (condition)
+        {
+            Debug.LogError(message);
+        }
+
+        #endif
+    }
 }

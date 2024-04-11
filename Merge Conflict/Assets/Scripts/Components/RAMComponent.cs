@@ -4,7 +4,7 @@ Description:   Elements data structure for the RAM.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -15,8 +15,9 @@ using UnityEngine;
 
 public class RAMComponent : Element, IComponent
 {
+    public static string Name = "RAM";
 
-    public RAMComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+    public RAMComponent(int tier) : base(tier, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -24,9 +25,9 @@ public class RAMComponent : Element, IComponent
         if (element is RAMComponent otherRAM)
         {
 
-            if ((this.level == otherRAM.level) && this.level < 4)
+            if ((this.tier == otherRAM.tier) && this.tier < 4)
             {
-                this.level++;
+                this.tier++;
                 return this;
             }
         }
@@ -34,8 +35,8 @@ public class RAMComponent : Element, IComponent
         return null;
     }
 
-    public RAMComponent Clone()
+    public override ComponentData GetComponentData()
     {
-        return new RAMComponent(level, trashValue, salesValue);
+        return Components.RamComponentData;
     }
 }

@@ -4,7 +4,7 @@ Description:   Elements data structure for the GPU.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -15,8 +15,9 @@ using UnityEngine;
 
 public class GPUComponent : Element, IComponent
 {
+    public static string Name = "GPU";
 
-    public GPUComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+    public GPUComponent(int tier) : base(tier, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -24,9 +25,9 @@ public class GPUComponent : Element, IComponent
         if (element is GPUComponent otherGPU)
         {
 
-            if ((this.level == otherGPU.level) && this.level < 4)
+            if ((this.tier == otherGPU.tier) && this.tier < 4)
             {
-                this.level++;
+                this.tier++;
                 return this;
             }
         }
@@ -34,8 +35,8 @@ public class GPUComponent : Element, IComponent
         return null;
     }
 
-    public GPUComponent Clone()
+    public override ComponentData GetComponentData()
     {
-        return new GPUComponent(level, trashValue, salesValue);
+        return Components.GpuComponentData;
     }
 }

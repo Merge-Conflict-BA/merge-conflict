@@ -4,7 +4,7 @@ Description:   Elements data structure for the HDD.
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
-Version:       V1.1
+Version:       V1.2
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -15,8 +15,9 @@ using UnityEngine;
 
 public class HDDComponent : Element, IComponent
 {
+    public static string Name = "HDD";
 
-    public HDDComponent(int level, int trashValue, int salesValue) : base(level, trashValue, salesValue) { }
+    public HDDComponent(int tier) : base(tier, Name) { }
 
     public Element? Merge(Element element)
     {
@@ -24,9 +25,9 @@ public class HDDComponent : Element, IComponent
         if (element is HDDComponent otherHDD)
         {
 
-            if ((this.level == otherHDD.level) && this.level < 4)
+            if ((this.tier == otherHDD.tier) && this.tier < 4)
             {
-                this.level++;
+                this.tier++;
                 return this;
             }
         }
@@ -34,8 +35,8 @@ public class HDDComponent : Element, IComponent
         return null;
     }
 
-    public HDDComponent Clone()
+    public override ComponentData GetComponentData()
     {
-        return new HDDComponent(level, trashValue, salesValue);
+        return Components.HddComponentData;
     }
 }

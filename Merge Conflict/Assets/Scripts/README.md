@@ -45,6 +45,7 @@ if (Tag.CompareTags(col.gameObject, Tag.PossibleTags.ConveyorBelt))
 | Method | name | PascalCase |
 | Method | arguments | camelCase |
 | Local | variables | camelCase |
+| Local | constant | PascalCase |
 | Field | name Public | PascalCase |
 | Field | name Private | _camelCase |
 | Properties | name | PascalCase |
