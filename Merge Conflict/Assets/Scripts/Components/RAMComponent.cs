@@ -1,4 +1,4 @@
-/**********************************************************************************************************************
+﻿/**********************************************************************************************************************
 Name:          RAMComponent
 Description:   Elements data structure for the RAM.  
 
@@ -40,8 +40,8 @@ public class RAMComponent : Element, IComponent
         return Components.RamComponentData;
     }
 
-    public override Element FromJSONElement(JSONElement jsonElement)
+    public override Element FromSavedElement(SavedElement savedElement)
     {
-        return new RAMComponent(jsonElement.Tier);
+        return new RAMComponent(savedElement.Tier);
     }
 }

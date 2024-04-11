@@ -124,7 +124,7 @@ public class UiManager : MonoBehaviour
     {
         if (clickedButton == ExitTheGame)
         {
-            PlayerPrefsManager.Instance.SaveComponentsOnDeskToPlayerPrefs();
+            PlayerPrefsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else

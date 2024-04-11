@@ -102,13 +102,13 @@ public class Element
         return Components.EmptyComponentData;
     }
 
-    public virtual JSONElement ToJSONElement()
+    public virtual SavedElement ToSavedElement()
     {
-        return new JSONElement(name, tier);
+        return new SavedElement(name, tier);
     }
 
-    public virtual Element FromJSONElement(JSONElement jsonElement)
+    public virtual Element FromSavedElement(SavedElement savedElement)
     {
-        return new(jsonElement.Tier, jsonElement.Name);
+        return new(savedElement.Tier, savedElement.Name);
     }
 }

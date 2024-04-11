@@ -75,17 +75,17 @@ public class JSONElement {
 
         string[] parentElementField = elements[0].Split(GetFieldSeperator());
 
-        JSONElement jsonElement = new(parentElementField[0], int.Parse(parentElementField[1]));
+        JSONElement savedElement = new(parentElementField[0], int.Parse(parentElementField[1]));
 
         if(elements.Length == 1){
-            return jsonElement;
+            return savedElement;
         }
 
         for(int i = 1; i < elements.Length; i++) {
-            jsonElement.Children.Add(Deserialize(elements[i], childLevel + 1));
+            savedElement.Children.Add(Deserialize(elements[i], childLevel + 1));
         }
 
-        return jsonElement;
+        return savedElement;
     }
 
     public override string ToString()

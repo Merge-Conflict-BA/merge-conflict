@@ -1,4 +1,4 @@
-/**********************************************************************************************************************
+﻿/**********************************************************************************************************************
 Name:          Trash
 Description:   Elements data structure for trash.  
 
@@ -59,13 +59,13 @@ public class Trash : Element
         return Components.TrashComponentData;
     }
 
-    public override JSONElement ToJSONElement()
+    public override SavedElement ToSavedElement()
     {
         return new(name, (int)trashVariant);
     }
 
-    public override Element FromJSONElement(JSONElement jsonElement)
+    public override Element FromSavedElement(SavedElement savedElement)
     {
-        return new Trash((TrashVariant)jsonElement.Tier);
+        return new Trash((TrashVariant)savedElement.Tier);
     }
 }

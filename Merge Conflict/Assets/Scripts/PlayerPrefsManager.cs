@@ -32,17 +32,17 @@ public class PlayerPrefsManager : MonoBehaviour
 
     private void Update()
     {
-        // TODO:  Test  -> delete later
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.W))
         {
-            SaveComponentsOnDeskToPlayerPrefs();
+            SaveElementsOnDeskToPlayerPrefs();
         }
 
-        // TODO:  Test  -> delete later
         if (Input.GetKeyDown(KeyCode.R))
         {
             SpawnSavedComponents();
         }
+#endif
     }
 
 
@@ -51,16 +51,16 @@ public class PlayerPrefsManager : MonoBehaviour
         return $"SavedComponent[{index}]";
     }
 
-    public void SaveComponentsOnDeskToPlayerPrefs(float delay = 0.2f)
+    public void SaveElementsOnDeskToPlayerPrefs(float delay = 0.2f)
     {
-        StartCoroutine(SaveComponentsOnDeskToPlayerPrefsAfterDelay(delay));
+        StartCoroutine(SaveElementsOnDeskToPlayerPrefsAfterDelay(delay));
     }
 
-    IEnumerator SaveComponentsOnDeskToPlayerPrefsAfterDelay(float delay)
+    IEnumerator SaveElementsOnDeskToPlayerPrefsAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        ClearSavedComponentPlayerPrefs();
+        ClearSavedElementPlayerPrefs();
 
         GameObject[] componentObjects = GameObject.FindGameObjectsWithTag(Tags.Component.ToString());
 
@@ -75,7 +75,7 @@ public class PlayerPrefsManager : MonoBehaviour
             {
                 if (ComponentHandler != null && ComponentHandler.ComponentMovement != null && ComponentHandler.ComponentMovement.IsPositionOnDesk(componentObject.GetComponent<RectTransform>().anchoredPosition))
                 {
-                    PlayerPrefs.SetString(GetPlayerPrefsKeyWithIndex(index), element.ToJSONElement().Serialize());
+                    PlayerPrefs.SetString(GetPlayerPrefsKeyWithIndex(index), element.ToSavedElement().Serialize());
                     index++;
                 }
             }
@@ -84,45 +84,44 @@ public class PlayerPrefsManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    private void ClearSavedComponentPlayerPrefs()
+    private void ClearSavedElementPlayerPrefs()
     {
 
         string noComponentFound = "no component";
-        string savedComponent = "";
-        int index = 0;
-        string key = "";
+        int index = 0;        
 
+        string savedComponent;
         do
         {
-            key = GetPlayerPrefsKeyWithIndex(index);
+            string key = GetPlayerPrefsKeyWithIndex(index);
+
             savedComponent = PlayerPrefs.GetString(key, noComponentFound);
             PlayerPrefs.DeleteKey(key);
+
             index++;
         } while (savedComponent != noComponentFound);
     }
 
-
-    // TODO:   repair: Spawned cases with motherboard have no childs
     public void SpawnSavedComponents()
     {
-        List<JSONElement> savedComponents = GetSavedComponentsFromPlayerPrefs();
+        List<SavedElement> savedComponents = GetSavedComponentsFromPlayerPrefs();
 
-        foreach (JSONElement jsonElement in savedComponents)
+        foreach (SavedElement savedElement in savedComponents)
         {
-            Element element = Components.GetElementByName(jsonElement.Name);
-            element = element.FromJSONElement(jsonElement);
+            Element element = Components.GetElementByName(savedElement.Name);
+            element = element.FromSavedElement(savedElement);
 
             element.InstantiateGameObjectAndAddTexture(ComponentSpawner.Instance.GetRandomPositionOnDesk());
         }
     }
 
-    private List<JSONElement> GetSavedComponentsFromPlayerPrefs()
+    private List<SavedElement> GetSavedComponentsFromPlayerPrefs()
     {
         const string noComponentFound = "no component";
         string savedComponent;
         int index = 0;
 
-        List<JSONElement> savedComponents = new();
+        List<SavedElement> savedComponents = new();
 
         do
         {
@@ -131,7 +130,7 @@ public class PlayerPrefsManager : MonoBehaviour
 
             if (savedComponent != noComponentFound)
             {
-                savedComponents.Add(JSONElement.Deserialize(savedComponent));
+                savedComponents.Add(SavedElement.Deserialize(savedComponent));
             }
 
         } while (savedComponent != noComponentFound);

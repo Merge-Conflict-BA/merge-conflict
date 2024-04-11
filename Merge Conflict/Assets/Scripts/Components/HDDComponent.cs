@@ -1,4 +1,4 @@
-/**********************************************************************************************************************
+﻿/**********************************************************************************************************************
 Name:          HDDComponent
 Description:   Elements data structure for the HDD.  
 
@@ -40,8 +40,8 @@ public class HDDComponent : Element, IComponent
         return Components.HddComponentData;
     }
 
-    public override Element FromJSONElement(JSONElement jsonElement)
+    public override Element FromSavedElement(SavedElement savedElement)
     {
-        return new HDDComponent(jsonElement.Tier);
+        return new HDDComponent(savedElement.Tier);
     }
 }

@@ -1,4 +1,4 @@
-/**********************************************************************************************************************
+﻿/**********************************************************************************************************************
 Name:          PowersupplyComponent
 Description:   Elements data structure for the powersupply.  
 
@@ -40,8 +40,8 @@ public class PowersupplyComponent : Element, IComponent
         return Components.PowerSupplyComponentData;
     }
 
-    public override Element FromJSONElement(JSONElement jsonElement)
+    public override Element FromSavedElement(SavedElement savedElement)
     {
-        return new PowersupplyComponent(jsonElement.Tier);
+        return new PowersupplyComponent(savedElement.Tier);
     }
 }

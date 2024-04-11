@@ -122,50 +122,50 @@ public class CaseComponent : Element, IComponent
         return Components.CaseComponentData;
     }
 
-    public override JSONElement ToJSONElement()
+    public override SavedElement ToSavedElement()
     {
-        List<JSONElement> children = new();
+        List<SavedElement> children = new();
 
         if (hdd != null)
         {
-            children.Add(hdd.ToJSONElement());
+            children.Add(hdd.ToSavedElement());
         }
         if (powersupply != null)
         {
-            children.Add(powersupply.ToJSONElement());
+            children.Add(powersupply.ToSavedElement());
         }
         if (motherboard != null)
         {
-            children.Add(motherboard.ToJSONElement());
+            children.Add(motherboard.ToSavedElement());
         }
 
         return new(name, tier, children);
     }
 
-    public override Element FromJSONElement(JSONElement jsonElement)
+    public override Element FromSavedElement(SavedElement savedElement)
     {
-        CaseComponent caseComponent = new(jsonElement.Tier);
+        CaseComponent caseComponent = new(savedElement.Tier);
 
-        if (jsonElement.Children.Count == 0)
+        if (savedElement.Children.Count == 0)
         {
             return caseComponent;
         }
 
-        foreach (JSONElement childElement in jsonElement.Children)
+        foreach (SavedElement childOfSavedElement in savedElement.Children)
         {
-            switch (childElement.Name)
+            switch (childOfSavedElement.Name)
             {
-                case var _ when childElement.Name.Equals(HDDComponent.Name):
-                    caseComponent.hdd = new HDDComponent(childElement.Tier);
+                case var _ when childOfSavedElement.Name.Equals(HDDComponent.Name):
+                    caseComponent.hdd = new HDDComponent(childOfSavedElement.Tier);
                     break;
 
-                case var _ when childElement.Name.Equals(PowersupplyComponent.Name):
-                    caseComponent.powersupply = new PowersupplyComponent(childElement.Tier);
+                case var _ when childOfSavedElement.Name.Equals(PowersupplyComponent.Name):
+                    caseComponent.powersupply = new PowersupplyComponent(childOfSavedElement.Tier);
                     break;
 
-                case var _ when childElement.Name.Equals(MBComponent.Name):
-                    caseComponent.motherboard = new MBComponent(childElement.Tier);
-                    caseComponent.motherboard = (MBComponent)caseComponent.motherboard.FromJSONElement(childElement);
+                case var _ when childOfSavedElement.Name.Equals(MBComponent.Name):
+                    caseComponent.motherboard = new MBComponent(childOfSavedElement.Tier);
+                    caseComponent.motherboard = (MBComponent)caseComponent.motherboard.FromSavedElement(childOfSavedElement);
                     break;
 
                 default:

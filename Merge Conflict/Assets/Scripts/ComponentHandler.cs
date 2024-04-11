@@ -166,26 +166,26 @@ public class ComponentHandler : MonoBehaviour
             if (Tags.Component.UsedByGameObject(staticComponentCollider.gameObject))
             {
                 MergeComponents(staticComponentCollider.gameObject, draggedComponentObject);
-                PlayerPrefsManager.Instance.SaveComponentsOnDeskToPlayerPrefs();
+                PlayerPrefsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
                 return;
             }
 
             if (Tags.Trashcan.UsedByGameObject(staticComponentCollider.gameObject))
             {
                 DiscardComponent(draggedComponentObject);
-                PlayerPrefsManager.Instance.SaveComponentsOnDeskToPlayerPrefs();
+                PlayerPrefsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
                 return;
             }
 
             if (Tags.SellingStation.UsedByGameObject(staticComponentCollider.gameObject))
             {
                 SellComponent(draggedComponentObject);
-                PlayerPrefsManager.Instance.SaveComponentsOnDeskToPlayerPrefs();
+                PlayerPrefsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
                 return;
             }
         }
 
-        PlayerPrefsManager.Instance.SaveComponentsOnDeskToPlayerPrefs();
+        PlayerPrefsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
     }
 
     private void MergeComponents(GameObject staticComponentObject, GameObject draggedComponentObject)

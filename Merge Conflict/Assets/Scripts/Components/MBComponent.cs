@@ -122,9 +122,9 @@ public class MBComponent : Element, IComponent
         return Components.MBComponentData;
     }
 
-    public override JSONElement ToJSONElement()
+    public override SavedElement ToJSONElement()
     {
-        List<JSONElement> children = new();
+        List<SavedElement> children = new();
 
         if (cpu != null)
         {
@@ -142,7 +142,7 @@ public class MBComponent : Element, IComponent
         return new(name, tier, children);
     }
 
-    public override Element FromJSONElement(JSONElement jsonElement)
+    public override Element FromJSONElement(SavedElement jsonElement)
     {
         MBComponent motherboard = new(jsonElement.Tier);
 
@@ -151,7 +151,7 @@ public class MBComponent : Element, IComponent
             return motherboard;
         }
 
-        foreach (JSONElement childElement in jsonElement.Children)
+        foreach (SavedElement childElement in jsonElement.Children)
         {
             switch (childElement.Name)
             {
