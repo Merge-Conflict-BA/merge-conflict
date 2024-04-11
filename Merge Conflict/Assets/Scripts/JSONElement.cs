@@ -87,4 +87,16 @@ public class JSONElement {
 
         return jsonElement;
     }
+
+    public override string ToString()
+    {
+        string s = $"{Name}, {Tier}";
+
+        foreach (JSONElement child in Children)
+        {
+            s += $"-child: {child}\n";
+        }
+
+        return s;
+    }
 }

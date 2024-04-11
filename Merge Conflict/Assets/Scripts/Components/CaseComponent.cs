@@ -165,6 +165,7 @@ public class CaseComponent : Element, IComponent
 
                 case var _ when childElement.Name.Equals(MBComponent.Name):
                     caseComponent.motherboard = new MBComponent(childElement.Tier);
+                    caseComponent.motherboard = (MBComponent)caseComponent.motherboard.FromJSONElement(childElement);
                     break;
 
                 default:
