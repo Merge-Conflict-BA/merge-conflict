@@ -22,7 +22,7 @@ Description:   Open and close the menu playfield, settings, level, elements, upg
 
 Author(s):     Markus Haubold, Hanno Witzleb
 Date:          2024-03-27
-Version:       V2.0
+Version:       V2.1
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -51,7 +51,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button _buttonExitGame;
     [SerializeField] private Button _buttonSellingStation;
     [SerializeField] private Button _buttonOpenIntroduction;
-    [SerializeField] private Button _playFirstGame;
+    [SerializeField] private Button _startFirstGame;
 
     //all menus
     [Header("Menu Canvases")]
@@ -81,7 +81,6 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
         new KeyValuePair<string, string>("SellingStation", "SellingStation"),
         new KeyValuePair<string, string>("ButtonOpenIntroduction", "Introduction"),
-        new KeyValuePair<string, string>("PlayFirstGame", "Playfield"),
     };
 
     const Canvas NoMenuOpened = null;
@@ -116,7 +115,7 @@ public class UiManager : MonoBehaviour
         SetupButtonListener(_buttonExitGame);
         SetupButtonListener(_buttonSellingStation);
         SetupButtonListener(_buttonOpenIntroduction);
-        SetupButtonListener(_playFirstGame);
+        SetupButtonListener(_startFirstGame);
 
         SelectVisiblePageAfterStartup();
     }
@@ -146,6 +145,13 @@ public class UiManager : MonoBehaviour
             return;
         }
 
+        //button at the end of the introduction to start the very first game
+        if (clickedButton == _startFirstGame.name)
+        {
+            StartFirstGame();
+            return;
+        }
+
         SwitchMenu(clickedButton);
     }
 
@@ -167,7 +173,7 @@ public class UiManager : MonoBehaviour
                     OpenMenu(_mainmenu);
                     AudioManager.Instance.PlayOpenMenuSound();
                 }
-               
+
                 else
                 {
                     _playfield.enabled = true;
@@ -206,12 +212,9 @@ public class UiManager : MonoBehaviour
                 break;
 
             case "Introduction":
-                _introduction.enabled = true;
+                OpenMenu(_introduction);
                 _currentOpenedMenu = _introduction;
-                break;
-
-            case "Playfield":
-                OpenMenu(_playfield);
+                AudioManager.Instance.PlayButtonClickSound();
                 break;
 
             default:
@@ -255,7 +258,9 @@ public class UiManager : MonoBehaviour
         }
 
         isMenuVisible = false;
+        _playfield.enabled = true;
 
+        AudioManager.Instance.PlayCloseMenuSound();
         SetPlayFieldSpritesVisible(true);
     }
 
@@ -303,24 +308,30 @@ public class UiManager : MonoBehaviour
 
     private void SelectVisiblePageAfterStartup()
     {
-        int? firstAppStart = PlayerPrefs.GetInt("firstAppStart");
-        Debugger.LogMessage("First App Start: " + firstAppStart);
+        int? firstAppStartDone = PlayerPrefs.GetInt("FirstAppStartDone");
+
         //its the very first time the app starts
-        if (firstAppStart == 0)
+        if (firstAppStartDone == 0)
         {
-            Debugger.LogMessage("open introduction");
             _finishedTutorialPopup.SetActive(true);
+            PlayerPrefs.SetInt("FirstAppStartDone", 1);
             OpenMenu(_introduction);
-            PlayerPrefs.SetInt("firstAppStart", 1);
+            _buttonOpenMainmenu.gameObject.SetActive(false);
         }
-        //do this from the 2nd start
-        if (firstAppStart == 1)
+        //show every start the playfield from the 2nd start
+        if (firstAppStartDone == 1)
         {
-            Debugger.LogMessage("open mainmenu");
-            OpenMenu(_playfield);
             _finishedTutorialPopup.SetActive(false);
-            _creditsContent.SetActive(true);
+            _creditsContent.SetActive(true); 
         }
+    }
+
+    private void StartFirstGame()
+    {
+        _finishedTutorialPopup.SetActive(false);
+        _creditsContent.SetActive(true);
+        CloseAllMenus();
+        _buttonOpenMainmenu.gameObject.SetActive(true);
     }
 
 }
