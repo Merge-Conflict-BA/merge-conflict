@@ -26,7 +26,7 @@ public class ComponentHandler : MonoBehaviour
     private bool _isDraggedOnce = false;
 
     // component movement
-    private ComponentMovement ComponentMovement;
+    public ComponentMovement ComponentMovement;
 
     private void Start()
     {
@@ -166,21 +166,26 @@ public class ComponentHandler : MonoBehaviour
             if (Tags.Component.UsedByGameObject(staticComponentCollider.gameObject))
             {
                 MergeComponents(staticComponentCollider.gameObject, draggedComponentObject);
+                SavedElementsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
                 return;
             }
 
             if (Tags.Trashcan.UsedByGameObject(staticComponentCollider.gameObject))
             {
                 DiscardComponent(draggedComponentObject);
+                SavedElementsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
                 return;
             }
 
             if (Tags.SellingStation.UsedByGameObject(staticComponentCollider.gameObject))
             {
                 SellComponent(draggedComponentObject);
+                SavedElementsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
                 return;
             }
         }
+
+        SavedElementsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
     }
 
     private void MergeComponents(GameObject staticComponentObject, GameObject draggedComponentObject)

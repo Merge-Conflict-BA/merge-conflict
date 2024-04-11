@@ -39,4 +39,9 @@ public class CPUComponent : Element, IComponent
     {
         return Components.CpuComponentData;
     }
+
+    public override Element FromSavedElement(SavedElement savedElement)
+    {
+        return new CPUComponent(savedElement.Tier);
+    }
 }

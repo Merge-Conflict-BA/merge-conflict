@@ -39,4 +39,9 @@ public class GPUComponent : Element, IComponent
     {
         return Components.GpuComponentData;
     }
+
+    public override Element FromSavedElement(SavedElement savedElement)
+    {
+        return new GPUComponent(savedElement.Tier);
+    }
 }
