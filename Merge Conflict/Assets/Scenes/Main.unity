@@ -942,6 +942,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 1067739604}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &147665810 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 1067739604}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &176137125
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -956,7 +967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -1270,6 +1281,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 215222512}
   m_CullTransparentMesh: 1
+--- !u!114 &216335079 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 1648222515}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &219968101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,7 +1344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -1800,7 +1822,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -2023,8 +2045,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: 200}
-  m_SizeDelta: {x: 150, y: 100}
+  m_AnchoredPosition: {x: 90, y: 215}
+  m_SizeDelta: {x: 180, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &329098966
 MonoBehaviour:
@@ -2040,7 +2062,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovingSpeed: 30
   MovingDirection: 0
-  SizeOfPart: {x: 150, y: 150}
+  SizeOfPart: {x: 180, y: 180}
   IsEndPart: 0
 --- !u!61 &329098969
 BoxCollider2D:
@@ -2306,7 +2328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -2734,7 +2756,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -3163,6 +3185,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 412902121}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &443633052 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 412902121}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &460325320
 GameObject:
   m_ObjectHideFlags: 0
@@ -3317,7 +3350,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -3433,6 +3466,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 327536738}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &468159254 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 327536738}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &477812717
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3447,7 +3491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -3554,6 +3598,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+--- !u!114 &477997933 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 857573739}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &481858004
 GameObject:
   m_ObjectHideFlags: 0
@@ -4322,7 +4377,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -251}
+  m_AnchoredPosition: {x: 0, y: -251}
   m_SizeDelta: {x: -471.742, y: 133.734}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &527533844
@@ -4715,7 +4770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -4840,7 +4895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -5440,7 +5495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -5662,7 +5717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -5769,6 +5824,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+--- !u!114 &674544916 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 176137125}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &678200481
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5783,7 +5849,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -5904,7 +5970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -6953,7 +7019,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &815815644
 MonoBehaviour:
@@ -7002,7 +7068,15 @@ MonoBehaviour:
   m_maxSpeed: 1.5
   allowRotation: 0
   pivotOffset: {x: 0, y: 0}
-  conveyorSegments: []
+  conveyorSegments:
+  - {fileID: 1924080150}
+  - {fileID: 1640120446}
+  - {fileID: 2104942060}
+  - {fileID: 477997933}
+  - {fileID: 2027370750}
+  - {fileID: 2038213251}
+  - {fileID: 1951573784}
+  - {fileID: 846417941}
 --- !u!210 &815815646
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -7110,6 +7184,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 547802352}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &846417941 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 547802352}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &848607537
 GameObject:
   m_ObjectHideFlags: 0
@@ -7199,7 +7284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -7853,8 +7938,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 75, y: 75}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchoredPosition: {x: 90, y: 90}
+  m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &926658732
 BoxCollider2D:
@@ -7942,7 +8027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovingSpeed: 30
   MovingDirection: 2
-  SizeOfPart: {x: 150, y: 150}
+  SizeOfPart: {x: 180, y: 180}
   IsEndPart: 0
 --- !u!1 &935302682
 GameObject:
@@ -8145,8 +8230,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -20, y: -20}
-  m_SizeDelta: {x: 160, y: 80}
+  m_AnchoredPosition: {x: -30, y: -30}
+  m_SizeDelta: {x: 180, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &979635377
 MonoBehaviour:
@@ -8475,7 +8560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -8943,7 +9028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -9340,8 +9425,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 74.99994, y: 75}
-  m_SizeDelta: {x: -150.00012, y: 150}
+  m_AnchoredPosition: {x: 89.99994, y: 90}
+  m_SizeDelta: {x: -180.00012, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &1083088807
 BoxCollider2D:
@@ -9429,7 +9514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovingSpeed: 30
   MovingDirection: 1
-  SizeOfPart: {x: 150, y: 150}
+  SizeOfPart: {x: 180, y: 180}
   IsEndPart: 0
 --- !u!1 &1097156108
 GameObject:
@@ -9482,8 +9567,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 75, y: 225}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchoredPosition: {x: 90, y: 270}
+  m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1097156110
 MonoBehaviour:
@@ -9532,7 +9617,23 @@ MonoBehaviour:
   m_maxSpeed: 1.5
   allowRotation: 0
   pivotOffset: {x: 0, y: 0}
-  conveyorSegments: []
+  conveyorSegments:
+  - {fileID: 216335079}
+  - {fileID: 1312330416}
+  - {fileID: 1335150676}
+  - {fileID: 1675235636}
+  - {fileID: 674544916}
+  - {fileID: 1381662451}
+  - {fileID: 147665810}
+  - {fileID: 1607370515}
+  - {fileID: 1695599604}
+  - {fileID: 1768165137}
+  - {fileID: 1894249657}
+  - {fileID: 443633052}
+  - {fileID: 1339646867}
+  - {fileID: 1109640896}
+  - {fileID: 1701773872}
+  - {fileID: 468159254}
 --- !u!210 &1097156112
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -9559,7 +9660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4483804302838372053, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -800.00006
+      value: -800.0008
       objectReference: {fileID: 0}
     - target: {fileID: 6906180385017960943, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
       propertyPath: m_Pivot.x
@@ -9663,6 +9764,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 1292045100}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1109640896 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 1292045100}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1119719822
 GameObject:
   m_ObjectHideFlags: 0
@@ -10558,7 +10670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -10939,7 +11051,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -11197,6 +11309,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 363338408}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1312330416 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 363338408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1322651312
 GameObject:
   m_ObjectHideFlags: 0
@@ -11539,6 +11662,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 1004978739}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1335150676 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 1004978739}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1338181365 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
@@ -11549,6 +11683,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 682485896}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1339646867 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 682485896}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1354812228
 GameObject:
   m_ObjectHideFlags: 0
@@ -11675,6 +11820,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 1495203800}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1381662451 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 1495203800}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1390143869
 GameObject:
   m_ObjectHideFlags: 0
@@ -12465,7 +12621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -12939,7 +13095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -13204,6 +13360,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 1965755683}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1607370515 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 1965755683}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1618080308
 GameObject:
   m_ObjectHideFlags: 0
@@ -13239,8 +13406,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 150, y: 150}
-  m_SizeDelta: {x: -150, y: -550}
+  m_AnchoredPosition: {x: 180, y: 180}
+  m_SizeDelta: {x: -180, y: -580}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1618080312
 MonoBehaviour:
@@ -13325,6 +13492,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1640120446 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 466383269}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1648222515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13339,12 +13517,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1097156111}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_flipDirection
       value: 0
@@ -13446,11 +13624,44 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+--- !u!114 &1675235636 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 663811548}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1695599604 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 249281851}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1701773870 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 678200481}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1701773872 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 678200481}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1703179734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13465,7 +13676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -14468,6 +14679,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759505642}
   m_CullTransparentMesh: 1
+--- !u!114 &1768165137 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 1240855845}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1769854676
 GameObject:
   m_ObjectHideFlags: 0
@@ -14642,7 +14864,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -14788,8 +15010,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 75, y: 75}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchoredPosition: {x: 90, y: 90}
+  m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &1885867484
 BoxCollider2D:
@@ -14877,7 +15099,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MovingSpeed: 30
   MovingDirection: 1
-  SizeOfPart: {x: 150, y: 150}
+  SizeOfPart: {x: 180, y: 180}
   IsEndPart: 1
 --- !u!1 &1887856000
 GameObject:
@@ -15013,6 +15235,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887856000}
   m_CullTransparentMesh: 1
+--- !u!114 &1894249657 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 477812717}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1902449117
 GameObject:
   m_ObjectHideFlags: 0
@@ -15364,6 +15597,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 1852890050}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1924080150 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 1852890050}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1933479626
 GameObject:
   m_ObjectHideFlags: 0
@@ -15580,6 +15824,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1943021070}
   m_CullTransparentMesh: 1
+--- !u!114 &1951573784 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 542753107}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1954469039
 GameObject:
   m_ObjectHideFlags: 0
@@ -15669,7 +15924,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: m_maxSpeed
-      value: 0.6
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
       propertyPath: conveyorBelt
@@ -15946,6 +16201,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 633995374}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2027370750 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 633995374}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2034312274
 GameObject:
   m_ObjectHideFlags: 0
@@ -16130,6 +16396,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036006857}
   m_CullTransparentMesh: 1
+--- !u!114 &2038213251 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 1703179734}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2040866190
 GameObject:
   m_ObjectHideFlags: 0
@@ -16776,6 +17053,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103045940}
   m_CullTransparentMesh: 1
+--- !u!114 &2104942060 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 1570800898}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2119573305
 GameObject:
   m_ObjectHideFlags: 0
@@ -17204,6 +17492,10 @@ PrefabInstance:
     - target: {fileID: 1804554732838484038, guid: d391588e72baf5c47a9d3bd2d9599930, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5225126733233952798, guid: d391588e72baf5c47a9d3bd2d9599930, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -698.46063
       objectReference: {fileID: 0}
     - target: {fileID: 5893462425231390300, guid: d391588e72baf5c47a9d3bd2d9599930, type: 3}
       propertyPath: m_Enabled
