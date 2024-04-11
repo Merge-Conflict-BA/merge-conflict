@@ -122,36 +122,36 @@ public class MBComponent : Element, IComponent
         return Components.MBComponentData;
     }
 
-    public override SavedElement ToJSONElement()
+    public override SavedElement ToSavedElement()
     {
         List<SavedElement> children = new();
 
         if (cpu != null)
         {
-            children.Add(cpu.ToJSONElement());
+            children.Add(cpu.ToSavedElement());
         }
         if (gpu != null)
         {
-            children.Add(gpu.ToJSONElement());
+            children.Add(gpu.ToSavedElement());
         }
         if (ram != null)
         {
-            children.Add(ram.ToJSONElement());
+            children.Add(ram.ToSavedElement());
         }
 
         return new(name, tier, children);
     }
 
-    public override Element FromJSONElement(SavedElement jsonElement)
+    public override Element FromSavedElement(SavedElement savedElement)
     {
-        MBComponent motherboard = new(jsonElement.Tier);
+        MBComponent motherboard = new(savedElement.Tier);
 
-        if (jsonElement.Children.Count == 0)
+        if (savedElement.Children.Count == 0)
         {
             return motherboard;
         }
 
-        foreach (SavedElement childElement in jsonElement.Children)
+        foreach (SavedElement childElement in savedElement.Children)
         {
             switch (childElement.Name)
             {
