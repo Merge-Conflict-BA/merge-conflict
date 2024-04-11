@@ -121,4 +121,58 @@ public class CaseComponent : Element, IComponent
     {
         return Components.CaseComponentData;
     }
+
+    public override SavedElement ToSavedElement()
+    {
+        List<SavedElement> children = new();
+
+        if (hdd != null)
+        {
+            children.Add(hdd.ToSavedElement());
+        }
+        if (powersupply != null)
+        {
+            children.Add(powersupply.ToSavedElement());
+        }
+        if (motherboard != null)
+        {
+            children.Add(motherboard.ToSavedElement());
+        }
+
+        return new(name, tier, children);
+    }
+
+    public override Element FromSavedElement(SavedElement savedElement)
+    {
+        CaseComponent caseComponent = new(savedElement.Tier);
+
+        if (savedElement.Children.Count == 0)
+        {
+            return caseComponent;
+        }
+
+        foreach (SavedElement childOfSavedElement in savedElement.Children)
+        {
+            switch (childOfSavedElement.Name)
+            {
+                case var _ when childOfSavedElement.Name.Equals(HDDComponent.Name):
+                    caseComponent.hdd = new HDDComponent(childOfSavedElement.Tier);
+                    break;
+
+                case var _ when childOfSavedElement.Name.Equals(PowersupplyComponent.Name):
+                    caseComponent.powersupply = new PowersupplyComponent(childOfSavedElement.Tier);
+                    break;
+
+                case var _ when childOfSavedElement.Name.Equals(MBComponent.Name):
+                    caseComponent.motherboard = new MBComponent(childOfSavedElement.Tier);
+                    caseComponent.motherboard = (MBComponent)caseComponent.motherboard.FromSavedElement(childOfSavedElement);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        return caseComponent;
+    }
 }

@@ -29,12 +29,7 @@ public class MBComponent : Element, IComponent
         this.gpu = gpu;
     }
 
-
     // Element in der funktion merge ist das Element, dass auf den MBComponent drauf gemerged wird
-
-    // !   Mögliches Problem : Was passiert beim Drag&Drop (mergen) wenn ein CaseComponent einen unbestückten MBComponent in sich trägt 
-    // !   und dann ein weiterer unbestückter MBComponent darauf abgelegt wird ? Muss man sich in diesem Fall rückversichern, dass der 
-    // !   MBComponent in einem CaseComponent sitzt und somit nicht gemerged werden darf .
 
     public Element? Merge(Element element)
     {
@@ -125,5 +120,58 @@ public class MBComponent : Element, IComponent
     public override ComponentData GetComponentData()
     {
         return Components.MBComponentData;
+    }
+
+    public override SavedElement ToSavedElement()
+    {
+        List<SavedElement> children = new();
+
+        if (cpu != null)
+        {
+            children.Add(cpu.ToSavedElement());
+        }
+        if (gpu != null)
+        {
+            children.Add(gpu.ToSavedElement());
+        }
+        if (ram != null)
+        {
+            children.Add(ram.ToSavedElement());
+        }
+
+        return new(name, tier, children);
+    }
+
+    public override Element FromSavedElement(SavedElement savedElement)
+    {
+        MBComponent motherboard = new(savedElement.Tier);
+
+        if (savedElement.Children.Count == 0)
+        {
+            return motherboard;
+        }
+
+        foreach (SavedElement childElement in savedElement.Children)
+        {
+            switch (childElement.Name)
+            {
+                case var _ when childElement.Name.Equals(CPUComponent.Name):
+                    motherboard.cpu = new CPUComponent(childElement.Tier);
+                    break;
+
+                case var _ when childElement.Name.Equals(GPUComponent.Name):
+                    motherboard.gpu = new GPUComponent(childElement.Tier);
+                    break;
+
+                case var _ when childElement.Name.Equals(RAMComponent.Name):
+                    motherboard.ram = new RAMComponent(childElement.Tier);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        return motherboard;
     }
 }

@@ -1,4 +1,4 @@
-/**********************************************************************************************************************
+﻿/**********************************************************************************************************************
 Name:          Trash
 Description:   Elements data structure for trash.  
 
@@ -57,5 +57,15 @@ public class Trash : Element
     public override ComponentData GetComponentData()
     {
         return Components.TrashComponentData;
+    }
+
+    public override SavedElement ToSavedElement()
+    {
+        return new(name, (int)trashVariant);
+    }
+
+    public override Element FromSavedElement(SavedElement savedElement)
+    {
+        return new Trash((TrashVariant)savedElement.Tier);
     }
 }
