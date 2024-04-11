@@ -31,6 +31,7 @@ using ExperienceSystem;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
 
 public class UiManager : MonoBehaviour
 {
@@ -48,6 +49,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button _buttonExitGame;
     [SerializeField] private Button _buttonSellingStation;
     [SerializeField] private Button _buttonOpenIntroduction;
+    [SerializeField] private Button _playFirstGame;
 
     //all menus
     [SerializeField] private Canvas _playfield;
@@ -58,6 +60,9 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Canvas _upgrade;
     [SerializeField] private Canvas _elements;
     [SerializeField] private Canvas _introduction;
+    [SerializeField] private GameObject _finishedTutorialPopup;
+    [SerializeField] private GameObject _creditsContent;
+
 
 
     //mapping buttons to the menu wich they should open
@@ -70,6 +75,7 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
         new KeyValuePair<string, string>("SellingStation", "Level"),
         new KeyValuePair<string, string>("ButtonOpenIntroduction", "Introduction"),
+        new KeyValuePair<string, string>("PlayFirstGame", "Playfield"),
     };
 
     const Canvas NoMenuOpened = null;
@@ -104,6 +110,9 @@ public class UiManager : MonoBehaviour
         SetupButtonListener(_buttonExitGame);
         SetupButtonListener(_buttonSellingStation);
         SetupButtonListener(_buttonOpenIntroduction);
+        SetupButtonListener(_playFirstGame);
+
+        SelectVisiblePageAfterStartup();
     }
 
     private void SetupButtonListener(Button button)
@@ -212,12 +221,8 @@ public class UiManager : MonoBehaviour
                 _currentOpenedMenu = _introduction;
                 break;
 
-            case "CloseMenu":
-                _mainmenu.enabled = false;
-                _playfield.enabled = true;
-                _elements.enabled = false;
-                _currentOpenedMenu = null;
-                isMenuVisible = false;
+            case "Playfield":
+                OpenMenu(_playfield);
                 break;
 
             default:
@@ -250,7 +255,7 @@ public class UiManager : MonoBehaviour
         _upgrade.enabled = false;
         _settings.enabled = false;
         _introduction.enabled = false;
-        
+
 
         if (_currentOpenedMenu != null)
         {
@@ -280,6 +285,7 @@ public class UiManager : MonoBehaviour
         _buttonOpenMainMenuText.text = menuText;
     }
 
+    //TODO: refactore this -> we can't stop the game-time because the swiper and the video in the instruction needs the time
     private void PauseGame()
     {
         //Time.timeScale = 0f;
@@ -288,6 +294,29 @@ public class UiManager : MonoBehaviour
     {
         //Time.timeScale = 1f; 
     }
+
+    private void SelectVisiblePageAfterStartup()
+    {
+        int? firstAppStart = PlayerPrefs.GetInt("firstAppStart");
+        Debugger.LogMessage("First App Start: " + firstAppStart);
+        //its the very first time the app starts
+        if (firstAppStart == 0)
+        {
+            Debugger.LogMessage("open introduction");
+            _finishedTutorialPopup.SetActive(true);
+            OpenMenu(_introduction);
+            PlayerPrefs.SetInt("firstAppStart", 1);
+        }
+        //do this from the 2nd start
+        if (firstAppStart == 1)
+        {
+            Debugger.LogMessage("open mainmenu");
+            OpenMenu(_playfield);
+            _finishedTutorialPopup.SetActive(false);
+            _creditsContent.SetActive(true);
+        }
+    }
+
 }
 
 
