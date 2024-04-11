@@ -26,7 +26,7 @@ public class SpawnChanceWhenTrashDiscardedUpgrade : Upgrade
 
     public override string GetNextLevelDescription()
     {
-        if (isAtMaxLevel())
+        if (IsAtMaxLevel())
         {
             return "-";
         }

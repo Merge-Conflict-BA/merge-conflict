@@ -26,7 +26,7 @@ public class ComponentHandler : MonoBehaviour
     private bool _isDraggedOnce = false;
 
     // component movement
-    private ComponentMovement ComponentMovement;
+    public ComponentMovement ComponentMovement;
 
     private void Start()
     {
@@ -166,21 +166,26 @@ public class ComponentHandler : MonoBehaviour
             if (Tags.Component.UsedByGameObject(staticComponentCollider.gameObject))
             {
                 MergeComponents(staticComponentCollider.gameObject, draggedComponentObject);
+                SavedElementsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
                 return;
             }
 
             if (Tags.Trashcan.UsedByGameObject(staticComponentCollider.gameObject))
             {
                 DiscardComponent(draggedComponentObject);
+                SavedElementsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
                 return;
             }
 
             if (Tags.SellingStation.UsedByGameObject(staticComponentCollider.gameObject))
             {
                 SellComponent(draggedComponentObject);
+                SavedElementsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
                 return;
             }
         }
+
+        SavedElementsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
     }
 
     private void MergeComponents(GameObject staticComponentObject, GameObject draggedComponentObject)
@@ -235,7 +240,7 @@ public class ComponentHandler : MonoBehaviour
 
     private void SellComponent(GameObject draggedComponentObject)
     {
-        Order? currentOrder = OrderGenerator.Instance.Order;
+        Order? currentOrder = OrderManager.Instance.Order;
         if (currentOrder == null)
         {
             Debugger.LogWarning("Tried selling a pc, but no Order present!!!");
@@ -249,32 +254,29 @@ public class ComponentHandler : MonoBehaviour
             ? draggedComponentHandler.element
             : null;
 
-        if (draggedElement == null)
-        {
-            return;
-        }
-
-        if (draggedElement.IsEqual(requiredOrderElement))
-        {
-            int actualSalesPrice = draggedElement.GetSalesPrice();
-            MoneyHandler.Instance.AddMoney(actualSalesPrice);
-
-            int actualSalesXP = draggedElement.GetSalesXP();
-            ExperienceHandler.AddExperiencePoints(actualSalesXP);
-
-            AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
-            AudioManager.Instance.PlayQuestCompletedSound();
-
-            Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
-            Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
-            Destroy(draggedComponentObject);
-        }
-        else
+        if (draggedElement == null
+            || draggedElement.IsEqual(requiredOrderElement) == false)
         {
             // if component cannot be sold -> automatically move it back onto the playfield
             AudioManager.Instance.PlayTrySellWrongComponentSound();
-            Debugger.LogMessage("Component cannot be sold. It does not correspond to the required order from the quest.");
+            Debugger.LogMessage("Component cannot be sold or is not a Component. It does not correspond to the required order from the quest.");
+            return;
         }
+        
+        int actualSalesPrice = draggedElement.GetSalesPrice();
+        MoneyHandler.Instance.AddMoney(actualSalesPrice);
+
+        int actualSalesXP = draggedElement.GetSalesXP();
+        ExperienceHandler.AddExperiencePoints(actualSalesXP);
+
+        AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
+        AudioManager.Instance.PlayQuestCompletedSound();
+
+        Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
+        Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
+        Destroy(draggedComponentObject);
+
+        OrderManager.Instance.GenerateNewOrder();
     }
 
     private bool IsOnConveyorBelt()

@@ -116,7 +116,7 @@ public class UiManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Button with name {button} not found. Please check if the button exists and is linked to the script UiManager!");
+            Debugger.LogError($"Button with name {button} not found. Please check if the button exists and is linked to the script UiManager!");
         }
     }
 
@@ -124,6 +124,7 @@ public class UiManager : MonoBehaviour
     {
         if (clickedButton == ExitTheGame)
         {
+            SavedElementsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -162,36 +163,36 @@ public class UiManager : MonoBehaviour
                 break;
 
             case "Settings":
-                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_settings);
+                AudioManager.Instance.PlayButtonClickSound();
                 break;
 
             case "Level":
-                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_level);
                 LevelMenu.Instance.OpenMenu();
+                AudioManager.Instance.PlayButtonClickSound();
                 break;
 
             case "SellingStation":
-                AudioManager.Instance.PlayOpenMenuSound();
                 OpenMenu(_level);
                 LevelMenu.Instance.OpenMenu();
+                AudioManager.Instance.PlayOpenMenuSound();
                 break;
 
             case "Upgrade":
-                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_upgrade);
                 UpgradeMenu.Instance.OpenMenu();
+                AudioManager.Instance.PlayButtonClickSound();
                 break;
 
             case "Elements":
-                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_elements);
                 ElementsMenu.Instance.OpenMenu();
+                AudioManager.Instance.PlayButtonClickSound();
                 break;
 
             default:
-                Debug.LogWarning("There is no menu with the name: " + menuName.Value);
+                Debugger.LogWarning("There is no menu with the name: " + menuName.Value);
                 break;
         }
 
@@ -251,7 +252,7 @@ public class UiManager : MonoBehaviour
 
         _buttonOpenMainMenuText.text = menuText;
     }
-    
+
     private void SetPlayFieldSpritesVisible(bool isVisible)
     {
         // Turns off components, else they would render above the menu.

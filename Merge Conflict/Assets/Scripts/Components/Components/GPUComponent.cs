@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
-Name:          CPUComponent
-Description:   Elements data structure for the CPU.  
+Name:          GPUComponent
+Description:   Elements data structure for the GPU.  
 
 Author(s):     Daniel Rittrich, Hanno Witzleb
 Date:          2024-02-26
@@ -13,19 +13,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CPUComponent : Element, IComponent
+public class GPUComponent : Element, IComponent
 {
-    public static string Name = "CPU";
+    public static string Name = "GPU";
 
-    public CPUComponent(int tier) : base(tier, Name) { }
+    public GPUComponent(int tier) : base(tier, Name) { }
 
     public Element? Merge(Element element)
     {
 
-        if (element is CPUComponent otherCPU)
+        if (element is GPUComponent otherGPU)
         {
 
-            if ((this.tier == otherCPU.tier) && this.tier < 4)
+            if ((this.tier == otherGPU.tier) && this.tier < 4)
             {
                 this.tier++;
                 return this;
@@ -37,6 +37,11 @@ public class CPUComponent : Element, IComponent
 
     public override ComponentData GetComponentData()
     {
-        return Components.CpuComponentData;
+        return Components.GpuComponentData;
+    }
+
+    public override Element FromSavedElement(SavedElement savedElement)
+    {
+        return new GPUComponent(savedElement.Tier);
     }
 }

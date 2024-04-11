@@ -20,7 +20,7 @@ public class Element
     {
         get { return _tier; }
         set { _tier = Mathf.Clamp(value, 1, 4); }
-    }    
+    }
 
     public readonly string name;
 
@@ -100,5 +100,15 @@ public class Element
     public virtual ComponentData GetComponentData()
     {
         return Components.EmptyComponentData;
+    }
+
+    public virtual SavedElement ToSavedElement()
+    {
+        return new SavedElement(name, tier);
+    }
+
+    public virtual Element FromSavedElement(SavedElement savedElement)
+    {
+        return new(savedElement.Tier, savedElement.Name);
     }
 }
