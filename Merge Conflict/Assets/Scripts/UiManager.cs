@@ -303,7 +303,7 @@ public class UiManager : MonoBehaviour
     }
     private void ContinueGame()
     {
-        //Time.timeScale = 1f; 
+        //Time.timeScale = 1f;
     }
 
     private void SelectVisiblePageAfterStartup()
