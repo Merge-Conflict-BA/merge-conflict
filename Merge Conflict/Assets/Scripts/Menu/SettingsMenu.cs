@@ -42,7 +42,7 @@ public class SettingsMenu : Menu
         _soundSlider = GetComponentbyObjectName<Slider>("SliderEffectsVolume");
     }
     
-    public void SetDisplayedSettings()
+    public void OpenMenu()
     {
         _musicSlider.value = _settings.MusicValue;
         _soundSlider.value = _settings.SoundValue;
