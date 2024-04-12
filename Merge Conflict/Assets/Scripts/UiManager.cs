@@ -121,12 +121,6 @@ public class UiManager : MonoBehaviour
         SelectVisiblePageAfterStartup();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E)) { conveyorbelt.SetActive(false); }
-        if (Input.GetKeyDown(KeyCode.R)) { conveyorbelt.SetActive(true); }
-    }
-
     private void SetupButtonListener(Button button)
     {
         if (button != null)
@@ -304,15 +298,12 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    //TODO: refactore this -> we can't stop the game-time because the swiper and the video in the instruction needs the time
     private void PauseGame()
     {
-        //Time.timeScale = 0f;
         GamePauseManager.Instance.Pause();
     }
     private void ContinueGame()
     {
-        //Time.timeScale = 1f;
         GamePauseManager.Instance.Continue();
     }
 
