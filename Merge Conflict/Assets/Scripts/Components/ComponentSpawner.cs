@@ -38,6 +38,8 @@ public class ComponentSpawner : MonoBehaviour
     public float TimeToStartMovement = 2;
     public float MaxScaleFactor = 1.05f;
 
+    private Coroutine SpawnOnBeltInIntervalCoroutine;
+
     void Awake()
     {
         //singleton -> only 1 instance
@@ -73,7 +75,7 @@ public class ComponentSpawner : MonoBehaviour
             50,
             transform.parent.GetComponent<RectTransform>().rect.height + 100);
 
-        StartCoroutine(SpawnOnBeltInInterval(initialSpawnDelaySeconds));
+        SpawnOnBeltInIntervalCoroutine = StartCoroutine(SpawnOnBeltInInterval(initialSpawnDelaySeconds));
 
         SavedElementsManager.Instance.SpawnSavedElements();
     }
@@ -171,5 +173,23 @@ public class ComponentSpawner : MonoBehaviour
         float y = Random.Range(anchoredPosition.y + padding, anchoredPosition.y + rectTransform.rect.height - padding);
 
         return new Vector2(x, y);
+    }
+
+    public void PauseSpawn()
+    {
+        if (SpawnOnBeltInIntervalCoroutine != null)
+        {
+            StopCoroutine(SpawnOnBeltInIntervalCoroutine);
+            SpawnOnBeltInIntervalCoroutine = null;
+        }
+    }
+
+    public void ResumeSpawn()
+    {
+        if (SpawnOnBeltInIntervalCoroutine == null)
+        {
+            int currentInterval = Upgrades.SpawnIntervalUpgrade.GetCurrentSecondsInterval();
+            SpawnOnBeltInIntervalCoroutine = StartCoroutine(SpawnOnBeltInInterval(currentInterval));
+        }
     }
 }

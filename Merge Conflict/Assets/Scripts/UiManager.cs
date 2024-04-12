@@ -69,6 +69,7 @@ public class UiManager : MonoBehaviour
 
     [Header("Other References")]
     public GameObject[] playFieldSpriteObjects;
+    public GameObject conveyorbelt;
 
 
     //mapping buttons to the menu wich they should open
@@ -118,6 +119,12 @@ public class UiManager : MonoBehaviour
         SetupButtonListener(_startFirstGame);
 
         SelectVisiblePageAfterStartup();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E)) { conveyorbelt.SetActive(false); }
+        if (Input.GetKeyDown(KeyCode.R)) { conveyorbelt.SetActive(true); }
     }
 
     private void SetupButtonListener(Button button)
@@ -178,6 +185,7 @@ public class UiManager : MonoBehaviour
                 {
                     _playfield.enabled = true;
                     ContinueGame();
+
                     AudioManager.Instance.PlayCloseMenuSound();
                 }
                 break;
@@ -260,7 +268,7 @@ public class UiManager : MonoBehaviour
         isMenuVisible = false;
         _playfield.enabled = true;
 
-        AudioManager.Instance.PlayCloseMenuSound();
+        //AudioManager.Instance.PlayCloseMenuSound();
         SetPlayFieldSpritesVisible(true);
     }
 
@@ -300,10 +308,12 @@ public class UiManager : MonoBehaviour
     private void PauseGame()
     {
         //Time.timeScale = 0f;
+        GamePauseManager.Instance.Pause();
     }
     private void ContinueGame()
     {
         //Time.timeScale = 1f;
+        GamePauseManager.Instance.Continue();
     }
 
     private void SelectVisiblePageAfterStartup()
@@ -333,6 +343,7 @@ public class UiManager : MonoBehaviour
         CloseAllMenus();
         _buttonOpenMainmenu.gameObject.SetActive(true);
         Introduction.Instance.ResetToFirstScreen(); //set swiper back to first screen
+        AudioManager.Instance.PlayCloseMenuSound();
     }
 
 }
