@@ -7,29 +7,22 @@ Version:       V1.0
 TODO:          - /
 **********************************************************************************************************************/
 
-#nullable enable
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
 public class SavedElement {
-    public string Name;
-    public int Tier; // also used for trashVariant
+    public readonly string Name;
+    public readonly int Tier; // also used for trashVariant
 
-    public List<SavedElement> Children;
+    public readonly List<SavedElement> Children;
 
     public SavedElement(string name, int tier, List<SavedElement> children = null) {
         Name = name;
         Tier = tier;
 
-        if(children == null){            
-            Children = new List<SavedElement>();
-        } else {
-            Children = children;
-        }
+        Children = children ?? new List<SavedElement>();
     }
 
     private static string GetFieldSeperator(){
