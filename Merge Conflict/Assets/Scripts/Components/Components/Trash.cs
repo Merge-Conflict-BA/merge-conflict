@@ -51,7 +51,7 @@ public class Trash : Element
 
     public override int GetTrashPrice()
     {
-        return GetComponentData().TrashPrices[(int)trashVariant];
+        return GetComponentData().GetTrashPrice((int)trashVariant + 1);
     }
 
     public override ComponentData GetComponentData()

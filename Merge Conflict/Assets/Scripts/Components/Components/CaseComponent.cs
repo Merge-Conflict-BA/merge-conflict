@@ -20,7 +20,6 @@ public class CaseComponent : Element, IComponent
     public HDDComponent? hdd;
     public static string Name = "Case";
 
-
     public CaseComponent(int tier, MBComponent? motherboard = null, PowersupplyComponent? powersupply = null, HDDComponent? hdd = null)
         : base(tier, Name)
     {
