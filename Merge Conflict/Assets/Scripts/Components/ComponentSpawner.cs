@@ -78,22 +78,6 @@ public class ComponentSpawner : MonoBehaviour
         SavedElementsManager.Instance.SpawnSavedElements();
     }
 
-    void Update()
-    {
-#if UNITY_EDITOR
-        //test the function -> spawn object on current mouse position
-        //TODO: delete this, if the gamelogic for the spawning is implemented!!!
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetBeltSpawnPosition());
-        }
-#endif
-    }
-
     // copied from: https://gamedev.stackexchange.com/questions/139736/how-can-i-change-invokerepeating-time-in-unity
     // after every spawn, this Coroutine reevaluates the current Interval
     private IEnumerator SpawnOnBeltInInterval(float initialDelaySeconds)
