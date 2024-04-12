@@ -1,3 +1,12 @@
+/**********************************************************************************************************************
+Name:          GamePauseManager
+Description:   Handle the conveyorbelt and the spawning according to the state of the game (paused or not)
+Author(s):     Markus Haubold
+Date:          2024-04-11
+Version:       V1.0
+TODO:          - 
+**********************************************************************************************************************/
+
 using UnityEngine;
 
 public class GamePauseManager : MonoBehaviour
@@ -21,12 +30,14 @@ public class GamePauseManager : MonoBehaviour
         }
     }
 
+    //pause the game by stopping the conveyor belt and the spawning of new objects
     public void Pause()
     {
         StartStopConveyorbelt(Stopped);
         ComponentSpawner.Instance.PauseSpawn();
     }
 
+    //continue the game by start the conveyor belt and the spawning of new objects
     public void Continue()
     {
         StartStopConveyorbelt(!Stopped);

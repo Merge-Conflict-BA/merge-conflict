@@ -11144,7 +11144,7 @@ MonoBehaviour:
   - {fileID: 495547896}
   - {fileID: 1097156108}
   - {fileID: 815815642}
-  conveyorbelt: {fileID: 1064727933}
+  conveyorbelt: {fileID: 0}
 --- !u!1 &1944834535
 GameObject:
   m_ObjectHideFlags: 0
@@ -12441,6 +12441,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 935302683}
   - {fileID: 519420032}
+  - {fileID: 1914203616}
   - {fileID: 1933479630}
   - {fileID: 540637954}
   - {fileID: 1154819337}
@@ -12452,4 +12453,3 @@ SceneRoots:
   - {fileID: 352800808}
   - {fileID: 1944834536}
   - {fileID: 2133702541}
-  - {fileID: 1914203616}

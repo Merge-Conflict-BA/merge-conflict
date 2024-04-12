@@ -75,8 +75,6 @@ public class ComponentSpawner : MonoBehaviour
             50,
             transform.parent.GetComponent<RectTransform>().rect.height + 100);
 
-        SpawnOnBeltInIntervalCoroutine = StartCoroutine(SpawnOnBeltInInterval(initialSpawnDelaySeconds));
-
         SavedElementsManager.Instance.SpawnSavedElements();
     }
 

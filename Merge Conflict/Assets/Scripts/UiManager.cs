@@ -21,7 +21,7 @@ Description:   Open and close the menu playfield, settings, level, elements, upg
                is opened; otherwise it returns false.
 
 Author(s):     Markus Haubold, Hanno Witzleb
-Date:          2024-03-27
+Date:          2024-04-12
 Version:       V2.1
 TODO:          - /
 **********************************************************************************************************************/
@@ -69,7 +69,6 @@ public class UiManager : MonoBehaviour
 
     [Header("Other References")]
     public GameObject[] playFieldSpriteObjects;
-    public GameObject conveyorbelt;
 
 
     //mapping buttons to the menu wich they should open
@@ -90,7 +89,7 @@ public class UiManager : MonoBehaviour
     private Canvas _currentOpenedMenu = NoMenuOpened;
     public bool isMenuVisible { get; private set; }
 
-    void Awake()
+    void Start()
     {
         //singleton -> only 1 instance
         if (_instance != null && _instance != this)
@@ -229,6 +228,7 @@ public class UiManager : MonoBehaviour
 
     private void OpenMenu(Canvas menuCanvas)
     {
+        PauseGame();
         menuCanvas.enabled = true;
         _currentOpenedMenu = menuCanvas;
 
@@ -262,8 +262,8 @@ public class UiManager : MonoBehaviour
         isMenuVisible = false;
         _playfield.enabled = true;
 
-        //AudioManager.Instance.PlayCloseMenuSound();
         SetPlayFieldSpritesVisible(true);
+        ContinueGame();
     }
 
     private void HandleMenuButtonText(Canvas currentOpenedMenu)
@@ -315,9 +315,9 @@ public class UiManager : MonoBehaviour
         if (firstAppStartDone == 0)
         {
             _finishedTutorialPopup.SetActive(true);
+            _buttonOpenMainmenu.gameObject.SetActive(false);
             PlayerPrefs.SetInt("FirstAppStartDone", 1);
             OpenMenu(_introduction);
-            _buttonOpenMainmenu.gameObject.SetActive(false);
         }
         //show every start the playfield from the 2nd start
         if (firstAppStartDone == 1)
