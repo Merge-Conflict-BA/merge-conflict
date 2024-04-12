@@ -6,9 +6,7 @@ public class GamePauseManager : MonoBehaviour
     public static GamePauseManager Instance { get { return _instance; } }
     public GameObject ConveyorbeltVertical;
     public GameObject ConveyorbeltHorizontal;
-    //public GameObject ComponentSpawner;
-    private bool gameState;
-    const bool GamePaused = false;
+    const bool Stopped = false;
 
 
     void Awake()
@@ -25,20 +23,19 @@ public class GamePauseManager : MonoBehaviour
 
     public void Pause()
     {
-        SetGameObjectActivePropertie(GamePaused);
+        StartStopConveyorbelt(Stopped);
         ComponentSpawner.Instance.PauseSpawn();
     }
 
     public void Continue()
     {
-        SetGameObjectActivePropertie(!GamePaused);
+        StartStopConveyorbelt(!Stopped);
         ComponentSpawner.Instance.ResumeSpawn();
     }
 
-    private void SetGameObjectActivePropertie(bool propertyState)
+    private void StartStopConveyorbelt(bool state)
     {
-        ConveyorbeltVertical.SetActive(propertyState);
-        ConveyorbeltHorizontal.SetActive(propertyState);
-        //ComponentSpawner.SetActive(propertyState);
+        ConveyorbeltVertical.SetActive(state);
+        ConveyorbeltHorizontal.SetActive(state);
     }
 }
