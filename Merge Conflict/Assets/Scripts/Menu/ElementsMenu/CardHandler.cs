@@ -46,7 +46,7 @@ public class CardHandler : MonoBehaviour
     public void UpdateSprite(FoundElement foundElement)
     {
         _cardElement = foundElement;
-        
+
         Image image = GetComponent<Image>();
 
         int elementTier = foundElement.Level - 1;
@@ -106,6 +106,7 @@ public class CardHandler : MonoBehaviour
         if (element == null)
         {
             Debugger.LogError("Could not get Component from Card element.");
+            AudioManager.Instance.PlayErrorSound();
             return;
         }
 
@@ -123,6 +124,7 @@ public class CardHandler : MonoBehaviour
 
         // Give feedback if the purchase is done -> instantiate gameObject with text ("+1")
         Instantiate(purchasedTextObject, transform.position, Quaternion.identity, transform);
+        AudioManager.Instance.PlayBuyElementButtonSound();
     }
 
     public void UpdatePrice()

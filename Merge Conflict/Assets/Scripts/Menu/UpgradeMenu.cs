@@ -111,25 +111,25 @@ public class UpgradeMenu : Menu
         {
             case UpgradeType.MergeXP:
                 descCurrLevel = Upgrades.MergeXPUpgrade.GetCurrentLevelDescription();
-                isMaxLevel = Upgrades.MergeXPUpgrade.isAtMaxLevel();
+                isMaxLevel = Upgrades.MergeXPUpgrade.IsAtMaxLevel();
                 if (!isMaxLevel) { descNextLevel = Upgrades.MergeXPUpgrade.GetNextLevelDescription(); };
                 break;
 
             case UpgradeType.MoneyWhenTrashed:
                 descCurrLevel = Upgrades.MoneyWhenTrashedUpgrade.GetCurrentLevelDescription();
-                isMaxLevel = Upgrades.MoneyWhenTrashedUpgrade.isAtMaxLevel();
+                isMaxLevel = Upgrades.MoneyWhenTrashedUpgrade.IsAtMaxLevel();
                 if (!isMaxLevel) { descNextLevel = Upgrades.MoneyWhenTrashedUpgrade.GetNextLevelDescription(); };
                 break;
 
             case UpgradeType.SpawnChanceWhenTrashDiscarded:
                 descCurrLevel = Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.GetCurrentLevelDescription();
-                isMaxLevel = Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.isAtMaxLevel();
+                isMaxLevel = Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.IsAtMaxLevel();
                 if (!isMaxLevel) { descNextLevel = Upgrades.SpawnChanceWhenTrashDiscardedUpgrade.GetNextLevelDescription(); };
                 break;
 
             case UpgradeType.SpawnInterval:
                 descCurrLevel = Upgrades.SpawnIntervalUpgrade.GetCurrentLevelDescription();
-                isMaxLevel = Upgrades.SpawnIntervalUpgrade.isAtMaxLevel();
+                isMaxLevel = Upgrades.SpawnIntervalUpgrade.IsAtMaxLevel();
                 if (!isMaxLevel) { descNextLevel = Upgrades.SpawnIntervalUpgrade.GetNextLevelDescription(); };
                 break;
 
@@ -165,9 +165,12 @@ public class UpgradeMenu : Menu
 
             default:
                 Debugger.LogWarning($"No matching upgrade. The upgrade to be purchased cannot be activated.");
-                break;
+                AudioManager.Instance.PlayErrorSound();
+                UpdateUI();
+                return;
         }
 
+        AudioManager.Instance.PlayBuyUpgradeButtonSound();
         UpdateUI();
     }
 }

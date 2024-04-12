@@ -7,44 +7,37 @@ Version:        V2.0
 TODO:           - 
 **********************************************************************************************************************/
 
+using System;
+using UnityEngine;
+using UnityEngine.Serialization;
+
+[Serializable]
 public class Order
 {
-
     public readonly CaseComponent PC;
-
-    public readonly int CaseTier;
-    public readonly int HddTier;
-    public readonly int PowersupplyTier;
-    public readonly int MotherboardTier;
-    public readonly int GpuTier;
-    public readonly int CpuTier;
-    public readonly int RamTier;
 
     public Order(int caseTier, int hddTier, int powersupplyTier, int motherboardTier, int gpuTier, int cpuTier, int ramTier)
     {
-        CaseTier = caseTier;
-        HddTier = hddTier;
-        PowersupplyTier = powersupplyTier;
-        MotherboardTier = motherboardTier;
-        GpuTier = gpuTier;
-        CpuTier = cpuTier;
-        RamTier = ramTier;
-
-        PC = CreatePC();
+        PC = CreatePC(caseTier, hddTier, powersupplyTier, motherboardTier, gpuTier, cpuTier, ramTier);
     }
 
-    private CaseComponent CreatePC()
+    public Order(CaseComponent pc)
     {
-        CPUComponent cpu = new CPUComponent(CpuTier);
-        RAMComponent ram = new RAMComponent(RamTier);
-        GPUComponent gpu = new GPUComponent(GpuTier);
+        PC = pc;
+    }
 
-        MBComponent motherboard = new MBComponent(MotherboardTier, cpu, ram, gpu);
+    private CaseComponent CreatePC(int caseTier, int hddTier, int powersupplyTier, int motherboardTier, int gpuTier, int cpuTier, int ramTier)
+    {
+        CPUComponent cpu = new CPUComponent(cpuTier);
+        RAMComponent ram = new RAMComponent(ramTier);
+        GPUComponent gpu = new GPUComponent(gpuTier);
 
-        HDDComponent hdd = new HDDComponent(HddTier);
-        PowersupplyComponent powersupply = new PowersupplyComponent(PowersupplyTier);
+        MBComponent motherboard = new MBComponent(motherboardTier, cpu, ram, gpu);
 
-        CaseComponent pcCase = new CaseComponent(CaseTier, motherboard, powersupply, hdd);
+        HDDComponent hdd = new HDDComponent(hddTier);
+        PowersupplyComponent powersupply = new PowersupplyComponent(powersupplyTier);
+
+        CaseComponent pcCase = new CaseComponent(caseTier, motherboard, powersupply, hdd);
 
         return pcCase;
     }

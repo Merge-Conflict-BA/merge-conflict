@@ -40,6 +40,30 @@ public class AudioManager : MonoBehaviour
     public AudioClip closeMenuSound;
 
     [Space(20)]
+    public AudioSource exitGameAudioSource;
+    public AudioClip exitGameSound;
+
+    [Space(20)]
+    public AudioSource buyUpgradeButtonAudioSource;
+    public AudioClip buyUpgradeButtonSound;
+
+    [Space(20)]
+    public AudioSource buyElementButtonAudioSource;
+    public AudioClip buyElementButtonSound;
+
+    [Space(20)]
+    public AudioSource levelUpAudioSource;
+    public AudioClip levelUpSound;
+
+    [Space(20)]
+    public AudioSource errorAudioSource;
+    public AudioClip errorSound;
+
+    [Space(20)]
+    public AudioSource questCompletedAudioSource;
+    public AudioClip questCompletedSound;
+
+    [Space(20)]
     public AudioSource mergeAudioSource;  // ?  Maybe separate sounds for lvl  2, 3, 4 
     public AudioClip[] mergeSound;
 
@@ -70,11 +94,12 @@ public class AudioManager : MonoBehaviour
     public float componentFootstepInterval = 0.18f;
 
     // ?  Maybe other sounds or environment sounds 
-    /*    (conveyorbelt, component walking, component dragging, component dropping, individual sounds for upgrades, 
-           open menu, close menu, component returning to desk, trash walkin on desk, level up, close menu, quest completed,
-           get component when throwing one away (upgrade), buy component, selling wrong component,  ... )  */
+    /*    (conveyorbelt, component dragging,  
+           component returning to desk, trash walkin on desk,
+           get component when throwing one away (upgrade),  selling wrong component,  ... )  */
 
-    // TODO: don't play dropComponent Sound when selling a component or throwing it in the trash can
+
+    // !  TODO:     implement sound for introduction button                  
 
     private Coroutine playNextBGMusicSongCoroutine;
     private Coroutine componentFootstepCoroutine;
@@ -189,6 +214,36 @@ public class AudioManager : MonoBehaviour
     public void PlayPickUpComponentSound()
     {
         pickUpComponentAudioSource.PlayOneShot(pickUpComponentSound);
+    }
+
+    public void PlayExitGameSound()
+    {
+        exitGameAudioSource.PlayOneShot(exitGameSound);
+    }
+
+    public void PlayBuyUpgradeButtonSound()
+    {
+        buyUpgradeButtonAudioSource.PlayOneShot(buyUpgradeButtonSound);
+    }
+
+    public void PlayBuyElementButtonSound()
+    {
+        buyElementButtonAudioSource.PlayOneShot(buyElementButtonSound);
+    }
+
+    public void PlayErrorSound()
+    {
+        errorAudioSource.PlayOneShot(errorSound);
+    }
+
+    public void PlayLevelUpSound()
+    {
+        levelUpAudioSource.PlayOneShot(levelUpSound);
+    }
+
+    public void PlayQuestCompletedSound()
+    {
+        questCompletedAudioSource.PlayOneShot(questCompletedSound);
     }
 
     public void StartComponentFootstepLoop()

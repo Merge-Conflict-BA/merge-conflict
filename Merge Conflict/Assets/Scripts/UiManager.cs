@@ -20,7 +20,7 @@ Description:   Open and close the menu playfield, settings, level, elements, upg
                To get the current state of the menu, call the methode: getMenuVisibility(). It returns true if the menu 
                is opened; otherwise it returns false.
 
-Author(s):     Markus Haubold
+Author(s):     Markus Haubold, Hanno Witzleb
 Date:          2024-03-27
 Version:       V2.0
 TODO:          - /
@@ -61,7 +61,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Canvas _elements;
 
     [Header("Other References")]
-    public GameObject componentsHolderObject;
+    public GameObject[] playFieldSpriteObjects;
 
 
     //mapping buttons to the menu wich they should open
@@ -116,7 +116,7 @@ public class UiManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Button with name {button} not found. Please check if the button exists and is linked to the script UiManager!");
+            Debugger.LogError($"Button with name {button} not found. Please check if the button exists and is linked to the script UiManager!");
         }
     }
 
@@ -124,6 +124,7 @@ public class UiManager : MonoBehaviour
     {
         if (clickedButton == ExitTheGame)
         {
+            SavedElementsManager.Instance.SaveElementsOnDeskToPlayerPrefs();
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -162,37 +163,37 @@ public class UiManager : MonoBehaviour
                 break;
 
             case "Settings":
-                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_settings);
+                AudioManager.Instance.PlayButtonClickSound();
                 SettingsMenu.Instance.SetDisplayedSettings();
                 break;
 
             case "Level":
-                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_level);
                 LevelMenu.Instance.OpenMenu();
+                AudioManager.Instance.PlayButtonClickSound();
                 break;
 
             case "SellingStation":
-                AudioManager.Instance.PlayOpenMenuSound();
                 OpenMenu(_level);
                 LevelMenu.Instance.OpenMenu();
+                AudioManager.Instance.PlayOpenMenuSound();
                 break;
 
             case "Upgrade":
-                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_upgrade);
                 UpgradeMenu.Instance.OpenMenu();
+                AudioManager.Instance.PlayButtonClickSound();
                 break;
 
             case "Elements":
-                AudioManager.Instance.PlayButtonClickSound();
                 OpenMenu(_elements);
                 ElementsMenu.Instance.OpenMenu();
+                AudioManager.Instance.PlayButtonClickSound();
                 break;
 
             default:
-                Debug.LogWarning("There is no menu with the name: " + menuName.Value);
+                Debugger.LogWarning("There is no menu with the name: " + menuName.Value);
                 break;
         }
 
@@ -206,7 +207,7 @@ public class UiManager : MonoBehaviour
 
         isMenuVisible = true;
 
-        SetComponentsVisible(false);
+        SetPlayFieldSpritesVisible(false);
     }
 
     private void CloseAllMenus()
@@ -231,7 +232,7 @@ public class UiManager : MonoBehaviour
 
         isMenuVisible = false;
 
-        SetComponentsVisible(true);
+        SetPlayFieldSpritesVisible(true);
     }
 
     private void HandleMenuButtonText(Canvas currentOpenedMenu)
@@ -252,15 +253,18 @@ public class UiManager : MonoBehaviour
 
         _buttonOpenMainMenuText.text = menuText;
     }
-    
-    private void SetComponentsVisible(bool isVisible)
+
+    private void SetPlayFieldSpritesVisible(bool isVisible)
     {
         // Turns off components, else they would render above the menu.
         // cant just simply set some layer, because components layers change constantly
         // and UI (Canvas, ...) ist a different render system than SpriteRenderer for Components
         // This is the easiest method ive found.
-
-        componentsHolderObject.GetComponent<SortingGroup>().sortingOrder = isVisible ? 1 : 0;
+        for (int i = 0; i < playFieldSpriteObjects.Length; i++)
+        {
+            playFieldSpriteObjects[i].GetComponent<SortingGroup>().sortingOrder
+                = isVisible ? playFieldSpriteObjects.Length - i : 0;
+        }
     }
 
     private void PauseGame()
