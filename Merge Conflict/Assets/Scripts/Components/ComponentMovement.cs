@@ -35,7 +35,7 @@ public class ComponentMovement : MonoBehaviour
      * [Header("Calculated in Start()")]
      */
     private Rect _deskRect;
-    private Vector2 _deskOffsetFromBottomLeft = new(150, 150);
+    private Vector2 _deskOffsetFromBottomLeft = new(180, 180);
     // Space between Component and border of desk
     private float _marginToDeskBorder = 5;
     // Default size and scale of the component
