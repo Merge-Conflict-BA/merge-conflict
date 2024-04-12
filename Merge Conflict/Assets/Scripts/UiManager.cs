@@ -164,6 +164,7 @@ public class UiManager : MonoBehaviour
 
             case "Settings":
                 OpenMenu(_settings);
+                SettingsMenu.Instance.OpenMenu();
                 AudioManager.Instance.PlayButtonClickSound();
                 break;
 
