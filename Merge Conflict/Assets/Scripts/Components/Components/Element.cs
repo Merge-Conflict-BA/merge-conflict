@@ -32,17 +32,17 @@ public class Element
 
     public virtual int GetTrashPrice()
     {
-        return GetComponentData().TrashPrices[tier];
+        return GetComponentData().GetTrashPrice(tier);
     }
 
     public virtual int GetSalesPrice()
     {
-        return GetComponentData().SalePrices[tier];
+        return GetComponentData().GetSalePrice(tier);
     }
 
     public virtual int GetSalesXP()
     {
-        return GetComponentData().SaleXP[tier];
+        return GetComponentData().GetSaleXP(tier);
     }
 
     // Is used to decide if a merging lvls up a component or adds one component to another.

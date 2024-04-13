@@ -18,7 +18,7 @@ public class TextureAtlas : MonoBehaviour
     private static TextureAtlas _instance;
     public static TextureAtlas Instance { get { return _instance; } }
 
-    public static float scale = 15f;
+    public static float scale = 23;
     public static float scaleSubComponents = 1f;
     public static float[] subComponentTextureValues = { 0f, 0f, scaleSubComponents }; //  float[] = {sizeWidth, sizeHeight, scale}
 
@@ -26,7 +26,7 @@ public class TextureAtlas : MonoBehaviour
     public static float[] caseTextureValues = { 5f, 5f, scale };
 
     public ElementTexture[] powersupplyTexture;
-    public static float[] powersupplyTextureValues = { 5.5f, 4.5f, scale };
+    public static float[] powersupplyTextureValues = { 5.5f, 4.5f, scale - 2 };
 
     public ElementTexture[] hddTexture;
     public static float[] hddTextureValues = { 2.7f, 4.5f, scale };

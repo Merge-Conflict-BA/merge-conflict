@@ -12,13 +12,13 @@ Version:       V1.0
 
 public class ComponentData
 {
-    public int[] SalePrices; 
-    public int[] SaleXP;
+    private readonly int[] SalePrices; 
+    private readonly int[] SaleXP;
 
-    public int[] TrashPrices;
+    private readonly int[] TrashPrices;
 
-    public int[] BaseBuyPrices;
-    public float[] RepeatBuyPriceIncreaseFactor = new float[] { 1.2f, 1.25f, 1.3f, 1.35f };
+    private readonly int[] BaseBuyPrices;
+    private readonly float[] RepeatBuyPriceIncreaseFactor = new float[] { 1.2f, 1.25f, 1.3f, 1.35f };
 
     public ComponentData(int[] salePrices, int[] saleXP, int[] trashPrices, int[] baseBuyPrices)
     {
@@ -55,5 +55,30 @@ public class ComponentData
         SalePrices = new int[] { };
         SaleXP = new int[] { };
         BaseBuyPrices = new int[] { };
+    }
+
+    public int GetSalePrice(int tier)
+    {
+        return SalePrices[tier - 1];
+    }
+
+    public int GetSaleXP(int tier)
+    {
+        return SaleXP[tier - 1];
+    }
+
+    public int GetTrashPrice(int tier)
+    {
+        return TrashPrices[tier - 1];
+    }
+
+    public int GetBaseBuyPrices(int tier)
+    {
+        return BaseBuyPrices[tier - 1];
+    }
+
+    public float GetRepeatBuyPriceIncreaseFactor(int tier)
+    {
+        return RepeatBuyPriceIncreaseFactor[tier - 1];
     }
 }

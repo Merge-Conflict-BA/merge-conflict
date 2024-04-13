@@ -122,7 +122,11 @@ public class ConveyorSegment : MonoBehaviour, IConveyorSystem {
     /// <summary> Changes sprite or animation </summary>
     internal void HandleOrientationChange() {
         if (anim == null)
+        {
+#if UNITY_EDITOR
             GetComponent<SpriteRenderer>().sprite = conveyorTheme[directionIndex][(int)alignment];
+#endif
+        }
         else {
             anim.SetFloat("Direction", directionIndex);
             anim.SetFloat("Alignment", (int)alignment);

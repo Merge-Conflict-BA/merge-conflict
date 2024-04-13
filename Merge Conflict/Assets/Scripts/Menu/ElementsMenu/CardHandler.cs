@@ -49,42 +49,41 @@ public class CardHandler : MonoBehaviour
 
         Image image = GetComponent<Image>();
 
-        int elementTier = foundElement.Level - 1;
         string elementName = foundElement.ElementName;
-
         Element element = Components.GetElementByName(elementName);
 
-        _startPrice = element.GetComponentData().BaseBuyPrices[elementTier];
-        _increaseFactor = element.GetComponentData().RepeatBuyPriceIncreaseFactor[elementTier];
+        _startPrice = element.GetComponentData().GetBaseBuyPrices(foundElement.Tier);
+        _increaseFactor = element.GetComponentData().GetRepeatBuyPriceIncreaseFactor(foundElement.Tier);
 
+        int elementTierIndex = foundElement.Tier - 1;
         switch (elementName)
         {
             case var _ when elementName.Equals(CaseComponent.Name):
-                image.sprite = CaseSprites[elementTier];
+                image.sprite = CaseSprites[elementTierIndex];
                 break;
 
             case var _ when elementName.Equals(CPUComponent.Name):
-                image.sprite = CPUSprites[elementTier];
+                image.sprite = CPUSprites[elementTierIndex];
                 break;
 
             case var _ when elementName.Equals(GPUComponent.Name):
-                image.sprite = GPUSprites[elementTier];
+                image.sprite = GPUSprites[elementTierIndex];
                 break;
 
             case var _ when elementName.Equals(HDDComponent.Name):
-                image.sprite = HDDSprites[elementTier];
+                image.sprite = HDDSprites[elementTierIndex];
                 break;
 
             case var _ when elementName.Equals(MBComponent.Name):
-                image.sprite = MotherboardSprites[elementTier];
+                image.sprite = MotherboardSprites[elementTierIndex];
                 break;
 
             case var _ when elementName.Equals(PowersupplyComponent.Name):
-                image.sprite = PowerSupplySprites[elementTier];
+                image.sprite = PowerSupplySprites[elementTierIndex];
                 break;
 
             case var _ when elementName.Equals(RAMComponent.Name):
-                image.sprite = RAMSprites[elementTier];
+                image.sprite = RAMSprites[elementTierIndex];
                 break;
 
             case var _ when elementName.Equals(Trash.Name):
@@ -110,7 +109,7 @@ public class CardHandler : MonoBehaviour
             return;
         }
 
-        element.tier = _cardElement.Level;
+        element.tier = _cardElement.Tier;
 
         element.InstantiateGameObjectAndAddTexture(ComponentSpawner.Instance.GetRandomPositionOnDesk());
         MoneyHandler.Instance.SpendMoney((int)Math.Floor(_startPrice * Math.Pow(_increaseFactor, _cardElement.CountPurchased)));
