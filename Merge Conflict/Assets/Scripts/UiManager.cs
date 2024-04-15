@@ -117,7 +117,7 @@ public class UiManager : MonoBehaviour
         SetupButtonListener(_buttonOpenIntroduction);
         SetupButtonListener(_startFirstGame);
 
-        SelectVisiblePageAfterStartup();
+        SelectVisiblePageAtStartup();
     }
 
     private void SetupButtonListener(Button button)
@@ -159,7 +159,7 @@ public class UiManager : MonoBehaviour
     {
         Canvas previousOpenedMenu = _currentOpenedMenu;
 
-        PauseGame();
+        GamePauseManager.Instance.Pause();
         CloseAllMenus();
 
         //open requested menu with usage of the mapping
@@ -176,8 +176,7 @@ public class UiManager : MonoBehaviour
 
                 else
                 {
-                    _playfield.enabled = true;
-                    ContinueGame();
+                    GamePauseManager.Instance.Continue();
 
                     AudioManager.Instance.PlayCloseMenuSound();
                 }
@@ -215,7 +214,6 @@ public class UiManager : MonoBehaviour
 
             case "Introduction":
                 OpenMenu(_introduction);
-                _currentOpenedMenu = _introduction;
                 AudioManager.Instance.PlayButtonClickSound();
                 break;
 
@@ -229,7 +227,7 @@ public class UiManager : MonoBehaviour
 
     private void OpenMenu(Canvas menuCanvas)
     {
-        PauseGame();
+        GamePauseManager.Instance.Pause();
         menuCanvas.enabled = true;
         _currentOpenedMenu = menuCanvas;
 
@@ -246,7 +244,6 @@ public class UiManager : MonoBehaviour
         }
 
         _mainmenu.enabled = false;
-        _playfield.enabled = false;
         _elements.enabled = false;
         _level.enabled = false;
         _upgrade.enabled = false;
@@ -264,7 +261,7 @@ public class UiManager : MonoBehaviour
         _playfield.enabled = true;
 
         SetPlayFieldSpritesVisible(true);
-        ContinueGame();
+        GamePauseManager.Instance.Continue();
     }
 
     private void HandleMenuButtonText(Canvas currentOpenedMenu)
@@ -299,16 +296,7 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    private void PauseGame()
-    {
-        GamePauseManager.Instance.Pause();
-    }
-    private void ContinueGame()
-    {
-        GamePauseManager.Instance.Continue();
-    }
-
-    private void SelectVisiblePageAfterStartup()
+    private void SelectVisiblePageAtStartup()
     {
         int? firstAppStartDone = PlayerPrefs.GetInt("FirstAppStartDone");
 
