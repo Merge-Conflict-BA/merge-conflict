@@ -28,8 +28,6 @@ public class CaseComponent : Element, IComponent
         this.hdd = hdd;
     }
 
-
-    // Element in der funktion merge ist das Element, dass auf den CaseComponent drauf gemerged wird
     public Element? Merge(Element element)
     {
         if (element is CaseComponent otherCase)

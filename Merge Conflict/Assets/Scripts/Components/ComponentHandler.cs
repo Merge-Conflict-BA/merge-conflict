@@ -257,12 +257,10 @@ public class ComponentHandler : MonoBehaviour
         if (draggedElement == null
             || draggedElement.IsEqual(requiredOrderElement) == false)
         {
-            // if component cannot be sold -> automatically move it back onto the playfield
             AudioManager.Instance.PlayTrySellWrongComponentSound();
-            Debugger.LogMessage("Component cannot be sold or is not a Component. It does not correspond to the required order from the quest.");
             return;
         }
-        
+
         int actualSalesPrice = draggedElement.GetSalesPrice();
         MoneyHandler.Instance.AddMoney(actualSalesPrice);
 
@@ -272,8 +270,6 @@ public class ComponentHandler : MonoBehaviour
         AnimationManager.Instance.PlaySellAnimation(GetComponent<RectTransform>().anchoredPosition);
         AudioManager.Instance.PlayQuestCompletedSound();
 
-        Debugger.LogMessage($"salesPrice : {actualSalesPrice}    salesXP : {actualSalesXP}");
-        Debugger.LogMessage("Component was sold. Congratulations! You have completed a quest.");
         Destroy(draggedComponentObject);
 
         OrderManager.Instance.GenerateNewOrder();

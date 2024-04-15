@@ -29,8 +29,6 @@ public class MBComponent : Element, IComponent
         this.gpu = gpu;
     }
 
-    // Element in der funktion merge ist das Element, dass auf den MBComponent drauf gemerged wird
-
     public Element? Merge(Element element)
     {
 
