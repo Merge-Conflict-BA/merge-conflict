@@ -21,8 +21,8 @@ Description:   Open and close the menu playfield, settings, level, elements, upg
                is opened; otherwise it returns false.
 
 Author(s):     Markus Haubold, Hanno Witzleb
-Date:          2024-03-27
-Version:       V2.0
+Date:          2024-04-12
+Version:       V2.1
 TODO:          - /
 **********************************************************************************************************************/
 
@@ -32,6 +32,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using TMPro;
+using Unity.VisualScripting;
 
 public class UiManager : MonoBehaviour
 {
@@ -49,6 +50,8 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button _buttonOpenElements;
     [SerializeField] private Button _buttonExitGame;
     [SerializeField] private Button _buttonSellingStation;
+    [SerializeField] private Button _buttonOpenIntroduction;
+    [SerializeField] private Button _startFirstGame;
 
     //all menus
     [Header("Menu Canvases")]
@@ -59,6 +62,10 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Canvas _level;
     [SerializeField] private Canvas _upgrade;
     [SerializeField] private Canvas _elements;
+    [SerializeField] private Canvas _introduction;
+    [SerializeField] private GameObject _finishedTutorialPopup;
+    [SerializeField] private GameObject _creditsContent;
+
 
     [Header("Other References")]
     public GameObject[] playFieldSpriteObjects;
@@ -73,6 +80,7 @@ public class UiManager : MonoBehaviour
         new KeyValuePair<string, string>("ButtonOpenUpgrade", "Upgrade"),
         new KeyValuePair<string, string>("ButtonOpenElements", "Elements"),
         new KeyValuePair<string, string>("SellingStation", "SellingStation"),
+        new KeyValuePair<string, string>("ButtonOpenIntroduction", "Introduction"),
     };
 
     const Canvas NoMenuOpened = null;
@@ -81,7 +89,7 @@ public class UiManager : MonoBehaviour
     private Canvas _currentOpenedMenu = NoMenuOpened;
     public bool isMenuVisible { get; private set; }
 
-    void Awake()
+    void Start()
     {
         //singleton -> only 1 instance
         if (_instance != null && _instance != this)
@@ -106,6 +114,10 @@ public class UiManager : MonoBehaviour
         SetupButtonListener(_buttonOpenElements);
         SetupButtonListener(_buttonExitGame);
         SetupButtonListener(_buttonSellingStation);
+        SetupButtonListener(_buttonOpenIntroduction);
+        SetupButtonListener(_startFirstGame);
+
+        SelectVisiblePageAtStartup();
     }
 
     private void SetupButtonListener(Button button)
@@ -133,6 +145,13 @@ public class UiManager : MonoBehaviour
             return;
         }
 
+        //button at the end of the introduction to start the very first game
+        if (clickedButton == _startFirstGame.name)
+        {
+            StartFirstGame();
+            return;
+        }
+
         SwitchMenu(clickedButton);
     }
 
@@ -140,7 +159,7 @@ public class UiManager : MonoBehaviour
     {
         Canvas previousOpenedMenu = _currentOpenedMenu;
 
-        PauseGame();
+        GamePauseManager.Instance.Pause();
         CloseAllMenus();
 
         //open requested menu with usage of the mapping
@@ -154,10 +173,11 @@ public class UiManager : MonoBehaviour
                     OpenMenu(_mainmenu);
                     AudioManager.Instance.PlayOpenMenuSound();
                 }
+
                 else
                 {
-                    _playfield.enabled = true;
-                    ContinueGame();
+                    GamePauseManager.Instance.Continue();
+
                     AudioManager.Instance.PlayCloseMenuSound();
                 }
                 break;
@@ -192,6 +212,11 @@ public class UiManager : MonoBehaviour
                 AudioManager.Instance.PlayButtonClickSound();
                 break;
 
+            case "Introduction":
+                OpenMenu(_introduction);
+                AudioManager.Instance.PlayButtonClickSound();
+                break;
+
             default:
                 Debugger.LogWarning("There is no menu with the name: " + menuName.Value);
                 break;
@@ -202,6 +227,7 @@ public class UiManager : MonoBehaviour
 
     private void OpenMenu(Canvas menuCanvas)
     {
+        GamePauseManager.Instance.Pause();
         menuCanvas.enabled = true;
         _currentOpenedMenu = menuCanvas;
 
@@ -218,11 +244,12 @@ public class UiManager : MonoBehaviour
         }
 
         _mainmenu.enabled = false;
-        _playfield.enabled = false;
         _elements.enabled = false;
         _level.enabled = false;
         _upgrade.enabled = false;
         _settings.enabled = false;
+        _introduction.enabled = false;
+
 
         if (_currentOpenedMenu != null)
         {
@@ -231,8 +258,10 @@ public class UiManager : MonoBehaviour
         }
 
         isMenuVisible = false;
+        _playfield.enabled = true;
 
         SetPlayFieldSpritesVisible(true);
+        GamePauseManager.Instance.Continue();
     }
 
     private void HandleMenuButtonText(Canvas currentOpenedMenu)
@@ -267,14 +296,36 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    private void PauseGame()
+    private void SelectVisiblePageAtStartup()
     {
-        Time.timeScale = 0f;
+        int? firstAppStartDone = PlayerPrefs.GetInt("FirstAppStartDone");
+
+        //its the very first time the app starts
+        if (firstAppStartDone == 0)
+        {
+            _finishedTutorialPopup.SetActive(true);
+            _buttonOpenMainmenu.gameObject.SetActive(false);
+            PlayerPrefs.SetInt("FirstAppStartDone", 1);
+            OpenMenu(_introduction);
+        }
+        //show every start the playfield from the 2nd start
+        if (firstAppStartDone == 1)
+        {
+            _finishedTutorialPopup.SetActive(false);
+            _creditsContent.SetActive(true);
+        }
     }
-    private void ContinueGame()
+
+    private void StartFirstGame()
     {
-        Time.timeScale = 1f;
+        _finishedTutorialPopup.SetActive(false);
+        _creditsContent.SetActive(true);
+        CloseAllMenus();
+        _buttonOpenMainmenu.gameObject.SetActive(true);
+        Introduction.Instance.ResetToFirstScreen(); //set swiper back to first screen
+        AudioManager.Instance.PlayCloseMenuSound();
     }
+
 }
 
 

@@ -38,6 +38,8 @@ public class ComponentSpawner : MonoBehaviour
     public float TimeToStartMovement = 2;
     public float MaxScaleFactor = 1.05f;
 
+    private Coroutine SpawnOnBeltInIntervalCoroutine;
+
     void Awake()
     {
         //singleton -> only 1 instance
@@ -73,25 +75,7 @@ public class ComponentSpawner : MonoBehaviour
             50,
             transform.parent.GetComponent<RectTransform>().rect.height + 100);
 
-        StartCoroutine(SpawnOnBeltInInterval(initialSpawnDelaySeconds));
-
         SavedElementsManager.Instance.SpawnSavedElements();
-    }
-
-    void Update()
-    {
-#if UNITY_EDITOR
-        //test the function -> spawn object on current mouse position
-        //TODO: delete this, if the gamelogic for the spawning is implemented!!!
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Components.GetRandomElement().InstantiateGameObjectAndAddTexture(GetBeltSpawnPosition());
-        }
-#endif
     }
 
     // copied from: https://gamedev.stackexchange.com/questions/139736/how-can-i-change-invokerepeating-time-in-unity
@@ -187,5 +171,23 @@ public class ComponentSpawner : MonoBehaviour
         float y = Random.Range(anchoredPosition.y + padding, anchoredPosition.y + rectTransform.rect.height - padding);
 
         return new Vector2(x, y);
+    }
+
+    public void PauseSpawn()
+    {
+        if (SpawnOnBeltInIntervalCoroutine != null)
+        {
+            StopCoroutine(SpawnOnBeltInIntervalCoroutine);
+            SpawnOnBeltInIntervalCoroutine = null;
+        }
+    }
+
+    public void ResumeSpawn()
+    {
+        if (SpawnOnBeltInIntervalCoroutine == null)
+        {
+            int currentInterval = Upgrades.SpawnIntervalUpgrade.GetCurrentSecondsInterval();
+            SpawnOnBeltInIntervalCoroutine = StartCoroutine(SpawnOnBeltInInterval(currentInterval));
+        }
     }
 }

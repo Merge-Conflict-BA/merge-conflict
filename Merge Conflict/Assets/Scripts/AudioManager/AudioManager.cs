@@ -123,6 +123,7 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.M))
         {
             if (playNextBGMusicSongCoroutine != null)
@@ -131,6 +132,7 @@ public class AudioManager : MonoBehaviour
             }
             playNextBGMusicSongCoroutine = StartCoroutine(PlayNextBGMusicSong());
         }
+#endif
     }
 
     private IEnumerator PlayNextBGMusicSong()
