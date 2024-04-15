@@ -28,7 +28,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource menuAudioSource;
 
     [Header("Effects")]
-    public AudioSource buttonClickAudioSource; // ?  Maybe separate AudioSources for different buttons
+    public AudioSource buttonClickAudioSource; 
     public AudioClip buttonClickSound;
 
     [Space(20)]
@@ -64,7 +64,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip questCompletedSound;
 
     [Space(20)]
-    public AudioSource mergeAudioSource;  // ?  Maybe separate sounds for lvl  2, 3, 4 
+    public AudioSource mergeAudioSource;  
     public AudioClip[] mergeSound;
 
     [Space(20)]
@@ -93,13 +93,6 @@ public class AudioManager : MonoBehaviour
     public AudioClip componentFootstepSound;
     public float componentFootstepInterval = 0.18f;
 
-    // ?  Maybe other sounds or environment sounds 
-    /*    (conveyorbelt, component dragging,  
-           component returning to desk, trash walkin on desk,
-           get component when throwing one away (upgrade),  selling wrong component,  ... )  */
-
-
-    // !  TODO:     implement sound for introduction button                  
 
     private Coroutine playNextBGMusicSongCoroutine;
     private Coroutine componentFootstepCoroutine;

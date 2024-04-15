@@ -61,11 +61,6 @@ public class UpgradeMenu : Menu
         spawnChanceWhenTrashDiscardedButton.onClick.AddListener(() => BuyNextUpgradeLevel(UpgradeType.SpawnChanceWhenTrashDiscarded));
         spawnIntervalButton.onClick.AddListener(() => BuyNextUpgradeLevel(UpgradeType.SpawnInterval));
 
-        // TODO: delete this test money function later
-#if UNITY_EDITOR
-        MoneyHandler.Instance.AddMoney(100000);
-#endif
-
         UpdateUI();
     }
 
