@@ -37,7 +37,6 @@ public class GamePauseManager : MonoBehaviour
         StartStopConveyorbelt(Stopped);
         ComponentSpawner.Instance.PauseSpawn();
         isStopped = true;
-        Debugger.LogMessage($"isStopped   :    {isStopped}");
     }
 
     //continue the game by start the conveyor belt and the spawning of new objects
@@ -46,7 +45,6 @@ public class GamePauseManager : MonoBehaviour
         StartStopConveyorbelt(!Stopped);
         ComponentSpawner.Instance.ResumeSpawn();
         isStopped = false;
-        Debugger.LogMessage($"isStopped   :    {isStopped}");
     }
 
     private void StartStopConveyorbelt(bool state)
