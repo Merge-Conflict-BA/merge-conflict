@@ -13,6 +13,11 @@ public class Menu : MonoBehaviour
         SetTitle();
     }
 
+    public void InitializeMenuWithoutTitlChange(Canvas canvas)
+    {
+        _canvas = canvas;
+    }
+
     public Canvas FindCanvasForMenu(string name)
     {
         GameObject foundCanvas = GameObject.Find(name);
@@ -37,7 +42,7 @@ public class Menu : MonoBehaviour
         return component;
     }
 
-    private Transform? FindObjectByNameInChildren(string name, Transform parent) 
+    private Transform? FindObjectByNameInChildren(string name, Transform parent)
     {
         Transform foundGameObject = parent.Find(name);
         if (foundGameObject != null)
@@ -50,9 +55,9 @@ public class Menu : MonoBehaviour
             if (child == null)
             {
                 continue;
-            }           
+            }
 
-            foundGameObject =  FindObjectByNameInChildren(name, child);
+            foundGameObject = FindObjectByNameInChildren(name, child);
 
             if (foundGameObject != null)
             {

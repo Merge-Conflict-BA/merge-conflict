@@ -18,7 +18,7 @@ public class ElementsMenu : Menu
     public GameObject CardsListContentObject;
     public TextMeshProUGUI actualMoneyText;
 
-    private Canvas _elementsmenuCanvas;
+    public Canvas _elementsmenuCanvas;
     private GameObject[] FoundElementCardObjects;
 
     private Vector2 _displayedCardSize;
@@ -51,7 +51,7 @@ public class ElementsMenu : Menu
         CardsListContentObject.SetActive(true);
         _elementsmenuCanvas = gameObject.GetComponent<Canvas>();
 
-        InitializeMenu(_elementsmenuCanvas);
+        InitializeMenuWithoutTitlChange(_elementsmenuCanvas);
         UpdateContentViewport();
         InstantiateCardObjects();
         UpdateActualMoneyText();

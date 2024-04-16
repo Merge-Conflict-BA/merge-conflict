@@ -175,7 +175,7 @@ MonoBehaviour:
   physicMode: 2
   m_forceMultiplier: 5
   m_maxSpeed: 1.5
-  animationSpeedScaling: 1.5
+  animationSpeedScaling: 2.5
   alignment: 0
   m_isHorizontal: 0
   m_flipDirection: 0

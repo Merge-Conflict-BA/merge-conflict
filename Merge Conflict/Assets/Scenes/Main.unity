@@ -2735,7 +2735,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -120}
+  m_AnchoredPosition: {x: 0, y: -254}
   m_SizeDelta: {x: 800, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &516796321
@@ -2767,8 +2767,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4285558896
+  m_fontColor: {r: 0.4392157, g: 0.4392157, b: 0.4392157, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4339,10 +4339,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1080665955}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 420, y: -100.42}
-  m_SizeDelta: {x: 840, y: 200.8375}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &704442089
 MonoBehaviour:
@@ -6305,7 +6305,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -218.65, y: -291.15002}
+  m_AnchoredPosition: {x: -218.65002, y: -291.15002}
   m_SizeDelta: {x: 2, y: 2.47047}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &1006736384
@@ -7018,13 +7018,15 @@ MonoBehaviour:
   - {fileID: 1381662451}
   - {fileID: 147665810}
   - {fileID: 1607370515}
-  - {fileID: 1695599604}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1266821626}
+  - {fileID: 1830379688}
   - {fileID: 443633052}
   - {fileID: 1109640896}
   - {fileID: 1701773872}
   - {fileID: 468159254}
+  - {fileID: 1990389069}
+  - {fileID: 1695599604}
+  - {fileID: 1603807673}
 --- !u!210 &1097156112
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -7051,7 +7053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4483804302838372053, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -844.99994
+      value: -800.0002
       objectReference: {fileID: 0}
     - target: {fileID: 6906180385017960943, guid: 1790d43eb6c8f47629dae30e9d891931, type: 3}
       propertyPath: m_Pivot.x
@@ -7729,6 +7731,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 1240855845}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1266821626 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 1240855845}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1292045100
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8880,6 +8893,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6403252182692130977, guid: 2f84a244ad5364517ae4d6f4277c5ad7, type: 3}
   m_PrefabInstance: {fileID: 1602220563}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1603807673 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 682485896}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1604206292
 GameObject:
   m_ObjectHideFlags: 0
@@ -9879,6 +9903,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1809725964}
   m_CullTransparentMesh: 1
+--- !u!114 &1830379688 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 477812717}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1840459509 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8176850701479282264, guid: 77820a42f28be47f5bdc3ec72002d9b7, type: 3}
@@ -11702,6 +11737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ConveyorbeltVertical: {fileID: 329098964}
   ConveyorbeltHorizontal: {fileID: 1083088805}
+  isStopped: 1
 --- !u!4 &1914203616
 Transform:
   m_ObjectHideFlags: 0
@@ -12238,6 +12274,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2318291671968577491, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
   m_PrefabInstance: {fileID: 1004978739}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1990389069 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 355644861625655469, guid: fecb995385b0fb245a9f9ca7865dfced, type: 3}
+  m_PrefabInstance: {fileID: 1004978739}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fd665194a5a48aeb6c093fc7993ecd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &2026513153 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 6403252182692130911, guid: 2f84a244ad5364517ae4d6f4277c5ad7, type: 3}
@@ -12791,6 +12838,7 @@ MonoBehaviour:
   CardPrefab: {fileID: 3478498447565196927, guid: 93bafa30f38266e418cfdc9cd526cfc4, type: 3}
   CardsListContentObject: {fileID: 481858004}
   actualMoneyText: {fileID: 950358979}
+  _elementsmenuCanvas: {fileID: 0}
 --- !u!1 &2116502492
 GameObject:
   m_ObjectHideFlags: 0
@@ -13017,7 +13065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5225126733233952798, guid: d391588e72baf5c47a9d3bd2d9599930, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -787.3936
+      value: -698.4602
       objectReference: {fileID: 0}
     - target: {fileID: 5893462425231390300, guid: d391588e72baf5c47a9d3bd2d9599930, type: 3}
       propertyPath: m_Enabled

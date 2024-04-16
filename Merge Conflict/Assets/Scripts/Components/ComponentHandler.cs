@@ -65,17 +65,23 @@ public class ComponentHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
-        HandleSpriteSorting();
-        offsetMouseToCamera = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        isBeingDragged = true;
+        if (GamePauseManager.Instance.isStopped == false)
+        {
+            HandleSpriteSorting();
+            offsetMouseToCamera = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            isBeingDragged = true;
+        }
     }
 
     private void OnMouseUp()
     {
-        HandleOverlappingObjects();
-        isBeingDragged = false;
-        ComponentMovement.HandleDraggingStop();
-        AudioManager.Instance.PlayDropComponentSound();
+        if (GamePauseManager.Instance.isStopped == false)
+        {
+            HandleOverlappingObjects();
+            isBeingDragged = false;
+            ComponentMovement.HandleDraggingStop();
+            AudioManager.Instance.PlayDropComponentSound();
+        }
     }
 
     private void HandleSpriteSorting()
